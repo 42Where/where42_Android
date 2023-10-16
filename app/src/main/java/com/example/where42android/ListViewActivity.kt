@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 class ListViewActivity  : AppCompatActivity() {
 
     var profileList = arrayListOf<profile_list>(
-        profile_list("Jaeyojun","handsome", "Gone", "jaeyojun_photo",),
-        profile_list("Jooypark","beautiful", "Gone", "jooypark_photo" ),
-        profile_list("jaju","graphics master", "Gone", "jaju_photo"),
+        profile_list("Jaeyojun","handsome", "Gone", "profile_photo_example",),
+        profile_list("Jooypark","beautiful", "Gone", "profile_photo_example" ),
+        profile_list("jaju","graphics master", "Gone", "profile_photo_example"),
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
