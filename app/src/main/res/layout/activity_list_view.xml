@@ -8,7 +8,7 @@
     tools:context=".ListViewActivity">
 
     <ImageView
-        android:id="@+id/ListTitle"
+        android:id="@+id/where42_logo"
         android:layout_width="174dp"
         android:layout_height="42dp"
         android:background="@drawable/list_title_box"
@@ -18,15 +18,13 @@
 
     <ListView
         android:id="@+id/peopleListView"
+        android:divider="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ListTitle"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@id/where42_logo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
