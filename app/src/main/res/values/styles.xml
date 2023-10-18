@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Custom SearchView Style -->
+    <style name="CustomSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- 힌트 텍스트의 색상을 변경 -->
+        <item name="android:textColorHint">#000000</item>
+
+        <!-- 검색 아이콘의 색상을 변경 -->
+        <item name="colorControlNormal">#000000</item>
+    </style>
+
+</resources>
