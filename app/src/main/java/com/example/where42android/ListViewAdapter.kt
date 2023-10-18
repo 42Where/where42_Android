@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 
 class ListViewAdapter(val context: Context, val profileList: ArrayList<profile_list>) : BaseAdapter() {
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         /* LayoutInflater는 item을 Adapter에서 사용할 View로 부풀려주는(inflate) 역할을 한다. */
         val view: View = LayoutInflater.from(context).inflate(R.layout.list_view_detail, null)
@@ -41,4 +44,6 @@ class ListViewAdapter(val context: Context, val profileList: ArrayList<profile_l
     override fun getCount(): Int {
         return profileList.size
     }
+
+
 }
