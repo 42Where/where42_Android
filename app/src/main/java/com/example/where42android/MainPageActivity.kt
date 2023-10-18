@@ -37,10 +37,6 @@ class MainPageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
 
-        val mainListView: ListView = findViewById(R.id.peopleListView)
-        val ListAdapter = ListViewAdapter(this, profileList)
-        mainListView.setAdapter(ListAdapter)
-
         val searchButton: ImageButton = this.findViewById(R.id.search_button)
 
         searchButton.setOnClickListener {
