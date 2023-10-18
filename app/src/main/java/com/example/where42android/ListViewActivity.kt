@@ -11,6 +11,13 @@ class ListViewActivity  : AppCompatActivity() {
         profile_list("Jaeyojun","handsome", "Gone", "profile_photo_example",),
         profile_list("Jooypark","beautiful", "Gone", "profile_photo_example" ),
         profile_list("jaju","graphics master", "Gone", "profile_photo_example"),
+        profile_list("jaju","graphics master", "Gone", "profile_photo_example"),
+        profile_list("jaju","graphics master", "Gone", "profile_photo_example"),
+        profile_list("jaju","graphics master", "Gone", "profile_photo_example"),
+        profile_list("jaju","graphics master", "Gone", "profile_photo_example"),
+        profile_list("jaju","graphics master", "Gone", "profile_photo_example"),
+        profile_list("jaju","graphics master", "Gone", "profile_photo_example"),
+
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
