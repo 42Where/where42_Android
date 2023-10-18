@@ -29,24 +29,28 @@
         <TextView
             android:id="@+id/intra_id"
             android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_height="32dp"
             android:layout_marginStart="8dp"
             android:gravity="center"
+            android:clipToOutline="true"
             android:text="인트라 ID"
-            android:textSize="16sp"
+            android:fontFamily="@font/gmarketsans_bold"
+            android:textSize="24sp"
             app:layout_constraintStart_toEndOf="@id/profile_photo"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/location_info"
-            android:layout_width="143dp"
-            android:layout_height="24dp"
+            android:layout_width="167dp"
+            android:layout_height="32dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/location_shape"
             android:gravity="center"
+            android:clipToOutline="true"
             android:text="CX2R1S5"
+            android:fontFamily="@font/gmarketsans_medium"
             android:textColor="#FCFDFF"
-            android:textSize="16sp"
+            android:textSize="24sp"
             app:layout_constraintStart_toEndOf="@id/intra_id"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +61,8 @@
             android:layout_marginStart="8dp"
             android:gravity="center"
             android:text="코멘트코멘트코멘트"
-            android:textSize="16sp"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/profile_photo" />
 

@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     val handler = Handler(Looper.getMainLooper())
     handler.postDelayed({
-        val intent = Intent(this, ListViewActivity::class.java)
+        val intent = Intent(this, MainPageActivity::class.java)
         startActivity(intent)
         finish()
     }, 3000)

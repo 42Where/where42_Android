@@ -1,11 +1,11 @@
 package com.example.where42android
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 
-class ListViewActivity  : AppCompatActivity() {
+class MainPageActivity : AppCompatActivity() {
 
     var profileList = arrayListOf<profile_list>(
         profile_list("Jaeyojun","handsome", "개포 c2r5s6", "profile_photo_example",),
@@ -14,11 +14,11 @@ class ListViewActivity  : AppCompatActivity() {
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_view)
+        setContentView(R.layout.activity_main_page)
 
-        var mainListView : ListView = findViewById(R.id.peopleListView) as ListView
-        val ExhibitionAdapter = ListViewAdapter(this, profileList)
-        mainListView.setAdapter(ExhibitionAdapter)
-
-        }
+        val otherLayout = LayoutInflater.from(this).inflate(R.layout.activity_list_view, null)
+        val mainListView: ListView = otherLayout.findViewById(R.id.peopleListView) as ListView
+        val ListAdapter = ListViewAdapter(this, profileList)
+        mainListView.setAdapter(ListAdapter)
+    }
 }
