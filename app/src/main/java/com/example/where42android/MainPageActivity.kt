@@ -1,14 +1,18 @@
 package com.example.where42android
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageButton
 import android.view.View
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,12 +56,38 @@ class MainPageActivity : AppCompatActivity() {
 
         }
 
+        /*새 그룹 기능 구현*/
+        val newGroupButton: Button = this.findViewById(R.id.newGroupButton)
+
+        newGroupButton.setOnClickListener {
+            try {
+                val builder = AlertDialog.Builder(this)
+                    .setTitle("새 그룹 만들기")
+                val type_view = layoutInflater.inflate(R.layout.new_group_popup, null)
+                val editText = type_view.findViewById<EditText>(R.id.editText)
+                builder.setView(type_view)
+                val listener = DialogInterface.OnClickListener { _, _ ->
+                    val userInput = editText.text.toString()
+                    Toast.makeText(this, "$userInput", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, CreateGroupActivity::class.java)
+                    intent.putExtra("userInputKey", userInput)
+                    startActivity(intent)
+                }
+                builder.setNegativeButton("취소", null)
+                builder.setPositiveButton("확인", listener)
+                builder.show()
+            }catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         /* footer의 홈버튼과 검색 버튼 기능 구현 */
         val searchButton: ImageButton = this.findViewById(R.id.search_button)
 
         searchButton.setOnClickListener {
             try {
-                Toast.makeText(this, "버튼을 클릭했습니다.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "버튼을 클릭했습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, SearchPage::class.java)
                 startActivity(intent)
             }catch (e: Exception) {
@@ -82,6 +112,7 @@ class MainPageActivity : AppCompatActivity() {
                 Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         /* rcyclerView 기능 구현*/
         val groupRecyclerView: RecyclerView = findViewById<RecyclerView?>(R.id.group_list)

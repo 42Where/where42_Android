@@ -66,13 +66,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/profile_photo" />
 
-        <ImageButton
+        <CheckBox
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/option_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:buttonTint="#132743"
+            android:id="@+id/checkBox"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
