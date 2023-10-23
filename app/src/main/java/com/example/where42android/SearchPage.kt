@@ -1,10 +1,12 @@
 package com.example.where42android
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.widget.SearchView
 import android.view.Menu
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView.OnQueryTextListener as OnQueryTextListener1
@@ -89,6 +91,21 @@ class SearchPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_page)
 
+        /* 홈버튼 눌렀을 때 MainPageActivity로 가기*/
+        val homeButton: ImageButton = this.findViewById(R.id.home_button)
+
+        homeButton.setOnClickListener {
+            try {
+                val intent = Intent(this, MainPageActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        /* 검색할 떄의 기능 구현*/
         searchView = findViewById(R.id.searchView)
         listView = findViewById(R.id.listView)
 
@@ -109,5 +126,7 @@ class SearchPage : AppCompatActivity() {
                 return false
             }
         })
+
+
     }
 }
