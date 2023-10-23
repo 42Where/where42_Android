@@ -56,7 +56,7 @@ class MainPageActivity : AppCompatActivity() {
 
         }
 
-        /* footer의 홈버튼과 검색 버튼 기능 구현 */
+        /*새 그룹 기능 구현*/
         val newGroupButton: Button = this.findViewById(R.id.newGroupButton)
 
         newGroupButton.setOnClickListener {
@@ -82,6 +82,7 @@ class MainPageActivity : AppCompatActivity() {
             }
         }
 
+        /* footer의 홈버튼과 검색 버튼 기능 구현 */
         val searchButton: ImageButton = this.findViewById(R.id.search_button)
 
         searchButton.setOnClickListener {
