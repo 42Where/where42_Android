@@ -9,8 +9,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class RecyclerViewAdapter(val context: Context, val profileList: ArrayList<profile_list>, val filterChecked: Boolean) :
+class RecyclerViewAdapter(val context: Context, private var profileList: ArrayList<profile_list>, val filterChecked: Boolean) :
     RecyclerView.Adapter<RecyclerViewAdapter.ProfileViewHolder>() {
+
+    fun updateList(newList: ArrayList<profile_list>) {
+        profileList = newList
+        notifyDataSetChanged()
+    }
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val profilePhoto: ImageView = itemView.findViewById(R.id.profile_photo)
         val intraId: TextView = itemView.findViewById(R.id.intra_id)

@@ -20,6 +20,9 @@
             android:name=".MainPageActivity"
             android:exported="false" />
         <activity
+            android:name=".CreateGroupActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

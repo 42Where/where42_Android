@@ -87,7 +87,7 @@
         app:layout_constraintBottom_toBottomOf="@id/main_profile">
 
         <android.widget.Button
-            android:id="@+id/newGroup"
+            android:id="@+id/newGroupButton"
             android:layout_width="114dp"
             android:layout_height="20dp"
             android:layout_marginEnd="12dp"
@@ -109,7 +109,7 @@
             android:buttonTint="#132743"
             android:id="@+id/checkBox"
             android:background="@drawable/main_page_filter"
-            app:layout_constraintStart_toEndOf="@id/newGroup"
+            app:layout_constraintStart_toEndOf="@id/newGroupButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -250,8 +250,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:scrollbars="vertical"
-            android:scrollbarFadeDuration="0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/group_list_header"/>
@@ -270,8 +268,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:scrollbars="vertical"
-        android:scrollbarFadeDuration="0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/friend_list_header"/>
