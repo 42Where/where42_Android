@@ -17,13 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/where42_logo" />
 
-    <ImageButton
-        android:id="@+id/setting_button"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/settings_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

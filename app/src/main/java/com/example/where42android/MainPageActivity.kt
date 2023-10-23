@@ -41,6 +41,22 @@ class MainPageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
 
+        /* header의 환경 설정 버튼을 눌렀을 때 */
+        val settingButton : ImageButton = this.findViewById(R.id.setting_button)
+        settingButton.setOnClickListener{
+            try {
+                val intent = Intent(this, SettingPage::class.java)
+                startActivity(intent)
+                finish()
+            }
+            catch (e: Exception){
+                e.printStackTrace()
+                Toast.makeText(this, "환경 세팅 작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        /* footer의 홈버튼과 검색 버튼 기능 구현 */
         val newGroupButton: Button = this.findViewById(R.id.newGroupButton)
 
         newGroupButton.setOnClickListener {
@@ -96,6 +112,8 @@ class MainPageActivity : AppCompatActivity() {
             }
         }
 
+
+        /* rcyclerView 기능 구현*/
         val groupRecyclerView: RecyclerView = findViewById<RecyclerView?>(R.id.group_list)
         val groupRecyclerViewAdapter = RecyclerViewAdapter(this, groupProfileList, isFilterChecked)
         groupRecyclerView.layoutManager = LinearLayoutManager(this)
