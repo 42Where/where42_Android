@@ -1,7 +1,10 @@
 package com.example.where42android
 
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -60,26 +63,28 @@ class MainPageActivity : AppCompatActivity() {
         val newGroupButton: Button = this.findViewById(R.id.newGroupButton)
 
         newGroupButton.setOnClickListener {
-            try {
-                val builder = AlertDialog.Builder(this)
-                    .setTitle("새 그룹 만들기")
-                val type_view = layoutInflater.inflate(R.layout.new_group_popup, null)
-                val editText = type_view.findViewById<EditText>(R.id.editText)
-                builder.setView(type_view)
-                val listener = DialogInterface.OnClickListener { _, _ ->
-                    val userInput = editText.text.toString()
-                    Toast.makeText(this, "$userInput", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, CreateGroupActivity::class.java)
-                    intent.putExtra("userInputKey", userInput)
-                    startActivity(intent)
-                }
-                builder.setNegativeButton("취소", null)
-                builder.setPositiveButton("확인", listener)
-                builder.show()
-            }catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.new_group_popup)
+
+            dialog.setCanceledOnTouchOutside(true)
+            dialog.setCancelable(true)
+            dialog.window?.setGravity(Gravity.CENTER)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            val editText = dialog.findViewById<EditText>(R.id.input)
+            val btnCancel = dialog.findViewById<Button>(R.id.cancel)
+            val btnSubmit = dialog.findViewById<Button>(R.id.submit)
+
+            btnCancel.setOnClickListener {
+                dialog.dismiss()
             }
+            btnSubmit.setOnClickListener {
+                val userInput = editText.text.toString()
+                val intent = Intent(this, CreateGroupActivity::class.java)
+                intent.putExtra("userInputKey", userInput)
+                startActivity(intent)
+            }
+            dialog.show()
         }
 
         /* footer의 홈버튼과 검색 버튼 기능 구현 */
@@ -130,6 +135,12 @@ class MainPageActivity : AppCompatActivity() {
             isFilterChecked = isChecked
             groupRecyclerView.adapter = RecyclerViewAdapter(this, groupProfileList, isFilterChecked)
             friendRecyclerView.adapter = RecyclerViewAdapter(this, friendProfileList, isFilterChecked)
+        }
+
+        val groupEditButton: ImageButton = findViewById(R.id.group_edit)
+        groupEditButton.setOnClickListener {
+            val groupDialog = GroupDialog(this)
+            groupDialog.showGroupDialog("그룹1")
         }
 
         val groupToggleButton: ImageButton = findViewById(R.id.group_toggle)

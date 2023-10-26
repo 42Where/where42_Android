@@ -67,6 +67,7 @@
             app:layout_constraintStart_toEndOf="@id/profile_photo" />
 
         <ImageButton
+            android:id="@+id/see_more"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@drawable/option_button"
