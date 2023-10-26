@@ -1,22 +1,29 @@
 package com.example.where42android
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
+import android.view.View
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import de.hdodenhof.circleimageview.CircleImageView
 
 class CreateGroupActivity : AppCompatActivity() {
     var friendProfileList = arrayListOf<profile_list>(
-        profile_list("Jaeyojun","handsome", "개포 c2r5s6", "profile_photo_example",),
-        profile_list("Jaeyojun","handsome", "퇴근", "profile_photo_example",),
-        profile_list("Jaeyojun","handsome", "개포 c2r5s6", "profile_photo_example",),
-        profile_list("Jooypark","beautiful", "개포 c2r5s6", "profile_photo_example" ),
-        profile_list("jaju","graphics master", "퇴근", "profile_photo_example"),
+        profile_list("Jaeyojun", "handsome", "개포 c2r5s6", "profile_photo_example",),
+        profile_list("Jaeyojun", "handsome", "퇴근", "profile_photo_example",),
+        profile_list("Jaeyojun", "handsome", "개포 c2r5s6", "profile_photo_example",),
+        profile_list("Jooypark", "beautiful", "개포 c2r5s6", "profile_photo_example"),
+        profile_list("jaju", "graphics master", "퇴근", "profile_photo_example"),
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_group)
@@ -24,13 +31,19 @@ class CreateGroupActivity : AppCompatActivity() {
         val receivedIntent = intent
         if (receivedIntent != null && receivedIntent.hasExtra("userInputKey")) {
             val userInput = receivedIntent.getStringExtra("userInputKey")
-            Toast.makeText(this, "$userInput", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "$userInput", Toast.LENGTH_SHORT).show()
         }
 
-        val friendRecyclerView: RecyclerView = findViewById<RecyclerView?>(R.id.friend_list)
-        val friendRecyclerViewAdapter = RecyclerViewAdapter(this, friendProfileList, false)
+
+
+        val friendRecyclerView: RecyclerView = findViewById<RecyclerView?>(R.id.new_gorup_friend_list)
+
+
+        val friendRecyclerViewAdapter = RecyclerViewAdapter_new_group(this, friendProfileList, false)
         friendRecyclerView.layoutManager = LinearLayoutManager(this)
         friendRecyclerView.adapter = friendRecyclerViewAdapter
+
+
 
         val searchView: SearchView = findViewById(R.id.searchView)
 

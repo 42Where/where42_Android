@@ -23,8 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-
-<!--        androidx.appcompat.widget.SearchView-->
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView"
                 app:searchIcon="@drawable/footer_search_icon"
@@ -36,7 +34,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:iconifiedByDefault="false"
                 app:queryHint="input this input"
-                android:background="@drawable/search_blackground" />
+                android:background="@drawable/search_back_ground"
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
