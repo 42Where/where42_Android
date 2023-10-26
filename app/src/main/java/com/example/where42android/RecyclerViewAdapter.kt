@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,24 @@ class RecyclerViewAdapter(val context: Context, private var profileList: ArrayLi
         val intraId: TextView = itemView.findViewById(R.id.intra_id)
         val comment: TextView = itemView.findViewById(R.id.Comment)
         val locationInfo: TextView = itemView.findViewById(R.id.location_info)
+        val seeMoreButton: ImageButton = itemView.findViewById(R.id.see_more)
+
+        init {
+            seeMoreButton.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val profile: profile_list
+                    if (filterChecked) {
+                        val filteredList = profileList.filter { it.location != "퇴근" }
+                        profile = filteredList[position]
+                    } else {
+                        profile = profileList[position]
+                    }
+                    val profileDialog = ProfileDialog(context)
+                    profileDialog.showProfileDialog(profile)
+                }
+            }
+        }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
             val view = LayoutInflater.from(context).inflate(R.layout.list_view_detail, parent, false)

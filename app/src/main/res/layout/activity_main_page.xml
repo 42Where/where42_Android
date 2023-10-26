@@ -161,6 +161,7 @@
                 android:gravity="center" >
 
                 <ImageButton
+                    android:id="@+id/group_edit"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/pencil_icon"
