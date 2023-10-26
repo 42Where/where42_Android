@@ -4,51 +4,35 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-
-class RecyclerViewAdapter(val context: Context, private var profileList: ArrayList<profile_list>, val filterChecked: Boolean) :
-    RecyclerView.Adapter<RecyclerViewAdapter.ProfileViewHolder>() {
+class RecyclerViewAdapter_new_group(val context: Context, private var profileList: ArrayList<profile_list>, val filterChecked: Boolean) :
+    RecyclerView.Adapter<RecyclerViewAdapter_new_group.GroupViewHolder>() {
 
     fun updateList(newList: ArrayList<profile_list>) {
         profileList = newList
         notifyDataSetChanged()
     }
-    inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
+    inner class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val profilePhoto: ImageView = itemView.findViewById(R.id.profile_photo)
         val intraId: TextView = itemView.findViewById(R.id.intra_id)
         val comment: TextView = itemView.findViewById(R.id.Comment)
         val locationInfo: TextView = itemView.findViewById(R.id.location_info)
-        val seeMoreButton: ImageButton = itemView.findViewById(R.id.see_more)
+    }
 
-        init {
-            seeMoreButton.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val profile: profile_list
-                    if (filterChecked) {
-                        val filteredList = profileList.filter { it.location != "퇴근" }
-                        profile = filteredList[position]
-                    } else {
-                        profile = profileList[position]
-                    }
-                    val profileDialog = ProfileDialog(context)
-                    profileDialog.showProfileDialog(profile)
-                }
-            }
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.list_view_detail_checkbox, parent, false)
+        return GroupViewHolder(view)
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
-            val view = LayoutInflater.from(context).inflate(R.layout.list_view_detail, parent, false)
-            return ProfileViewHolder(view)
-    }
-    override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
+
+    override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
         if (filterChecked) {
             // filterChecked가 true일 때만 필터링을 적용합니다.
-            // '퇴근'인 요소를 건너뜁니다.
+            // 특정 조건에 따라 그룹 목록을 필터링할 수 있습니다.
+            // 이 코드를 원하는 방식으로 수정하세요.
             val filteredList = profileList.filter { it.location != "퇴근" }
             val profile = filteredList[position]
             val resourceId = context.resources.getIdentifier(profile.photo, "drawable", context.packageName)
@@ -67,12 +51,12 @@ class RecyclerViewAdapter(val context: Context, private var profileList: ArrayLi
             holder.locationInfo.text = profile.location
         }
     }
+
     override fun getItemCount(): Int {
         return if (filterChecked) {
-            profileList.filter { it.location != "퇴근" }.size
+            profileList.filter {it.location != "퇴근"}.size
         } else {
             profileList.size
         }
     }
-
 }

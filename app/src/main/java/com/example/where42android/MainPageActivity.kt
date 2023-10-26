@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Button
@@ -125,6 +126,7 @@ class MainPageActivity : AppCompatActivity() {
         groupRecyclerView.layoutManager = LinearLayoutManager(this)
         groupRecyclerView.adapter = groupRecyclerViewAdapter
 
+
         val friendRecyclerView: RecyclerView = findViewById<RecyclerView?>(R.id.friend_list)
         val friendRecyclerViewAdapter = RecyclerViewAdapter(this, friendProfileList, isFilterChecked)
         friendRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -162,5 +164,7 @@ class MainPageActivity : AppCompatActivity() {
             }
             isFriendListVisible = !isFriendListVisible
         }
+
+        /* 그룹 설정 기능 */
     }
 }
