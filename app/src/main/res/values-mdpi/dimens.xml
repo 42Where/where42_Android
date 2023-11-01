@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="profile_image">16dp</dimen>
+    <dimen name="intra_ID">7dp</dimen>
+    <dimen name="location_w">41.75dp</dimen>
+    <dimen name="location_h">9dp</dimen>
+    <dimen name="comment">7dp</dimen>
+    <dimen name="see_more">6dp</dimen>
+    <dimen name="profile_card">24.5dp</dimen>
+    <dimen name="profile_card_padding">4dp</dimen>
+    <dimen name="font_small">6sp</dimen>
+
+</resources>
