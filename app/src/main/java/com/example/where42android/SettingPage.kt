@@ -4,9 +4,11 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
@@ -20,6 +22,46 @@ class SettingPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting_page)
+        fun adjustTextViewSize(textView: TextView) {
+            val displayMetrics = textView.resources.displayMetrics
+            val screenWidth = displayMetrics.widthPixels
+
+            val desiredWidth = screenWidth * 0.412 // 원하는 폭 (현재 레이아웃에서의 비율)
+            val text = textView.text.toString()
+
+            // 적절한 텍스트 크기 계산
+            var textSize = 74 // 초기 텍스트 크기
+            var paint = Paint()
+            paint.textSize = textSize.toFloat()
+
+            while (paint.measureText(text) > desiredWidth) {
+                textSize--
+                paint.textSize = textSize.toFloat()
+            }
+
+            // TextView에 적절한 텍스트 크기 설정
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
+        }
+        val myTextView = findViewById<TextView>(R.id.text_setting)
+        adjustTextViewSize(myTextView)
+
+
+//
+//        fun resizeTextViewToScreenRatio(textView: TextView, textSizeDP: Float) {
+//            val displayMetrics = textView.context.resources.displayMetrics
+//            val screenWidth = displayMetrics.widthPixels.toFloat()
+//            val screenHeight = displayMetrics.heightPixels.toFloat()
+//
+//            val textSizeRatio = textSizeDP / screenWidth
+//            val newTextSize = screenWidth * textSizeRatio
+//
+//            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, newTextSize)
+//        }
+//
+//        val myTextView = findViewById<TextView>(R.id.text_setting)
+//        val textSizeInDP = 16.0f // 설정하려는 텍스트 크기 (DP 단위)
+//
+//        resizeTextViewToScreenRatio(myTextView, textSizeInDP)
 
         /*footer 홈, 검색 버튼*/
         val homeButton: ImageButton = this.findViewById(R.id.home_button)

@@ -1,17 +1,20 @@
 package com.example.where42android
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageButton
 import android.view.View
+import android.view.WindowManager
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ListView
@@ -44,6 +47,28 @@ class MainPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
+
+
+        fun getDeviceScreenSize(context: Context): Pair<Int, Int> {
+            val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val display = windowManager.defaultDisplay
+
+            val metrics = DisplayMetrics()
+            display.getMetrics(metrics)
+
+            val widthPixels = metrics.widthPixels
+            val heightPixels = metrics.heightPixels
+
+            return Pair(widthPixels, heightPixels)
+        }
+
+        val screenSize = getDeviceScreenSize(this)
+        val screenWidth = screenSize.first
+        val screenHeight = screenSize.second
+
+// 너비와 높이 출력
+        Log.d("ScreenSize", "Width: $screenWidth pixels, Height: $screenHeight pixels")
+
 
         /* header의 환경 설정 버튼을 눌렀을 때 */
         val settingButton : ImageButton = this.findViewById(R.id.setting_button)
