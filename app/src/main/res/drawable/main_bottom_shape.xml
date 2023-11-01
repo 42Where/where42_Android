@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<!--     윗부분을 타원 모양으로 만드는 독립된 Shape Drawable-->
+<!--    <item>-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid android:color="#132743"/>-->
+<!--            <size android:width="700dp" android:height="700dp"/>-->
+<!--&lt;!&ndash;            <corners android:topLeftRadius="-100dp" android:topRightRadius="-100dp"/>&ndash;&gt;-->
+<!--        </shape>-->
+<!--    </item>-->
+     아랫부분은 사각형 모양으로 유지하는 Shape Drawable
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#132743"/>
+            <size android:width="650dp" android:height="650dp"/>
+            <corners android:topLeftRadius="70dp" android:topRightRadius="70dp"/>
+        </shape>
+    </item>
+</layer-list>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle"-->
+    <!--    android:paddingTop="4dp"-->
+    <!--    android:paddingBottom="4dp"-->
+    <!--    android:paddingLeft="12dp"-->
+    <!--    android:paddingRight="12dp">-->
+    <!--    <solid android:color="#132743"/>-->
+    <!--    <corners android:topLeftRadius="10dp" android:topRightRadius="10dp"/>-->
+    <!--    <size android:width="167dp" android:height="200dp"/>-->
+    <!--</shape>-->
