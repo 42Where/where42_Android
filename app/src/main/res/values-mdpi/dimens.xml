@@ -27,4 +27,16 @@
     <dimen name="filter_available_h">18dp</dimen>
     <dimen name="filter_available_font">10sp</dimen>
 
+    <!--    세팅 페이지 버튼-->
+    <dimen name="setting_width">74dp</dimen>
+    <dimen name="setting_height">28.5dp</dimen>
+    <dimen name="setting_button_text">12sp</dimen>
+
+    <!--    header-->
+    <dimen name="layout_height_header">16dp</dimen>
+    <dimen name="layout_height_padding">3dp</dimen>
+    <dimen name="where42_logo_width">43.5dp</dimen>
+    <dimen name="where42_logo_height">12dp</dimen>
+
+
 </resources>

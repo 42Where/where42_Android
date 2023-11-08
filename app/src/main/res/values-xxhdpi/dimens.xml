@@ -10,4 +10,16 @@
     <dimen name="profile_card_padding">12dp</dimen>
     <dimen name="font_small">18sp</dimen>
 
+
+    <!--    세팅 페이지 버튼-->
+    <dimen name="setting_width">222dp</dimen>
+    <dimen name="setting_height">85.5dp</dimen>
+    <dimen name="setting_button_text">36sp</dimen>
+
+    <!--    header-->
+    <dimen name="layout_height_header">48dp</dimen>
+    <dimen name="layout_height_padding">9dp</dimen>
+    <dimen name="where42_logo_width">130.5dp</dimen>
+    <dimen name="where42_logo_height">36dp</dimen>
+
 </resources>
