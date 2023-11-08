@@ -3,10 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/profile_card"
-    android:paddingStart="@dimen/profile_card_padding"
-    android:paddingEnd="@dimen/profile_card_padding"
-    android:paddingTop="@dimen/profile_card_padding"
-    android:paddingBottom="@dimen/profile_card_padding"
+    android:padding="@dimen/profile_card_padding"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -64,7 +61,6 @@
         android:text="코멘트코멘트코멘트"
         android:fontFamily="@font/gmarketsans_medium"
         android:textSize="@dimen/font_small"
-        app:layout_constraintTop_toBottomOf="@id/guideline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/profile_photo"
         />

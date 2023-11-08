@@ -15,96 +15,99 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_profile"
         android:layout_width="match_parent"
-        android:layout_height="192dp"
-        android:padding="32dp"
+        android:layout_height="@dimen/main_profile_card"
+        android:padding="@dimen/main_profile_card_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_photo"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
+            android:layout_width="@dimen/main_profile_image"
+            android:layout_height="@dimen/main_profile_image"
             android:src="@drawable/profile_photo_example"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/intra_id"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_marginStart="12dp"
+            android:layout_height="@dimen/main_intra_ID"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:clipToOutline="true"
+            android:text="인트라 ID"
+            android:fontFamily="@font/gmarketsans_bold"
+            android:textSize="@dimen/font_medium"
             app:layout_constraintStart_toEndOf="@id/profile_photo"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toTopOf="@id/guideline1"/>
 
-            <TextView
-                android:id="@+id/intra_id"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:gravity="center"
-                android:clipToOutline="true"
-                android:text="인트라 ID"
-                android:fontFamily="@font/gmarketsans_bold"
-                android:textSize="28sp"
-                android:textColor="#132743"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/location_info"
+            android:layout_width="@dimen/main_location_w"
+            android:layout_height="@dimen/main_location_h"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/location_shape"
+            android:gravity="center"
+            android:clipToOutline="true"
+            android:text="cx2r1s5"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textColor="#FCFDFF"
+            android:textSize="@dimen/font_medium"
+            app:layout_constraintStart_toEndOf="@id/intra_id"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/guideline1"/>
 
-            <TextView
-                android:id="@+id/location_info"
-                android:layout_width="143dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/location_shape"
-                android:gravity="center"
-                android:clipToOutline="true"
-                android:text="CX2R1S5"
-                android:fontFamily="@font/gmarketsans_medium"
-                android:textColor="#FCFDFF"
-                android:textSize="24sp"
-                app:layout_constraintStart_toEndOf="@id/intra_id"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/Comment"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:gravity="center"
-                android:text="코멘트코멘트코멘트"
-                android:fontFamily="@font/gmarketsans_medium"
-                android:textSize="28sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <TextView
+            android:id="@+id/Comment"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/main_comment"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:text="코멘트코멘트코멘트"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/font_small"
+            app:layout_constraintTop_toTopOf="@id/guideline1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/profile_photo"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/option_buttons"
         android:layout_width="wrap_content"
-        android:layout_height="24dp"
+        android:layout_height="@dimen/tools"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/main_profile">
 
         <android.widget.Button
             android:id="@+id/newGroupButton"
-            android:layout_width="114dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/new_group_w"
+            android:layout_height="@dimen/new_group_h"
             android:layout_marginEnd="12dp"
             android:background="@drawable/main_page_filter"
             android:fontFamily="@font/gmarketsans_medium"
             android:text="새 그룹"
             android:textColor="#132743"
-            android:textSize="16sp"
+            android:textSize="@dimen/new_group_font"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/checkBox"
             app:layout_constraintStart_toStartOf="parent" />
+
         <CheckBox
-            android:layout_width="220dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/filter_available_w"
+            android:layout_height="@dimen/filter_available_h"
             android:text="출근한 친구만 보기"
             android:fontFamily="@font/gmarketsans_medium"
-            android:textSize="20sp"
+            android:textSize="@dimen/filter_available_font"
             android:textColor="#132743"
             android:buttonTint="#132743"
             android:id="@+id/checkBox"
@@ -112,6 +115,7 @@
             app:layout_constraintStart_toEndOf="@id/newGroupButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

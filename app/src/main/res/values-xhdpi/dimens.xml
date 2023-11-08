@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    list_view_detail-->
+    <dimen name="profile_card">49dp</dimen>
+    <dimen name="profile_card_padding">8dp</dimen>
     <dimen name="profile_image">32dp</dimen>
     <dimen name="intra_ID">14dp</dimen>
     <dimen name="location_w">83.5dp</dimen>
     <dimen name="location_h">18dp</dimen>
     <dimen name="comment">14dp</dimen>
     <dimen name="see_more">12dp</dimen>
-    <dimen name="profile_card">49dp</dimen>
-    <dimen name="profile_card_padding">8dp</dimen>
     <dimen name="font_small">12sp</dimen>
+    <!--    activity_main_page-->
+    <dimen name="main_profile_card">96dp</dimen>
+    <dimen name="main_profile_card_padding">16dp</dimen>
+    <dimen name="main_profile_image">64dp</dimen>
+    <dimen name="main_intra_ID">18.5dp</dimen>
+    <dimen name="main_location_w">99dp</dimen>
+    <dimen name="main_location_h">20dp</dimen>
+    <dimen name="main_comment">14dp</dimen>
+    <dimen name="font_medium">16sp</dimen>
+    <dimen name="tools">18dp</dimen>
+    <dimen name="new_group_w">57dp</dimen>
+    <dimen name="new_group_h">18dp</dimen>
+    <dimen name="new_group_font">10sp</dimen>
+    <dimen name="filter_available_w">110dp</dimen>
+    <dimen name="filter_available_h">18dp</dimen>
+    <dimen name="filter_available_font">10sp</dimen>
 
 </resources>
