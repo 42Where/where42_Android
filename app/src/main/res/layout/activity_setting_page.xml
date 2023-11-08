@@ -19,17 +19,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.097" />
-    <!--    <ImageView-->
-    <!--        android:id="@+id/main_logo"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintHeight_default="percent"-->
-    <!--        app:layout_constraintHeight_percent="0.23"-->
-    <!--        android:adjustViewBounds="true"-->
-    <!--        android:src="@drawable/main_logo"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="@id/guideline3"/>-->
 
     <TextView
         android:id="@+id/text_setting"
@@ -50,46 +39,68 @@
         />
 
 
-        <androidx.appcompat.widget.AppCompatButton
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.253" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/logout_button"
-            android:layout_width="@dimen/width"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/setting_width"
+            android:layout_height="@dimen/setting_height"
             style="@style/RoundedButton"
-            android:textSize="48px"
-            app:layout_constraintTop_toBottomOf="@id/text_setting"
+            android:textSize="@dimen/setting_button_text"
+            app:layout_constraintTop_toBottomOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="50dp"
             android:text="로그아웃"
             android:gravity="center"
             android:fontFamily="@font/gmarketsans_light"
             />
 
+<!--    546 + 12 / 1280-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.435" />
 
-        <androidx.appcompat.widget.AppCompatButton
+
+    <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/unavailable_button"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/setting_width"
+            android:layout_height="@dimen/setting_height"
             style="@style/RoundedButton"
-            android:textSize="48px"
-            app:layout_constraintTop_toBottomOf="@id/logout_button"
+            android:textSize="@dimen/setting_button_text"
+            app:layout_constraintTop_toTopOf="@id/guideline3"
             app:layout_constraintStart_toStartOf="@id/logout_button"
-            android:layout_marginTop="75dp"
             android:text="자리비움"
             android:gravity="center"
             android:fontFamily="@font/gmarketsans_light"
             />
 
+    <!--    768 + 12 / 1280-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.605" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/comment_button"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/setting_width"
+            android:layout_height="@dimen/setting_height"
             style="@style/RoundedButton"
-            android:textSize="48px"
-            app:layout_constraintTop_toBottomOf="@id/unavailable_button"
+            android:textSize="@dimen/setting_button_text"
+            app:layout_constraintTop_toBottomOf="@id/guideline4"
             app:layout_constraintStart_toStartOf="@id/unavailable_button"
             android:text="코멘트 설정"
-            android:layout_marginTop="75dp"
             android:gravity="center"
             android:fontFamily="@font/gmarketsans_light"
             />

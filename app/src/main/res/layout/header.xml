@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:paddingStart="12dp"
-    android:paddingEnd="12dp">
+    android:layout_height="@dimen/layout_height_header"
+    android:paddingStart="@dimen/layout_height_padding"
+    android:paddingEnd="@dimen/layout_height_padding">
 
     <ImageView
         android:id="@+id/where42_logo"
-        android:layout_width="174dp"
-        android:layout_height="42dp"
+        android:layout_width="@dimen/where42_logo_width"
+        android:layout_height="@dimen/where42_logo_height"
         android:background="@drawable/list_title_box"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,11 +19,19 @@
 
     <ImageButton
         android:id="@+id/setting_button"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="@dimen/setting_btn"
+        android:layout_height="@dimen/setting_btn"
+        android:backgroundTint="@android:color/transparent"
         android:src="@drawable/settings_icon"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="fitCenter"
+        android:padding="0sp"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

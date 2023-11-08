@@ -22,6 +22,7 @@ class SettingPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting_page)
+
         fun adjustTextViewSize(textView: TextView) {
             val displayMetrics = textView.resources.displayMetrics
             val screenWidth = displayMetrics.widthPixels
