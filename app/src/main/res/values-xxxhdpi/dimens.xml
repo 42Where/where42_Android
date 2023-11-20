@@ -37,6 +37,33 @@
     <dimen name="layout_height_padding">12dp</dimen>
     <dimen name="where42_logo_width">174dp</dimen>
     <dimen name="where42_logo_height">42dp</dimen>
-    <dimen name="setting_btn">48dp</dimen>
+    <dimen name="header_setting_btn">48dp</dimen>
+
+<!--    footer-->
+    <dimen name="constr_layout_height">58dp</dimen>
+    <dimen name="header_home_btn">34dp</dimen>
+
+<!--    search_view-->
+    <dimen name="search_header_layout_height_toolbar">64dp</dimen>
+
+<!--    new_group_popup-->
+    <dimen name="newgroup_layout_width">495dp</dimen>
+    <dimen name="newgroup_layout_height">212dp</dimen>
+    <dimen name="newgroup_layout_padding_top_bottom">32dp</dimen>
+    <dimen name="newgroup_layout_padding_start_end">48dp</dimen>
+    <dimen name="newgroup_textsize">20sp</dimen>
+    <dimen name="edittext_layout_width">399dp</dimen>
+    <dimen name="edittext_layout_height">40dp</dimen>
+    <dimen name="edittext_layout_margin">24dp</dimen>
+    <dimen name="edittext_layout_padding">8dp</dimen>
+
+    <dimen name="newgroup_button_width">80dp</dimen>
+    <dimen name="newgroup_button_height">32dp</dimen>
+    <dimen name="newgroup_button_padding">20dp</dimen>
+    <dimen name="newgroup_button_marginend">24dp</dimen>
+    <dimen name="newgroup_button_textsize">18sp</dimen>
+    <!--    create_group-->
+    <dimen name="create_group_button_height">88dp</dimen>
+    <dimen name="create_group_button_textsize">28sp</dimen>
 
 </resources>

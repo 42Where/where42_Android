@@ -15,5 +15,8 @@
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
+    <style name="MySearchViewStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="searchIcon">@drawable/footer_search_icon</item>
+    </style>
 
 </resources>
