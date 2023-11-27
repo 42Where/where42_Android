@@ -10,6 +10,33 @@
     <dimen name="profile_card_padding">12dp</dimen>
     <dimen name="font_small">18sp</dimen>
 
+    <!--    activity_main_page-->
+    <dimen name="main_profile_card">144dp</dimen>
+    <dimen name="main_profile_card_padding">24dp</dimen>
+    <dimen name="main_profile_image">96dp</dimen>
+    <dimen name="main_intra_ID">27.75dp</dimen>
+    <dimen name="main_location_w">148.5dp</dimen>
+    <dimen name="main_location_h">30dp</dimen>
+    <dimen name="main_comment">21dp</dimen>
+    <dimen name="font_medium">24sp</dimen>
+    <dimen name="buttons_w">259.5dp</dimen>
+    <dimen name="buttons_h">27dp</dimen>
+    <dimen name="new_group_w">85.5dp</dimen>
+    <dimen name="new_group_h">27dp</dimen>
+    <dimen name="new_group_font">15sp</dimen>
+    <dimen name="filter_available_w">165dp</dimen>
+    <dimen name="filter_available_h">27dp</dimen>
+    <dimen name="filter_available_font">15sp</dimen>
+    <dimen name="list_titlebar_h">42dp</dimen>
+    <dimen name="group_font">21sp</dimen>
+    <dimen name="friend_font">15sp</dimen>
+    <dimen name="list_padding_start_end">18dp</dimen>
+    <dimen name="list_padding_top_bottom">9dp</dimen>
+    <dimen name="divider">1.5dp</dimen>
+    <dimen name="option_buttons_w">12dp</dimen>
+    <dimen name="option_buttons_h">12dp</dimen>
+
+
 
     <!--    세팅 페이지 버튼-->
     <dimen name="setting_width">222dp</dimen>

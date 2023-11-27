@@ -10,22 +10,32 @@
     <dimen name="profile_card">24.5dp</dimen>
     <dimen name="profile_card_padding">4dp</dimen>
     <dimen name="font_small">6sp</dimen>
+
     <!--    activity_main_page-->
     <dimen name="main_profile_card">48dp</dimen>
     <dimen name="main_profile_card_padding">8dp</dimen>
-    <dimen name="main_profile_image">64dp</dimen>
-    <dimen name="main_intra_ID">18.5dp</dimen>
-    <dimen name="main_location_w">99dp</dimen>
-    <dimen name="main_location_h">20dp</dimen>
-    <dimen name="main_comment">14dp</dimen>
-    <dimen name="font_medium">16sp</dimen>
-    <dimen name="tools">18dp</dimen>
-    <dimen name="new_group_w">57dp</dimen>
-    <dimen name="new_group_h">18dp</dimen>
-    <dimen name="new_group_font">10sp</dimen>
-    <dimen name="filter_available_w">110dp</dimen>
-    <dimen name="filter_available_h">18dp</dimen>
-    <dimen name="filter_available_font">10sp</dimen>
+    <dimen name="main_profile_image">32dp</dimen>
+    <dimen name="main_intra_ID">9.25dp</dimen>
+    <dimen name="main_location_w">49.5dp</dimen>
+    <dimen name="main_location_h">10dp</dimen>
+    <dimen name="main_comment">7dp</dimen>
+    <dimen name="font_medium">8sp</dimen>
+    <dimen name="buttons_w">86.5dp</dimen>
+    <dimen name="buttons_h">9dp</dimen>
+    <dimen name="new_group_w">28.5dp</dimen>
+    <dimen name="new_group_h">9dp</dimen>
+    <dimen name="new_group_font">5sp</dimen>
+    <dimen name="filter_available_w">55dp</dimen>
+    <dimen name="filter_available_h">9dp</dimen>
+    <dimen name="filter_available_font">5sp</dimen>
+    <dimen name="list_titlebar_h">14dp</dimen>
+    <dimen name="group_font">7sp</dimen>
+    <dimen name="friend_font">5sp</dimen>
+    <dimen name="list_padding_start_end">6dp</dimen>
+    <dimen name="list_padding_top_bottom">3dp</dimen>
+    <dimen name="divider">0.5dp</dimen>
+    <dimen name="option_buttons_w">4dp</dimen>
+    <dimen name="option_buttons_h">4dp</dimen>
 
     <!--    세팅 페이지 버튼-->
     <dimen name="setting_width">74dp</dimen>

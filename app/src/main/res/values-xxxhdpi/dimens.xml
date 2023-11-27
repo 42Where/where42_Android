@@ -19,13 +19,22 @@
     <dimen name="main_location_h">40dp</dimen>
     <dimen name="main_comment">28dp</dimen>
     <dimen name="font_medium">32sp</dimen>
-    <dimen name="tools">36dp</dimen>
+    <dimen name="buttons_w">346dp</dimen>
+    <dimen name="buttons_h">36dp</dimen>
     <dimen name="new_group_w">114dp</dimen>
     <dimen name="new_group_h">36dp</dimen>
     <dimen name="new_group_font">20sp</dimen>
     <dimen name="filter_available_w">220dp</dimen>
     <dimen name="filter_available_h">36dp</dimen>
     <dimen name="filter_available_font">20sp</dimen>
+    <dimen name="list_titlebar_h">56dp</dimen>
+    <dimen name="group_font">28sp</dimen>
+    <dimen name="friend_font">20sp</dimen>
+    <dimen name="list_padding_start_end">24dp</dimen>
+    <dimen name="list_padding_top_bottom">12dp</dimen>
+    <dimen name="divider">2dp</dimen>
+    <dimen name="option_buttons_w">16dp</dimen>
+    <dimen name="option_buttons_h">16dp</dimen>
 
 <!--    세팅 페이지 버튼-->
     <dimen name="setting_width">296dp</dimen>
