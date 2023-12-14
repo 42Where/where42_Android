@@ -7,6 +7,9 @@ android {
     namespace = "com.example.where42android"
     compileSdk = 34
 
+    buildFeatures {
+        dataBinding = true
+    }
     defaultConfig {
         applicationId = "com.example.where42android"
         minSdk = 31
@@ -36,6 +39,8 @@ android {
 }
 
 dependencies {
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.ssomai:android.scalablelayout:2.1.6")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("androidx.core:core-ktx:1.9.0")
