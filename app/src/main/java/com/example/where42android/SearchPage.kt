@@ -12,6 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView.OnQueryTextListener as OnQueryTextListener1
 
 
+import com.example.where42android.ApiObject.getMemberService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 //class SearchPage : AppCompatActivity() {
 //
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,7 +114,36 @@ class SearchPage : AppCompatActivity() {
         searchView = findViewById(R.id.searchView)
         listView = findViewById(R.id.listView)
 
-        // 리스트뷰에 표시할 데이터
+
+//
+//        val listView: ListView = findViewById(R.id.listView) // 리스트뷰의 ID를 적절하게 변경해야 합니다.
+//        val adapter = ArrayAdapter<Member>(this, android.R.layout.simple_list_item_1)
+//        listView.adapter = adapter
+//
+//        getMemberService.getMembers().enqueue(object : Callback<List<Member>> {
+//            override fun onResponse(call: Call<List<Member>>, response: Response<List<Member>>) {
+//                if (response.isSuccessful) {
+//                    val members = response.body() ?: return
+//                    adapter.clear()
+//                    adapter.addAll(members)
+//                } else {
+//
+//                    // 서버에서 에러 응답을 받았을 때의 처리를 작성합니다.
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<List<Member>>, t: Throwable) {
+//                // 네트워크 요청이 실패했을 때의 처리를 작성합니다.
+//            }
+//        })
+//
+//        listView.setOnItemClickListener { parent, view, position, id ->
+//            val selectedMember = adapter.getItem(position)
+//            // selectedMember를 사용하여 클릭 이벤트를 처리합니다.
+//            // 예를 들어, 새 액티비티를 시작하거나 토스트 메시지를 표시할 수 있습니다.
+//        }
+
+//         리스트뷰에 표시할 데이터
         val data = listOf("Apple", "Banana", "Cherry", "Date", "Fig", "Grape")
 
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
