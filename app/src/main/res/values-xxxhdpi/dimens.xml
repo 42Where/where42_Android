@@ -28,7 +28,11 @@
     <dimen name="filter_available_h">36dp</dimen>
     <dimen name="filter_available_font">20sp</dimen>
     <dimen name="list_titlebar_h">56dp</dimen>
-    <dimen name="group_font">28sp</dimen>
+<!--    <dimen name="group_font">28sp</dimen>-->
+    <dimen name="group_font">20sp</dimen>
+    <dimen name="group_font_count">20sp</dimen>
+<!--    <dimen name="group_font_count">8sp</dimen>-->
+
     <dimen name="friend_font">20sp</dimen>
     <dimen name="list_padding_start_end">24dp</dimen>
     <dimen name="list_padding_top_bottom">12dp</dimen>

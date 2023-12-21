@@ -17,7 +17,10 @@ class RecyclerViewAdapterAll(private val context: Context) :
 
     init {
         for (i in 1..10) {
-            dummyDataList.add("Group $i")
+            if (i != 10)
+                dummyDataList.add("Group $i")
+            else
+                dummyDataList.add("friendList")
         }
     }
 
