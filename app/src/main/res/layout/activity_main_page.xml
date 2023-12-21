@@ -12,138 +12,159 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="192dp"-->
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/main_profile"-->
+<!--    <ListView-->
+<!--        android:id="@+id/listView"-->
 <!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/main_profile_card"-->
-<!--        android:padding="@dimen/main_profile_card_padding"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/header">-->
+<!--        android:layout_height="match_parent" />-->
 
-<!--        <androidx.constraintlayout.widget.Guideline-->
-<!--            android:id="@+id/guideline1"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"-->
-<!--            app:layout_constraintGuide_percent="0.5" />-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="192dp"-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_profile"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_profile_card"
+        android:padding="@dimen/main_profile_card_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
 
-<!--        <de.hdodenhof.circleimageview.CircleImageView-->
-<!--            android:id="@+id/profile_photo"-->
-<!--            android:layout_width="@dimen/main_profile_image"-->
-<!--            android:layout_height="@dimen/main_profile_image"-->
-<!--            android:src="@drawable/profile_photo_example"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/intra_id"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="@dimen/main_intra_ID"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginBottom="5dp"-->
-<!--            android:gravity="center"-->
-<!--            android:clipToOutline="true"-->
-<!--            android:text="인트라 ID"-->
-<!--            android:fontFamily="@font/gmarketsans_bold"-->
-<!--            android:textSize="@dimen/font_medium"-->
-<!--            app:layout_constraintStart_toEndOf="@id/profile_photo"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/guideline1"/>-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_photo"
+            android:layout_width="@dimen/main_profile_image"
+            android:layout_height="@dimen/main_profile_image"
+            android:src="@drawable/profile_photo_example"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/location_info"-->
-<!--            android:layout_width="@dimen/main_location_w"-->
-<!--            android:layout_height="@dimen/main_location_h"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginBottom="5dp"-->
-<!--            android:background="@drawable/location_shape"-->
-<!--            android:gravity="center"-->
-<!--            android:clipToOutline="true"-->
-<!--            android:text="cx2r1s5"-->
-<!--            android:fontFamily="@font/gmarketsans_medium"-->
-<!--            android:textColor="#FCFDFF"-->
-<!--            android:textSize="@dimen/font_medium"-->
-<!--            app:layout_constraintStart_toEndOf="@id/intra_id"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/guideline1"/>-->
+        <TextView
+            android:id="@+id/intra_id"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/main_intra_ID"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:clipToOutline="true"
+            android:text="인트라 ID"
+            android:fontFamily="@font/gmarketsans_bold"
+            android:textSize="@dimen/font_medium"
+            app:layout_constraintStart_toEndOf="@id/profile_photo"
+            app:layout_constraintBottom_toTopOf="@id/guideline1"/>
 
-<!--        <TextView-->
-<!--            android:id="@+id/Comment"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="@dimen/main_comment"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:gravity="center"-->
-<!--            android:text="코멘트코멘트코멘트"-->
-<!--            android:fontFamily="@font/gmarketsans_medium"-->
-<!--            android:textSize="@dimen/font_small"-->
-<!--            app:layout_constraintTop_toTopOf="@id/guideline1"-->
-<!--            app:layout_constraintStart_toEndOf="@id/profile_photo"-->
-<!--            />-->
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <TextView
+            android:id="@+id/location_info"
+            android:layout_width="@dimen/main_location_w"
+            android:layout_height="@dimen/main_location_h"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/location_shape"
+            android:gravity="center"
+            android:clipToOutline="true"
+            android:text="cx2r1s5"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textColor="#FCFDFF"
+            android:textSize="@dimen/font_medium"
+            app:layout_constraintStart_toEndOf="@id/intra_id"
+            app:layout_constraintBottom_toTopOf="@id/guideline1"/>
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/option_buttons"-->
-<!--        android:layout_width="@dimen/buttons_w"-->
-<!--        android:layout_height="@dimen/buttons_h"-->
-<!--        android:layout_marginEnd="5dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/main_profile">-->
+        <TextView
+            android:id="@+id/Comment"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/main_comment"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="코멘트코멘트코멘트"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/font_small"
+            app:layout_constraintTop_toTopOf="@id/guideline1"
+            app:layout_constraintStart_toEndOf="@id/profile_photo"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        <android.widget.Button-->
-<!--            android:id="@+id/newGroupButton"-->
-<!--            android:layout_width="@dimen/new_group_w"-->
-<!--            android:layout_height="@dimen/new_group_h"-->
-<!--            android:background="@drawable/main_page_filter"-->
-<!--            android:fontFamily="@font/gmarketsans_medium"-->
-<!--            android:text="새 그룹"-->
-<!--            android:textColor="#132743"-->
-<!--            android:textSize="@dimen/new_group_font"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent" />-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/option_buttons"
+        android:layout_width="@dimen/buttons_w"
+        android:layout_height="@dimen/buttons_h"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/main_profile">
 
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:id="@+id/filter_available"-->
-<!--            android:layout_width="@dimen/filter_available_w"-->
-<!--            android:layout_height="@dimen/filter_available_h"-->
-<!--            android:background="@drawable/main_page_filter"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent">-->
+        <android.widget.Button
+            android:id="@+id/newGroupButton"
+            android:layout_width="@dimen/new_group_w"
+            android:layout_height="@dimen/new_group_h"
+            android:background="@drawable/main_page_filter"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:text="새 그룹"
+            android:textColor="#132743"
+            android:textSize="@dimen/new_group_font"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-<!--            <CheckBox-->
-<!--                android:id="@+id/checkBox"-->
-<!--                android:layout_width="10dp"-->
-<!--                android:layout_height="10dp"-->
-<!--                android:buttonTint="#132743"-->
-<!--                android:background="@drawable/custom_checkbox"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toStartOf="@+id/available"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/filter_available"
+            android:layout_width="@dimen/filter_available_w"
+            android:layout_height="@dimen/filter_available_h"
+            android:background="@drawable/main_page_filter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="출근한 친구만 보기"-->
-<!--                android:fontFamily="@font/gmarketsans_medium"-->
-<!--                android:textSize="@dimen/filter_available_font"-->
-<!--                android:textColor="#132743"-->
-<!--                android:buttonTint="#132743"-->
-<!--                android:id="@+id/available"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintStart_toEndOf="@+id/checkBox"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"/>-->
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:buttonTint="#132743"
+                android:background="@drawable/custom_checkbox"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/available"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="출근한 친구만 보기"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:textSize="@dimen/filter_available_font"
+                android:textColor="#132743"
+                android:buttonTint="#132743"
+                android:id="@+id/available"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/checkBox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--        android:layout_height="wrap_content"-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/all_group"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:divider="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/footer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_profile" />
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/friend_list"-->
+<!--        android:divider="#FFFFFF"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="24dp"-->
+<!--        android:layout_marginEnd="24dp"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/friend_list_header"/>-->
 
 <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
 <!--        android:id="@+id/group_list_header"-->
@@ -160,6 +181,17 @@
 <!--            android:layout_centerInParent="true"-->
 <!--            android:background="#132743"-->
 <!--            app:layout_constraintTop_toTopOf="parent"/>-->
+
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/all_group"-->
+<!--            android:divider="#FFFFFF"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/group_list_header"/>-->
+
 
 <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
 <!--            android:layout_width="match_parent"-->
@@ -183,6 +215,7 @@
 <!--                app:layout_constraintBottom_toBottomOf="parent"-->
 <!--                app:layout_constraintStart_toStartOf="parent"-->
 <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
 <!--            <LinearLayout-->
 <!--                android:layout_width="60dp"-->
 <!--                android:layout_height="24dp"-->
@@ -209,8 +242,11 @@
 <!--                    android:src="@drawable/fold_icon" />-->
 <!--            </LinearLayout>-->
 <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
+<!--        여기까지가 grouplist-->
 <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+
 
 <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
 <!--        android:id="@+id/friend_list_header"-->
@@ -278,12 +314,12 @@
 
 <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-<!--&lt;!&ndash;        <include&ndash;&gt;-->
-<!--&lt;!&ndash;            android:id="@+id/group_list"&ndash;&gt;-->
-<!--&lt;!&ndash;            layout="@layout/activity_list_view"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintTop_toBottomOf="@id/group_list_header"/>&ndash;&gt;-->
+<!--        <include-->
+<!--            android:id="@+id/group_list"-->
+<!--            layout="@layout/activity_list_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/group_list_header"/>-->
 
 <!--        <androidx.recyclerview.widget.RecyclerView-->
 <!--            android:id="@+id/group_list"-->
@@ -296,12 +332,6 @@
 <!--            app:layout_constraintRight_toRightOf="parent"-->
 <!--            app:layout_constraintTop_toBottomOf="@id/group_list_header"/>-->
 
-<!--&lt;!&ndash;        <include&ndash;&gt;-->
-<!--&lt;!&ndash;            android:id="@+id/friend_list"&ndash;&gt;-->
-<!--&lt;!&ndash;            layout="@layout/activity_list_view"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;            app:layout_constraintTop_toBottomOf="@id/friend_list_header"/>&ndash;&gt;-->
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/friend_list"-->
