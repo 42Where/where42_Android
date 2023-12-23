@@ -150,6 +150,7 @@
 
 
     <!--        android:layout_height="wrap_content"-->
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="7dp"
         android:id="@+id/all_group"

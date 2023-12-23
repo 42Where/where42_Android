@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -16,13 +18,20 @@ class RecyclerViewAdapterAll(private val context: Context) :
     private val dummyDataList = mutableListOf<String>()
 
     init {
-        for (i in 1..10) {
-            if (i != 10)
+        for (i in 1..2) {
+            if (i != 2)
                 dummyDataList.add("Group $i")
             else
                 dummyDataList.add("friendList")
         }
     }
+//
+//    var groupProfileList = arrayListOf<profile_list>(
+//        profile_list("Jaeyojun","handsome", "퇴근", "profile_photo_example",),
+//        profile_list("Jooypark","beautiful", "퇴근", "profile_photo_example" ),
+//        profile_list("jaju","graphics master", "개포 c2r5s6", "profile_photo_example"),
+//    )
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.recycler_group_list, parent, false)
@@ -42,6 +51,35 @@ class RecyclerViewAdapterAll(private val context: Context) :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val groupName: TextView = itemView.findViewById(R.id.group_name_text_view)
+
+        var groupProfileList = arrayListOf<profile_list>(
+            profile_list("Jaeyojun","handsome", "퇴근", "profile_photo_example",),
+            profile_list("Jooypark","beautiful", "퇴근", "profile_photo_example" ),
+            profile_list("jaju","graphics master", "개포 c2r5s6", "profile_photo_example"),
+        )
+
+//        val recyclerView: RecyclerView = findViewById(R.id.all_group)
+//        val adapter = RecyclerViewAdapterAll(this)
+//
+//        // LinearLayoutManager를 설정해야 합니다.
+//        val layoutManager = LinearLayoutManager(this)
+//        recyclerView.layoutManager = layoutManager
+//
+//        recyclerView.adapter = adapter
+
+        val recyclerViewAdapter = RecyclerViewAdapter(context, groupProfileList, false)
+
+        init {
+//            for (i in 1..10) {
+//                if (i != 10)
+//                    dummyDataList.add("Group $i")
+//                else
+//                    dummyDataList.add("friendList")
+//            }
+            // recyclerViewAdapter를 이용하여 필요한 작업 수행
+             recyclerViewAdapter.updateList(groupProfileList)
+//             recyclerViewAdapter.someMethod()
+        }
     }
 }
 

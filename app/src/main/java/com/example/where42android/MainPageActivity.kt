@@ -38,6 +38,8 @@ import retrofit2.Callback
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
+
+
 class MainPageActivity : AppCompatActivity() {
 
     var groupProfileList = arrayListOf<profile_list>(
@@ -58,6 +60,8 @@ class MainPageActivity : AppCompatActivity() {
     var isFilterChecked = false
     var isGroupListVisible = false
     var isFriendListVisible = true
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
@@ -293,4 +297,5 @@ class MainPageActivity : AppCompatActivity() {
 
         /* 그룹 설정 기능 */
     }
+
 }
