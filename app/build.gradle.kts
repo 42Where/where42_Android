@@ -9,7 +9,10 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
+
+
 
     defaultConfig {
         applicationId = "com.example.where42android"
@@ -53,4 +56,10 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    //리사이클러뷰
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+    // For control over item selection of both touch and mouse driven selection
+    implementation ("androidx.recyclerview:recyclerview-selection:1.1.0")
+
 }

@@ -2,7 +2,6 @@ package com.example.where42android
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,33 +9,24 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageButton
-import android.view.View
 import android.view.WindowManager
-import android.widget.ArrayAdapter
-import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.where42android.ApiObject.getMemberService
 import com.example.where42android.ApiObject.service
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Response
-import retrofit2.Callback
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+
+import com.example.where42android.databinding.ActivityMainPageBinding
+import com.example.where42android.fragment.MainFragment
 
 
 
@@ -61,6 +51,8 @@ class MainPageActivity : AppCompatActivity() {
     var isGroupListVisible = false
     var isFriendListVisible = true
 
+
+    lateinit var binding: ActivityMainPageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,7 +90,7 @@ class MainPageActivity : AppCompatActivity() {
 
 
         fun getDeviceScreenSize(context: Context): Pair<Int, Int> {
-            val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val windowManager = context.getSystemService(WINDOW_SERVICE) as WindowManager
             val display = windowManager.defaultDisplay
 
             val metrics = DisplayMetrics()
@@ -224,14 +216,23 @@ class MainPageActivity : AppCompatActivity() {
 //        val adapter = RecyclerViewAdapterAll(this)
 //        recyclerView.adapter = adapter
 
-        val recyclerView: RecyclerView = findViewById(R.id.all_group)
-        val adapter = RecyclerViewAdapterAll(this)
+        //------
 
-        // LinearLayoutManager를 설정해야 합니다.
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
+        binding = ActivityMainPageBinding.inflate(layoutInflater)
 
-        recyclerView.adapter = adapter
+        setContentView(binding.root)
+
+        supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment()).commit()
+
+//        val recyclerView: RecyclerView = findViewById(R.id.all_group)
+//        val adapter = RecyclerViewAdapterAll(this)
+//
+//        // LinearLayoutManager를 설정해야 합니다.
+//        val layoutManager = LinearLayoutManager(this)
+//        recyclerView.layoutManager = layoutManager
+//
+//        recyclerView.adapter = adapter
+        //----------
 
 //        recyclerView.layoutManager = LinearLayoutManager(this)
 
