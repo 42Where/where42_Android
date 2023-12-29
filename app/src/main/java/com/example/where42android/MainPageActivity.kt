@@ -27,7 +27,8 @@ import com.bumptech.glide.request.RequestOptions
 
 import com.example.where42android.databinding.ActivityMainPageBinding
 import com.example.where42android.fragment.MainFragment
-
+import java.io.IOException
+import java.net.SocketTimeoutException
 
 
 class MainPageActivity : AppCompatActivity() {
@@ -57,62 +58,29 @@ class MainPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
-        //12_18 사용자 프로필 가져오기
-        val intraId = 6 // Replace with the actual intraId
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getMember(intraId)
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    val member = response.body()
-                    // TODO: Handle the member data
-                    if (member != null) {
-                        val intraIdTextView =
-                            findViewById<TextView>(R.id.intra_id) // XML에서 TextView 식별
-                        intraIdTextView.text =
-                            member.intraName // member에서 Intra ID를 가져와 TextView에 설정
-                        val comment = findViewById<TextView>(R.id.Comment)
-                        comment.text = member.comment
-                        val location = findViewById<TextView>(R.id.location_info)
-                        location.text = member.location
-                        val main_image = findViewById<CircleImageView>(R.id.profile_photo)
-                        val imageUrl = member.image
-                        Glide.with(this@MainPageActivity)
-                            .load(imageUrl)
-                            .apply(RequestOptions().circleCrop()) // CircleImageView를 사용하므로 원형으로 자르기 위해 circleCrop을 적용합니다.
-                            .into(main_image)
-                    }
-                } else {
-                    Log.e("API Error", "Failed to get member: ${response.errorBody()}")
-                }
-            }
+        /*에시 버튼*/
+        val myButton = findViewById<Button>(R.id.examplebutton) as Button
+        //set listener
+        myButton.setOnClickListener {
+            //Action perform when the user clicks on the button.
+            Toast.makeText(this@MainPageActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
         }
-
-
-        fun getDeviceScreenSize(context: Context): Pair<Int, Int> {
-            val windowManager = context.getSystemService(WINDOW_SERVICE) as WindowManager
-            val display = windowManager.defaultDisplay
-
-            val metrics = DisplayMetrics()
-            display.getMetrics(metrics)
-
-            val widthPixels = metrics.widthPixels
-            val heightPixels = metrics.heightPixels
-
-            return Pair(widthPixels, heightPixels)
-        }
-
-        val screenSize = getDeviceScreenSize(this)
-        val screenWidth = screenSize.first
-        val screenHeight = screenSize.second
-
-// 너비와 높이 출력
-        Log.d("ScreenSize", "Width: $screenWidth pixels, Height: $screenHeight pixels")
-
+//
+//        val examplebut : Button = this.findViewById(R.id.examplebutton)
+//        examplebut.setOnClickListener {
+//            Log.d("MainActivity", "설정 버튼 클릭됨")
+//            Toast.makeText(this, "환경 세팅 작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//
+//        }
 
         /* header의 환경 설정 버튼을 눌렀을 때 */
         val settingButton: ImageButton = this.findViewById(R.id.setting_button)
         settingButton.setOnClickListener {
+            Log.d("MainActivity", "설정 버튼 클릭됨")
             try {
                 val intent = Intent(this, SettingPage::class.java)
                 startActivity(intent)
@@ -124,10 +92,94 @@ class MainPageActivity : AppCompatActivity() {
 
         }
 
+        //12_18 사용자 프로필 가져오기
+        val intraId = 6 // Replace with the actual intraId
+        Log.e("check", "hello")
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = service.getMember(intraId)
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful)
+                    {
+                        Log.e("check", "fuck")
+                        val member = response.body()
+                        // TODO: Handle the member data
+                        if (member != null) {
+                            val intraIdTextView =
+                                findViewById<TextView>(R.id.intra_id) // XML에서 TextView 식별
+                            intraIdTextView.text =
+                                member.intraName // member에서 Intra ID를 가져와 TextView에 설정
+                            val comment = findViewById<TextView>(R.id.Comment)
+                            comment.text = member.comment
+                            val location = findViewById<TextView>(R.id.location_info)
+                            location.text = member.location
+                            val main_image = findViewById<CircleImageView>(R.id.profile_photo)
+                            val imageUrl = member.image
+                            Glide.with(this@MainPageActivity)
+                                .load(imageUrl)
+                                .apply(RequestOptions().circleCrop()) // CircleImageView를 사용하므로 원형으로 자르기 위해 circleCrop을 적용합니다.
+                                .into(main_image)
+                        }
+                        else
+                        {
+                            Log.e("check", "fuck2")
+                            throw IOException("Network Error Occurred")
+                        }
+                    }
+                    else
+                    {
+                        Log.e("check", "fuck3")
+                        val errorBody = response.errorBody()?.string()
+                        val errorMessage = response.message() // HTTP 에러 메시지
+                        val errorCode = response.code() // HTTP 에러 코드
+
+                        val detailedErrorMessage =
+                            "Failed to get member. Error code: $errorCode, Message: $errorMessage, Error Body: $errorBody"
+                        Log.e("API Error", detailedErrorMessage)
+//                    Log.e("API Error", "Failed to get member: ${response.errorBody()}")
+                    }
+                }
+            } catch (e: IOException) {
+                Log.e("check", "fuck4")
+                Log.e("Network Error", "IOException: ${e.message}")
+
+            } catch (e: SocketTimeoutException) {
+                Log.e("check", "fuck5")
+                Log.e("Network Error", "SocketTimeoutException: ${e.message}")
+            }
+        }
+
+
+//        fun getDeviceScreenSize(context: Context): Pair<Int, Int> {
+//            val windowManager = context.getSystemService(WINDOW_SERVICE) as WindowManager
+//            val display = windowManager.defaultDisplay
+//
+//            val metrics = DisplayMetrics()
+//            display.getMetrics(metrics)
+//
+//            val widthPixels = metrics.widthPixels
+//            val heightPixels = metrics.heightPixels
+//
+//            return Pair(widthPixels, heightPixels)
+//        }
+//
+//        val screenSize = getDeviceScreenSize(this)
+//        val screenWidth = screenSize.first
+//        val screenHeight = screenSize.second
+//
+//// 너비와 높이 출력
+//        Log.d("ScreenSize", "Width: $screenWidth pixels, Height: $screenHeight pixels")
+
+
+
+
         /*새 그룹 기능 구현*/
         val newGroupButton: Button = this.findViewById(R.id.newGroupButton)
 
         newGroupButton.setOnClickListener {
+            Log.e("clickGroupButton", "fuck")
+            Toast.makeText(this, "환경 세팅 작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
             val dialog = Dialog(this)
             dialog.setContentView(R.layout.new_group_popup)
 
@@ -218,11 +270,17 @@ class MainPageActivity : AppCompatActivity() {
 
         //------
 
+
+
         binding = ActivityMainPageBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
 
         supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment()).commit()
+
+        //이 부분이 새 그룹 버튼 눌렀을 때 나오는 팝업
+
+
 
 //        val recyclerView: RecyclerView = findViewById(R.id.all_group)
 //        val adapter = RecyclerViewAdapterAll(this)

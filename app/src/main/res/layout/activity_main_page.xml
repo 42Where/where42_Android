@@ -42,7 +42,10 @@
             android:layout_height="@dimen/main_profile_image"
             android:src="@drawable/profile_photo_example"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:civ_border_color="#95FFB5B5"
+            app:civ_border_overlay="true"
+            app:civ_border_width="3dp"/>
 
         <TextView
             android:id="@+id/intra_id"
@@ -74,6 +77,9 @@
             app:layout_constraintStart_toEndOf="@id/intra_id"
             app:layout_constraintBottom_toTopOf="@id/guideline1"/>
 
+
+
+
         <TextView
             android:id="@+id/Comment"
             android:layout_width="wrap_content"
@@ -88,6 +94,17 @@
             app:layout_constraintStart_toEndOf="@id/profile_photo"
             />
 
+        <android.widget.Button
+            android:id="@+id/examplebutton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:text="fuck"
+            android:textColor="#132743"
+            android:textSize="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintStart_toEndOf="@id/Comment"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -98,6 +115,7 @@
         android:layout_marginEnd="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/main_profile">
+
 
         <android.widget.Button
             android:id="@+id/newGroupButton"

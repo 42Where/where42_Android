@@ -2,6 +2,7 @@ package com.example.where42android.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,14 +40,49 @@ class OutRecyclerViewAdapter(val context: Context, val itemList: MutableList<Rec
     //bind() 메서드는 데이터를 ViewHolder에 바인딩합니다.
     //innerRecyclerview에 대한 adapter와 layoutManager를 설정하여 내부 RecyclerView를 초기화하고 연결합니다.
     inner class Holder(var binding: HolderRecyclerviewOutGroupBinding) : RecyclerView.ViewHolder(binding.root) {
+
+
+        //밑 부분이 토글 버튼 눌렀을 때 데이터 보이냐 안 보이냐!!
+        private var isInnerRecyclerViewVisible = true // 내부 RecyclerView 가시성 상태를 기록하는 변수
+
+        init {
+            binding.groupToggle.setOnClickListener {
+                isInnerRecyclerViewVisible = !isInnerRecyclerViewVisible // 가시성 상태 변경
+
+                if (isInnerRecyclerViewVisible) {
+                    binding.innerRecyclerview.visibility = View.VISIBLE // 내부 RecyclerView 보이기
+                    binding.viewLine.visibility = View.VISIBLE
+                } else {
+                    binding.innerRecyclerview.visibility = View.GONE // 내부 RecyclerView 숨기기
+                    binding.viewLine.visibility = View.GONE
+                }
+            }
+        }
+
         fun bind(item: RecyclerOutViewModel) {
             binding.model = item
 
             //내부 RecyclerView에 대한 어댑터를 설정합니다.
             //InRecyclerViewAdapter는 내부 RecyclerView에 표시될 데이터를 관리합니다. item.innerList는 외부 RecyclerView의 각 항목에 대한 내부 RecyclerView의 데이터 목록입니다.
-            binding.innerRecyclerview.adapter = InRecyclerViewAdapter(context, item.innerList)
-            binding.innerRecyclerview.layoutManager = LinearLayoutManager(context)
+
+            if (isInnerRecyclerViewVisible) {
+                binding.innerRecyclerview.visibility = View.VISIBLE // 내부 RecyclerView 보이기
+                binding.innerRecyclerview.adapter = InRecyclerViewAdapter(context, item.innerList)
+                binding.innerRecyclerview.layoutManager = LinearLayoutManager(context)
+            } else {
+                binding.innerRecyclerview.visibility = View.GONE // 내부 RecyclerView 숨기기
+            }
         }
+
+
+//        fun bind(item: RecyclerOutViewModel) {
+//            binding.model = item
+//
+//            //내부 RecyclerView에 대한 어댑터를 설정합니다.
+//            //InRecyclerViewAdapter는 내부 RecyclerView에 표시될 데이터를 관리합니다. item.innerList는 외부 RecyclerView의 각 항목에 대한 내부 RecyclerView의 데이터 목록입니다.
+//            binding.innerRecyclerview.adapter = InRecyclerViewAdapter(context, item.innerList)
+//            binding.innerRecyclerview.layoutManager = LinearLayoutManager(context)
+//        }
     }
 
 }

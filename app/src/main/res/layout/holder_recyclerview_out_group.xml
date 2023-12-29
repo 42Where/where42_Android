@@ -11,18 +11,65 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/pr"
         >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="#30132743"
+                android:layout_centerInParent="true"
+                app:layout_constraintTop_toTopOf="@id/pr" />
+
+
 
         <TextView
             android:id="@+id/text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{model.title}"
-            android:textColor="@color/black"
-            android:textSize="24sp"
+            android:paddingStart="12dp"
+            android:paddingBottom="4dp"
+            android:paddingTop="6dp"
+            android:textColor="#132743"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/group_font"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center" >
+
+                <ImageButton
+                    android:id="@+id/group_edit"
+                    android:layout_width="@dimen/option_buttons_w"
+                    android:layout_height="@dimen/option_buttons_h"
+                    android:layout_marginEnd="12dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/pencil_icon" />
+
+                <ImageButton
+                    android:id="@+id/group_toggle"
+                    android:layout_width="@dimen/option_buttons_w"
+                    android:layout_height="@dimen/option_buttons_h"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/fold_icon" />
+            </LinearLayout>
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="#30132743"
+            android:layout_centerInParent="true"
+            app:layout_constraintBottom_toBottomOf="@id/text_view" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/inner_recyclerview"

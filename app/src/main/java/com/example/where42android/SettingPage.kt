@@ -110,7 +110,7 @@ class SettingPage : AppCompatActivity() {
             val title = dialog.findViewById<TextView>(R.id.title)
             title.text = "코멘트 설정"
 
-            val editText = dialog.findViewById<EditText>(R.id.input)
+//            val editText = dialog.findViewById<EditText>(R.id.input)
             val btnCancel = dialog.findViewById<Button>(R.id.cancel)
             val btnSubmit = dialog.findViewById<Button>(R.id.submit)
 

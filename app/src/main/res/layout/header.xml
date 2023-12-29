@@ -21,7 +21,6 @@
         android:id="@+id/setting_button"
         android:layout_width="@dimen/header_setting_btn"
         android:layout_height="@dimen/header_setting_btn"
-
         android:src="@drawable/settings_icon"
         android:scaleType="fitCenter"
         android:backgroundTint="@android:color/transparent"

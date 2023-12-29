@@ -30,6 +30,20 @@ object ApiObject {
     val getMemberService: MemberAPI by lazy {
         getRetrofit.create(MemberAPI::class.java)
     }
+
+    //더미 데이터 그룹 넣어주기 postman grouinfo memberslist
+    //http://13.209.149.15:8080/v3/group/?memberId=6
+    val getgroup: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    val getgroupService: MemberAPI by lazy {
+        getgroup.create(MemberAPI::class.java)
+    }
+
 }
 
 //interface MemberAPI {

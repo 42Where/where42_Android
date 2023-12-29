@@ -16,6 +16,11 @@ interface MemberAPI {
 
     @GET("v3/member/")
     fun getMembers(): Call<List<Member>>
+
+//    @GET("v3/group/")
+//    fun getGroupData(@Query("memberId") memberId: Int): Call<GroupList>
+//    @GET("v3/group/info")
+//    fun getGroupInfo(@Query("memberId") memberId: Int): Response<List<GroupList>>
 }
 
 //import retrofit2.http.GET
