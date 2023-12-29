@@ -33,24 +33,24 @@ import java.net.SocketTimeoutException
 
 class MainPageActivity : AppCompatActivity() {
 
-    var groupProfileList = arrayListOf<profile_list>(
-        profile_list("Jaeyojun","handsome", "퇴근", "profile_photo_example",),
-        profile_list("Jooypark","beautiful", "퇴근", "profile_photo_example" ),
-        profile_list("jaju","graphics master", "개포 c2r5s6", "profile_photo_example"),
-    )
-
-
-    var friendProfileList = arrayListOf<profile_list>(
-        profile_list("Jaeyojun","handsome", "개포 c2r5s6", "profile_photo_example",),
-        profile_list("Jaeyojun","handsome", "퇴근", "profile_photo_example",),
-        profile_list("Jaeyojun","handsome", "개포 c2r5s6", "profile_photo_example",),
-        profile_list("Jooypark","beautiful", "개포 c2r5s6", "profile_photo_example" ),
-        profile_list("jaju","graphics master", "퇴근", "profile_photo_example"),
-    )
-
-    var isFilterChecked = false
-    var isGroupListVisible = false
-    var isFriendListVisible = true
+//    var groupProfileList = arrayListOf<profile_list>(
+//        profile_list("Jaeyojun","handsome", "퇴근", "profile_photo_example",),
+//        profile_list("Jooypark","beautiful", "퇴근", "profile_photo_example" ),
+//        profile_list("jaju","graphics master", "개포 c2r5s6", "profile_photo_example"),
+//    )
+//
+//
+//    var friendProfileList = arrayListOf<profile_list>(
+//        profile_list("Jaeyojun","handsome", "개포 c2r5s6", "profile_photo_example",),
+//        profile_list("Jaeyojun","handsome", "퇴근", "profile_photo_example",),
+//        profile_list("Jaeyojun","handsome", "개포 c2r5s6", "profile_photo_example",),
+//        profile_list("Jooypark","beautiful", "개포 c2r5s6", "profile_photo_example" ),
+//        profile_list("jaju","graphics master", "퇴근", "profile_photo_example"),
+//    )
+//
+//    var isFilterChecked = false
+//    var isGroupListVisible = false
+//    var isFriendListVisible = true
 
 
     lateinit var binding: ActivityMainPageBinding
@@ -60,12 +60,29 @@ class MainPageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_page)
 
         /*에시 버튼*/
-        val myButton = findViewById<Button>(R.id.examplebutton) as Button
-        //set listener
+        val myButton = findViewById<Button>(R.id.examplebutton)
         myButton.setOnClickListener {
-            //Action perform when the user clicks on the button.
-            Toast.makeText(this@MainPageActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
+            try {
+                // Action perform when the user clicks on the button.
+                Toast.makeText(this@MainPageActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
+
+                // 여기에 예외가 발생할 수 있는 코드 추가
+                // 예를 들어, 아래 코드는 인위적인 ArithmeticException을 발생시킵니다.
+
+            } catch (e: Exception) {
+                // 예외가 발생하면 해당 예외를 처리하는 부분
+                Toast.makeText(
+                    this@MainPageActivity,
+                    "Exception occurred: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
+        //set listener
+//        myButton.setOnClickListener {
+//            //Action perform when the user clicks on the button.
+//            Toast.makeText(this@MainPageActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
+//        }
 //
 //        val examplebut : Button = this.findViewById(R.id.examplebutton)
 //        examplebut.setOnClickListener {
