@@ -1,15 +1,23 @@
-package com.example.where42android
+package com.example.where42android.dialog
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
+import com.example.where42android.Base_url_api_Retrofit.GroupDelete
+import com.example.where42android.Base_url_api_Retrofit.GroupDeleteResponse
+import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
+import com.example.where42android.R
+import com.example.where42android.fragment.MainFragment
+import com.example.where42android.profile_list
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileDialog (private val context: Context) {
     private val dialog = Dialog(context)
@@ -43,7 +51,7 @@ class ProfileDialog (private val context: Context) {
 class GroupDialog (private val context: Context) {
     private val dialog = Dialog(context)
 
-    fun showGroupDialog(name: String) {
+    fun showGroupDialog(name: String, groupId:Number, callback: (Boolean) -> Unit) {
         dialog.setContentView(R.layout.group_popup)
 
         dialog.setCanceledOnTouchOutside(true)
@@ -71,7 +79,37 @@ class GroupDialog (private val context: Context) {
             dialog.dismiss()
         }
         btnDelete.setOnClickListener {
+            val retrofitAPI = RetrofitConnection.getInstance().create(GroupDelete::class.java)
+            val groupIdToDelete = groupId.toInt() // 여기에 삭제하려는 groupId를 설정하세요.
+            val call = retrofitAPI.deleteGroup(groupIdToDelete)
+
+            call.enqueue(object : Callback<GroupDeleteResponse> {
+                override fun onResponse(
+                    call: Call<GroupDeleteResponse>,
+                    response: Response<GroupDeleteResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val deletedGroup = response.body()
+                        callback(true) // 삭제 성공 시 true 전달
+                        // 성공적으로 삭제되었으므로 적절한 처리를 수행합니다.
+                    } else {
+                        // API 호출에 실패한 경우
+                        Log.e("DELETE_ERROR", "Failed to delete group. Error code: ${response.code()}")
+                        // 실패 처리 로직을 수행하세요.
+                        callback(false) // 삭제 실패 시 false 전달
+                    }
+                }
+
+                override fun onFailure(call: Call<GroupDeleteResponse>, t: Throwable) {
+                    // 네트워크 오류 등의 이유로 API 호출이 실패한 경우
+                    Log.e("DELETE_ERROR", "Network error occurred. Message: ${t.message}")
+                    // 실패 처리 로직을 수행하세요.
+                    callback(false) // 삭제 실패 시 false 전달
+                }
+            })
+
             dialog.dismiss()
+
         }
         dialog.show()
     }

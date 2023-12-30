@@ -9,7 +9,8 @@
     android:paddingStart="@dimen/newgroup_layout_padding_start_end"
     android:paddingEnd="@dimen/newgroup_layout_padding_start_end"
     >
-
+<!--    android:layout_width="@dimen/newgroup_layout_width"-->
+<!--    android:layout_height="@dimen/newgroup_layout_height"-->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -32,7 +33,7 @@
         android:paddingStart="@dimen/edittext_layout_padding"
         android:paddingEnd="@dimen/edittext_layout_padding"
         android:background="@drawable/text_edit_box"/>
-    
+
     <android.widget.Button
         android:id="@+id/cancel"
         android:layout_width="@dimen/newgroup_button_width"

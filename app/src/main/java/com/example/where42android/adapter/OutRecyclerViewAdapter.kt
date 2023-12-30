@@ -1,14 +1,16 @@
 package com.example.where42android.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.example.where42android.databinding.HolderRecyclerviewOutGroupBinding
+import com.example.where42android.dialog.GroupDialog
 import com.example.where42android.model.RecyclerOutViewModel
+
 
 //context: 어댑터를 생성할 때 전달되는 컨텍스트(액티비티, 프래그먼트 등)
 //itemList: RecyclerOutViewModel 객체의 MutableList로, RecyclerView에 표시될 데이터 목록을 저장합니다.
@@ -29,6 +31,17 @@ class OutRecyclerViewAdapter(val context: Context, val itemList: MutableList<Rec
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val item = itemList[position]
         holder.bind(item)
+
+        holder.binding.groupEdit.setOnClickListener {
+            val groupDialog = GroupDialog(holder.binding.root.context)
+            groupDialog.showGroupDialog(item.title, item.groupId) { success ->
+                if (success) {
+                    // 데이터 업데이트 및 RecyclerView 갱신
+
+                    updateData() // 데이터 업데이트 메서드 호출
+                }
+            }
+        }
     }
 
     //RecyclerView에 표시될 총 항목 수를 반환합니다.
@@ -44,7 +57,6 @@ class OutRecyclerViewAdapter(val context: Context, val itemList: MutableList<Rec
 
         //밑 부분이 토글 버튼 눌렀을 때 데이터 보이냐 안 보이냐!!
         private var isInnerRecyclerViewVisible = true // 내부 RecyclerView 가시성 상태를 기록하는 변수
-
         init {
             binding.groupToggle.setOnClickListener {
                 isInnerRecyclerViewVisible = !isInnerRecyclerViewVisible // 가시성 상태 변경
@@ -83,6 +95,16 @@ class OutRecyclerViewAdapter(val context: Context, val itemList: MutableList<Rec
 //            binding.innerRecyclerview.adapter = InRecyclerViewAdapter(context, item.innerList)
 //            binding.innerRecyclerview.layoutManager = LinearLayoutManager(context)
 //        }
+    }
+
+    //화면을 새로 그리는데,,, 괜찮겠지?
+    fun updateData() {
+//        notifyDataSetChanged()
+        val intent = (context as Activity).intent
+        context.finish() //현재 액티비티 종료 실시
+        context.startActivity(intent) //현재 액티비티 재실행 실시
+
+
     }
 
 }

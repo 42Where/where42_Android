@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView.OnQueryTextListener as OnQueryTextListener1
 
 
-import com.example.where42android.ApiObject.getMemberService
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

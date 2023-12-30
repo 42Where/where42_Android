@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.where42android.dialog.ProfileDialog
 
 
 class RecyclerViewAdapter(val context: Context, private var profileList: ArrayList<profile_list>, val filterChecked: Boolean) :

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainPageActivity">
+    tools:context=".MainPageActivity"
+    >
 
     <include
         android:id="@+id/header"
@@ -94,17 +95,6 @@
             app:layout_constraintStart_toEndOf="@id/profile_photo"
             />
 
-        <android.widget.Button
-            android:id="@+id/examplebutton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:fontFamily="@font/gmarketsans_medium"
-            android:text="fuck"
-            android:textColor="#132743"
-            android:textSize="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            app:layout_constraintStart_toEndOf="@id/Comment"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

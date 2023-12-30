@@ -1,13 +1,12 @@
 package com.example.where42android
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.widget.Button
@@ -15,8 +14,13 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.app.AppCompatActivity
+import com.example.where42android.Base_url_api_Retrofit.ApiObject
+import com.example.where42android.Base_url_api_Retrofit.CommentChangeMember
+import com.example.where42android.Base_url_api_Retrofit.UpdateCommentRequest
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SettingPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,8 +98,6 @@ class SettingPage : AppCompatActivity() {
             }
         }
 
-        /* 코멘트 설정 버튼을 눌렀을 떄 기능 구현해야함. 주여이 팝업 기능 들고오기*/
-        //val commentbutton: AppCompatButton = this.findViewById(R.id.comment_button)
         val commentButton: Button = this.findViewById(R.id.comment_button)
 
         commentButton.setOnClickListener {
@@ -110,7 +112,7 @@ class SettingPage : AppCompatActivity() {
             val title = dialog.findViewById<TextView>(R.id.title)
             title.text = "코멘트 설정"
 
-//            val editText = dialog.findViewById<EditText>(R.id.input)
+            val editText = dialog.findViewById<EditText>(R.id.input)
             val btnCancel = dialog.findViewById<Button>(R.id.cancel)
             val btnSubmit = dialog.findViewById<Button>(R.id.submit)
 
@@ -118,7 +120,46 @@ class SettingPage : AppCompatActivity() {
                 dialog.dismiss()
             }
             btnSubmit.setOnClickListener {
+                val comment :String = editText.text.toString()
+                //intraid 바꿔주기
+                //JSON 만들기
+                val updateRequest = UpdateCommentRequest(6, comment)
+
+                val call = ApiObject.service.updateMemberComment(updateRequest)
+                call.enqueue(object : Callback<CommentChangeMember> {
+                    override fun onResponse(
+                        call: Call<CommentChangeMember>,
+                        response: Response<CommentChangeMember>
+                    ) {
+                        // 성공적으로 응답을 받았을 때 처리
+                        if (response.isSuccessful) {
+                            val result = response.body()
+                            // 처리할 작업 수행
+                        } else {
+                            // 응답은 받았지만 실패했을 때 처리
+                            val errorBody = response.errorBody()?.string()
+                            val errorMessage = response.message() // HTTP 에러 메시지
+                            val errorCode = response.code() // HTTP 에러 코드
+
+                            val detailedErrorMessage =
+                                "Failed to update comment. Error code: $errorCode, Message: $errorMessage, Error Body: $errorBody"
+                            Log.e("Update Error", detailedErrorMessage)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<CommentChangeMember>, t: Throwable) {
+                        // 요청 자체가 실패했을 때 처리
+                        val errorMessage = "코멘트가 설정 되지 않아요! 안 되면 where42 team을 찾아주세요!."
+                        Toast.makeText(this@SettingPage, errorMessage, Toast.LENGTH_SHORT).show()
+                        Log.e("Network Error", "Retrofit Failure: ${t.message}")
+                    }
+                })
                 dialog.dismiss()
+
+                val intent = Intent(this@SettingPage, MainPageActivity::class.java)
+                finish() //인텐트 종료
+                startActivity(intent)
+
             }
             dialog.show()
         }

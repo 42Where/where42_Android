@@ -7,22 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.where42android.ApiObject
 import com.example.where42android.adapter.OutRecyclerViewAdapter
 import com.example.where42android.databinding.FragmentActivityMainPageBinding
 //import com.example.where42android.group_api.GroupViewModel
 //import com.example.where42android.group_api.GroupViewModelFactory
 import com.example.where42android.model.RecyclerInViewModel
 import com.example.where42android.model.RecyclerOutViewModel
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.example.where42android.retrofit.RetrofitConnection
-import com.example.where42android.retrofit.groups_memberlist
+import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
+import com.example.where42android.Base_url_api_Retrofit.groups_memberlist
 import retrofit2.Call
-import com.example.where42android.retrofit.GroupMemberListService
+import com.example.where42android.Base_url_api_Retrofit.GroupMemberListService
 import retrofit2.Callback
 
 
@@ -59,7 +56,7 @@ class MainFragment : Fragment() {
         progressBar.visibility = View.GONE // 프로그레스바 숨기기
     }
 
-    private fun setUpRecyclerView() {
+     fun setUpRecyclerView() {
         showLoading()
         // Example memberId
         val intraId = 6 // Replace this with your memberId value
@@ -91,7 +88,9 @@ class MainFragment : Fragment() {
 
                         val recyclerOutViewModel = RecyclerOutViewModel(
                             title = groupDetail.groupName ?: "",
-                            innerItemList
+                            innerItemList,
+                            //그룹을 삭제하기 위해 필요한 groupId
+                            groupId = groupDetail.groupId ?: 0 // Assuming groupId is of type Number or In
                         )
 
                         itemList.add(recyclerOutViewModel)

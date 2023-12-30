@@ -5,7 +5,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.where42android.R
 import com.example.where42android.databinding.HolderRecyclerviewInMeberListBinding
 import com.example.where42android.fragment.loadImage
