@@ -9,12 +9,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.where42android.databinding.HolderRecyclerviewOutGroupBinding
 import com.example.where42android.dialog.GroupDialog
+import com.example.where42android.model.RecyclerInViewModel
 import com.example.where42android.model.RecyclerOutViewModel
 
 
 //context: 어댑터를 생성할 때 전달되는 컨텍스트(액티비티, 프래그먼트 등)
 //itemList: RecyclerOutViewModel 객체의 MutableList로, RecyclerView에 표시될 데이터 목록을 저장합니다.
-class OutRecyclerViewAdapter(val context: Context, val itemList: MutableList<RecyclerOutViewModel>): RecyclerView.Adapter<OutRecyclerViewAdapter.Holder>() {
+class OutRecyclerViewAdapter (val context: Context, val itemList: MutableList<RecyclerOutViewModel>): RecyclerView.Adapter<OutRecyclerViewAdapter.Holder>() {
+
+    // 체크박스 상태를 저장하기 위한 변수
+    private var showNonLeaveMembersOnly = false
+
+    // 체크박스 상태를 설정하는 메서드
+    fun setShowNonLeaveMembersOnly(showOnly: Boolean) {
+        showNonLeaveMembersOnly = showOnly
+        notifyDataSetChanged() // 데이터가 변경되었음을 어댑터에 알려 갱신
+    }
 
     //RecyclerView에 표시될 각 항목의 ViewHolder를 생성합니다.
     //HolderRecyclerviewOutGroupBinding을 사용하여 ViewHolder를 생성하고 반환합니다.
@@ -32,6 +42,7 @@ class OutRecyclerViewAdapter(val context: Context, val itemList: MutableList<Rec
         val item = itemList[position]
         holder.bind(item)
 
+        //group 편집 버튼 사용 -> ShowgroupDialog로 이동
         holder.binding.groupEdit.setOnClickListener {
             val groupDialog = GroupDialog(holder.binding.root.context)
             groupDialog.showGroupDialog(item.title, item.groupId) { success ->
@@ -42,6 +53,16 @@ class OutRecyclerViewAdapter(val context: Context, val itemList: MutableList<Rec
                 }
             }
         }
+
+
+        //CheckBox 출근한 친구만 보기
+        val filteredInnerList: MutableList<RecyclerInViewModel> = if (showNonLeaveMembersOnly) {
+            item.innerList.filter { it.location != "퇴근" }.toMutableList() // "퇴근"이 아닌 위치만 필터링
+        } else {
+            item.innerList.toMutableList() // 필터링하지 않고 전체 리스트 표시
+        }
+
+        holder.bind(item.copy(innerList = filteredInnerList))
     }
 
     //RecyclerView에 표시될 총 항목 수를 반환합니다.

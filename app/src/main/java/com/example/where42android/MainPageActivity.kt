@@ -7,12 +7,15 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.example.where42android.Base_url_api_Retrofit.ApiObject.service
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
@@ -26,6 +29,7 @@ import com.example.where42android.Base_url_api_Retrofit.NewGroup
 import com.example.where42android.Base_url_api_Retrofit.NewGroupRequest
 import com.example.where42android.Base_url_api_Retrofit.NewGroupResponses
 import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
+import com.example.where42android.main.MainSettingPage
 
 import com.example.where42android.databinding.ActivityMainPageBinding
 import com.example.where42android.fragment.MainFragment
@@ -35,19 +39,38 @@ import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
 
-
+interface OnOperationCompleteListener {
+    fun onOperationComplete()
+}
 class MainPageActivity : AppCompatActivity() {
 
 
     lateinit var binding: ActivityMainPageBinding
     lateinit var profile : Member
+    lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
+        binding = ActivityMainPageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
-        //1. 12_18 api를 통해 사용자 프로필 가져오기
+        progressBar = binding.myProgressBar // 프로그레스 바 찾기
+        progressBar.visibility = View.VISIBLE
+
+
+
+//        supportFragmentManager.beginTransaction()
+//            .replace(binding.container.id, fragment)
+//            .commit()
+        supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment()).commit()
+        //2. group list을 보여주기 위해 binding으로 MainFragment 설정
+
+
+
+
+        //2. 12_18 api를 통해 사용자 프로필 가져오기
         val intraId = 6 // Replace with the actual intraId
 
         Log.e("check", "hello")
@@ -78,6 +101,7 @@ class MainPageActivity : AppCompatActivity() {
                                 .load(imageUrl)
                                 .apply(RequestOptions().circleCrop()) // CircleImageView를 사용하므로 원형으로 자르기 위해 circleCrop을 적용합니다.
                                 .into(main_image)
+
                         }
                         else
                         {
@@ -108,18 +132,28 @@ class MainPageActivity : AppCompatActivity() {
             }
         }
 
-        //2. group list을 보여주기 위해 binding으로 MainFragment 설정
-        binding = ActivityMainPageBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment()).commit()
+        val locationTextView = findViewById<TextView>(R.id.location_info)
+        locationTextView.post {
+            val maxWidth = locationTextView.width // TextView의 최대 너비
+            val textPaint = locationTextView.paint // TextView의 Paint 객체
+            val text = locationTextView.text.toString() // TextView에 표시되는 텍스트
 
-        //header의 환경 설정 버튼을 눌렀을 때 -> SettingPage.kt로 가게 하기
+            val textWidth = textPaint.measureText(text) // 텍스트의 폭 계산
+            if (textWidth > maxWidth) {
+                locationTextView.layoutParams.width = maxWidth // TextView의 너비를 최대 너비로 설정
+            }
+        }
+
+
+        //1. header의 환경 설정 버튼을 눌렀을 때 -> SettingPage.kt로 가게 하기
         val headerBinding = binding.header // Change to your actual ID for the included header
         val settingButton: ImageButton = headerBinding.settingButton
 
         settingButton.setOnClickListener {
             try {
-                val intent = Intent(this, SettingPage::class.java)
+                val intent = Intent(this, MainSettingPage::class.java)
+                //값 넘겨주기
+                intent.putExtra("PROFILE_DATA", profile.intraId)
                 startActivity(intent)
                 finish()
             } catch (e: Exception) {
@@ -130,7 +164,6 @@ class MainPageActivity : AppCompatActivity() {
 
 
         //3. footer의 홈버튼과 검색 버튼 기능 구현
-
         val footerBinding = binding.footer
         val searchButton : ImageButton = footerBinding.searchButton
 
@@ -197,32 +230,21 @@ class MainPageActivity : AppCompatActivity() {
         //4. 새 그룹 기능 구현
         val newGroupButton: Button = binding.newGroupButton // 레이아웃 바인딩 객체에서 버튼 가져오기
 
-//        newGroupButton.setOnClickListener {
-//            // 새로운 그룹 버튼 클릭 시 커스텀 다이얼로그 표시
-////            val newActivityIntent = Intent(this, NewActivity::class.java)
-////            startActivity(newActivityIntent)
-////           val dialog = CustomDialog() // 커스텀 다이얼로그 객체 생성
-////            dialog.show(supportFragmentManager, "YOUR_TAG")
-//             // 다이얼로그 표시
-//        }
+
         newGroupButton.setOnClickListener {
             val dialog = Dialog(this)
-            dialog.setContentView(R.layout.new_group_popup)
+            dialog.setContentView(R.layout.activity_edittext_popup)
 
             dialog.setCanceledOnTouchOutside(true)
             dialog.setCancelable(true)
             dialog.window?.setGravity(Gravity.CENTER)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#80000000")))
-//            dialog.getWindow()?.setBackgroundDrawable( ColorDrawable(android.graphics.Color.TRANSPARENT));
-//            dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(80000000));
-
-            //여기가 뒷배경 안 보이게 해주는 거
-//            dialog.window?.setBackgroundDrawableResource(R.drawable.new_group_background)
-//            dialog.getWindow()?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-//            dialog.setCancelable(false);
 
             val editText = dialog.findViewById<EditText>(R.id.input)
+            val typeface = ResourcesCompat.getFont(this, R.font.gmarketsans_bold)
+            editText.typeface = typeface
+            editText.hint = "그룹명을 지정해주세요."
+
             val btnCancel = dialog.findViewById<Button>(R.id.cancel)
             val btnSubmit = dialog.findViewById<Button>(R.id.submit)
 
@@ -240,6 +262,7 @@ class MainPageActivity : AppCompatActivity() {
                 val intra_id = profile.intraId
 
                 //JSON 만들어주기
+                //NewGroup @POST("v3/group")
                 val newGroupRequest = NewGroupRequest(groupname, intra_id)
                 val call = retrofitAPI.newGroup(newGroupRequest)
 
@@ -251,10 +274,11 @@ class MainPageActivity : AppCompatActivity() {
                     ) {
                         if (response.isSuccessful) {
                             val newGroupResponse  = response.body()
-//                            newGroupResponse.groupId
-
                             val intent = Intent(this@MainPageActivity, CreateGroupActivity::class.java)
-                            intent.putExtra("groupIdKey", newGroupResponse?.groupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
+                            //default 아이디 넣어주어야함.
+                            Log.d("check_newGroup", "${newGroupResponse?.groupId}")
+                            intent.putExtra("newgroupIdKey", newGroupResponse?.groupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
+                            intent.putExtra("groupIdKey", profile?.defaultGroupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
                             startActivity(intent)
                             // 성공적으로 삭제되었으므로 적절한 처리를 수행합니다.
                         } else {
@@ -270,14 +294,11 @@ class MainPageActivity : AppCompatActivity() {
                         Log.e("CREATE_ERROR", "Network error occurred. Message: ${t.message}")
                     }
                 })
-
-
 //                val userInput = editText.text.toString()
 //                val intent = Intent(this, CreateGroupActivity::class.java)
 //                intent.putExtra("userInputKey", userInput)
 //                startActivity(intent)
             }
-
             dialog.show()
         }
 
@@ -442,7 +463,7 @@ class MainPageActivity : AppCompatActivity() {
 //                // 네트워크 요청이 실패했을 때의 처리를 작성합니다.
 //            }})
 
-
+        progressBar.visibility = View.GONE // ProgressBar 숨기기
     }
 
 }

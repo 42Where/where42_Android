@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/header"
-        layout="@layout/header"
+        layout="@layout/activity_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/search_header_layout_height_toolbar" />
 
@@ -54,7 +54,7 @@
 
     <include
         android:id="@+id/footer"
-        layout="@layout/footer"
+        layout="@layout/activity_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent" />

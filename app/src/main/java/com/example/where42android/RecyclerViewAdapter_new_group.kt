@@ -24,7 +24,7 @@ class RecyclerViewAdapter_new_group(val context: Context, private var profileLis
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.list_view_detail_checkbox, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.activity_create_group_list_view_detail_checkbox, parent, false)
         return GroupViewHolder(view)
     }
 

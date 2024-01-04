@@ -1,51 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingPage">
+    tools:context=".main.MainSettingPage">
 
     <include
         android:id="@+id/header"
-        layout="@layout/header_setting"
+        layout="@layout/activity_setting_page_header_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
+<!--12     + 85 / 1280 = 0.116-->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.097" />
+        app:layout_constraintGuide_percent="0.116" />
 
     <TextView
         android:id="@+id/text_setting"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/setting_page_text_setting_width"
+        android:layout_height="@dimen/setting_page_text_setting_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline1"
         android:gravity="center_horizontal"
-        android:textSize="74sp"
-        android:fontFamily="@font/gmarketsans_medium"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.097"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.412"
+        android:textSize="@dimen/setting_page_text_size"
+        android:fontFamily="@font/gmarketsans_bold"
         android:text="환경설정"
-
         />
+<!--    app:layout_constraintHeight_default="percent"-->
+<!--    app:layout_constraintHeight_percent="0.097"-->
+<!--    app:layout_constraintWidth_default="percent"-->
+<!--    app:layout_constraintWidth_percent="0.412"-->
 
-
-
+    <!--12 + 85 + 125 + 82/ 1280 = 0.2375-->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.253" />
+        app:layout_constraintGuide_percent="0.238" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -62,13 +61,13 @@
             android:fontFamily="@font/gmarketsans_light"
             />
 
-<!--    546 + 12 / 1280-->
+    <!--12 + 85 + 125 + 82 + 114 + 90 / 1280 = 0.3968-->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.435" />
+        app:layout_constraintGuide_percent="0.397" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -84,13 +83,13 @@
             android:fontFamily="@font/gmarketsans_light"
             />
 
-    <!--    768 + 12 / 1280-->
+    <!--12 + 85 + 125 + 82 + 114 + 90 + 114 + 90 / 1280 = 0.5562-->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.605" />
+        app:layout_constraintGuide_percent="0.556" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/comment_button"
@@ -106,10 +105,32 @@
             />
 
 
+    <!--12 + 85 + 125 + 82 + 114 + 90 + 114 + 90 + 114 + 90/ 1280 = 0.7156-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.716" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/place_setting_button"
+        android:layout_width="@dimen/setting_width"
+        android:layout_height="@dimen/setting_height"
+        style="@style/RoundedButton"
+        android:textSize="@dimen/setting_button_text"
+        app:layout_constraintTop_toBottomOf="@id/guideline5"
+        app:layout_constraintStart_toStartOf="@id/comment_button"
+        android:text="자리 설정"
+        android:gravity="center"
+        android:fontFamily="@font/gmarketsans_light"
+        />
+
+
 
     <include
         android:id="@+id/footer"
-        layout="@layout/footer"
+        layout="@layout/activity_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent" />

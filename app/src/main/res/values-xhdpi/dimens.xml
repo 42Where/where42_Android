@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    list_view_detail-->
-    <dimen name="profile_card">49dp</dimen>
-    <dimen name="profile_card_padding">8dp</dimen>
-    <dimen name="profile_image">32dp</dimen>
-    <dimen name="intra_ID">14dp</dimen>
-    <dimen name="location_w">83.5dp</dimen>
-    <dimen name="location_h">18dp</dimen>
-    <dimen name="comment">14dp</dimen>
-    <dimen name="see_more">12dp</dimen>
-    <dimen name="font_small">12sp</dimen>
     <!--    activity_main_page-->
     <dimen name="main_profile_card">96dp</dimen>
     <dimen name="main_profile_card_padding">16dp</dimen>
-    <dimen name="main_profile_image">64dp</dimen>
-    <dimen name="main_intra_ID">18.5dp</dimen>
-    <dimen name="main_location_w">99dp</dimen>
-    <dimen name="main_location_h">20dp</dimen>
+
+    <dimen name="main_profile_image">56dp</dimen>
+
+    <dimen name="main_intra_ID_width">71.5dp</dimen>
+    <dimen name="main_intra_ID_height">18.5dp</dimen>
+
+
+    <dimen name="main_location_w">71.5dp</dimen>
+    <dimen name="main_location_h">16dp</dimen>
+
     <dimen name="main_comment">14dp</dimen>
-    <dimen name="font_medium">16sp</dimen>
+
+    <dimen name="font_medium_change">12sp</dimen>
+
     <dimen name="buttons_w">173dp</dimen>
     <dimen name="buttons_h">18dp</dimen>
     <dimen name="new_group_w">57dp</dimen>
@@ -28,9 +26,9 @@
     <dimen name="filter_available_h">18dp</dimen>
     <dimen name="filter_available_font">10sp</dimen>
     <dimen name="list_titlebar_h">28dp</dimen>
-<!--    <dimen name="group_font">14sp</dimen>-->
+    <!--    <dimen name="group_font">14sp</dimen>-->
     <dimen name="group_font">10sp</dimen>
-<!--    <dimen name="group_font_count">10sp</dimen>-->
+    <!--    <dimen name="group_font_count">10sp</dimen>-->
 
     <dimen name="friend_font">10sp</dimen>
     <dimen name="list_padding_start_end">12dp</dimen>
@@ -39,8 +37,23 @@
     <dimen name="option_buttons_w">8dp</dimen>
     <dimen name="option_buttons_h">8dp</dimen>
 
+    <!--    list_view_detail-->
+
+    <dimen name="intra_ID">14dp</dimen>
+    <dimen name="location_w">83.5dp</dimen>
+    <dimen name="location_h">18dp</dimen>
+    <dimen name="comment">14dp</dimen>
+    <dimen name="see_more">12dp</dimen>
+
+
+
 
     <!--    세팅 페이지 버튼-->
+
+    <dimen name="setting_page_text_setting_width">162dp</dimen>
+    <dimen name="setting_page_text_setting_height">62.5dp</dimen>
+    <dimen name="setting_page_text_size">32sp</dimen>
+
     <dimen name="setting_width">148dp</dimen>
     <dimen name="setting_height">57dp</dimen>
     <dimen name="setting_button_text">24sp</dimen>
@@ -63,6 +76,9 @@
     <!--    new_group_popup-->
     <dimen name="newgroup_layout_width">247.5dp</dimen>
     <dimen name="newgroup_layout_height">106dp</dimen>
+    <dimen name="editstatus_layout_width">200dp</dimen>
+    <dimen name="editstatus_layout_height">74dp</dimen>
+
     <dimen name="newgroup_layout_padding_top_bottom">16dp</dimen>
     <dimen name="newgroup_layout_padding_start_end">24dp</dimen>
     <dimen name="newgroup_textsize">10sp</dimen>
@@ -81,4 +97,16 @@
     <!--    create_group-->
     <dimen name="create_group_button_height">44dp</dimen>
     <dimen name="create_group_button_textsize">14sp</dimen>
+
+    <!--    holder_recylcer_in_member_list.xml-->
+    <dimen name="profile_image">32dp</dimen>
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="profile_card">42dp</dimen>
+
+    <!--    activity_editgroup_popup-->
+    <dimen name="editgroup_layout_height">152dp</dimen>
+    <dimen name="groupname_textview_height">26dp</dimen>
+    <dimen name="groupname_textsize">9dp</dimen>
+    <dimen name="group_Button_height">42dp</dimen>
+
 </resources>

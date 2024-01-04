@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/newgroup_layout_width"
-    android:layout_height="@dimen/newgroup_layout_height"
+    android:layout_width="@dimen/editstatus_layout_width"
+    android:layout_height="@dimen/editstatus_layout_height"
     android:background="@drawable/center_popup_background"
-    android:paddingTop="@dimen/newgroup_layout_padding_top_bottom"
-    android:paddingBottom="@dimen/newgroup_layout_padding_top_bottom"
-    android:paddingStart="@dimen/newgroup_layout_padding_start_end"
-    android:paddingEnd="@dimen/newgroup_layout_padding_start_end"
     >
-<!--    android:layout_width="@dimen/newgroup_layout_width"-->
-<!--    android:layout_height="@dimen/newgroup_layout_height"-->
+    <!--    android:layout_width="@dimen/newgroup_layout_width"-->
+    <!--    android:layout_height="@dimen/newgroup_layout_height"-->
+<!--    android:paddingTop="@dimen/newgroup_layout_padding_top_bottom"-->
+<!--    android:paddingBottom="@dimen/newgroup_layout_padding_top_bottom"-->
+<!--    android:paddingStart="@dimen/newgroup_layout_padding_start_end"-->
+<!--    android:paddingEnd="@dimen/newgroup_layout_padding_start_end"-->
+
+<!--    32 / 148 = 0.2162-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.216" />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline1"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="새 그룹 만들기"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="자리비움으로 설정하시겠습니까?"
         android:textColor="#132743"
         android:textSize="@dimen/newgroup_textsize"
         android:fontFamily="@font/gmarketsans_bold" />
 
-    <EditText
-        android:id="@+id/input"
-        android:layout_width="@dimen/edittext_layout_width"
-        android:layout_height="@dimen/edittext_layout_height"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/edittext_layout_margin"
-        android:layout_marginBottom="@dimen/edittext_layout_margin"
-        android:paddingStart="@dimen/edittext_layout_padding"
-        android:paddingEnd="@dimen/edittext_layout_padding"
-        android:background="@drawable/text_edit_box"/>
+    <!--    32  + 28 + 24/ 148 = 0.5675-->
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintGuide_percent="0.568" />-->
 
     <android.widget.Button
         android:id="@+id/cancel"
@@ -40,7 +46,9 @@
         android:layout_height="@dimen/newgroup_button_height"
         android:background="@drawable/cancel_button"
         app:layout_constraintEnd_toStartOf="@id/submit"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintEnd_toEndOf="@id/title"
+        android:layout_marginTop="20dp"
         android:paddingStart="@dimen/newgroup_button_padding"
         android:paddingEnd="@dimen/newgroup_button_padding"
         android:layout_marginEnd="@dimen/newgroup_button_marginend"
@@ -55,8 +63,9 @@
         android:layout_width="@dimen/newgroup_button_width"
         android:layout_height="@dimen/newgroup_button_height"
         android:background="@drawable/submit_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintEnd_toEndOf="@id/title"
         android:paddingStart="@dimen/newgroup_button_padding"
         android:paddingEnd="@dimen/newgroup_button_padding"
         android:text="확인"

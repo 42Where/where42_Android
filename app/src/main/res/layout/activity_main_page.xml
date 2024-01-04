@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/header"
-        layout="@layout/header"
+        layout="@layout/activity_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -20,15 +20,24 @@
 
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="192dp"-->
+
+<!--    android:padding="@dimen/main_profile_card_padding"-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_profile"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_profile_card"
-        android:padding="@dimen/main_profile_card_padding"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
 
+<!--        32 / 720-->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.044" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline1"
@@ -37,47 +46,63 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5" />
 
+<!--        app:layout_constraintStart_toStartOf="parent"-->
         <de.hdodenhof.circleimageview.CircleImageView
+
             android:id="@+id/profile_photo"
             android:layout_width="@dimen/main_profile_image"
             android:layout_height="@dimen/main_profile_image"
             android:src="@drawable/profile_photo_example"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline4"
             app:civ_border_color="#95FFB5B5"
             app:civ_border_overlay="true"
+            android:layout_marginTop="24dp"
             app:civ_border_width="3dp"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.45" />
+
 
         <TextView
             android:id="@+id/intra_id"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/main_intra_ID"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:clipToOutline="true"
+            android:layout_height="@dimen/main_intra_ID_height"
+
+            android:gravity="bottom"
             android:text="인트라 ID"
             android:fontFamily="@font/gmarketsans_bold"
-            android:textSize="@dimen/font_medium"
+            android:textSize="@dimen/font_medium_change"
             app:layout_constraintStart_toEndOf="@id/profile_photo"
-            app:layout_constraintBottom_toTopOf="@id/guideline1"/>
+            app:layout_constraintBottom_toTopOf="@id/guideline2"
 
+            android:layout_marginLeft="12dp"/>
+<!--        android:textSize="@dimen/font_medium"-->
+<!--        android:clipToOutline="true"-->
+
+
+<!--        android:layout_width="@dimen/main_location_w"-->
         <TextView
             android:id="@+id/location_info"
-            android:layout_width="@dimen/main_location_w"
-            android:layout_height="@dimen/main_location_h"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/main_intra_ID_height"
+            android:layout_marginLeft="6dp"
             android:background="@drawable/location_shape"
             android:gravity="center"
             android:clipToOutline="true"
             android:text="cx2r1s5"
             android:fontFamily="@font/gmarketsans_medium"
             android:textColor="#FCFDFF"
-            android:textSize="@dimen/font_medium"
+            android:textSize="@dimen/font_medium_change"
             app:layout_constraintStart_toEndOf="@id/intra_id"
-            app:layout_constraintBottom_toTopOf="@id/guideline1"/>
-
+            app:layout_constraintBottom_toTopOf="@id/guideline2"
+            android:maxLines="1"
+            android:ellipsize="end"
+/>
 
 
 
@@ -85,13 +110,14 @@
             android:id="@+id/Comment"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/main_comment"
-            android:layout_marginStart="8dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="5dp"
+
             android:gravity="center"
             android:text="코멘트코멘트코멘트"
             android:fontFamily="@font/gmarketsans_medium"
             android:textSize="@dimen/font_small"
-            app:layout_constraintTop_toTopOf="@id/guideline1"
+            app:layout_constraintTop_toTopOf="@id/guideline2"
             app:layout_constraintStart_toEndOf="@id/profile_photo"
             />
 
@@ -161,17 +187,9 @@
 
 
 <!--    프래그먼트를 띄어줄 부분을 만듦-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/main_profile"
-        app:layout_constraintBottom_toTopOf="@id/footer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:layout_marginTop="7dp"-->
 <!--        android:id="@+id/all_group"-->
 <!--        android:layout_width="match_parent"-->
@@ -217,13 +235,33 @@
 
 <!--    </LinearLayout>-->
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_profile"
+        app:layout_constraintVertical_bias="1.0" />
+
     <include
         android:id="@+id/footer"
-        layout="@layout/footer"
+        layout="@layout/activity_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <ProgressBar
+        android:id="@+id/myProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 <!--    <View-->
 <!--        android:layout_width="match_parent"-->

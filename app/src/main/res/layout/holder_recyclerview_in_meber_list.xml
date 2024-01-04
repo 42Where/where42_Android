@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/profile_card"
-        android:padding="@dimen/profile_card_padding">
+        >
 
 
 
@@ -27,13 +27,22 @@
 
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
+<!--        CircleImageView guideLine-->
+<!--        30 / 720 = 0.0416-->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.042" />
+
+<!--        android:src="@{model.emoji}"-->
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/emoji"
             android:layout_width="@dimen/profile_image"
             android:layout_height="@dimen/profile_image"
             android:src="@{model.emoji}"
-
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:civ_border_color="#95FFB5B5"
@@ -41,44 +50,7 @@
             app:civ_border_width="2dp"
             />
 
-
-
-<!--        <FrameLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/cirecleimage_border"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            android:id="@+id/imageBackground">-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/emoji"-->
-<!--                android:layout_width="@dimen/profile_image"-->
-<!--                android:layout_height="@dimen/profile_image"-->
-<!--                android:src="@{model.emoji}"-->
-<!--                android:background="@drawable/cirecleimage_border"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                android:scaleType="centerCrop"-->
-<!--            android:clipToOutline="true"-->
-<!--            android:outlineProvider="bounds"-->
-<!--            />-->
-<!--        </FrameLayout>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/emoji"-->
-<!--            android:layout_width="@dimen/profile_image"-->
-<!--            android:layout_height="@dimen/profile_image"-->
-<!--            android:text="@{model.emoji}"-->
-<!--            android:textAlignment="center"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent" />-->
-
-<!--        android:text="인트라 ID"-->
-<!--        android:text="@{model.content}"-->
+<!--        android:text="@{model.intra_id}"-->
         <TextView
             android:id="@+id/intra_id"
             android:layout_width="wrap_content"
@@ -86,13 +58,13 @@
             android:layout_marginStart="8dp"
             android:text="@{model.intra_id}"
             android:textSize="@dimen/font_small"
+            android:gravity="bottom"
             android:fontFamily="@font/gmarketsans_bold"
             app:layout_constraintStart_toEndOf="@id/emoji"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/guideline" />
 
 <!--        android:text="코멘트코멘트코멘트"-->
-<!--        android:text="@{model.content}"-->
+<!--        android:text="@{model.comment}"-->
         <TextView
             android:id="@+id/text_view"
             android:layout_width="wrap_content"
@@ -104,14 +76,16 @@
             android:textSize="@dimen/font_small"
             app:layout_constraintStart_toEndOf="@id/emoji"
             app:layout_constraintTop_toBottomOf="@id/guideline"
-            app:layout_constraintBottom_toBottomOf="parent"
+
             />
 
 <!--        android:text="CX2R1S5"-->
+<!--        android:text="@{model.location}"-->
+<!--        android:layout_height="@dimen/location_h"-->
         <TextView
             android:id="@+id/location"
-            android:layout_width="@dimen/location_w"
-            android:layout_height="@dimen/location_h"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/comment"
             android:layout_marginStart="8dp"
             android:background="@drawable/location_shape"
             android:gravity="center"
@@ -120,8 +94,9 @@
             android:fontFamily="@font/gmarketsans_medium"
             android:textColor="#FCFDFF"
             android:textSize="@dimen/font_small"
+            android:maxLines="1"
+            android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/intra_id"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/guideline"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

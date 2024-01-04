@@ -29,12 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".NewActivity"
-
-            />
         <activity android:name=".MainPageActivity"/>
-        <activity android:name=".SettingPage" />
+        <activity android:name=".main.MainSettingPage" />
+        <activity android:name=".main.MainDeleteGroupDetailList" />
     </application>
 
 </manifest>

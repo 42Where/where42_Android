@@ -3,21 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/profile_card"
-    android:padding="@dimen/profile_card_padding"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="66dp"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -26,12 +14,19 @@
         app:layout_constraintGuide_percent="0.5" />
 
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.042" />
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_photo"
             android:layout_width="@dimen/profile_image"
             android:layout_height="@dimen/profile_image"
             android:src="@drawable/profile_photo_example"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:civ_border_color="#95FFB5B5"
@@ -43,13 +38,11 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/intra_ID"
             android:layout_marginStart="8dp"
-            android:gravity="center"
-            android:clipToOutline="true"
+            android:gravity="bottom"
             android:text="인트라 ID"
             android:fontFamily="@font/gmarketsans_bold"
             android:textSize="@dimen/font_small"
             app:layout_constraintStart_toEndOf="@id/profile_photo"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/guideline" />
 
     <TextView
@@ -62,13 +55,12 @@
         android:fontFamily="@font/gmarketsans_medium"
         android:textSize="@dimen/font_small"
         app:layout_constraintTop_toBottomOf="@id/guideline"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/profile_photo" />
 
         <TextView
             android:id="@+id/location_info"
-            android:layout_width="@dimen/location_w"
-            android:layout_height="@dimen/location_h"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/comment"
             android:layout_marginStart="8dp"
             android:background="@drawable/location_shape"
             android:gravity="center"
@@ -77,11 +69,10 @@
             android:fontFamily="@font/gmarketsans_medium"
             android:textColor="#FCFDFF"
             android:textSize="@dimen/font_small"
+            android:maxLines="1"
+            android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/intra_id"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/guideline"/>
-
-
 
         <CheckBox
             android:layout_width="24dp"
