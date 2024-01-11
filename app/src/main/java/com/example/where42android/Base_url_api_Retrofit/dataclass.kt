@@ -4,17 +4,49 @@ import com.google.gson.annotations.SerializedName
 import java.time.LocalDateTime
 import java.util.Date
 
+
+import java.net.URLDecoder
+import java.util.Objects
+
+data class OAuthResponse(
+    val code: String,
+    val state: String
+)
+
+//fun parseOAuthResponse(url: String): OAuthResponse {
+//    val uri = URLDecoder.decode(url, "UTF-8")
+//    val params = uri.split("?").last().split("&")
+//    val codeParam = params.find { it.startsWith("code=") }
+//    val stateParam = params.find { it.startsWith("state=") }
+//
+//    val code = codeParam?.substringAfter("code=")
+//    val state = stateParam?.substringAfter("state=")
+//
+//    return OAuthResponse(code.orEmpty(), state.orEmpty())
+//}
+//
+//fun main() {
+//    val url = "https://profile.intra.42.fr/users/auth/keycloak_student/callback?code=received_authorization_code&state=your_state_value"
+//    val oAuthResponse = parseOAuthResponse(url)
+//
+//    println("Authorization Code: ${oAuthResponse.code}")
+//    println("State: ${oAuthResponse.state}")
+//}
+//
+
+
 //Member
 data class Member(
     val intraId: Int,
     val intraName: String,
     val grade: String,
     val image: String,
-    val comment: String?,
+    var comment: String?,
     val inCluster: Boolean,
     val agree: Boolean,
     val defaultGroupId: Int,
-    val location: String
+    var location: String,
+    var data: Object
 )
 
 //@POST("v3/member/comment")
@@ -76,21 +108,33 @@ data class GroupDeleteResponse(
 //Group 전부 보이기
 class groups_memberlist : ArrayList<groups_memberlist.groups_memberlistItem>(){
     data class groups_memberlistItem(
-        val count: Int,
+//        val count: Int,
         val groupId: Int,
         val groupName: String,
         val members: List<Member>
     ) {
         data class Member(
-            val comment: String,
-            val groupId: Any,
-            val groupName: Any,
+            val intraId: Int,
+            val intraName : String,
+            val grade: String,
             val image: String,
+            val comment: String,
             val inCluster: Boolean,
+            val agree: Boolean,
+            val defaultGroupId: Int,
             val location: String,
-            val memberId: Int,
-            val memberIntraName: String
         )
+//        data class Member(
+//            val comment: String,
+////            val groupId: Any,
+//            val groupId: Int,
+//            val groupName: String,
+//            val image: String,
+//            val inCluster: Boolean,
+//            val location: String,
+////            val memberId: Int,
+//            val memberIntraName: String
+//        )
     }
 }
 
@@ -129,14 +173,16 @@ data class AddMembersRequest(
 
 class addMembersResponse : ArrayList<addMembersResponse.addMembersResponseItem>(){
     data class addMembersResponseItem(
-        val comment: Any,
-        val groupId: Any,
-        val groupName: Any,
-        val image: Any,
-        val inCluster: Boolean,
         val intraId: Int,
-        val location: Any,
-        val memberIntraName: String
+        val intraName: String,
+        var grade : String,
+        val image: String,
+        val comment: String,
+        val inCluster: Boolean,
+        val agree : Boolean,
+        var defaultGroupId: Int,
+        val location: String,
+
     )
 }
 

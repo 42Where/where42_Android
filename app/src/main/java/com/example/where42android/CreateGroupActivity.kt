@@ -1,28 +1,33 @@
 package com.example.where42android
 
 
+import SharedViewModel_GroupsMembersList
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.where42android.Base_url_api_Retrofit.AddMembersRequest
 import com.example.where42android.Base_url_api_Retrofit.Deafult_friendGroup_memberlist
 import com.example.where42android.Base_url_api_Retrofit.GroupAddMemberlist
+import com.example.where42android.Base_url_api_Retrofit.NewGroupRequest
 import com.example.where42android.adapter.RecyclerViewAdapter_defaultList
 
 import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.example.where42android.Base_url_api_Retrofit.addMembersResponse
 import com.example.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
+import com.example.where42android.main.MainPageActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class CreateGroupActivity : AppCompatActivity() {
 
+    private lateinit var sharedViewModel: SharedViewModel_GroupsMembersList
 //    private val retrofitAPI = RetrofitConnection.getInstance().create(MemberallListService::class.java)
     private val retrofitAPI = RetrofitConnection.getInstance().create(Deafult_friendGroup_memberlist::class.java)
     private val retrofitAPI2 = RetrofitConnection.getInstance().create(GroupAddMemberlist::class.java)
@@ -47,24 +52,33 @@ class CreateGroupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_group)
 
-
-        val newGroupResponseGroupId = intent.getIntExtra("newgroupIdKey", -1)
+        //1. MainPageActivity.kt에서 값 받아오기
+//        val newGroupResponseGroupId = intent.getIntExtra("newgroupIdKey", -1)
+        val newgroupName = intent.getStringExtra("newgroupNameKey")
+        val profileIntraId = intent.getIntExtra("profileintraIdKey", -1)
         val groupId = intent.getIntExtra("groupIdKey", -1)
         //여기로 groupid 받아옴 여기에 이제 checkbox 선택된 members 넣어주면 됨
         Log.e("check_newGroup", "recive :  ${groupId.toString()}")
-        Log.e("check_newGroup", "recive :  ${newGroupResponseGroupId}")
-        Log.e("ID : groupId", newGroupResponseGroupId.toString())
 
+//        Log.e("check_newGroup", "recive :  ${newGroupResponseGroupId}")
+//        Log.e("ID : groupId", newGroupResponseGroupId.toString())
 
-        //checkbox 체크한 것만 들고오기
+        //2. 그룹 만들기
+        val newGroupRequest = NewGroupRequest(newgroupName.toString(), profileIntraId)
+        sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
+        sharedViewModel.addGroup(newGroupRequest)
+
+        //3.default 그룹 보여주기
+        fetchMemberAllData(groupId)
+
+        //4. checkbox 체크한 것만 들고오고 그룹에 멤버 추가 api
         val createGroupButton: AppCompatButton = findViewById(R.id.new_group_make)
         createGroupButton.setOnClickListener {
+            //2. 그룹 만들기 API 호출
+
             // 체크된 체크박스가 있는 항목들 가져오기
             val selectedItems = getSelectedItems()
-
             //조건문 해야될 듯 만약 list에 아무것도 없으면 리턴 시키기
-
-
             // 여기서 가져온 선택된 항목들에 대해 원하는 작업 수행 가능
             // 예를 들어, 선택된 항목들의 이름을 로그에 출력하는 등의 동작 수행
             val members =  mutableListOf<String>()
@@ -79,77 +93,23 @@ class CreateGroupActivity : AppCompatActivity() {
             //Safe call operator (?.): ?.를 사용하여 nullable한 변수에 안전하게 접근합니다.
             //Elvis operator (?:): ?:를 사용하여 nullable한 경우 대체값을 지정할 수 있습니다.
             //Safe cast operator (as?): as?를 사용하여 안전한 형변환을 시도합니다.
-            val groupIdInt = newGroupResponseGroupId
 
+//            val groupIdInt = newGroupResponseGroupId
 
             //넘겨줄 grorupid, members JSON으로 만들기
 
-            Log.d("check", "groupInt : ${groupIdInt} , members : ${members}")
-            val groupId_members = AddMembersRequest(groupIdInt, members)
-            Log.d("check", "groupId_members : ${groupId_members}")
+//            Log.d("check", "groupInt : ${groupIdInt} , members : ${members}")
+//            val groupId_members = AddMembersRequest(groupIdInt, members)
+//            Log.d("check", "groupId_members : ${groupId_members}")
 
-            //새로운 그룹에 member 추가하는 코드 작성!
-            retrofitAPI2.addMembersToGroup(groupId_members).enqueue(object :
-                Callback<List<addMembersResponse.addMembersResponseItem>> {
-                override fun onResponse(
-                    call: Call<List<addMembersResponse.addMembersResponseItem>>,
-                    response: Response<List<addMembersResponse.addMembersResponseItem>>
-                ) {
-                    if (response.isSuccessful)
-                    {
-                        Log.d("groupmemberadd", "${response.body()}")
-                        val intent = Intent(this@CreateGroupActivity, MainPageActivity::class.java)
-                        finish() //인텐트 종료
-                        startActivity(intent)
-                    }
-                    else
-                    {
-                        Log.d("groupmemberadd_error", "API call failed. Response: $response")
-                    }
-                }
-                override fun onFailure(
-                    call: Call<List<addMembersResponse.addMembersResponseItem>>,
-                    t: Throwable)
-                {
-                    Log.d("groupmemberadd_error", "onFailure API call failed.")
-                    // API 요청 자체가 실패한 경우 처리
-                }
-            })
-
+            sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
+//            sharedViewModel.addMembersToGroup(groupId_members)
+            sharedViewModel.addMembersToGroup(newgroupName.toString(), members)
+            finish()
         }
 
-
-
-//        val receivedIntent = intent
-//        if (receivedIntent != null && receivedIntent.hasExtra("userInputKey")) {
-//            val userInput = receivedIntent.getStringExtra("userInputKey")
-//            //Toast.makeText(this, "$userInput", Toast.LENGTH_SHORT).show()
-//        }
-
         Log.d("CALL", "fucking here")
-        // API 호출
-        fetchMemberAllData(groupId)
 
-//
-//        val friendRecyclerView: RecyclerView = findViewById<RecyclerView?>(R.id.new_gorup_friend_list)
-//
-//
-//        val friendRecyclerViewAdapter = RecyclerViewAdapter_new_group(this, friendProfileList, false)
-//        friendRecyclerView.layoutManager = LinearLayoutManager(this)
-//        friendRecyclerView.adapter = friendRecyclerViewAdapter
-
-//        val friendRecyclerView: RecyclerView = findViewById(R.id.new_gorup_friend_list)
-//
-//        val friendRecyclerViewAdapter = RecyclerViewAdapter_defaultList(this, friendProfileList, false)
-//        friendRecyclerView.layoutManager = LinearLayoutManager(this)
-//        friendRecyclerView.adapter = friendRecyclerViewAdapter
-
-//        // 체크된 항목들 가져오기
-//        val checkedItems = friendRecyclerViewAdapter.checkedItems
-//        Log.d("CheckedItem", "IntraName: ${checkedItems}")
-//        checkedItems.forEachIndexed { index, item ->
-//            Log.d("CheckedItem $index", "IntraName: ${item.memberIntraName}, isChecked: ${item.isChecked}")
-//        }
 
         //검색바 기능
         val searchView: SearchView = findViewById(R.id.searchView)
@@ -178,17 +138,10 @@ class CreateGroupActivity : AppCompatActivity() {
             }
 
         })
-
-
     }
 
     // Retrofit을 통한 API 호출 함수
     private fun fetchMemberAllData(groupId:Int) {
-
-//        val service = retrofit.create(MemberallListService::class.java)
-
-//        val call = service.getMemberAllList()
-        Log.d("CALL", "fucking here2")
 
         retrofitAPI.getdefaultGroupList(groupId).enqueue(object :
             Callback<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>> {

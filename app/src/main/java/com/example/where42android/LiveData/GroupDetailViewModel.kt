@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.where42android.Base_url_api_Retrofit.Deafult_friendGroup_memberlist
+import com.example.where42android.Base_url_api_Retrofit.GroupDelete
+import com.example.where42android.Base_url_api_Retrofit.GroupDeleteResponse
 import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.example.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import retrofit2.Call
@@ -16,12 +18,15 @@ import retrofit2.Response
 // 다시 생성되어도 데이터를 유지하는 데 사용됩니다.
 class GroupDetailViewModel : ViewModel() {
 
-
 //    MutableLiveData: defaultGroupMemberList는 그룹의 멤버 목록을 저장하기 위한 MutableLiveData입니다. LiveData는
 //    수명 주기를 인식하여 데이터의 변경 사항을 관찰할 수 있는 데이터 홀더입니다. MutableLiveData는 데이터를 변경할 수 있는 LiveData입니다.
     private val defaultGroupMemberList = MutableLiveData<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>()
+
+//    LiveData Getter: defaultGroupMemberLiveData는 defaultGroupMemberList의 값을 외부에 노출하는 LiveData 속성입니다.
+//    이를 통해 UI 컨트롤러(액티비티 또는 프래그먼트)에서 LiveData를 관찰하여 데이터 변경을 감지할 수 있습니다.
     val defaultGroupMemberLiveData: LiveData<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
         get() = defaultGroupMemberList
+
 
     fun getDefaultGroupMemberList(groupId: Int) {
         val retrofitAPI = RetrofitConnection.getInstance().create(Deafult_friendGroup_memberlist::class.java)
@@ -69,5 +74,7 @@ class GroupDetailViewModel : ViewModel() {
                 // Handle network failure
             }
         })
+
     }
+
 }

@@ -1,13 +1,12 @@
 package com.example.where42android.main
 
+import SharedViewModel_Profile
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
@@ -16,18 +15,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.where42android.Base_url_api_Retrofit.ApiObject
 import com.example.where42android.Base_url_api_Retrofit.CommentChangeMember
-import com.example.where42android.Base_url_api_Retrofit.Deafult_friendGroup_memberlist
-import com.example.where42android.Base_url_api_Retrofit.NewGroupResponses
-import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection_data
 import com.example.where42android.Base_url_api_Retrofit.UpdateCommentRequest
 import com.example.where42android.Base_url_api_Retrofit.locationCustomMemberRequest
 import com.example.where42android.Base_url_api_Retrofit.locationCustomMemberResponse
 import com.example.where42android.Base_url_api_Retrofit.member_custom_location
-import com.example.where42android.CreateGroupActivity
-import com.example.where42android.MainPageActivity
 import com.example.where42android.R
 import com.example.where42android.SearchPage
 import retrofit2.Call
@@ -121,40 +116,47 @@ class MainSettingPage : AppCompatActivity() {
                 //JSON 만들기
                 val updateRequest = UpdateCommentRequest(6, comment)
 
-                val call = ApiObject.service.updateMemberComment(updateRequest)
-                call.enqueue(object : Callback<CommentChangeMember> {
-                    override fun onResponse(
-                        call: Call<CommentChangeMember>,
-                        response: Response<CommentChangeMember>
-                    ) {
-                        // 성공적으로 응답을 받았을 때 처리
-                        if (response.isSuccessful) {
-                            val result = response.body()
-                            // 처리할 작업 수행
-                        } else {
-                            // 응답은 받았지만 실패했을 때 처리
-                            val errorBody = response.errorBody()?.string()
-                            val errorMessage = response.message() // HTTP 에러 메시지
-                            val errorCode = response.code() // HTTP 에러 코드
+                // SharedViewModel_Profile 인스턴스 생성
+                val sharedViewModel = ViewModelProvider(this).get(SharedViewModel_Profile::class.java)
+//                sharedViewModel.updateComment(comment)
+                // updateMemberComment 함수 호출
+                sharedViewModel.updateMemberComment(updateRequest)
 
-                            val detailedErrorMessage =
-                                "Failed to update comment. Error code: $errorCode, Message: $errorMessage, Error Body: $errorBody"
-                            Log.e("Update Error", detailedErrorMessage)
-                        }
-                    }
 
-                    override fun onFailure(call: Call<CommentChangeMember>, t: Throwable) {
-                        // 요청 자체가 실패했을 때 처리
-                        val errorMessage = "코멘트가 설정 되지 않아요! 안 되면 where42 team을 찾아주세요!."
-                        Toast.makeText(this@MainSettingPage, errorMessage, Toast.LENGTH_SHORT).show()
-                        Log.e("Network Error", "Retrofit Failure: ${t.message}")
-                    }
-                })
+//                val call = ApiObject.service.updateMemberComment(updateRequest)
+//                call.enqueue(object : Callback<CommentChangeMember> {
+//                    override fun onResponse(
+//                        call: Call<CommentChangeMember>,
+//                        response: Response<CommentChangeMember>
+//                    ) {
+//                        // 성공적으로 응답을 받았을 때 처리
+//                        if (response.isSuccessful) {
+//                            val result = response.body()
+//                            // 처리할 작업 수행
+//                        } else {
+//                            // 응답은 받았지만 실패했을 때 처리
+//                            val errorBody = response.errorBody()?.string()
+//                            val errorMessage = response.message() // HTTP 에러 메시지
+//                            val errorCode = response.code() // HTTP 에러 코드
+//
+//                            val detailedErrorMessage =
+//                                "Failed to update comment. Error code: $errorCode, Message: $errorMessage, Error Body: $errorBody"
+//                            Log.e("Update Error", detailedErrorMessage)
+//                        }
+//                    }
+//
+//                    override fun onFailure(call: Call<CommentChangeMember>, t: Throwable) {
+//                        // 요청 자체가 실패했을 때 처리
+//                        val errorMessage = "코멘트가 설정 되지 않아요! 안 되면 where42 team을 찾아주세요!."
+//                        Toast.makeText(this@MainSettingPage, errorMessage, Toast.LENGTH_SHORT).show()
+//                        Log.e("Network Error", "Retrofit Failure: ${t.message}")
+//                    }
+//                })
                 dialog.dismiss()
-
-                val intent = Intent(this@MainSettingPage, MainPageActivity::class.java)
+//
+//                val intent = Intent(this@MainSettingPage, MainPageActivity::class.java)
                 finish() //인텐트 종료
-                startActivity(intent)
+//                startActivity(intent)
 
             }
             dialog.show()
@@ -189,35 +191,42 @@ class MainSettingPage : AppCompatActivity() {
             }
 
             btnSubmit.setOnClickListener {
-                val retrofitAPI = RetrofitConnection_data.getInstance().create(member_custom_location::class.java)
                 val textcustomlocation : String = editText.text.toString().trim()
                 val editlocationcustom = locationCustomMemberRequest(profileIntraId, textcustomlocation)
-                val call = retrofitAPI.customLocationChange(editlocationcustom)
+                val sharedViewModel = ViewModelProvider(this).get(SharedViewModel_Profile::class.java)
+//                sharedViewModel.updateComment(comment)
+                // updateMemberComment 함수 호출
+                sharedViewModel.updateMemberCustomLocaton(editlocationcustom)
 
-                call.enqueue(object : Callback<locationCustomMemberResponse> {
-                    override fun onResponse(
-                        call: Call<locationCustomMemberResponse>,
-                        response: Response<locationCustomMemberResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            val newGroupResponse  = response.body()
-                            // 성공적으로 삭제되었으므로 적절한 처리를 수행합니다.
-                        } else {
-                            // API 호출에 실패한 경우
-                            Log.e("DELETE_ERROR", "Failed to delete group. Error code: ${response.code()}")
-
-                        }
-                    }
-                    override fun onFailure(call: Call<locationCustomMemberResponse>, t: Throwable) {
-
-                        Log.e("CREATE_ERROR", "Network error occurred. Message: ${t.message}")
-                    }
-                })
+//                val retrofitAPI = RetrofitConnection_data.getInstance().create(member_custom_location::class.java)
+//                val textcustomlocation : String = editText.text.toString().trim()
+//                val editlocationcustom = locationCustomMemberRequest(profileIntraId, textcustomlocation)
+//                val call = retrofitAPI.customLocationChange(editlocationcustom)
+//
+//                call.enqueue(object : Callback<locationCustomMemberResponse> {
+//                    override fun onResponse(
+//                        call: Call<locationCustomMemberResponse>,
+//                        response: Response<locationCustomMemberResponse>
+//                    ) {
+//                        if (response.isSuccessful) {
+//                            val newGroupResponse  = response.body()
+//                            // 성공적으로 삭제되었으므로 적절한 처리를 수행합니다.
+//                        } else {
+//                            // API 호출에 실패한 경우
+//                            Log.e("DELETE_ERROR", "Failed to delete group. Error code: ${response.code()}")
+//
+//                        }
+//                    }
+//                    override fun onFailure(call: Call<locationCustomMemberResponse>, t: Throwable) {
+//
+//                        Log.e("CREATE_ERROR", "Network error occurred. Message: ${t.message}")
+//                    }
+//                })
                 dialog.dismiss()
 
-                val intent = Intent(this@MainSettingPage, MainPageActivity::class.java)
+//                val intent = Intent(this@MainSettingPage, MainPageActivity::class.java)
                 finish() //인텐트 종료
-                startActivity(intent)
+//                startActivity(intent)
             }
             dialog.show()
 

@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 //    kotlin("kapt") version "1.5.30"
+
 }
 
 android {
@@ -44,7 +45,9 @@ android {
 }
 
 dependencies {
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
@@ -58,6 +61,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
 
 
 //    livedata
@@ -89,14 +93,18 @@ dependencies {
 //    testImplementation("androidx.arch.core:core-testing:$arch_version")
 //    // optional - Test helpers for Lifecycle runtime
 //    testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version")
-    implementation ("androidx.lifecycle:lifecycle-livedata:2.3.1")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-runtime:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-common-java8:2.3.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0") // 최신 버전으로 업데이트 필요
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0") // LiveData에 대한 Kotlin 확장 라이브러리도 추가하는 것이 좋습니다.
+
 
     //리사이클러뷰
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     // For control over item selection of both touch and mouse driven selection
     implementation ("androidx.recyclerview:recyclerview-selection:1.1.0")
+
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
 }

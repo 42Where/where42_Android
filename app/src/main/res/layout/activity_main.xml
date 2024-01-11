@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/constraintLayout">
 
 <!--16/1280=0.012-->
     <androidx.constraintlayout.widget.Guideline
@@ -116,6 +117,7 @@
         app:layout_constraintTop_toBottomOf="@id/guideline6"/>
 
     <ImageButton
+        android:id="@+id/loginbutton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
@@ -130,5 +132,22 @@
         app:layout_constraintTop_toTopOf="@id/guideline7"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.4218" />
+
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+<!--    <WebView-->
+<!--        android:id="@+id/webView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/loginbutton"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintBottom_toBottomOf="parent" />-->
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -99,6 +99,20 @@
             app:layout_constraintStart_toEndOf="@id/intra_id"
             app:layout_constraintBottom_toTopOf="@id/guideline"/>
 
+        <android.widget.ImageButton
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:background="@drawable/option_button"
+            android:textSize="@dimen/filter_available_font"
+            android:layout_marginRight="15dp"
+            android:id="@+id/option_edit"
+            android:buttonTint="#132743"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

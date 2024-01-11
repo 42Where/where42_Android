@@ -109,4 +109,11 @@
     <dimen name="groupname_textsize">9dp</dimen>
     <dimen name="group_Button_height">42dp</dimen>
 
+    <!--    activiy_profile_popup.xml-->
+    <dimen name="profile_popup_layout_height">90dp</dimen>
+    <dimen name="profile_popup_layout_height_paddingTop">14dp</dimen>
+
+
+    <dimen name="profile_popup_detail_layout_height">80dp</dimen>
+
 </resources>
