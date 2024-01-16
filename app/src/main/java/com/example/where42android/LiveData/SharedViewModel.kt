@@ -49,16 +49,18 @@ class SharedViewModel_GroupsMembersList : ViewModel() {
 
 }
 
-class SharedViewModel_Profile : ViewModel() {
+class SharedViewModel_Profile (
+): ViewModel() {
 //    ViewModelProvider를 사용하여 새로운 인스턴스를 가져올 때마다 ProfileList가 초기화되는 문제를 해결하려면,
 //    앱의 전체 생명 주기 동안 공유되는 싱글톤 패턴을 적용
     private val profile: ProfileList = ProfileList.getInstance()
     //    private val profile = ProfileList() // 공유할 ViewModel 인스턴스
     val profileLiveData: LiveData<Member?>
         get() = profile.profileLiveData
-    fun getMemberData(intraId: Int) {
+
+    fun getMemberData(intraId: Int, token: String) {
         Log.e("ProfileList", "here")
-//        profile.getMemberData(intraId)
+        profile.getMemberData(intraId, token)
     }
     fun updateMemberComment(updateCommentRequest: UpdateCommentRequest)
     {

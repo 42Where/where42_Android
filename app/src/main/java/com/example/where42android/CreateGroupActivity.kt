@@ -29,8 +29,8 @@ class CreateGroupActivity : AppCompatActivity() {
 
     private lateinit var sharedViewModel: SharedViewModel_GroupsMembersList
 //    private val retrofitAPI = RetrofitConnection.getInstance().create(MemberallListService::class.java)
-    private val retrofitAPI = RetrofitConnection.getInstance().create(Deafult_friendGroup_memberlist::class.java)
-    private val retrofitAPI2 = RetrofitConnection.getInstance().create(GroupAddMemberlist::class.java)
+//    private val retrofitAPI = RetrofitConnection.getInstance().create(Deafult_friendGroup_memberlist::class.java)
+//    private val retrofitAPI2 = RetrofitConnection.getInstance().create(GroupAddMemberlist::class.java)
     val friendProfileList = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
     private fun getSelectedItems(): List<friendGroup_default_memberlist.friendGroup_default_memberlistItem> {
         val selectedItems = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
@@ -142,38 +142,38 @@ class CreateGroupActivity : AppCompatActivity() {
 
     // Retrofit을 통한 API 호출 함수
     private fun fetchMemberAllData(groupId:Int) {
-
-        retrofitAPI.getdefaultGroupList(groupId).enqueue(object :
-            Callback<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>> {
-            override fun onResponse(
-                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
-                response: Response<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
-            ) {
-                if (response.isSuccessful)
-                {
-                    Log.d("CALL", "fucking here3")
-                    Log.d("CALL2", "API call successful. Response: $response")
-                    val friendList = response.body()
-                    friendList?.let { members ->
-                        // 받은 멤버 데이터를 friendProfileList에 추가
-                        for (member in members) {
-                            friendProfileList.add(member)
-                        }
-                        updateAdapterData(friendProfileList)
-                    }
-                }
-                else
-                {
-                    Log.d("API Error", "API call successful. Response: $response")
-                }
-            }
-            override fun onFailure(
-                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
-                t: Throwable)
-            {
-                // API 요청 자체가 실패한 경우 처리
-            }
-        })
+//
+//        retrofitAPI.getdefaultGroupList(groupId).enqueue(object :
+//            Callback<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>> {
+//            override fun onResponse(
+//                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
+//                response: Response<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
+//            ) {
+//                if (response.isSuccessful)
+//                {
+//                    Log.d("CALL", "fucking here3")
+//                    Log.d("CALL2", "API call successful. Response: $response")
+//                    val friendList = response.body()
+//                    friendList?.let { members ->
+//                        // 받은 멤버 데이터를 friendProfileList에 추가
+//                        for (member in members) {
+//                            friendProfileList.add(member)
+//                        }
+//                        updateAdapterData(friendProfileList)
+//                    }
+//                }
+//                else
+//                {
+//                    Log.d("API Error", "API call successful. Response: $response")
+//                }
+//            }
+//            override fun onFailure(
+//                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
+//                t: Throwable)
+//            {
+//                // API 요청 자체가 실패한 경우 처리
+//            }
+//        })
     }
 
 //        retrofitAPI.getMemberAllList().enqueue(object : Callback<List<MemberAll.MemberAllItem>> {

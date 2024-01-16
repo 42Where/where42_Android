@@ -25,172 +25,210 @@ class RetrofitConnection {
         private const val BASE_URL = "http://13.209.149.15:8080/"
         private var INSTANCE: Retrofit? = null
 
-        fun getInstance(): Retrofit {
+        fun getInstance(token: String): Retrofit {
             if (INSTANCE == null) {  // null인 경우에만 생성
 
                 val interceptor = createInterceptor()
+                val tokenInterceptor = addToken(token)
 
                 var loggingInterceptor = HttpLoggingInterceptor()
                 loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-                val gson = GsonBuilder().setLenient().create()
-                val nullOnEmptyConverterFactory = NullOnEmptyConverterFactory()
+                val gson = GsonBuilder()
+                    .setLenient()
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS")
+                    .create()
+
+//                val nullOnEmptyConverterFactory = NullOnEmptyConverterFactory()
 
                 val okHttpClient = OkHttpClient.Builder()
                     .addInterceptor(interceptor) // 생성한 Interceptor 추가
+                    .addInterceptor(tokenInterceptor)
                     .addInterceptor(loggingInterceptor)
 
                 INSTANCE = Retrofit.Builder()
                     .baseUrl(BASE_URL)  // API 베이스 URL 설정
                     .client(okHttpClient.build()) // OkHttp 클라이언트를 Retrofit에 설정
-                    .addConverterFactory(nullOnEmptyConverterFactory)
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .addConverterFactory(
-                        GsonConverterFactory.create(
-                            GsonBuilder().setLenient().create()
-                        )
-                    )
+                    .addConverterFactory(ScalarsConverterFactory.create()) // 칼라(Scalar) 형식의 응답을 변환하기 위한 스칼라 컨버터를 추가합니다. 스칼라는 문자열이나 기본 타입과 같이 단일 값으로 이루어진 응답을 처리하는 데 사용됩니다.
+                    .addConverterFactory(NullOnEmptyConverterFactory)
+                    .addConverterFactory(GsonConverterFactory.create(gson)) // 스칼라(Scalar) 형식의 응답을 변환하기 위한 스칼라 컨버터를 추가합니다. 스칼라는 문자열이나 기본 타입과 같이 단일 값으로 이루어진 응답을 처리하는 데 사용됩니다.
                     .build()
             }
             return INSTANCE!!
         }
 
+        private fun addToken(token: String) : Interceptor {
+            return Interceptor { chain ->
+                val originalRequest = chain.request()
+                val modifiedRequest = originalRequest.newBuilder()
+                    .header("Authorization", "Bearer $token") // 여기서 "Bearer"는 토큰 타입에 따라 다를 수 있습니다.
+                    .build()
+
+                chain.proceed(modifiedRequest)
+            }
+        }
+
 
         private fun createInterceptor(): Interceptor {
             return Interceptor { chain ->
+                //request.url -> Interceptor is invoked for URL: http://13.209.149.15:8080/v3/member?intraId=6
                 val request = chain.request()
-                Log.d("Interceptor", "Interceptor is invoked for URL: ${request.url}")
+                Log.e("hello", "hello")
 
+                //response 출력
+                //->  Interceptor is invoked for URL: Response{protocol=h2, code=200, message=, url=https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=1251f8f333239c9642c220b6df4e6b8e6900155d80d1bb64}
                 val response = chain.proceed(request)
-                Log.d("Interceptor", "Interceptor is invoked for URL: ${response}")
 
+                //requestURL JSON 처럼 만들어주기
                 val requestURL =  "{" + request.url + "}"
-                Log.e("Interceptor", "a ${requestURL}")
+
+                //contentType : text/html;charset=utf-8
                 val contentType = response.body?.contentType()
-                val bodyString = response.body?.string() ?: ""
+
+                //body에는 html 파일 들어있음.
+//                val bodyString = response.body?.string() ?: ""
                 val url = response.request.url.toString()
-                Log.e("Interceptor", "${url}")
-
-                try {
-                    Log.e("Interceptor", "contentType : ${contentType}")
-                    Log.e("Interceptor", "bodyString ${bodyString}")
-//                    val jsonObject = JSONObject(bodyString)
-                    val jsonObject = JSONObject()
-                    val url2 = "{" + url + "}"
-                    jsonObject.put("url", "{" + url + "}")
-//                    val jsonObject = JSONObject(url)
-                    // JSONObject로 변환된 응답을 이용한 작업 수행
-//                    Log.d("Interceptor", "JSON Response: $jsonObject")
-
-//                    val dataPayload = if (responseJson.has(KEY_DATA)) responseJson[KEY_DATA] else EMPTY_JSON
-                    // 원래의 response를 다시 만들어줍니다.
-                    val newResponse = response.newBuilder()
-                        .code(200)
-                        .addHeader("X-Naver-Client-Secret", "fyfwt9PCUN")
-                        .body(requestURL.toString().toResponseBody())
-                        .message(requestURL)
-                        .build()
-
-                    // newResponse로 반환합니다.
-                    Log.e ("Interceptor", "plz")
-//                    return@Interceptor newResponse
-                    return@Interceptor newResponse
-//                    return@Interceptor response.newBuilder()
+                Log.e("redirectURL", " redirectURL ${url}")
+//                try {
+////                    val jsonObject = JSONObject()
+////                    val url2 = "{" + url + "}"
+////                    jsonObject.put("url", "{" + url + "}")
+//                    // 원래의 response를 다시 만들어줍니다.
+//                    val newResponse = response.newBuilder()
 //                        .code(200)
-//                        .body(url.toResponseBody())
+//                        .addHeader("X-Naver-Client-Secret", "fyfwt9PCUN")
+//                        .body(requestURL.toString().toResponseBody())
+//                        .message(requestURL)
 //                        .build()
-                } catch (e: JSONException) {
-                    // JSON 파싱 중 에러 발생 시, 예외 처리
-                    Log.e("Interceptor", "Error parsing JSON: ${e.message}")
-                    Log.e("Interceptor", " ${response}")
-                    return@Interceptor response
-                }
-
-
-                Log.d("Interceptor", "Interceptor is invoked for URL: ${url}")
-                if (url.startsWith("https:")) {
+//
+//                    // newResponse로 반환합니다.
+//                    return@Interceptor newResponse
+//                } catch (e: JSONException) {
+//                    // JSON 파싱 중 에러 발생 시, 예외 처리
+//                    return@Interceptor response
+//                }
+                Log.d("Interceptor", "code ${response.code}}")
+                //이건 토큰 재발급
+                if (url.startsWith("http://13.209.149.15:8080") && response.code == 401)
+                {
+                    Log.d("Interceptor", "url : ${url}")
                     Log.d("Interceptor", "here")
                     return@Interceptor response.newBuilder()
-                        .code(200)
+                        .code(401)
+                        .addHeader("redirectUrl", requestURL)
                         .body(requestURL.toResponseBody())
                         .build()
-
-                } else {
+//                    return@Interceptor response.newBuilder()
+//                        .code(200)
+//                        .body(requestURL.toResponseBody())
+//                        .build()
+                }
+                //여기는 token이 없음
+                else if (url.startsWith("https://auth.42.fr"))
+                {
                     return@Interceptor response.newBuilder()
-                        .code(401)
+                        .code(201)
+                        .addHeader("redirectUrl", requestURL)
                         .message("CustomInterceptor: There is no value starting with \"https:\"")
                         .build()
                 }
+                else {
+//                    return@Interceptor response.newBuilder()
+//                        .code(200)
+//                        .message("CustomInterceptor: SUC")
+//                        .build()
+                    Log.e("plz", "plz ${response}")
+                    Log.e("plz", "plz body : ${response.body}")
+//                    Log.e("plz", "plz body2 : ${bodyString}")
+//                    return@Interceptor response
+                    val responseBodyString = response.body?.string() ?: ""
+
+                    Log.e("plz", "plz body : ${responseBodyString}")
+//                    val responseBodyString = response.peekBody(Long.MAX_VALUE).string()
+                    return@Interceptor response.newBuilder()
+                        .code(200) // 변경하고자 하는 새로운 HTTP 코드
+                        .message("CustomInterceptor: SUC")
+                        //.body(response.body) // 기존의 body를 그대로 사용
+//                        .body(bodyString)
+//                        .body(response.peekBody(Long.MAX_VALUE))
+                        .body(responseBodyString.toResponseBody(response.body?.contentType()))
+                        .build()
+                }
             }
         }
 
-        class NullOnEmptyConverterFactory : Converter.Factory() {
+        //NullOnEmptyConverterFactory 클래스는 Retrofit에서 사용되는 Converter.Factory를 상속하며, 주로 빈 응답(Empty Response)에 대한 처리를 담당합니다.
+        // 이 클래스는 응답이 비어있는 경우에 null을 반환하도록 동작합니다.
+        //여러 Retrofit Converter.Factory 중 하나로서, 주로 서버로부터의 응답을 변환하기 위한 컨버터를 제공합니다
+        private val NullOnEmptyConverterFactory = object : Converter.Factory() {
             fun converterFactory() = this
-            override fun responseBodyConverter(type: Type, annotations: Array<out Annotation>, retrofit: Retrofit) = object :
-                Converter<ResponseBody, Any?> {
+            override fun responseBodyConverter(type: Type, annotations: Array<out Annotation>, retrofit: Retrofit) = object : Converter<ResponseBody, Any?> {
                 val nextResponseBodyConverter = retrofit.nextResponseBodyConverter<Any?>(converterFactory(), type, annotations)
-                override fun convert(value: ResponseBody) = if (value.contentLength() != 0L) {
-                    try{
-                        nextResponseBodyConverter.convert(value)
-                    }catch (e:Exception){
-                        e.printStackTrace()
-                        null
-                    }
-                } else{
-                    null
-                }
+                override fun convert(value: ResponseBody) = if (value.contentLength() == 0L) null else nextResponseBodyConverter.convert(value)
             }
         }
 
-        private fun httpLoggingInterceptor(): HttpLoggingInterceptor {
-
-            val interceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-                override fun log(message: String) {
-                    if (message.startsWith("\"https:")) {
-                        // 원하는 작업을 수행하고자 할 때 처리 코드를 추가하세요.
-                        Log.e("Interceptor", "vb")
-                        var url = message
-                    }
-                }
-            })
-            Log.e("Interceptor", "hg ${HttpLoggingInterceptor.Level.BODY}")
-            return interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        }
-
-
-//        private var url: String? = null
+//        class NullOnEmptyConverterFactory : Converter.Factory() {
+//            fun converterFactory() = this
+//            override fun responseBodyConverter(
+//                type: Type,
+//                annotations: Array<out Annotation>,
+//                retrofit: Retrofit) = object : Converter<ResponseBody, Any?> {
+//                val nextResponseBodyConverter = retrofit.nextResponseBodyConverter<Any?>(converterFactory(), type, annotations)
+//                override fun convert(value: ResponseBody): Any? {
+//                    Log.e("herenull", "where?")
+//                    Log.e("herenull", "value : ${value}?")
+//                    Log.e("herenull", "type : ${type}?")
+//                    Log.e("herenull", "value len : ${value.contentLength()}")
+//                    return if (value.contentLength() != 0L) {
+//                        try {
+//                            Log.e("herenull", "where?1")
+//                            Log.e("herenull", "value : ${nextResponseBodyConverter.convert(value)}")
+//                            nextResponseBodyConverter.convert(value)
+//                        } catch (e: Exception) {
+//                            Log.e("herenull", "where?2")
+//                            e.printStackTrace()
+//                            getDefaultForType(type)
+//                        }
+//                    } else {
+//                        Log.e("herenull", "where?3")
+//                        getDefaultForType(type)
+//                    }
+//                }
 //
-//        private fun createCustomInterceptor(): Interceptor {
-//            return object : Interceptor {
-//                override fun intercept(chain: Interceptor.Chain): Response {
-//                    val response = chain.proceed(chain.request())
-//
-//                    if (url != null) {
-//                        return response.newBuilder()
-//                            .code(200)
-//                            .body(url!!.toResponseBody())
-//                            .build()
+//                private fun getDefaultForType(type: Type): Any? {
+//                    // 여기에서 기본값을 설정하거나, 타입에 따라 다른 기본값을 설정할 수 있습니다.
+//                    // 예를 들어, 클래스 타입인 경우에는 빈 인스턴스를 생성하여 반환할 수 있습니다.
+//                    return when (type) {
+//                        String::class.java -> ""
+//                        Int::class.java -> 0
+//                        Boolean::class.java -> false
+//                        // 기타 타입에 대한 기본값을 설정할 수 있음
+//                        else -> null
 //                    }
 //
-//                    return response.newBuilder()
-//                        .code(502)
-//                        .message("CustomInterceptor: There is no value starting with \"https:\"")
-//                        .build()
 //                }
+//
+////                override fun convert(value: ResponseBody) =
+////                    if (value.contentLength() != 0L)
+////                    {
+////                        try{
+////                            Log.e("nextResponseBodyConverter", "valuee : ${nextResponseBodyConverter}?")
+////                            Log.e("herenull", "value a: ${nextResponseBodyConverter.convert(value)}")
+////                            nextResponseBodyConverter.convert(value)
+////                        }catch (e:Exception){
+////                            e.printStackTrace()
+////                            null
+////                        }
+////                    } else{
+////                        Log.e("nextResponseBodyConverter", "valuee : ${nextResponseBodyConverter}?")
+////                        Log.e("herenull", "value a: ${nextResponseBodyConverter.convert(value)}")
+////                        null
+////                    }
+//
 //            }
 //        }
-//
-//        private fun createHttpLoggingInterceptor(): HttpLoggingInterceptor {
-//            val interceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-//                override fun log(message: String) {
-//                    if (message.startsWith("\"https:")) {
-//                        url = message
-//                    }
-//                }
-//            })
-//            return interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-//        }
+
     }
 }
 

@@ -29,51 +29,51 @@ class GroupDetailViewModel : ViewModel() {
 
 
     fun getDefaultGroupMemberList(groupId: Int) {
-        val retrofitAPI = RetrofitConnection.getInstance().create(Deafult_friendGroup_memberlist::class.java)
-//        val service = retrofit.create(Deafult_friendGroup_memberlist::class.java)
-
-        Log.e("GroupID", "${groupId}")
-        retrofitAPI.getdefaultGroupList(groupId).enqueue(object :
-            Callback<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>> {
-            override fun onResponse(
-                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
-                response: Response<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
-            ) {
-                if (response.isSuccessful) {
-                    defaultGroupMemberList.value = response.body()
-                    Log.d("defaultGroupMemberList", "${defaultGroupMemberList.value}")
-//                    val friendList = response.body()
-//                    friendList?.let { members ->
-//                        for (member in members) {
-//                            // 기존 LiveData에 새로운 값을 추가하기 위해 기존 값에 새로운 값(member)을 추가합니다.
-//                            val currentList = defaultGroupMemberList.value.orEmpty().toMutableList()
-//                            currentList.add(member)
-//                            Log.d("currentItem", "${currentList}")
-//                            defaultGroupMemberList.postValue(currentList)
-//                        }
-//                    }
-                    Log.d("defaultGroupMemberList", "${defaultGroupMemberList}")
-//                    friendList?.let { members ->
-//                        // 받은 멤버 데이터를 friendProfileList에 추가
-//                        for (member in members) {
-//                            defaultGroupMemberList.value.add(member)
-//                        }
-//                    }
-                    Log.e("viewModel suc", "here1")
-                } else {
-                    // Handle unsuccessful response
-                    Log.e("viewModel Error", "here1")
-                }
-            }
-
-            override fun onFailure(
-                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
-                t: Throwable
-            ) {
-                Log.e("viewModel Error", "here2")
-                // Handle network failure
-            }
-        })
+//        val retrofitAPI = RetrofitConnection.getInstance().create(Deafult_friendGroup_memberlist::class.java)
+////        val service = retrofit.create(Deafult_friendGroup_memberlist::class.java)
+//
+//        Log.e("GroupID", "${groupId}")
+//        retrofitAPI.getdefaultGroupList(groupId).enqueue(object :
+//            Callback<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>> {
+//            override fun onResponse(
+//                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
+//                response: Response<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
+//            ) {
+//                if (response.isSuccessful) {
+//                    defaultGroupMemberList.value = response.body()
+//                    Log.d("defaultGroupMemberList", "${defaultGroupMemberList.value}")
+////                    val friendList = response.body()
+////                    friendList?.let { members ->
+////                        for (member in members) {
+////                            // 기존 LiveData에 새로운 값을 추가하기 위해 기존 값에 새로운 값(member)을 추가합니다.
+////                            val currentList = defaultGroupMemberList.value.orEmpty().toMutableList()
+////                            currentList.add(member)
+////                            Log.d("currentItem", "${currentList}")
+////                            defaultGroupMemberList.postValue(currentList)
+////                        }
+////                    }
+//                    Log.d("defaultGroupMemberList", "${defaultGroupMemberList}")
+////                    friendList?.let { members ->
+////                        // 받은 멤버 데이터를 friendProfileList에 추가
+////                        for (member in members) {
+////                            defaultGroupMemberList.value.add(member)
+////                        }
+////                    }
+//                    Log.e("viewModel suc", "here1")
+//                } else {
+//                    // Handle unsuccessful response
+//                    Log.e("viewModel Error", "here1")
+//                }
+//            }
+//
+//            override fun onFailure(
+//                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
+//                t: Throwable
+//            ) {
+//                Log.e("viewModel Error", "here2")
+//                // Handle network failure
+//            }
+//        })
 
     }
 

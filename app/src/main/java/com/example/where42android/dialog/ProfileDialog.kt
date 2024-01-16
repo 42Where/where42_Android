@@ -15,6 +15,8 @@ import android.widget.TextView
 import com.example.where42android.Base_url_api_Retrofit.GroupChangeName
 import com.example.where42android.Base_url_api_Retrofit.GroupNameRequest
 import com.example.where42android.Base_url_api_Retrofit.GroupNameResponse
+import com.example.where42android.Base_url_api_Retrofit.JoinAPI
+import com.example.where42android.Base_url_api_Retrofit.JoinResponse
 import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.example.where42android.R
 import com.example.where42android.main.MainDeleteGroupDetailList
@@ -51,6 +53,62 @@ class ProfileDialog (private val context: Context) {
         dialog.show()
     }
 }
+
+class AgreeDialog (private val context: Context) {
+    private val agreedialog = Dialog(context)
+
+    fun showAgreeDialog(token:String, intraId: String?, agreement:String?, callback: (Boolean) -> Unit)
+    {
+        agreedialog.setContentView(R.layout.activity_profile_agree)
+        agreedialog.setCanceledOnTouchOutside(true)
+        agreedialog.setCancelable(true)
+
+        agreedialog.window?.setGravity(Gravity.CENTER)
+        agreedialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val btnCancel = agreedialog.findViewById<TextView>(R.id.cancel)
+        val btnSubmit = agreedialog.findViewById<Button>(R.id.submit)
+        btnSubmit.setOnClickListener {
+
+            //Join api 호출해야됨
+            val retrofitAPI = RetrofitConnection.getInstance(token).create(JoinAPI::class.java)
+
+            val call = retrofitAPI.join(intraId?.toInt() ?: -1)
+            call.enqueue(object : retrofit2.Callback<JoinResponse> {
+                override fun onResponse(call: Call<JoinResponse>, response: Response<JoinResponse>) {
+                    if (response.isSuccessful) {
+                        val joinResponse = response.body()
+                        // joinResponse를 이용하여 응답 처리
+                        Log.e("joinResponse", "joinResponse : ${joinResponse}" )
+                        callback(true)
+                    } else {
+                        // 서버 응답이 실패인 경우
+                        Log.e("joinResponse", "joinResponse f: ${response}")
+                        callback(true)
+                    }
+                }
+
+                override fun onFailure(call: Call<JoinResponse>, t: Throwable) {
+                    Log.e("joinResponse", "joinResponse fa : ${t.message}")
+                    // 네트워크 실패 또는 예외 발생
+                }
+            })
+
+
+            agreedialog.dismiss()
+
+        }
+
+        btnCancel.setOnClickListener {
+
+            agreedialog.dismiss()
+            callback(false)
+        }
+        agreedialog.show()
+    }
+}
+
+
 
 class GroupDialog (private val context: Context, val viewModel: SharedViewModel_GroupsMembersList) {
     private val dialog = Dialog(context)
@@ -115,7 +173,7 @@ class GroupDialog (private val context: Context, val viewModel: SharedViewModel_
                     Log.d("here2", "here2")
 //                //input == changegroupname,  groupNameChange = groupId.toInt()
                     val retrofitAPI =
-                        RetrofitConnection.getInstance().create(GroupChangeName::class.java)
+                        RetrofitConnection.getInstance("awd").create(GroupChangeName::class.java)
 
                     val groupChangedata = GroupNameRequest(groupId.toInt(), groupName)
                     val call = retrofitAPI.groupChangeName(groupChangedata)
@@ -234,4 +292,7 @@ class GroupDialog (private val context: Context, val viewModel: SharedViewModel_
         }
         dialog.show()
     }
+
+
+
 }

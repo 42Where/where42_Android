@@ -38,7 +38,7 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: ActivityMainPageFragmentBinding
 
-    private val retrofitAPI = RetrofitConnection.getInstance().create(GroupMemberListService::class.java)
+    private val retrofitAPI = RetrofitConnection.getInstance("awd").create(GroupMemberListService::class.java)
     private val emptyItemList = mutableListOf<RecyclerOutViewModel>()
 
 //    private lateinit var viewModel: GroupsMembersList

@@ -8,31 +8,10 @@ import java.util.Date
 import java.net.URLDecoder
 import java.util.Objects
 
-data class OAuthResponse(
-    val code: String,
-    val state: String
-)
 
-//fun parseOAuthResponse(url: String): OAuthResponse {
-//    val uri = URLDecoder.decode(url, "UTF-8")
-//    val params = uri.split("?").last().split("&")
-//    val codeParam = params.find { it.startsWith("code=") }
-//    val stateParam = params.find { it.startsWith("state=") }
-//
-//    val code = codeParam?.substringAfter("code=")
-//    val state = stateParam?.substringAfter("state=")
-//
-//    return OAuthResponse(code.orEmpty(), state.orEmpty())
-//}
-//
-//fun main() {
-//    val url = "https://profile.intra.42.fr/users/auth/keycloak_student/callback?code=received_authorization_code&state=your_state_value"
-//    val oAuthResponse = parseOAuthResponse(url)
-//
-//    println("Authorization Code: ${oAuthResponse.code}")
-//    println("State: ${oAuthResponse.state}")
-//}
-//
+data class JoinResponse(
+    val message: String
+)
 
 
 //Member
@@ -46,7 +25,6 @@ data class Member(
     val agree: Boolean,
     val defaultGroupId: Int,
     var location: String,
-    var data: Object
 )
 
 //@POST("v3/member/comment")
