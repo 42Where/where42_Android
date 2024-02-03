@@ -62,10 +62,10 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/comment"
             android:layout_marginStart="8dp"
-            android:background="@drawable/location_shape"
+            android:background="@drawable/location_shape_another_version"
             android:gravity="center"
             android:clipToOutline="true"
-            android:text="CX2R1S5"
+            android:text="CX2R1S5CC"
             android:fontFamily="@font/gmarketsans_medium"
             android:textColor="#FCFDFF"
             android:textSize="@dimen/font_small"
@@ -74,14 +74,36 @@
             app:layout_constraintStart_toEndOf="@id/intra_id"
             app:layout_constraintBottom_toTopOf="@id/guideline"/>
 
-        <CheckBox
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:buttonTint="#132743"
-            android:id="@+id/checkBox"/>
+<!--    android:layout_width="24dp"-->
+<!--    android:layout_height="24dp"-->
+<!--    android:layout_marginRight="6dp"-->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.94" />
+
+    <CheckBox
+        android:layout_width="@dimen/newgroup_layout_padding_top_bottom"
+        android:layout_height="@dimen/newgroup_layout_padding_top_bottom"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline2"
+
+        app:layout_constraintTop_toTopOf="parent"
+        android:buttonTint="#132743"
+        android:id="@+id/checkBox"/>
+<!--        <CheckBox-->
+<!--            android:layout_width="@dimen/newgroup_layout_padding_top_bottom"-->
+<!--            android:layout_height="@dimen/newgroup_layout_padding_top_bottom"-->
+<!--            android:layout_marginRight="@dimen/edittext_layout_padding"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            android:buttonTint="#132743"-->
+<!--            android:id="@+id/checkBox"/>-->
 
 <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 

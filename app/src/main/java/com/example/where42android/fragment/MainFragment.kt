@@ -1,8 +1,12 @@
 package com.example.where42android.fragment
 
 
-import SharedViewModel_GroupsMembersList
+//import com.example.where42android.databinding.FragmentActivityMainPageBinding
+//import com.example.where42android.group_api.GroupViewModel
+//import com.example.where42android.group_api.GroupViewModelFactory
 
+
+import SharedViewModel_GroupsMembersList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,36 +14,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.where42android.Base_url_api_Retrofit.GroupMemberListService
+import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
+import com.example.where42android.R
 import com.example.where42android.adapter.OutRecyclerViewAdapter
-//import com.example.where42android.databinding.FragmentActivityMainPageBinding
-//import com.example.where42android.group_api.GroupViewModel
-//import com.example.where42android.group_api.GroupViewModelFactory
+import com.example.where42android.databinding.ActivityMainPageFragmentBinding
 import com.example.where42android.model.RecyclerInViewModel
 import com.example.where42android.model.RecyclerOutViewModel
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
-import com.example.where42android.Base_url_api_Retrofit.groups_memberlist
-import retrofit2.Call
-import com.example.where42android.Base_url_api_Retrofit.GroupMemberListService
-import com.example.where42android.LiveData.GroupsMembersList
-import com.example.where42android.main.MainPageActivity
-import com.example.where42android.R
-import com.example.where42android.databinding.ActivityMainPageFragmentBinding
-import retrofit2.Callback
 
 
-import retrofit2.Response
+class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
 
-
-class MainFragment : Fragment() {
 
     private lateinit var binding: ActivityMainPageFragmentBinding
-
-    private val retrofitAPI = RetrofitConnection.getInstance("awd").create(GroupMemberListService::class.java)
+    private val token = receivedToken
+    private val retrofitAPI = RetrofitConnection.getInstance(token).create(GroupMemberListService::class.java)
     private val emptyItemList = mutableListOf<RecyclerOutViewModel>()
+    private val intraid = IntraId
 
 //    private lateinit var viewModel: GroupsMembersList
 
@@ -86,9 +81,11 @@ class MainFragment : Fragment() {
                             emoji = intraId.image ?: "",
                             location = intraId.location ?: "",
                             comment = intraId.comment ?: "",
-                            intra_id = intraId.intraName ?: ""
+                            intra_name = intraId.intraName ?: "",
+                            included_group = groupDetail.groupId ?: -1,
+                            intra_id = intraId.intraId ?: -1,
                         )
-
+                        Log.d("groupId", "id : ${groupDetail.groupId}")
                         innerItemList.add(recyclerInViewModel)
                     }
 
@@ -99,6 +96,15 @@ class MainFragment : Fragment() {
                     )
 
                     itemList.add(recyclerOutViewModel)
+                }
+
+                // itemList에서 "default" 그룹을 찾아서 제거하고 다시 맨 뒤로 추가
+                val defaultGroup = itemList.firstOrNull { it.title == "default" }
+
+                if (defaultGroup != null) {
+                    itemList.remove(defaultGroup)
+                    defaultGroup.title = "친구 목록"
+                    itemList.add(defaultGroup)
                 }
 
                 // Set up RecyclerView Adapter
@@ -117,8 +123,8 @@ class MainFragment : Fragment() {
         }
 
         // Call function to fetch data
-        val intraId = 6 // Replace this with your memberId value
-        sharedViewModel.getGroupMemberList(intraId)
+//        val intraId = 6 // Replace this with your memberId value
+        sharedViewModel.getGroupMemberList(intraid, token)
     }
 }
 

@@ -7,15 +7,19 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import android.util.Log
+import android.view.View
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.example.where42android.MainActivity
+import com.example.where42android.R
+import com.example.where42android.UserSettings
 import com.example.where42android.dialog.AgreeDialog
 import com.example.where42android.main.MainPageActivity
 
-class CustomWebViewClient(private val context: Context) : WebViewClient() {
+class CustomWebViewClient(private val context: Context, private val activity: Activity) : WebViewClient() {
 
 
 
@@ -63,6 +67,13 @@ class CustomWebViewClient(private val context: Context) : WebViewClient() {
         editor.putString("intraId", intraid[1])
         editor.putString("agreement", agreement[1])
         editor.putString("AuthToken", tokenSplit[0])
+
+        val userSettings = UserSettings.getInstance()
+        userSettings.token = tokenSplit[0]
+        userSettings.intraId = intraid[1].toInt()
+        userSettings.agreement = agreement[1].toBoolean()
+
+//        editor.putString("AuthToken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k")
         editor.apply()
     }
 
@@ -72,19 +83,27 @@ class CustomWebViewClient(private val context: Context) : WebViewClient() {
         Log.e("onPageFinished", "here")
         // 특정 조건을 만족하면 토큰을 가져와서 SharedPreferences에 저장
         if (url != null && shouldSaveToken(url)) {
+//            WebView.GONE
             WebView.GONE
+            activity.runOnUiThread {
+                activity.findViewById<WebView>(R.id.webView).visibility = View.GONE
+            }
             Log.e("onPageFinished", "here2")
             val token = retrieveTokenFromUrl(url)
             Log.e("onPageFinished", "${token}")
             saveTokenToSharedPreferences(token)
 
+            val token1 = getTokenFromSharedPreferences(context) ?: "notoken"
+            Log.d("token_check", "Stored Token after_custom : ${token1}")
+
             //여기에 Dialog 넣어주면 될 듯
             val contexttoken = getTokenFromSharedPreferences(context) ?: "notoken"
+            Log.d("token_check", "Stored Token  contexttoken after_custom : ${contexttoken}")
             val intraId = getIntraidFromSharedPreferences(context)
             val agreement = getAgreementFromSharedPreferences((context))
 
             val agreeDialog = AgreeDialog(context)
-            agreeDialog.showAgreeDialog(contexttoken, intraId, agreement) { result ->
+            agreeDialog.showAgreeDialog(contexttoken, intraId, agreement, context) { result ->
                 if (result)
                 {
                     showMainPageActivity()

@@ -33,6 +33,7 @@
         <activity android:name=".main.MainPageActivity"/>
         <activity android:name=".main.MainSettingPage" />
         <activity android:name=".main.MainDeleteGroupDetailList" />
+        <activity android:name=".main.MainAddGroupDetailList"/>
     </application>
 
 </manifest>

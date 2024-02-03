@@ -52,11 +52,11 @@
 
 <!--        android:text="@{model.intra_id}"-->
         <TextView
-            android:id="@+id/intra_id"
+            android:id="@+id/intra_name"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/intra_ID"
             android:layout_marginStart="8dp"
-            android:text="@{model.intra_id}"
+            android:text="@{model.intra_name}"
             android:textSize="@dimen/font_small"
             android:gravity="bottom"
             android:fontFamily="@font/gmarketsans_bold"
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/comment"
             android:layout_marginStart="8dp"
-            android:background="@drawable/location_shape"
+            android:background="@drawable/location_shape_another_version"
             android:gravity="center"
             android:clipToOutline="true"
             android:text="@{model.location}"
@@ -96,7 +96,7 @@
             android:textSize="@dimen/font_small"
             android:maxLines="1"
             android:ellipsize="end"
-            app:layout_constraintStart_toEndOf="@id/intra_id"
+            app:layout_constraintStart_toEndOf="@id/intra_name"
             app:layout_constraintBottom_toTopOf="@id/guideline"/>
 
         <android.widget.ImageButton

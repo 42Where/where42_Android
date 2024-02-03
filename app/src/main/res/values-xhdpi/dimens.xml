@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    activity_main_page-->
-    <dimen name="main_profile_card">96dp</dimen>
+    <dimen name="main_profile_card">86.5dp</dimen>
     <dimen name="main_profile_card_padding">16dp</dimen>
 
     <dimen name="main_profile_image">56dp</dimen>
@@ -17,6 +17,17 @@
 
     <dimen name="font_medium_change">12sp</dimen>
 
+
+    <dimen name="CircleImageView_border">2dp</dimen>
+
+    <dimen name="newgroup_image">8dp</dimen>
+    <dimen name="newgroup_image_paddingLeft">9.4dp</dimen>
+
+
+    <dimen name="button_text_top">1.3dp</dimen>
+
+
+
     <dimen name="buttons_w">173dp</dimen>
     <dimen name="buttons_h">18dp</dimen>
     <dimen name="new_group_w">57dp</dimen>
@@ -26,6 +37,14 @@
     <dimen name="filter_available_h">18dp</dimen>
     <dimen name="filter_available_font">10sp</dimen>
     <dimen name="list_titlebar_h">28dp</dimen>
+
+
+
+    <dimen name="intra_name">8dp</dimen>
+    <dimen name="location_info">4dp</dimen>
+    <dimen name="Comment">2dp</dimen>
+    <dimen name="checkBox">10dp</dimen>
+
     <!--    <dimen name="group_font">14sp</dimen>-->
     <dimen name="group_font">10sp</dimen>
     <!--    <dimen name="group_font_count">10sp</dimen>-->
@@ -34,8 +53,8 @@
     <dimen name="list_padding_start_end">12dp</dimen>
     <dimen name="list_padding_top_bottom">6dp</dimen>
     <dimen name="divider">1dp</dimen>
-    <dimen name="option_buttons_w">8dp</dimen>
-    <dimen name="option_buttons_h">8dp</dimen>
+    <dimen name="option_buttons_w">10.5dp</dimen>
+    <dimen name="option_buttons_h">10.5dp</dimen>
 
     <!--    list_view_detail-->
 
@@ -61,7 +80,8 @@
     <!--    header-->
     <dimen name="layout_height_header">32dp</dimen>
     <dimen name="layout_height_padding">6dp</dimen>
-    <dimen name="where42_logo_width">87dp</dimen>
+<!--    <dimen name="where42_logo_width">87dp</dimen>-->
+    <dimen name="where42_logo_width">66dp</dimen>
     <dimen name="where42_logo_height">21dp</dimen>
     <dimen name="header_setting_btn">24dp</dimen>
 
@@ -79,7 +99,12 @@
     <dimen name="editstatus_layout_width">200dp</dimen>
     <dimen name="editstatus_layout_height">74dp</dimen>
 
+
+    <dimen name="newgroup_layout_padding_bottom">21.3dp</dimen>
+    <dimen name="newgroup_layout_padding_top">16dp</dimen>
+
     <dimen name="newgroup_layout_padding_top_bottom">16dp</dimen>
+
     <dimen name="newgroup_layout_padding_start_end">24dp</dimen>
     <dimen name="newgroup_textsize">10sp</dimen>
     <dimen name="edittext_layout_width">199.5dp</dimen>
@@ -106,7 +131,7 @@
     <!--    activity_editgroup_popup-->
     <dimen name="editgroup_layout_height">152dp</dimen>
     <dimen name="groupname_textview_height">26dp</dimen>
-    <dimen name="groupname_textsize">9dp</dimen>
+    <dimen name="groupname_textsize">9sp</dimen>
     <dimen name="group_Button_height">42dp</dimen>
 
     <!--    activiy_profile_popup.xml-->
@@ -115,5 +140,12 @@
 
 
     <dimen name="profile_popup_detail_layout_height">80dp</dimen>
+
+    <!--    actvitiy_editgroupmember_popup.xml-->
+    <dimen name="editgroupmember_button_width">85dp</dimen>
+    <dimen name="editgroupmember_button_height">35dp</dimen>
+
+    <!--activity_deletegroup_detail_list-->
+    <dimen name="groupname_textsize_deletegroup">16sp</dimen>
 
 </resources>

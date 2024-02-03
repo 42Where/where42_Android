@@ -25,8 +25,7 @@ import retrofit2.Response
 // 여기에는 Kotlin의 object 키워드를 활용하여 싱글톤 객체를 만드는 방법이 있습니다.
 class ProfileList private constructor(): ViewModel() {
 
-//    private val retrofitAPI = RetrofitConnection.getInstance().create(MemberAPI::class.java)
-private lateinit var retrofitAPI : MemberAPI
+
     private val profile = MutableLiveData<Member?>()
     val profileLiveData: LiveData<Member?>
         get() = profile
@@ -43,34 +42,90 @@ private lateinit var retrofitAPI : MemberAPI
         }
     }
 
-    fun getMemberData(intraId: Int, token: String)
-    {
-        retrofitAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
-        val call = retrofitAPI.getMember(intraId)
 
-        call.enqueue(object : Callback<Member> {
-            override fun onResponse(
-                call: Call<Member>,
-                response: Response<Member>
-            ) {
-//                Log.e("check2", "res Suc ${response}")
-//                Log.e("check2", "res Suc body ${response.body()}")
-                Log.e("check2", "res Suc $response")
-                Log.e("check2", "res Suc code ${response.code()}")
-                Log.e("check2", "res Suc message ${response.message()}")
-//                val bodyString = response.body()?.string()
-//                Log.e("check2", "res Suc body $bodyString")
 
-                val res = response.body()
 
-                Log.e("check2", "res Suc ${res}")
+//    fun getMemberData(intraId: Int, token: String)
+//    {
+//        retrofitAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
+//        val call = retrofitAPI.getMember(intraId)
+//
+//        call.enqueue(object : Callback<Member> {
+//            override fun onResponse(
+//                call: Call<Member>,
+//                response: Response<Member>
+//            ) {
+////                Log.e("check2", "res Suc ${response}")
+////                Log.e("check2", "res Suc body ${response.body()}")
+//                Log.e("check2", "res Suc $response")
+//                Log.e("check2", "res Suc code ${response.code()}")
+//                Log.e("check2", "res Suc message ${response.message()}")
+////                val bodyString = response.body()?.string()
+////                Log.e("check2", "res Suc body $bodyString")
+//
+//                val res = response.body()
+//
+//                Log.e("check2", "res Suc ${res}")
+//                if (response.isSuccessful) {
+//                    val member: Member? = res
+//                    Log.e("check2", "member Suc ${member}")
+//                    member?.let {
+//                        profile.value = it
+//                        Log.e("check2", "Suc ${response.code()}")
+//                        Log.e("check2", "Suc ${token}")
+//                    } ?: run {
+//                        profile.value = Member(
+//                            intraId = -1,
+//                            intraName = "",
+//                            grade = "",
+//                            image = "",
+//                            comment = "",
+//                            inCluster = false,
+//                            agree = false,
+//                            defaultGroupId = -1,
+//                            location = ""
+//                        )
+//                        Log.d("check2", "run ${profile.value}")
+//                        Log.e("check2", "run ${token}")
+//                    }
+//                }
+//                else {
+//                    when (response.code()) {
+//                        401 -> {
+//                            //여기는 토큰이 만료되었다는 거임
+//                            profile.value = null
+//                            Log.d("check2", "401, ${response.headers()}, ${response}")
+//                            Log.e("check2", "401 ${token}")
+//                            //원래는 여기 reissue가 와야함.
+//
+//                        }
+//                        else -> {
+//                            // 기본적으로 어떻게 처리할지 작성
+//                        }
+//                    }
+////                    profile.value = null
+////                    Log.d("ProfileList", "error1")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<Member>, t: Throwable) {
+//                profile.value = null // Setting null in case of network failure or exceptions
+//                Log.d("ProfileList", "error : ${t.message}")
+//            }
+//
+//        })
+//    }
+
+    fun getMemberData(intraId: Int, token : String) {
+        val retrofitAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
+        viewModelScope.launch {
+            try {
+                val response = retrofitAPI.getMember(intraId)
                 if (response.isSuccessful) {
-                    val member: Member? = res
-                    Log.e("check2", "member Suc ${member}")
+                    val member: Member? = response.body()
                     member?.let {
                         profile.value = it
-                        Log.e("check2", "Suc ${response.code()}")
-                        Log.e("check2", "Suc ${token}")
+                        Log.e("ProfileList", "${profile.value}")
                     } ?: run {
                         profile.value = Member(
                             intraId = -1,
@@ -83,35 +138,21 @@ private lateinit var retrofitAPI : MemberAPI
                             defaultGroupId = -1,
                             location = ""
                         )
-                        Log.d("check2", "run ${profile.value}")
-                        Log.e("check2", "run ${token}")
+                        Log.d("ProfileList", "${profile.value}")
                     }
+                } else {
+                    // Handle unsuccessful response
+                    profile.value = null
+                    Log.d("ProfileList", "error1")
                 }
-                else {
-                    when (response.code()) {
-                        401 -> {
-                            //여기는 토큰이 만료되었다는 거임
-                            profile.value = null
-                            Log.d("check2", "401, ${response.headers()}, ${response}")
-                            Log.e("check2", "401 ${token}")
-                            //원래는 여기 reissue가 와야함.
-
-                        }
-                        else -> {
-                            // 기본적으로 어떻게 처리할지 작성
-                        }
-                    }
-//                    profile.value = null
-//                    Log.d("ProfileList", "error1")
-                }
-            }
-
-            override fun onFailure(call: Call<Member>, t: Throwable) {
+            } catch (e: Exception) {
                 profile.value = null // Setting null in case of network failure or exceptions
-                Log.d("ProfileList", "error : ${t.message}")
+                Log.d("ProfileList", "error2")
+                Log.d("ProfileList", "error : ${e.message}")
+                e.printStackTrace()
             }
+        }
 
-        })
     }
 
 
@@ -191,62 +232,67 @@ private lateinit var retrofitAPI : MemberAPI
 //
 //    }
 
-//    fun updateMemberComment(updateCommentRequest: UpdateCommentRequest) {
-//        Log.d("ProfileList", "updateMemberComment : ${profile.value}")
-//        retrofitAPI.updateMemberComment(updateCommentRequest).enqueue(object :
-//            Callback<CommentChangeMember> {
-//            override fun onResponse(
-//                call: Call<CommentChangeMember>,
-//                response: Response<CommentChangeMember>
-//            ) {
-//                if (response.isSuccessful) {
-//                    val commentChangeMember: CommentChangeMember? = response.body()
-//                    val currentProfile = profile.value
-//                    Log.d("ProfileList", "${profile.value}")
-//                    val updatedComment = commentChangeMember?.comment ?: ""
-//
-//                    currentProfile?.let {
-//                        val updatedProfile = it.copy(comment = updatedComment)
-//                        profile.postValue(updatedProfile) // Update LiveData with new value
-//                    } ?: run {
-//                        // Handle the case when profile.value is null
-//                        val newProfile = Member(
-//                            intraId = -1,
-//                            intraName = "",
-//                            grade = "",
-//                            image = "",
-//                            comment = updatedComment,
-//                            inCluster = false,
-//                            agree = false,
-//                            defaultGroupId = -1,
-//                            location = ""
-//                            data = null
-//                        )
-//                        profile.postValue(newProfile)
-//                    }
-//                    // 추가: 성공 응답 로그
-//                    Log.d("ProfileList", "onResponse: Success")
-//                } else {
-//                    // 추가: 실패 응답 로그
-//                    Log.e("ProfileList", "onResponse: Failure")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<CommentChangeMember>, t: Throwable) {
-//                Log.e("respone2 fail", "fail")
-//                // Handle failure
-//                // For example, handle the failure accordingly
-//            }
-//        })
-//    }
+    fun updateMemberComment(updateCommentRequest: UpdateCommentRequest, token: String) {
+        Log.d("ProfileList", "updateMemberComment : ${profile.value}")
+        val retrofitAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
+
+        retrofitAPI.updateMemberComment(updateCommentRequest).enqueue(object :
+            Callback<CommentChangeMember> {
+            override fun onResponse(
+                call: Call<CommentChangeMember>,
+                response: Response<CommentChangeMember>
+            ) {
+                if (response.isSuccessful) {
+                    val commentChangeMember: CommentChangeMember? = response.body()
+                    val currentProfile = profile.value
+                    Log.d("ProfileList", "${profile.value}")
+                    val updatedComment = commentChangeMember?.comment ?: ""
+                    Log.e("checkpoint", "1currentProfile -> ${profile.value}, commentChangeMember -> ${commentChangeMember}")
+                    currentProfile?.let {
+                        Log.e("checkpoint", "2currentProfile -> ${profile.value}, commentChangeMember -> ${commentChangeMember}")
+                        val updatedProfile = it.copy(comment = updatedComment, location = it.location ?: "")
+                        Log.e("checkpoint", "3currentProfile -> ${profile.value}, commentChangeMember -> ${commentChangeMember}")
+                        profile.postValue(updatedProfile) // Update LiveData with new value
+                    } ?: run {
+                        // Handle the case when profile.value is null
+                        val newProfile = Member(
+                            intraId = -1,
+                            intraName = "",
+                            grade = "",
+                            image = "",
+                            comment = updatedComment,
+                            inCluster = false,
+                            agree = false,
+                            defaultGroupId = -1,
+                            location = "",
+                        )
+                        profile.postValue(newProfile)
+                    }
+                    // 추가: 성공 응답 로그
+                    Log.d("ProfileList", "onResponse: Success")
+                } else {
+                    // 추가: 실패 응답 로그
+                    Log.e("ProfileList", "onResponse: Failure")
+                }
+            }
+
+            override fun onFailure(call: Call<CommentChangeMember>, t: Throwable) {
+                Log.e("respone2 fail", "fail")
+                // Handle failure
+                // For example, handle the failure accordingly
+            }
+        })
+    }
 
         private val editlocationcustom = MutableLiveData<locationCustomMemberResponse>()
         val editlocationcustomLiveData: LiveData<locationCustomMemberResponse>
         get() = editlocationcustom
 
-        fun updateMemberCustomLocaton(locationCustomMemberRequest: locationCustomMemberRequest) {
+        fun updateMemberCustomLocaton(locationCustomMemberRequest: locationCustomMemberRequest, token: String) {
+//            val retrofitAPI =
+//                RetrofitConnection_data.getInstance().create(member_custom_location::class.java)
             val retrofitAPI =
-                RetrofitConnection_data.getInstance().create(member_custom_location::class.java)
+                RetrofitConnection.getInstance(token).create(member_custom_location::class.java)
             val call = retrofitAPI.customLocationChange(locationCustomMemberRequest)
 
             call.enqueue(object : Callback<locationCustomMemberResponse> {

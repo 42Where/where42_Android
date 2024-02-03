@@ -2,8 +2,12 @@ package com.example.where42android.Base_url_api_Retrofit
 
 
 import android.util.Log
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonSyntaxException
 import okhttp3.Interceptor
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
@@ -26,11 +30,12 @@ class RetrofitConnection {
         private var INSTANCE: Retrofit? = null
 
         fun getInstance(token: String): Retrofit {
-            if (INSTANCE == null) {  // null인 경우에만 생성
+            val tokenInterceptor = addToken(token)
+
+//            if (INSTANCE == null)
+//            {  // null인 경우에만 생성
 
                 val interceptor = createInterceptor()
-                val tokenInterceptor = addToken(token)
-
                 var loggingInterceptor = HttpLoggingInterceptor()
                 loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -53,7 +58,7 @@ class RetrofitConnection {
                     .addConverterFactory(NullOnEmptyConverterFactory)
                     .addConverterFactory(GsonConverterFactory.create(gson)) // 스칼라(Scalar) 형식의 응답을 변환하기 위한 스칼라 컨버터를 추가합니다. 스칼라는 문자열이나 기본 타입과 같이 단일 값으로 이루어진 응답을 처리하는 데 사용됩니다.
                     .build()
-            }
+//            }
             return INSTANCE!!
         }
 
@@ -83,7 +88,7 @@ class RetrofitConnection {
                 val requestURL =  "{" + request.url + "}"
 
                 //contentType : text/html;charset=utf-8
-                val contentType = response.body?.contentType()
+//                val contentType = response.body?.contentType()
 
                 //body에는 html 파일 들어있음.
 //                val bodyString = response.body?.string() ?: ""
@@ -108,15 +113,35 @@ class RetrofitConnection {
 //                    return@Interceptor response
 //                }
                 Log.d("Interceptor", "code ${response.code}}")
+                val responseBodyString = response.body?.string() ?: ""
+                Log.d("Interceptor", "responseBodyString ${responseBodyString}}")
                 //이건 토큰 재발급
                 if (url.startsWith("http://13.209.149.15:8080") && response.code == 401)
                 {
                     Log.d("Interceptor", "url : ${url}")
                     Log.d("Interceptor", "here")
+                    Log.d("Interceptor", "here2")
+
+                    val regex = Regex("errorCode=(\\d+), errorMessage=(.*?)\\)")
+                    val matchResult = regex.find(responseBodyString)
+
+                    val errorCode = matchResult?.groupValues?.get(1)?.toIntOrNull() ?: 0
+                    val errorMessage = matchResult?.groupValues?.get(2) ?: ""
+
+                    val jsonObject = mapOf(
+                        "CustomException" to mapOf(
+                            "errorCode" to errorCode,
+                            "errorMessage" to errorMessage
+                        )
+                    )
+
+                    val jsonString = Gson().toJson(jsonObject)
+
                     return@Interceptor response.newBuilder()
                         .code(401)
                         .addHeader("redirectUrl", requestURL)
-                        .body(requestURL.toResponseBody())
+//                        .body(requestURL.toResponseBody())
+                        .body(jsonString.toResponseBody())
                         .build()
 //                    return@Interceptor response.newBuilder()
 //                        .code(200)
@@ -132,6 +157,58 @@ class RetrofitConnection {
                         .message("CustomInterceptor: There is no value starting with \"https:\"")
                         .build()
                 }
+                //이미 동의한 유저임
+                else if (response.code == 400 || response.code == 404) {
+                    Log.e("join_check", "${response.code}")
+//                    val customException = Gson().fromJson(responseBodyString, ErrorResponse::class.java)
+//                    val customExceptionJson = Gson().toJson(customException)
+//                    val mediaType = "application/json; charset=utf-8".toMediaType()
+//                    val responseBody = customExceptionJson.toResponseBody(mediaType)
+
+//                    val regex = Regex("errorCode=(\\d+), errorMessage=(.*?)}")
+//                    val matchResult = regex.find(responseBodyString)
+//
+//                    val errorCode = matchResult?.groupValues?.get(1)?.toIntOrNull() ?: 0
+//                    val errorMessage = matchResult?.groupValues?.get(2) ?: ""
+
+//                    println("errorCode: $errorCode, errorMessage: $errorMessage")
+//                    Log.e("hi", "${errorCode}, ${errorMessage}")
+
+//                    val responseBody = responseBodyString.toResponseBody(mediaType)
+//                    val gson = Gson()
+//                    val customException = gson.fromJson(responseBodyString, CustomException::class.java)
+
+
+                    val responseString = "{" + responseBodyString
+
+
+//                    val responseString = "{" + responseBodyString
+
+//                    val input = "CustomException(errorCode=1700, errorMessage=이미 동의한 유저입니다)"
+                    val regex = Regex("CustomException\\(errorCode=(\\d+), errorMessage=(.*)\\)")
+                    val matchResult = regex.find(responseBodyString)
+
+                        val errorCode = matchResult?.groupValues?.get(1)?.toIntOrNull() ?: 0
+                        val errorMessage = matchResult?.groupValues?.get(2)
+
+                        val jsonObject = mapOf(
+                            "CustomException" to mapOf(
+                                "errorCode" to errorCode,
+                                "errorMessage" to errorMessage
+                            )
+                        )
+
+                        val jsonString = Gson().toJson(jsonObject)
+
+                        println(jsonString)
+
+                    return@Interceptor response.newBuilder()
+                        .code(200)
+                        .body(jsonString.toResponseBody())
+                        .build()
+
+
+                }
                 else {
 //                    return@Interceptor response.newBuilder()
 //                        .code(200)
@@ -141,9 +218,11 @@ class RetrofitConnection {
                     Log.e("plz", "plz body : ${response.body}")
 //                    Log.e("plz", "plz body2 : ${bodyString}")
 //                    return@Interceptor response
-                    val responseBodyString = response.body?.string() ?: ""
+//                    val responseBodyString = response.body?.string() ?: ""
 
                     Log.e("plz", "plz body : ${responseBodyString}")
+
+
 //                    val responseBodyString = response.peekBody(Long.MAX_VALUE).string()
                     return@Interceptor response.newBuilder()
                         .code(200) // 변경하고자 하는 새로운 HTTP 코드
@@ -164,7 +243,17 @@ class RetrofitConnection {
             fun converterFactory() = this
             override fun responseBodyConverter(type: Type, annotations: Array<out Annotation>, retrofit: Retrofit) = object : Converter<ResponseBody, Any?> {
                 val nextResponseBodyConverter = retrofit.nextResponseBodyConverter<Any?>(converterFactory(), type, annotations)
-                override fun convert(value: ResponseBody) = if (value.contentLength() == 0L) null else nextResponseBodyConverter.convert(value)
+                override fun convert(value: ResponseBody) =
+                    if (value.contentLength() == 0L)
+                    {
+                        Log.e("Null_here", " NULLhere")
+                        null
+                    }
+                    else
+                    {
+                        Log.e("Null_here", " NULLhere2")
+                        nextResponseBodyConverter.convert(value)
+                    }
             }
         }
 

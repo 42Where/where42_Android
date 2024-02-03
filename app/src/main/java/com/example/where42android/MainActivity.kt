@@ -19,12 +19,37 @@ import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.example.where42android.WebView.CustomWebViewClient
 import com.example.where42android.dialog.AgreeDialog
 import com.example.where42android.main.MainPageActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.await
 import java.io.IOException
 import kotlin.properties.Delegates
+import com.example.where42android.Base_url_api_Retrofit.ApiObject.service
+import kotlinx.coroutines.async
 
+
+class UserSettings private constructor() {
+    var token: String = ""
+    var intraId: Int = -1
+    var agreement: Boolean = false
+    var defaultGroup : Int = -1
+
+    companion object {
+        @Volatile
+        private var instance: UserSettings? = null
+
+        fun getInstance(): UserSettings =
+            instance ?: synchronized(this) {
+                instance ?: UserSettings().also { instance = it }
+            }
+    }
+}
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,7 +59,8 @@ class MainActivity : AppCompatActivity() {
     fun saveTokenToSharedPreferences(context: Context, token: String) {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.putString("AuthToken", token)
+//        editor.putString("AuthToken", token)
+     editor.putString("AuthToken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k")
         editor.apply()
     }
 
@@ -80,64 +106,166 @@ class MainActivity : AppCompatActivity() {
 //        val webView = findViewById<WebView>(R.id.webView)
         webView.settings.javaScriptEnabled = true // JavaScript 활성화 여부 설정
 
-        val cookieManager = CookieManager.getInstance()
-        cookieManager.removeAllCookies(null)
+//        val cookieManager = CookieManager.getInstance()
+//        cookieManager.removeAllCookies(null)
+
+        //token 값 일부러 바꾸기 -> 나중에 삭제해야됨
+//        saveTokenToSharedPreferences(this, "a")
+
+
+        val token = getTokenFromSharedPreferences(this@MainActivity) ?: "notoken"
+        val intraId = getIntraidFromSharedPreferences(this@MainActivity)
+        val agreement = getAgreementFromSharedPreferences((this@MainActivity))
+
+
+        val userSettings = UserSettings.getInstance()
+
+        Log.e("refre", " token : ${userSettings.token}")
+        if (userSettings.token == "" || userSettings.intraId == -1){
+            userSettings.token = token
+            if (intraId != null) {
+                userSettings.intraId = intraId.toInt()
+            }
+        }
+
+
 
         loginButton.setOnClickListener {
             //안드로이드 AVD에 저장된 쿠키값 없애기
 
-
             val token = getTokenFromSharedPreferences(this@MainActivity) ?: "notoken"
             val intraId = getIntraidFromSharedPreferences(this@MainActivity)
             val agreement = getAgreementFromSharedPreferences((this@MainActivity))
-            Log.d("MainActivity", "Stored Token: ${token}")
-            Log.d("MainActivity", "Stored intraId: ${intraId}")
-            Log.d("MainActivity", "Stored agreement: ${agreement}")
+            Log.d("MainActivity2", "Stored Token: ${token}")
+            Log.d("MainActivity2", "Stored intraId: ${intraId}")
+            Log.d("MainActivity2", "Stored agreement: ${agreement}")
 
 
             val intraid : Int = intraId?.toInt() ?: -1
 
 //            val memberAPI = MemberAPI.create()
             val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
-            val call = memberAPI.getMember(intraid)
+//            val call = memberAPI.getMember(intraid)
+            CoroutineScope(Dispatchers.IO).launch{
+                try {
+                        val response = memberAPI.getMember(intraid)
+                        withContext(Dispatchers.Main) {
+                            if (response.isSuccessful) {
+                                when (response.code()) {
+                                    200 -> {
+                                        Log.d("SUC", "SUC ${response.code()}")
+                                        val intent = Intent(this@MainActivity, MainPageActivity::class.java)
+                                        intent.putExtra("TOKEN_KEY", token)
+                                        intent.putExtra("INTRAID_KEY", intraId)
+                                        intent.putExtra("AGREEMENT_KEY", agreement)
+                                        startActivity(intent)
+                                        finish()
+                                    }
 
-            call.enqueue(object : Callback<Member> {
-                override fun onResponse(call: Call<Member>,
-                                        response: Response<Member>) {
-                    val res = response.body()
-                    if (response.isSuccessful) {
-                        when (response.code())
-                        {
-                            200 -> {
-                                Log.d("SUC", "SUC ${response.code()}")
-                                val intent = Intent(this@MainActivity, MainPageActivity::class.java)
-                                intent.putExtra("TOKEN_KEY", token)
-                                intent.putExtra("INTRAID_KEY", intraId)
-                                intent.putExtra("AGREEMENT_KEY", agreement)
-                                startActivity(intent)
-                                finish()
-                            }
-                            201 ->
-                            {
-                                //여기가 리다이렉트
-                                Log.d("SUC", "header : ${response.headers()}")
+                                    201 -> {
+                                        //여기가 리다이렉트
+                                        Log.d("SUC", "header : ${response.headers()}")
 //                                val originalString = response.message()
-                                val headers = response.headers()
-                                val originalString = headers["redirectUrl"]
-                                val modifiedString =
-                                    originalString?.replace("{", "")?.replace("}", "")
-                                Log.d("SUC", "modifiedString : ${modifiedString}")
+                                        val headers = response.headers()
+                                        val originalString = headers["redirectUrl"]
+                                        val modifiedString =
+                                            originalString?.replace("{", "")?.replace("}", "")
+                                        Log.d("SUC", "modifiedString : ${modifiedString}")
 //                                val modifiedString = originalString.replace("{", "").replace("}", "")
-                                val customWebViewClient = CustomWebViewClient(this@MainActivity)
-                                runOnUiThread {
-                                    webView.visibility = VISIBLE
-                                    webView.webViewClient = customWebViewClient
-                                    if (modifiedString != null) {
-                                        webView.loadUrl(modifiedString)
+                                        val customWebViewClient =
+                                            CustomWebViewClient(this@MainActivity, this@MainActivity)
+                                        runOnUiThread {
+                                            webView.visibility = VISIBLE
+                                            webView.webViewClient = customWebViewClient
+                                            if (modifiedString != null) {
+                                                webView.loadUrl(modifiedString)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                when (response.code()) {
+                                    401 -> {
+                                        //여기는 토큰이 만료되었다는 거임
+                                        Log.d(
+                                            "redirectURL",
+                                            "401, ${response.headers()}, ${response}"
+                                        )
+
+                                        val headers = response.headers()
+                                        val originalString = headers["redirectUrl"]
+                                        val modifiedString =
+                                            originalString?.replace("{", "")?.replace("}", "")
+                                        Log.d("SUC", "modifiedString : ${modifiedString}")
+//                                val modifiedString = originalString.replace("{", "").replace("}", "")
+                                        val customWebViewClient =
+                                            CustomWebViewClient(this@MainActivity, this@MainActivity)
+                                        runOnUiThread {
+                                            webView.visibility = VISIBLE
+                                            webView.webViewClient = customWebViewClient
+                                            if (modifiedString != null) {
+                                                webView.loadUrl(modifiedString)
+//                                        webView.visibility = GONE
+//                                        Log.d("SUC", "SUC ${response.code()}")
+//                                    val intent = Intent(this@MainActivity, MainPageActivity::class.java)
+//                                        intent.putExtra("TOKEN_KEY", token)
+//                                        intent.putExtra("INTRAID_KEY", intraId)
+//                                        intent.putExtra("AGREEMENT_KEY", agreement)
+//                                        startActivity(intent)
+//                                        finish()
+                                            }
+                                        }
+                                    }
+                                    else -> {
+                                        // 기본적으로 어떻게 처리할지 작성
                                     }
                                 }
                             }
                         }
+                    }
+                    catch (e:IOException){
+                        Log.e("fail" , " fail")
+                    }
+            }
+//
+//            call.enqueue(object : Callback<Member> {
+//                override fun onResponse(call: Call<Member>,
+//                                        response: Response<Member>) {
+//                    val res = response.body()
+//                    if (response.isSuccessful) {
+//                        when (response.code())
+//                        {
+//                            200 -> {
+//                                Log.d("SUC", "SUC ${response.code()}")
+//                                val intent = Intent(this@MainActivity, MainPageActivity::class.java)
+//                                intent.putExtra("TOKEN_KEY", token)
+//                                intent.putExtra("INTRAID_KEY", intraId)
+//                                intent.putExtra("AGREEMENT_KEY", agreement)
+//                                startActivity(intent)
+//                                finish()
+//                            }
+//                            201 ->
+//                            {
+//                                //여기가 리다이렉트
+//                                Log.d("SUC", "header : ${response.headers()}")
+////                                val originalString = response.message()
+//                                val headers = response.headers()
+//                                val originalString = headers["redirectUrl"]
+//                                val modifiedString =
+//                                    originalString?.replace("{", "")?.replace("}", "")
+//                                Log.d("SUC", "modifiedString : ${modifiedString}")
+////                                val modifiedString = originalString.replace("{", "").replace("}", "")
+//                                val customWebViewClient = CustomWebViewClient(this@MainActivity)
+//                                runOnUiThread {
+//                                    webView.visibility = VISIBLE
+//                                    webView.webViewClient = customWebViewClient
+//                                    if (modifiedString != null) {
+//                                        webView.loadUrl(modifiedString)
+//                                    }
+//                                }
+//                            }
+//                        }
 
                         // API 요청은 성공했으나 응답 코드가 200이 아닌 경우 HTML을 로드
                         // 원하는 처리를 수행하고자 한다면 여기에 추가적인 로직을 작성할 수 있습니다.
@@ -173,69 +301,69 @@ class MainActivity : AppCompatActivity() {
 //                            Log.e("currentURL", "${currentUrl}")
 //                                webView.loadDataWithBaseURL(modifiedString, null, "text/html", "utf-8", null)
 
-                    } else {
-                        when (response.code()) {
-                            401 -> {
-                                //여기는 토큰이 만료되었다는 거임
-                                Log.d("redirectURL", "401, ${response.headers()}, ${response}")
-
-                                val headers = response.headers()
-                                val originalString = headers["redirectUrl"]
-                                val modifiedString =
-                                    originalString?.replace("{", "")?.replace("}", "")
-                                Log.d("SUC", "modifiedString : ${modifiedString}")
-//                                val modifiedString = originalString.replace("{", "").replace("}", "")
-                                val customWebViewClient = CustomWebViewClient(this@MainActivity)
-
-
-                                runOnUiThread {
-                                    webView.visibility = VISIBLE
-                                    webView.webViewClient = customWebViewClient
-                                    if (modifiedString != null) {
-                                        webView.loadUrl(modifiedString)
-//                                        webView.visibility = GONE
-//                                        Log.d("SUC", "SUC ${response.code()}")
-//                                    val intent = Intent(this@MainActivity, MainPageActivity::class.java)
-//                                        intent.putExtra("TOKEN_KEY", token)
-//                                        intent.putExtra("INTRAID_KEY", intraId)
-//                                        intent.putExtra("AGREEMENT_KEY", agreement)
-//                                        startActivity(intent)
-//                                        finish()
-                                    }
-                                }
-                            }
-                            else -> {
-                                // 기본적으로 어떻게 처리할지 작성
-                            }
-                        }
-                    }
-//                    if (response.isSuccessful) {
-//                        // Handle successful response if needed
-//                        Log.e("awd", "awd")
 //                    } else {
-//                        Log.e("awd", "awd1")
-//                        val contentType = response.headers()["Content-Type"]
-//                        if (contentType != null && contentType.contains("text/html")) {
-//                            // HTML 응답을 WebView에 로드하여 리다이렉트
-//                            val responseBody = response.errorBody()?.string()
-//                            responseBody?.let {
-//                                webView.visibility = VISIBLE
-//                                webView.loadDataWithBaseURL(null, it, "text/html", "utf-8", null)
+//                        when (response.code()) {
+//                            401 -> {
+//                                //여기는 토큰이 만료되었다는 거임
+//                                Log.d("redirectURL", "401, ${response.headers()}, ${response}")
+//
+//                                val headers = response.headers()
+//                                val originalString = headers["redirectUrl"]
+//                                val modifiedString =
+//                                    originalString?.replace("{", "")?.replace("}", "")
+//                                Log.d("SUC", "modifiedString : ${modifiedString}")
+////                                val modifiedString = originalString.replace("{", "").replace("}", "")
+//                                val customWebViewClient = CustomWebViewClient(this@MainActivity)
+//
+//
+//                                runOnUiThread {
+//                                    webView.visibility = VISIBLE
+//                                    webView.webViewClient = customWebViewClient
+//                                    if (modifiedString != null) {
+//                                        webView.loadUrl(modifiedString)
+////                                        webView.visibility = GONE
+////                                        Log.d("SUC", "SUC ${response.code()}")
+////                                    val intent = Intent(this@MainActivity, MainPageActivity::class.java)
+////                                        intent.putExtra("TOKEN_KEY", token)
+////                                        intent.putExtra("INTRAID_KEY", intraId)
+////                                        intent.putExtra("AGREEMENT_KEY", agreement)
+////                                        startActivity(intent)
+////                                        finish()
+//                                    }
+//                                }
 //                            }
-//                        } else {
-//                            // Handle other error cases
-//                            Log.e("ErrorBody", "Error Body: ${response.errorBody()?.string()}")
+//                            else -> {
+//                                // 기본적으로 어떻게 처리할지 작성
+//                            }
 //                        }
 //                    }
-                }
-
-                override fun onFailure(call: Call<Member>, t: Throwable) {
-                    // Handle failure cases
-                    Log.e("awd", "awd2")
-
-
-                }
-            })
+////                    if (response.isSuccessful) {
+////                        // Handle successful response if needed
+////                        Log.e("awd", "awd")
+////                    } else {
+////                        Log.e("awd", "awd1")
+////                        val contentType = response.headers()["Content-Type"]
+////                        if (contentType != null && contentType.contains("text/html")) {
+////                            // HTML 응답을 WebView에 로드하여 리다이렉트
+////                            val responseBody = response.errorBody()?.string()
+////                            responseBody?.let {
+////                                webView.visibility = VISIBLE
+////                                webView.loadDataWithBaseURL(null, it, "text/html", "utf-8", null)
+////                            }
+////                        } else {
+////                            // Handle other error cases
+////                            Log.e("ErrorBody", "Error Body: ${response.errorBody()?.string()}")
+////                        }
+////                    }
+//                }
+//
+//                override fun onFailure(call: Call<Member>, t: Throwable) {
+//                    // Handle failure cases
+//                    Log.e("awd", "awd2")
+//
+//
+//                }
+//            })
 //
 //        }
 

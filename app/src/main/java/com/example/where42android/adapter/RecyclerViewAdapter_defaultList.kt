@@ -2,6 +2,8 @@ package com.example.where42android.adapter
 
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,10 @@ import com.bumptech.glide.Glide
 import com.example.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.example.where42android.R
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RecyclerViewAdapter_defaultList(
     private val context: Context,
@@ -56,8 +62,9 @@ class RecyclerViewAdapter_defaultList(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textViewName: CircleImageView = itemView.findViewById(R.id.profile_photo)
         private val textViewGrade: TextView = itemView.findViewById(R.id.intra_id)
-        private val textViewLocation: TextView = itemView.findViewById(R.id.Comment)
-        private val textViewComment: TextView = itemView.findViewById(R.id.location_info)
+        private val textViewLocation: TextView = itemView.findViewById(R.id.location_info)
+        private val textViewComment: TextView =  itemView.findViewById(R.id.Comment)
+
 
         fun bind(member: friendGroup_default_memberlist.friendGroup_default_memberlistItem) {
             Glide.with(context)
@@ -66,9 +73,27 @@ class RecyclerViewAdapter_defaultList(
                 .error(R.drawable.placeholder) // Error image if Glide fails to load
                 .into(textViewName)
 
-            textViewGrade.text = member.memberIntraName
-            textViewLocation.text = member.comment
-            textViewComment.text = member.location ?: "No comment available"
+//            textViewGrade.text = member.memberIntraName
+            textViewGrade.text = member.intraName
+            textViewComment.text = member.comment
+            textViewLocation.text = member.location ?: "No comment available"
+
+            GlobalScope.launch(Dispatchers.Main) {
+                    val leftPadding = 20 // 왼쪽 여백 값
+                    val rightPadding = 20 // 오른쪽 여백 값
+                    textViewLocation.setPadding(leftPadding, 0, rightPadding, 0)
+                    adjustBackgroundSizeWithPadding(textViewLocation, leftPadding, rightPadding)
+
+                    val color = Color.parseColor("#132743")
+//                        binding.location.setBackgroundColor(color)
+
+                    val gradientDrawable = GradientDrawable()
+                    gradientDrawable.setColor(color)
+                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+                    textViewLocation.background = gradientDrawable
+
+            }
+
 
             val checkBox: CheckBox = itemView.findViewById(R.id.checkBox) // 체크박스 ID에 맞게 수정
             checkBox.isChecked = member in checkedItems

@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -34,30 +35,39 @@ import com.example.where42android.LiveData.GroupsMembersList
 import com.example.where42android.MainActivity
 import com.example.where42android.R
 import com.example.where42android.SearchPage
+import com.example.where42android.UserSettings
+import com.example.where42android.adapter.adjustBackgroundSizeWithPadding
 
 import com.example.where42android.databinding.ActivityMainPageBinding
 import com.example.where42android.fragment.MainFragment
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
+import kotlin.properties.Delegates
 
 interface OnOperationCompleteListener {
     fun onOperationComplete()
 }
+
+
+
 class MainPageActivity : AppCompatActivity() {
 
-
+//    private val binding by lazy { ActivityMainPageBinding.inflate(layoutInflater) }
     lateinit var binding: ActivityMainPageBinding
     lateinit var profile : Member
+
 //    lateinit var progressBar: ProgressBar
 
     private lateinit var sharedViewModel: SharedViewModel_GroupsMembersList
 
     private lateinit var sharedViewModel_profile: SharedViewModel_Profile
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,16 +81,25 @@ class MainPageActivity : AppCompatActivity() {
 
         //token 들고오기
         val intent = intent
-        val receivedToken = intent.getStringExtra("TOKEN_KEY")?: "notoken"
-        val receivedIntraId = intent.getStringExtra("INTRAID_KEY")?.toInt() ?: -1
+        val receivedToken1 = intent.getStringExtra("TOKEN_KEY")?: "notoken"
+        val receivedIntraId1 = intent.getStringExtra("INTRAID_KEY")?.toInt() ?: -1
+
         val receivedAgreement = intent.getStringExtra("AGREEMENT_KEY")
+
+
+        val userSettings = UserSettings.getInstance()
+        val receivedToken = userSettings.token
+        val receivedIntraId = userSettings.intraId
+        Log.e("checkcheck", "here intraId : receive token ${receivedToken}")
+        Log.e("checkcheck", "here intraId : intraId ${receivedIntraId}")
+
 //        Log.d("MainActivity", "Stored Token: ${receivedToken}")
 //        Log.d("MainActivity", "Stored intraId: ${receivedIntraId}")
 //        Log.d("MainActivity", "Stored agreement: ${receivedAgreement}")
 
 
 //        2. group list을 보여주기 위해 binding으로 MainFragment 설정
-//        supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment(receivedToken, receivedIntraId)).commit()
 
 //        2. 12_18 api를 통해 사용자 프로필 가져오기
         Log.d("PageCheck", "here")
@@ -97,6 +116,7 @@ class MainPageActivity : AppCompatActivity() {
         sharedViewModel_profile.profileLiveData.observe(this) { member ->
             member?.let {
                 profile = member
+                userSettings.defaultGroup = member.defaultGroupId
                 val intraIdTextView = binding.intraId
                 intraIdTextView.text = member.intraName
                 binding.Comment.text = member.comment
@@ -110,6 +130,33 @@ class MainPageActivity : AppCompatActivity() {
             }
         }
 
+        //location 박스 설정
+//        GlobalScope.launch(Dispatchers.Main) {
+//
+//        }
+
+
+        binding.root.post {
+            val leftPadding = 20 // 왼쪽 여백 값
+            val rightPadding = 20 // 오른쪽 여백 값
+            binding.locationInfo.setPadding(leftPadding, 0, rightPadding, 0)
+            adjustBackgroundSizeWithPadding(binding.locationInfo, leftPadding, rightPadding)
+
+
+            val color = Color.parseColor("#132743")
+//                        binding.location.setBackgroundColor(color)
+
+            val gradientDrawable = GradientDrawable()
+            gradientDrawable.setColor(color)
+            gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+
+            // 배경을 설정
+            binding.locationInfo.background = gradientDrawable
+        }
+
+//
+//        val locationTextView = findViewById<TextView>(R.id.location_info)
+//        val text = locationTextView.text.toString() // TextView에 표시되는 텍스트
 
 //        val locationTextView = findViewById<TextView>(R.id.location_info)
 //        locationTextView.post {
@@ -122,109 +169,112 @@ class MainPageActivity : AppCompatActivity() {
 //                locationTextView.layoutParams.width = maxWidth // TextView의 너비를 최대 너비로 설정
 //            }
 //        }
-//
-//
-//        //1. header의 환경 설정 버튼을 눌렀을 때 -> SettingPage.kt로 가게 하기
-//        val headerBinding = binding.header // Change to your actual ID for the included header
-//        val settingButton: ImageButton = headerBinding.settingButton
-//
-//        settingButton.setOnClickListener {
-//            try {
-//                val intent = Intent(this, MainSettingPage::class.java)
-//                //값 넘겨주기
-//                intent.putExtra("PROFILE_DATA", profile.intraId)
-//                startActivity(intent)
-////                finish()
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                Toast.makeText(this, "환경 세팅 작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//
-//
-//        //3. footer의 홈버튼과 검색 버튼 기능 구현
-//        val footerBinding = binding.footer
-//        val searchButton : ImageButton = footerBinding.searchButton
-//
-//        searchButton.setOnClickListener {
-//            try {
-//                //Toast.makeText(this, "버튼을 클릭했습니다.", Toast.LENGTH_SHORT).show()
-//                val intent = Intent(this, SearchPage::class.java)
-//                startActivity(intent)
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//
-//
-//        val homeButton : ImageButton = footerBinding.homeButton
-//
-//        homeButton.setOnClickListener {
-//            try {
-//                if (this::class.java != MainPageActivity::class.java) {
-//                    val intent = Intent(this, MainPageActivity::class.java)
-//                    startActivity(intent)
-//                    finish()
-//                } else
-//                    Toast.makeText(this, "이미 로그인 페이지에 있습니다!", Toast.LENGTH_SHORT).show()
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//
-//
-//        //4. 새 그룹 기능 구현
-//        val newGroupButton: Button = binding.newGroupButton // 레이아웃 바인딩 객체에서 버튼 가져오기
-//
-//
-//        newGroupButton.setOnClickListener {
-//            val dialog = Dialog(this)
-//            dialog.setContentView(R.layout.activity_edittext_popup)
-//
-//            dialog.setCanceledOnTouchOutside(true)
-//            dialog.setCancelable(true)
-//            dialog.window?.setGravity(Gravity.CENTER)
-//            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//
-//            val editText = dialog.findViewById<EditText>(R.id.input)
-//            val typeface = ResourcesCompat.getFont(this, R.font.gmarketsans_bold)
-//            editText.typeface = typeface
-//            editText.hint = "그룹명을 지정해주세요."
-//
-//            val btnCancel = dialog.findViewById<Button>(R.id.cancel)
-//            val btnSubmit = dialog.findViewById<Button>(R.id.submit)
-//
-//            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//
-//            btnCancel.setOnClickListener {
-//                dialog.dismiss()
-//            }
-//            btnSubmit.setOnClickListener {
-//                //새그룹 버튼 확인 누르면 api 요청
-//                val retrofitAPI = RetrofitConnection.getInstance().create(NewGroup::class.java)
-//                //groupname, intraid 필요
-//                val groupname : String = editText.text.toString()
-//                //intraid 불러오자
-//                val intra_id = profile.intraId
-//
-//                //JSON 만들어주기
-//                //NewGroup @POST("v3/group")
-////                val newGroupRequest = NewGroupRequest(groupname, intra_id)
-//
-////                sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
-//                val intent = Intent(this@MainPageActivity, CreateGroupActivity::class.java)
-//                intent.putExtra("newgroupNameKey", groupname)
-//                intent.putExtra("profileintraIdKey", profile.intraId)
-//                intent.putExtra("groupIdKey", profile?.defaultGroupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
-//                startActivity(intent)
-//
-//
-//                dialog.dismiss()
-//            }
-//            dialog.show()
-//        }
-//
+
+
+        //1. header의 환경 설정 버튼을 눌렀을 때 -> SettingPage.kt로 가게 하기
+        val headerBinding = binding.header // Change to your actual ID for the included header
+        val settingButton: ImageButton = headerBinding.settingButton
+
+        settingButton.setOnClickListener {
+            try {
+                val intent = Intent(this, MainSettingPage::class.java)
+                //값 넘겨주기
+                intent.putExtra("PROFILE_DATA", profile.intraId)
+                intent.putExtra("TOKEN", receivedToken)
+                Log.e("MainSettingPage", "receivedIntraId : ${receivedIntraId}")
+                intent.putExtra("INTRA_ID", receivedIntraId)
+                startActivity(intent)
+//                finish()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "환경 세팅 작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        //3. footer의 홈버튼과 검색 버튼 기능 구현
+        val footerBinding = binding.footer
+        val searchButton : ImageButton = footerBinding.searchButton
+
+        searchButton.setOnClickListener {
+            try {
+                //Toast.makeText(this, "버튼을 클릭했습니다.", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SearchPage::class.java)
+                startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        val homeButton : ImageButton = footerBinding.homeButton
+
+        homeButton.setOnClickListener {
+            try {
+                if (this::class.java != MainPageActivity::class.java) {
+                    val intent = Intent(this, MainPageActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else
+                    Toast.makeText(this, "이미 로그인 페이지에 있습니다!", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        //4. 새 그룹 기능 구현
+        val newGroupButton: Button = binding.newGroupButton // 레이아웃 바인딩 객체에서 버튼 가져오기
+
+
+        newGroupButton.setOnClickListener {
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.activity_edittext_popup)
+
+            dialog.setCanceledOnTouchOutside(true)
+            dialog.setCancelable(true)
+            dialog.window?.setGravity(Gravity.CENTER)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            val editText = dialog.findViewById<EditText>(R.id.input)
+            val typeface = ResourcesCompat.getFont(this, R.font.gmarketsans_bold)
+            editText.typeface = typeface
+            editText.hint = "그룹명을 지정해주세요."
+
+            val btnCancel = dialog.findViewById<Button>(R.id.cancel)
+            val btnSubmit = dialog.findViewById<Button>(R.id.submit)
+
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            btnCancel.setOnClickListener {
+                dialog.dismiss()
+            }
+            btnSubmit.setOnClickListener {
+                //새그룹 버튼 확인 누르면 api 요청
+                val retrofitAPI = RetrofitConnection.getInstance(receivedToken).create(NewGroup::class.java)
+                //groupname, intraid 필요
+                val groupname : String = editText.text.toString()
+                //intraid 불러오자
+                val intra_id = profile.intraId
+
+                //JSON 만들어주기
+                //NewGroup @POST("v3/group")
+//                val newGroupRequest = NewGroupRequest(groupname, intra_id)
+
+//                sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
+                val intent = Intent(this@MainPageActivity, CreateGroupActivity::class.java)
+                intent.putExtra("newgroupNameKey", groupname)
+                intent.putExtra("profileintraIdKey", profile.intraId)
+                intent.putExtra("groupIdKey", profile?.defaultGroupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
+                startActivity(intent)
+
+
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
+
     }
 }

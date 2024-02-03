@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="counter"
@@ -8,9 +10,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+        android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.MainPageActivity"
     >
@@ -48,17 +48,16 @@
 
 <!--        android:src="@drawable/profile_photo_example"-->
         <de.hdodenhof.circleimageview.CircleImageView
-
             android:id="@+id/profile_photo"
             android:layout_width="@dimen/main_profile_image"
             android:layout_height="@dimen/main_profile_image"
             android:src="@drawable/profile_photo_example"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline4"
             app:civ_border_color="#95FFB5B5"
             app:civ_border_overlay="true"
-            android:layout_marginTop="24dp"
-            app:civ_border_width="3dp"/>
+            app:civ_border_width="@dimen/CircleImageView_border"/>
 <!--        <de.hdodenhof.circleimageview.CircleImageView-->
 
 <!--            android:id="@+id/profile_photo"-->
@@ -92,20 +91,21 @@
             android:textSize="@dimen/font_medium_change"
             app:layout_constraintStart_toEndOf="@id/profile_photo"
             app:layout_constraintBottom_toTopOf="@id/guideline2"
-            android:layout_marginLeft="12dp"/>
+            android:layout_marginLeft="@dimen/intra_name"/>
 
 
 
 <!--        android:layout_width="@dimen/main_location_w"-->
+<!--        "@dimen/location_info" == 6dp -->
         <TextView
             android:id="@+id/location_info"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/main_intra_ID_height"
-            android:layout_marginLeft="6dp"
-            android:background="@drawable/location_shape"
+            android:layout_marginLeft="@dimen/location_info"
+            android:background="@drawable/location_shape_another_version"
             android:gravity="center"
             android:clipToOutline="true"
-            android:text="cx2r1s5"
+            android:text="cx2r1s5cccccc"
             android:fontFamily="@font/gmarketsans_medium"
             android:textColor="#FCFDFF"
             android:textSize="@dimen/font_medium_change"
@@ -117,12 +117,13 @@
 
 
 <!--        android:text="코멘트코멘트코멘트"-->
+<!--        android:layout_marginTop="3dp" -->
         <TextView
             android:id="@+id/Comment"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/main_comment"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/intra_name"
+            android:layout_marginTop="@dimen/Comment"
             android:gravity="center"
             android:text="@{counter.profile.comment}"
             android:fontFamily="@font/gmarketsans_medium"
@@ -134,15 +135,72 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--        android:layout_marginEnd="@dimen/location_info" == 6-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/option_buttons"
         android:layout_width="@dimen/buttons_w"
         android:layout_height="@dimen/buttons_h"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="@dimen/location_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/main_profile">
 
 
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/option_buttonsa"-->
+<!--            android:layout_width="@dimen/new_group_w"-->
+<!--            android:layout_height="@dimen/new_group_h"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/filter_available"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            >-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/newGroupImage"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/new_group"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+<!--&lt;!&ndash;            android:layout_width="@dimen/new_group_w"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="@dimen/new_group_h"&ndash;&gt;-->
+
+<!--        <android.widget.Button-->
+<!--            android:id="@+id/newGroupButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@drawable/main_page_filter"-->
+<!--            android:fontFamily="@font/gmarketsans_medium"-->
+<!--            android:text="새 그룹"-->
+<!--            android:textColor="#132743"-->
+<!--         -->
+<!--            android:textSize="@dimen/new_group_font"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_newgroupguideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.04" />
+
+<!--        app:layout_constraintStart_toStartOf="@id/newGroupButton"-->
+
+        <ImageView
+            android:id="@+id/newGroupImage"
+            android:layout_width="@dimen/newgroup_image"
+            android:layout_height="@dimen/newgroup_image"
+            android:src="@drawable/new_group"
+            android:scaleType="fitCenter"
+            android:padding="0sp"
+            android:backgroundTint="@android:color/transparent"
+            app:layout_constraintStart_toEndOf="@id/guideline_newgroupguideline"
+            app:layout_constraintTop_toTopOf="@id/newGroupButton"
+            app:layout_constraintBottom_toBottomOf="@id/newGroupButton" />
+
+
+<!--        <dimen name="newgroup_button_marginRight">9dp</dimen>-->
         <android.widget.Button
             android:id="@+id/newGroupButton"
             android:layout_width="@dimen/new_group_w"
@@ -150,10 +208,16 @@
             android:background="@drawable/main_page_filter"
             android:fontFamily="@font/gmarketsans_medium"
             android:text="새 그룹"
+            android:paddingLeft="@dimen/newgroup_image_paddingLeft"
+            android:paddingTop="@dimen/button_text_top"
+            android:layout_marginRight="@dimen/layout_height_padding"
+            android:textSize="@dimen/filter_available_font"
+            android:gravity="center"
             android:textColor="#132743"
-            android:textSize="@dimen/new_group_font"
+            app:layout_constraintEnd_toStartOf="@id/filter_available"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/filter_available"
@@ -163,15 +227,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.07" />
+
+            <!--            android:layout_width="@dimen/checkBox" == 15dp-->
             <CheckBox
                 android:id="@+id/checkBox"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="@dimen/checkBox"
+                android:layout_height="@dimen/checkBox"
                 android:buttonTint="#132743"
                 android:background="@drawable/custom_checkbox"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/available"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline9"
+
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
@@ -179,7 +252,7 @@
             <android.widget.Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="2dp"
+                android:paddingTop="@dimen/button_text_top"
                 android:text="출근한 친구만 보기"
                 android:fontFamily="@font/gmarketsans_medium"
                 android:background="@null"
@@ -211,20 +284,18 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/footer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_profile"
+            app:layout_constraintVertical_bias="1.0" />
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/footer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_profile"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <include
+        <include
         android:id="@+id/footer"
         layout="@layout/activity_footer"
         android:layout_width="match_parent"

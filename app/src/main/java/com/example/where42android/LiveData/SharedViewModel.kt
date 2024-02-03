@@ -21,8 +21,8 @@ class SharedViewModel_GroupsMembersList : ViewModel() {
 
 
     // ViewModel에서 데이터 가져오는 함수
-    fun getGroupMemberList(intraId: Int) {
-        viewModel.getGroupMemberList(intraId)
+    fun getGroupMemberList(intraId: Int, token : String) {
+        viewModel.getGroupMemberList(intraId, token)
     }
 
     // ViewModel에서 그룹 삭제하는 함수
@@ -42,8 +42,21 @@ class SharedViewModel_GroupsMembersList : ViewModel() {
 //        viewModel.addMembersToGroup(groupId_members)
 //    }
 
-    fun addMembersToGroup(newgroupName : String, members: MutableList<String> ) {
+    fun addMembersToGroup(newgroupName : String, members: MutableList<Int> ) {
         viewModel.addMembersToGroup(newgroupName, members)
+    }
+
+
+    //그룹에서 친구 삭제하기
+    fun deleteFriendGroup (groupId: Int, member: MutableList<Int>)
+    {
+        Log.e ("deleteFriendGroup", "GroupId : ${groupId}, member : ${member}")
+        viewModel.deleteFriendGroup(groupId, member)
+    }
+
+    fun getGroupMemberList (groupId: Int)
+    {
+        viewModel.getGroupMemberList(groupId)
     }
 
 
@@ -62,14 +75,14 @@ class SharedViewModel_Profile (
         Log.e("ProfileList", "here")
         profile.getMemberData(intraId, token)
     }
-    fun updateMemberComment(updateCommentRequest: UpdateCommentRequest)
+    fun updateMemberComment(updateCommentRequest: UpdateCommentRequest, token: String)
     {
-//        profile.updateMemberComment(updateCommentRequest)
+        profile.updateMemberComment(updateCommentRequest, token)
     }
 
-    fun updateMemberCustomLocaton(locationCustomMemberRequest: locationCustomMemberRequest)
+    fun updateMemberCustomLocaton(locationCustomMemberRequest: locationCustomMemberRequest, token: String)
     {
-        profile.updateMemberCustomLocaton(locationCustomMemberRequest)
+        profile.updateMemberCustomLocaton(locationCustomMemberRequest, token)
     }
 
 

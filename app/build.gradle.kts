@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.where42android"
-        minSdk = 31
+        minSdk = 30 //31
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+
 
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
@@ -94,8 +95,8 @@ dependencies {
 //    testImplementation("androidx.arch.core:core-testing:$arch_version")
 //    // optional - Test helpers for Lifecycle runtime
 //    testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version")
-    implementation ("androidx.lifecycle:lifecycle-runtime:2.3.1")
-    implementation ("androidx.lifecycle:lifecycle-common-java8:2.3.1")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    implementation ("androidx.lifecycle:lifecycle-common-java8:2.4.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0") // 최신 버전으로 업데이트 필요
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0") // LiveData에 대한 Kotlin 확장 라이브러리도 추가하는 것이 좋습니다.
 
@@ -107,7 +108,7 @@ dependencies {
 
 
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
 
 
 }

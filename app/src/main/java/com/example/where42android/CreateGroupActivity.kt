@@ -29,8 +29,10 @@ class CreateGroupActivity : AppCompatActivity() {
 
     private lateinit var sharedViewModel: SharedViewModel_GroupsMembersList
 //    private val retrofitAPI = RetrofitConnection.getInstance().create(MemberallListService::class.java)
-//    private val retrofitAPI = RetrofitConnection.getInstance().create(Deafult_friendGroup_memberlist::class.java)
+    val userSettings = UserSettings.getInstance()
+    private val retrofitAPI = RetrofitConnection.getInstance(userSettings.token).create(Deafult_friendGroup_memberlist::class.java)
 //    private val retrofitAPI2 = RetrofitConnection.getInstance().create(GroupAddMemberlist::class.java)
+
     val friendProfileList = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
     private fun getSelectedItems(): List<friendGroup_default_memberlist.friendGroup_default_memberlistItem> {
         val selectedItems = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
@@ -78,14 +80,25 @@ class CreateGroupActivity : AppCompatActivity() {
 
             // 체크된 체크박스가 있는 항목들 가져오기
             val selectedItems = getSelectedItems()
+
             //조건문 해야될 듯 만약 list에 아무것도 없으면 리턴 시키기
             // 여기서 가져온 선택된 항목들에 대해 원하는 작업 수행 가능
             // 예를 들어, 선택된 항목들의 이름을 로그에 출력하는 등의 동작 수행
-            val members =  mutableListOf<String>()
+
+//            val members =  mutableListOf<String>()
+//            selectedItems.forEach { selectedItem ->
+//                Log.d("선택된 항목", "이름: ${selectedItem.intraName}")
+////                members.add(selectedItem.memberIntraName)
+//                members.add(selectedItem.intraName)
+//            }
+
+            val members =  mutableListOf<Int>()
             selectedItems.forEach { selectedItem ->
-                Log.d("선택된 항목", "이름: ${selectedItem.memberIntraName}")
-                members.add(selectedItem.memberIntraName)
+                Log.d("선택된 항목", "이름: ${selectedItem.intraName}")
+//                members.add(selectedItem.memberIntraName)
+                members.add(selectedItem.intraId)
             }
+
             //newGroupResponseGroupId가 nullable한 문자열(String?)인 경우 .toInt()를 호출할 때 null이 반환될 수 있습니다.
             //
             //이러한 상황을 처리하기 위해 안전한 방법으로 nullable 체크를 하고 값을 가져오는 것이 좋습니다. Kotlin에서는 nullable인 변수를 안전하게 처리하기 위해 다음과 같은 방법을 사용할 수 있습니다:
@@ -126,7 +139,7 @@ class CreateGroupActivity : AppCompatActivity() {
                 newText?.let { query ->
                     val searchText = query.toLowerCase().trim() // 입력된 검색어 소문자로 변환
                     for (member in friendProfileList) {
-                        val memberName = member.memberIntraName.toLowerCase()
+                        val memberName = member.intraName.toLowerCase()
                         if (memberName.contains(searchText)) {
                             filteredList.add(member)
                         }
@@ -143,37 +156,37 @@ class CreateGroupActivity : AppCompatActivity() {
     // Retrofit을 통한 API 호출 함수
     private fun fetchMemberAllData(groupId:Int) {
 //
-//        retrofitAPI.getdefaultGroupList(groupId).enqueue(object :
-//            Callback<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>> {
-//            override fun onResponse(
-//                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
-//                response: Response<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
-//            ) {
-//                if (response.isSuccessful)
-//                {
-//                    Log.d("CALL", "fucking here3")
-//                    Log.d("CALL2", "API call successful. Response: $response")
-//                    val friendList = response.body()
-//                    friendList?.let { members ->
-//                        // 받은 멤버 데이터를 friendProfileList에 추가
-//                        for (member in members) {
-//                            friendProfileList.add(member)
-//                        }
-//                        updateAdapterData(friendProfileList)
-//                    }
-//                }
-//                else
-//                {
-//                    Log.d("API Error", "API call successful. Response: $response")
-//                }
-//            }
-//            override fun onFailure(
-//                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
-//                t: Throwable)
-//            {
-//                // API 요청 자체가 실패한 경우 처리
-//            }
-//        })
+        retrofitAPI.getdefaultGroupList(groupId).enqueue(object :
+            Callback<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>> {
+            override fun onResponse(
+                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
+                response: Response<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
+            ) {
+                if (response.isSuccessful)
+                {
+                    Log.d("CALL", "fucking here3")
+                    Log.d("CALL2", "API call successful. Response: $response")
+                    val friendList = response.body()
+                    friendList?.let { members ->
+                        // 받은 멤버 데이터를 friendProfileList에 추가
+                        for (member in members) {
+                            friendProfileList.add(member)
+                        }
+                        updateAdapterData(friendProfileList)
+                    }
+                }
+                else
+                {
+                    Log.d("API Error", "API call successful. Response: $response")
+                }
+            }
+            override fun onFailure(
+                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
+                t: Throwable)
+            {
+                // API 요청 자체가 실패한 경우 처리
+            }
+        })
     }
 
 //        retrofitAPI.getMemberAllList().enqueue(object : Callback<List<MemberAll.MemberAllItem>> {

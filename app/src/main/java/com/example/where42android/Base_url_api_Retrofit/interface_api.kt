@@ -26,24 +26,24 @@ import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
+import retrofit2.http.PUT
 import java.lang.reflect.Type
 import java.util.logging.Logger
 
 
 //JOIN
 interface JoinAPI{
-    @FormUrlEncoded
     @POST("v3/join")
-    fun join(
-        @Field("intra_id") intraId: Int
-    ): Call<JoinResponse>
+    suspend fun join(@Query("intra_id") intraId: Int
+    ): Response<JoinResponse>
 }
 
 
 //Member
 interface MemberAPI {
     @GET("v3/member")
-    fun getMember(@Query("intraId") intraId: Int): Call<Member>
+//    fun getMember(@Query("intraId") intraId: Int): Call<Member>
+    suspend fun getMember(@Query("intraId") intraId: Int): Response<Member>
 
     @GET("v3/member/all")
     fun getMembers(): Call<List<Member>>
@@ -52,6 +52,11 @@ interface MemberAPI {
     fun updateMemberComment(
         @Body request: UpdateCommentRequest
     ): Call<CommentChangeMember> // YourResponseModel은 서버 응답에 따라 실제 응답 모델로 변경되어야 합니다
+
+    @PUT("v3/group/groupmember")
+    fun deleteFriendList(
+        @Body request: deleteFriendListRequest
+    ): Call<List<deleteFriendListResponse.deleteFriendListResponseItem>>
 
 }
 
@@ -105,10 +110,13 @@ interface GroupAddMemberlist {
 }
 
 
-//default group memberlist 들고오기
+//group memberlist 들고오기
 interface Deafult_friendGroup_memberlist {
     @GET("v3/group/groupmember")
     fun getdefaultGroupList(@Query("groupId") groupId: Int): Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
+    @POST("/v3/group/groupmember/not-ingroup")
+    fun getGroupMembersNotInGroup(@Query("groupId") groupId: Int): Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
+
 }
 
 //location/custom

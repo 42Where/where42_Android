@@ -38,7 +38,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
+<!--        app:layout_constraintBottom_toTopOf="@id/view_line"-->
             <LinearLayout
                 android:layout_width="60dp"
                 android:layout_height="24dp"
@@ -71,7 +71,9 @@
             android:layout_height="@dimen/divider"
             android:background="#30132743"
             android:layout_centerInParent="true"
-            app:layout_constraintBottom_toBottomOf="@id/text_view" />
+            app:layout_constraintBottom_toBottomOf="@id/text_view"
+            android:visibility="gone"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/inner_recyclerview"

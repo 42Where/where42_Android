@@ -1,6 +1,7 @@
 package com.example.where42android.Base_url_api_Retrofit
 
 import com.google.gson.annotations.SerializedName
+import retrofit2.http.PUT
 import java.time.LocalDateTime
 import java.util.Date
 
@@ -13,6 +14,10 @@ data class JoinResponse(
     val message: String
 )
 
+data class CustomException(
+    val errorCode: Int,
+    val errorMessage: String
+)
 
 //Member
 data class Member(
@@ -59,6 +64,25 @@ class MemberAll : ArrayList<MemberAll.MemberAllItem>(){
     )
 }
 
+//@PUT("v3/group/groupmember")
+data class deleteFriendListRequest(
+    val groupId: Int,
+    val members: List<Int>
+)
+
+
+class deleteFriendListResponse : ArrayList<deleteFriendListResponse.deleteFriendListResponseItem>(){
+    data class deleteFriendListResponseItem(
+        val comment: Any,
+        val groupId: Int,
+        val groupName: Any,
+        val image: Any,
+        val inCluster: Boolean,
+        val intraId: Int,
+        val location: Any,
+        val memberIntraName: Any
+    )
+}
 
 //Group
 
@@ -119,14 +143,26 @@ class groups_memberlist : ArrayList<groups_memberlist.groups_memberlistItem>(){
 //Get deault(friend) group member list
 class friendGroup_default_memberlist : ArrayList<friendGroup_default_memberlist.friendGroup_default_memberlistItem>(){
     data class friendGroup_default_memberlistItem(
-        val comment: String,
-        val groupId: Any,
-        val groupName: Any,
-        val image: String,
-        val inCluster: Boolean,
         val intraId: Int,
-        val location: String,
-        val memberIntraName: String,
+        val intraName: String,
+        val grade: String,
+        val image: String,
+        var comment: String?,
+        val inCluster: Boolean,
+        val agree: Boolean,
+        val defaultGroupId: Int,
+        var location: String,
+//        val intraId: Int,
+//        val IntraName: String,
+//
+//        val comment: String,
+//        val groupId: Any,
+//        val groupName: Any,
+//        val image: String,
+//        val inCluster: Boolean,
+//
+//        val location: String,
+
         val isChecked: Boolean = false
     )
 }
@@ -146,7 +182,7 @@ data class NewGroupResponses(
 //Grop에 memeberlist 추가
 data class AddMembersRequest(
     val groupId: Int,
-    val members: List<String>
+    val members: List<Int>
 )
 
 class addMembersResponse : ArrayList<addMembersResponse.addMembersResponseItem>(){

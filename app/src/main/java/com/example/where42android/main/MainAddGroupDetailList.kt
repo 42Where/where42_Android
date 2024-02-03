@@ -1,5 +1,6 @@
 package com.example.where42android.main
 
+
 import SharedViewModel_GroupsMembersList
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainDeleteGroupDetailList : AppCompatActivity() {
+class MainAddGroupDetailList : AppCompatActivity() {
 
     val friendProfileList = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
 
@@ -49,9 +51,10 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
 
         val groupIdNumber: Number = intent.getIntExtra("GROUP_ID", -1)
         val groupId : Int = groupIdNumber.toInt()
+        Log.e("herehere", "here : ${groupId}")
 
 
-        //1. group member 보여주기
+        //1. group member 보여주기 -> v3/group/groupmember/not-ingroup?groupId=(groupId) 사용
         fetchMemberAllData(groupId)
 
         val groupName: String? = intent.getStringExtra("GROUP_NAME")
@@ -59,35 +62,33 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
         groupChangeName.text = groupName
 
         val createGroupButton: AppCompatButton = findViewById(R.id.delete_group_member)
+        createGroupButton.text = "멤버 추가하기"
+
+        // 색상 리소스 가져오기
+        // 배경색 설정
+        val backgroundColor = ContextCompat.getColor(this, R.color.blue_add)
+        createGroupButton.setBackgroundColor(backgroundColor)
+
         createGroupButton.setOnClickListener {
             //2. 그룹 만들기 API 호출
 
             // 체크된 체크박스가 있는 항목들 가져오기
             val selectedItems = getSelectedItems()
 
-            //조건문 해야될 듯 만약 list에 아무것도 없으면 리턴 시키기
-            // 여기서 가져온 선택된 항목들에 대해 원하는 작업 수행 가능
-            // 예를 들어, 선택된 항목들의 이름을 로그에 출력하는 등의 동작 수행
-
-//            val members =  mutableListOf<String>()
-//            selectedItems.forEach { selectedItem ->
-//                Log.d("선택된 항목", "이름: ${selectedItem.intraName}")
-////                members.add(selectedItem.memberIntraName)
-//                members.add(selectedItem.intraName)
-//            }
-
             val members =  mutableListOf<Int>()
             selectedItems.forEach { selectedItem ->
                 Log.d("선택된 항목", "이름: ${selectedItem.intraName}")
-//                members.add(selectedItem.memberIntraName)
                 members.add(selectedItem.intraId)
             }
-
             val sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
-//            sharedViewModel.addMembersToGroup(groupId_members)
-            sharedViewModel.deleteFriendGroup(groupId, members)
-            finish()
+
+//            sharedViewModel.deleteFriendGroup(groupId, members)
+            if (groupName != null) {
+                sharedViewModel.addMembersToGroup(groupName, members)
+                finish()
+            }
         }
+
 
         //검색바 기능
         val searchView: SearchView = findViewById(R.id.searchView)
@@ -125,7 +126,7 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
         val userSettings = UserSettings.getInstance()
         val retrofitAPI =
             RetrofitConnection.getInstance(userSettings.token).create(Deafult_friendGroup_memberlist::class.java)
-        retrofitAPI.getdefaultGroupList(groupId).enqueue(object :
+        retrofitAPI.getGroupMembersNotInGroup(groupId).enqueue(object :
             Callback<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>> {
             override fun onResponse(
                 call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,

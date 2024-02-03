@@ -4,69 +4,59 @@
     android:layout_width="@dimen/newgroup_layout_width"
     android:layout_height="@dimen/newgroup_layout_height"
     android:background="@drawable/center_popup_background"
-    android:paddingTop="@dimen/newgroup_layout_padding_top_bottom"
-    android:paddingBottom="@dimen/newgroup_layout_padding_top_bottom"
+    android:paddingBottom="@dimen/newgroup_layout_padding_bottom"
+    android:paddingTop="@dimen/newgroup_layout_padding_top"
     android:paddingStart="@dimen/newgroup_layout_padding_start_end"
     android:paddingEnd="@dimen/newgroup_layout_padding_start_end"
     >
-<!--    android:layout_width="@dimen/newgroup_layout_width"-->
-<!--    android:layout_height="@dimen/newgroup_layout_height"-->
+<!--    android:paddingBottom="@dimen/newgroup_layout_padding_top_bottom"-->
+
+    <!--    android:layout_width="@dimen/newgroup_layout_width"-->
+    <!--    android:layout_height="@dimen/newgroup_layout_height"-->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="새 그룹 만들기"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="멤버 편집 기능을 선택해주세요."
         android:textColor="#132743"
         android:textSize="@dimen/newgroup_textsize"
         android:fontFamily="@font/gmarketsans_bold" />
 
-    <EditText
-        android:id="@+id/input"
-        android:layout_width="@dimen/edittext_layout_width"
-        android:layout_height="@dimen/edittext_layout_height"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/edittext_layout_margin"
-        android:layout_marginBottom="@dimen/edittext_layout_margin"
-        android:textSize="@dimen/newgroup_textsize"
-        android:gravity="left|center"
-        android:hint="힌트"
-        android:paddingStart="@dimen/edittext_layout_padding"
-        android:paddingEnd="@dimen/edittext_layout_padding"
-        android:background="@drawable/text_edit_box"/>
-
     <android.widget.Button
-        android:id="@+id/cancel"
-        android:layout_width="@dimen/newgroup_button_width"
-        android:layout_height="@dimen/newgroup_button_height"
+        android:id="@+id/member_plus"
+        android:layout_width="@dimen/editgroupmember_button_width"
+        android:layout_height="@dimen/editgroupmember_button_height"
         android:background="@drawable/cancel_button"
-        app:layout_constraintEnd_toStartOf="@id/submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/member_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         android:paddingStart="@dimen/newgroup_button_padding"
         android:paddingEnd="@dimen/newgroup_button_padding"
         android:layout_marginEnd="@dimen/newgroup_button_marginend"
-        android:text="취소"
+        android:text="멤버 추가하기"
         android:textColor="#132743"
         android:gravity="center"
-        android:textSize="@dimen/newgroup_button_textsize"
+        android:textSize="@dimen/newgroup_textsize"
         android:fontFamily="@font/gmarketsans_medium"/>
+<!--    android:textSize="@dimen/newgroup_button_textsize"-->
 
     <android.widget.Button
-        android:id="@+id/submit"
-        android:layout_width="@dimen/newgroup_button_width"
-        android:layout_height="@dimen/newgroup_button_height"
+        android:id="@+id/member_delete"
+        android:layout_width="@dimen/editgroupmember_button_width"
+        android:layout_height="@dimen/editgroupmember_button_height"
         android:background="@drawable/submit_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/member_plus"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:paddingStart="@dimen/newgroup_button_padding"
         android:paddingEnd="@dimen/newgroup_button_padding"
-        android:text="확인"
+        android:text="멤버 삭제하기"
         android:textColor="@color/white"
         android:gravity="center"
-        android:textSize="@dimen/newgroup_button_textsize"
+        android:textSize="@dimen/newgroup_textsize"
         android:fontFamily="@font/gmarketsans_medium"/>
-
-
+<!--    android:textSize="@dimen/newgroup_button_textsize"-->
 </androidx.constraintlayout.widget.ConstraintLayout>
