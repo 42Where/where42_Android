@@ -5,9 +5,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.view.View
+import android.webkit.CookieManager
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -39,42 +41,80 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         return url?.substringAfter("token=") ?: ""
     }
 
-//    private fun splitToken(token: String): Map<String, String> {
-//        val tokenSplit = token.split("&").associate {
-//            val (key, value) = it.split("=")
-//            key to value
-//        }
-//        return tokenSplit
-//    }
-
-    private fun saveTokenToSharedPreferences(token: String) {
+    private fun saveTokenToSharedPreferences(accesstoken: String, refreshToken:String, url: String) {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-//        eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUwMzEzNjUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUwMzE0MjV9.-A30zCF_vE8oQHYk0fD5f63Xeckyw7K_X4VIEFK4jk8&intraId=141447&agreement=true
-        Log.e("AuthToken", "here ${token}")
-//        val tokenMap = splitToken(token)
-        val tokenSplit = token.split("&")
-        Log.e("AuthToken", "here ${tokenSplit}")
-//        for ((key, value) in tokenMap) {
-//            Log.e("AuthToken", "$key: $value")
-//        }
 
-        val intraid = tokenSplit[1].split("=")
-        val agreement = tokenSplit[2].split("=")
-        Log.e("AuthToken", "here ${intraid}")
-        Log.e("AuthToken", "here ${agreement}")
+        val uri = Uri.parse(url)
+        val intraid = uri.getQueryParameter("intraId")
+        val agreement = uri.getQueryParameter("agreement")
 
-        editor.putString("intraId", intraid[1])
-        editor.putString("agreement", agreement[1])
-        editor.putString("AuthToken", tokenSplit[0])
+        Log.e("ParsedCookies", "saveTokenToSharedPreferences_intraid: $intraid")
+        Log.e("ParsedCookies", "saveTokenToSharedPreferences_agreement: $agreement")
+
+        editor.putString("intraId", intraid)
+        editor.putString("agreement", agreement)
+        editor.putString("AuthToken", accesstoken)
+        editor.putString("RefreshToken", refreshToken)
+
 
         val userSettings = UserSettings.getInstance()
-        userSettings.token = tokenSplit[0]
-        userSettings.intraId = intraid[1].toInt()
-        userSettings.agreement = agreement[1].toBoolean()
-
-//        editor.putString("AuthToken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k")
+        userSettings.token = accesstoken
+        if (intraid != null)
+        {
+            userSettings.intraId = intraid.toInt()
+        }
+        userSettings.agreement = agreement.toBoolean()
+        userSettings.refreshToken = refreshToken
         editor.apply()
+    }
+
+
+
+//    private fun saveTokenToSharedPreferences(token: String) {
+//        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+//        val editor = sharedPreferences.edit()
+////        eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUwMzEzNjUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUwMzE0MjV9.-A30zCF_vE8oQHYk0fD5f63Xeckyw7K_X4VIEFK4jk8&intraId=141447&agreement=true
+//        Log.e("AuthToken", "here ${token}")
+////        val tokenMap = splitToken(token)
+//        val tokenSplit = token.split("&")
+//        Log.e("AuthToken", "here ${tokenSplit}")
+////        for ((key, value) in tokenMap) {
+////            Log.e("AuthToken", "$key: $value")
+////        }
+//
+//        val intraid = tokenSplit[1].split("=")
+//        val agreement = tokenSplit[2].split("=")
+//        Log.e("AuthToken", "here ${intraid}")
+//        Log.e("AuthToken", "here ${agreement}")
+//
+//        editor.putString("intraId", intraid[1])
+//        editor.putString("agreement", agreement[1])
+//        editor.putString("AuthToken", tokenSplit[0])
+//
+//        val userSettings = UserSettings.getInstance()
+//        userSettings.token = tokenSplit[0]
+//        userSettings.intraId = intraid[1].toInt()
+//        userSettings.agreement = agreement[1].toBoolean()
+//
+////        editor.putString("AuthToken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k")
+//        editor.apply()
+//    }
+
+    fun parseCookies(cookieString: String): Map<String, String> {
+        val cookieMap = mutableMapOf<String, String>()
+        val cookiePairs = cookieString.split(";")
+
+        for (pair in cookiePairs) {
+            val keyValue = pair.trim().split("=")
+            if (keyValue.size == 2) {
+                val key = keyValue[0].trim()
+                val value = keyValue[1].trim()
+                cookieMap[key] = value
+            }
+        }
+
+        return cookieMap
     }
 
     override fun onPageFinished(view: WebView?, url: String?) {
@@ -82,38 +122,86 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         Log.e("onPageFinished", "${url}")
         Log.e("onPageFinished", "here")
         // 특정 조건을 만족하면 토큰을 가져와서 SharedPreferences에 저장
-        if (url != null && shouldSaveToken(url)) {
-//            WebView.GONE
-            WebView.GONE
+        if (url != null && shouldSaveToken(url))
+        {
+            val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
+            Log.e("HeaderInfo_Page", "http://13.209.149.15:8080/의 쿠키2: $cookies")
             activity.runOnUiThread {
                 activity.findViewById<WebView>(R.id.webView).visibility = View.GONE
             }
-            Log.e("onPageFinished", "here2")
-            val token = retrieveTokenFromUrl(url)
-            Log.e("onPageFinished", "${token}")
-            saveTokenToSharedPreferences(token)
-
+            val cookiesMap = parseCookies(cookies)
+            val jsessionId = cookiesMap["JSESSIONID"]
+            val accessToken = cookiesMap["accessToken"]
+            val refreshToken = cookiesMap["refreshToken"]
+            Log.e("ParsedCookies", "JSESSIONID: $jsessionId")
+            Log.e("ParsedCookies", "accessToken: $accessToken")
+            Log.e("ParsedCookies", "refreshToken: $refreshToken")
+//            val token = retrieveTokenFromUrl(url)
+//            Log.e("onPageFinished", "${token}")
+//            saveTokenToSharedPreferences(token)
+            if (accessToken != null && refreshToken != null)
+            {
+                saveTokenToSharedPreferences(accessToken, refreshToken, url)
+            }
             val token1 = getTokenFromSharedPreferences(context) ?: "notoken"
             Log.d("token_check", "Stored Token after_custom : ${token1}")
-
             //여기에 Dialog 넣어주면 될 듯
             val contexttoken = getTokenFromSharedPreferences(context) ?: "notoken"
             Log.d("token_check", "Stored Token  contexttoken after_custom : ${contexttoken}")
             val intraId = getIntraidFromSharedPreferences(context)
             val agreement = getAgreementFromSharedPreferences((context))
 
-            val agreeDialog = AgreeDialog(context)
-            agreeDialog.showAgreeDialog(contexttoken, intraId, agreement, context) { result ->
-                if (result)
-                {
-                    showMainPageActivity()
-                }
-                else
-                {
+            val userSettings_agreement = UserSettings.getInstance().agreement
 
+            if (userSettings_agreement == false)
+            {
+                val agreeDialog = AgreeDialog(context)
+                agreeDialog.showAgreeDialog(contexttoken, intraId, agreement, context) { result ->
+                    if (result) {
+                        showMainPageActivity()
+                    } else {
+
+                    }
                 }
             }
-//            showMainPageActivity()
+            else
+            {
+                showMainPageActivity()
+            }
+
+            // ------------------------- 전에 작성했더 코드
+//            WebView.GONE
+//            WebView.GONE
+//            activity.runOnUiThread {
+//                activity.findViewById<WebView>(R.id.webView).visibility = View.GONE
+//            }
+
+
+//            val token = retrieveTokenFromUrl(url)
+//            Log.e("onPageFinished", "${token}")
+//            saveTokenToSharedPreferences(token)
+//
+//            val token1 = getTokenFromSharedPreferences(context) ?: "notoken"
+//            Log.d("token_check", "Stored Token after_custom : ${token1}")
+//            //여기에 Dialog 넣어주면 될 듯
+//            val contexttoken = getTokenFromSharedPreferences(context) ?: "notoken"
+//            Log.d("token_check", "Stored Token  contexttoken after_custom : ${contexttoken}")
+//            val intraId = getIntraidFromSharedPreferences(context)
+//            val agreement = getAgreementFromSharedPreferences((context))
+
+//            val agreeDialog = AgreeDialog(context)
+//            agreeDialog.showAgreeDialog(contexttoken, intraId, agreement, context) { result ->
+//                if (result)
+//                {
+//                    showMainPageActivity()
+//                }
+//                else
+//                {
+//
+//                }
+//            }
+            // ------------------------- 전에 작성했더 코드
+
         }
     }
 

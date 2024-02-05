@@ -10,6 +10,13 @@ import java.net.URLDecoder
 import java.util.Objects
 
 
+// 응답 데이터 클래스
+data class ReissueResponse(
+    @SerializedName("refreshToken") val refreshToken: String
+)
+
+
+
 data class JoinResponse(
     val message: String
 )

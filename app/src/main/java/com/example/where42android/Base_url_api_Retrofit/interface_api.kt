@@ -31,6 +31,16 @@ import java.lang.reflect.Type
 import java.util.logging.Logger
 
 
+//reissue
+interface reissueAPI{
+    // POST 요청을 위한 함수
+    @POST("/v3/jwt/reissue")
+    suspend fun reissueToken(): Response<ReissueResponse>
+
+}
+
+
+
 //JOIN
 interface JoinAPI{
     @POST("v3/join")

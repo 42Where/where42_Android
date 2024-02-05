@@ -115,6 +115,7 @@ class RetrofitConnection {
                 Log.d("Interceptor", "code ${response.code}}")
                 val responseBodyString = response.body?.string() ?: ""
                 Log.d("Interceptor", "responseBodyString ${responseBodyString}}")
+
                 //이건 토큰 재발급
                 if (url.startsWith("http://13.209.149.15:8080") && response.code == 401)
                 {
