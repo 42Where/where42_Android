@@ -69,38 +69,6 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         editor.apply()
     }
 
-
-
-//    private fun saveTokenToSharedPreferences(token: String) {
-//        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-//        val editor = sharedPreferences.edit()
-////        eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUwMzEzNjUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUwMzE0MjV9.-A30zCF_vE8oQHYk0fD5f63Xeckyw7K_X4VIEFK4jk8&intraId=141447&agreement=true
-//        Log.e("AuthToken", "here ${token}")
-////        val tokenMap = splitToken(token)
-//        val tokenSplit = token.split("&")
-//        Log.e("AuthToken", "here ${tokenSplit}")
-////        for ((key, value) in tokenMap) {
-////            Log.e("AuthToken", "$key: $value")
-////        }
-//
-//        val intraid = tokenSplit[1].split("=")
-//        val agreement = tokenSplit[2].split("=")
-//        Log.e("AuthToken", "here ${intraid}")
-//        Log.e("AuthToken", "here ${agreement}")
-//
-//        editor.putString("intraId", intraid[1])
-//        editor.putString("agreement", agreement[1])
-//        editor.putString("AuthToken", tokenSplit[0])
-//
-//        val userSettings = UserSettings.getInstance()
-//        userSettings.token = tokenSplit[0]
-//        userSettings.intraId = intraid[1].toInt()
-//        userSettings.agreement = agreement[1].toBoolean()
-//
-////        editor.putString("AuthToken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k")
-//        editor.apply()
-//    }
-
     fun parseCookies(cookieString: String): Map<String, String> {
         val cookieMap = mutableMapOf<String, String>()
         val cookiePairs = cookieString.split(";")
@@ -122,7 +90,8 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         Log.e("onPageFinished", "${url}")
         Log.e("onPageFinished", "here")
         // 특정 조건을 만족하면 토큰을 가져와서 SharedPreferences에 저장
-        if (url != null && shouldSaveToken(url))
+//                && shouldSaveToken(url)
+        if (url != null && url.startsWith("http://localhost:3000"))
         {
             val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
             Log.e("HeaderInfo_Page", "http://13.209.149.15:8080/의 쿠키2: $cookies")

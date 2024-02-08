@@ -31,6 +31,7 @@
         android:layout_marginTop="@dimen/edittext_layout_margin"
         android:layout_marginBottom="@dimen/edittext_layout_margin"
         android:textSize="@dimen/newgroup_textsize"
+        android:fontFamily="@font/gmarketsans_bold"
         android:gravity="left|center"
         android:hint="힌트"
         android:paddingStart="@dimen/edittext_layout_padding"

@@ -37,6 +37,7 @@ data class Member(
     val agree: Boolean,
     val defaultGroupId: Int,
     var location: String,
+    var responsecode : Int
 )
 
 //@POST("v3/member/comment")
@@ -119,7 +120,7 @@ class groups_memberlist : ArrayList<groups_memberlist.groups_memberlistItem>(){
     data class groups_memberlistItem(
 //        val count: Int,
         val groupId: Int,
-        val groupName: String,
+        var groupName: String,
         val members: List<Member>
     ) {
         data class Member(

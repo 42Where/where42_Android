@@ -226,17 +226,13 @@ class GroupDialog (private val context: Context, val viewModel: SharedViewModel_
 
                 // 레이아웃 내의 뷰들을 가져옴
                 val title = editdialog.findViewById<TextView>(R.id.title)
-                title.text = "그룹 이름을 변경해주세요"
+                title.text = "그룹 이름 변경"
 
                 val input = editdialog.findViewById<EditText>(R.id.input)
+                input.hint = "그룹 이름을 변경을 변경해주세요."
                 val cancel = editdialog.findViewById<Button>(R.id.cancel)
                 val submit = editdialog.findViewById<Button>(R.id.submit)
 
-                // Dialog 크기 설정
-//            editdialog.window?.setLayout(
-//                ViewGroup.LayoutParams.MATCH_PARENT,
-//                ViewGroup.LayoutParams.WRAP_CONTENT
-//            )
                 editdialog.window?.setGravity(Gravity.CENTER)
                 editdialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -255,49 +251,14 @@ class GroupDialog (private val context: Context, val viewModel: SharedViewModel_
 
                     if (groupName.isNotEmpty()) {
                         Log.d("here2", "here2")
-//                //input == changegroupname,  groupNameChange = groupId.toInt()
-                        val retrofitAPI =
-                            RetrofitConnection.getInstance("awd")
-                                .create(GroupChangeName::class.java)
+                        viewModel.editGroupName(groupName, groupId.toInt())
+                        editdialog.dismiss()
+                        dialog.dismiss()
 
-                        val groupChangedata = GroupNameRequest(groupId.toInt(), groupName)
-                        val call = retrofitAPI.groupChangeName(groupChangedata)
-
-                        call.enqueue(object : Callback<GroupNameResponse> {
-                            override fun onResponse(
-                                call: Call<GroupNameResponse>,
-                                response: Response<GroupNameResponse>
-                            ) {
-                                if (response.isSuccessful) {
-                                    val deletedGroup = response.body()
-                                    dialog.dismiss()
-                                    callback(true) // 삭제 성공 시 true 전달
-                                    // 성공적으로 삭제되었으므로 적절한 처리를 수행합니다.
-                                } else {
-                                    // API 호출에 실패한 경우
-                                    Log.e(
-                                        "DELETE_ERROR",
-                                        "Failed to delete group. Error code: ${response.code()}"
-                                    )
-                                    // 실패 처리 로직을 수행하세요.
-                                    callback(false) // 삭제 실패 시 false 전달
-                                }
-                            }
-
-                            override fun onFailure(call: Call<GroupNameResponse>, t: Throwable) {
-                                // 네트워크 오류 등의 이유로 API 호출이 실패한 경우
-                                Log.e(
-                                    "DELETE_ERROR",
-                                    "Network error occurred. Message: ${t.message}"
-                                )
-                                // 실패 처리 로직을 수행하세요.
-                                callback(false) // 삭제 실패 시 false 전달
-                            }
-                        })
                     } else {
 
                     }
-//                dialog.dismiss()
+
                 }
                 editdialog.show()
             }

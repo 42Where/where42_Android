@@ -14,9 +14,12 @@ import com.example.where42android.Base_url_api_Retrofit.AddMembersRequest
 import com.example.where42android.Base_url_api_Retrofit.CommentChangeMember
 import com.example.where42android.Base_url_api_Retrofit.Deafult_friendGroup_memberlist
 import com.example.where42android.Base_url_api_Retrofit.GroupAddMemberlist
+import com.example.where42android.Base_url_api_Retrofit.GroupChangeName
 import com.example.where42android.Base_url_api_Retrofit.GroupDelete
 import com.example.where42android.Base_url_api_Retrofit.GroupDeleteResponse
 import com.example.where42android.Base_url_api_Retrofit.GroupMemberListService
+import com.example.where42android.Base_url_api_Retrofit.GroupNameRequest
+import com.example.where42android.Base_url_api_Retrofit.GroupNameResponse
 import com.example.where42android.Base_url_api_Retrofit.Member
 import com.example.where42android.Base_url_api_Retrofit.MemberAPI
 import com.example.where42android.Base_url_api_Retrofit.NewGroup
@@ -402,6 +405,63 @@ class GroupsMembersList() : ViewModel() {
 
 
     }
+
+
+
+    fun editGroupName(groupName:String, groupId:Int) {
+        val retrofitAPI = RetrofitConnection.getInstance(userSetting.token).create(GroupChangeName::class.java)
+
+        val groupChangedata = GroupNameRequest(groupId, groupName)
+        val call = retrofitAPI.groupChangeName(groupChangedata)
+
+        call.enqueue(object : Callback<GroupNameResponse> {
+            override fun onResponse(
+                call: Call<GroupNameResponse>,
+                response: Response<GroupNameResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val editGroupresponse = response.body()
+//                    dialog.dismiss()
+//                    callback(true) // 삭제 성공 시 true 전달
+                    // 성공적으로 삭제되었으므로 적절한 처리를 수행합니다.
+
+                    // 현재 그룹 리스트를 가져옴
+                    val currentGroups = groupsMembersList.value.orEmpty().toMutableList()
+
+                    val groupIndex = currentGroups.indexOfFirst { it.groupId == groupId }
+                    if (groupIndex != -1) { // 그룹을 찾았는지 확인
+                        if (editGroupresponse != null) {
+                            currentGroups[groupIndex].groupName = editGroupresponse.groupName
+                        }
+                    } else {
+                        // 그룹을 찾지 못한 경우에 대한 처리
+                    }
+
+                    groupsMembersList.value = currentGroups
+
+                } else {
+                    // API 호출에 실패한 경우
+                    Log.e(
+                        "DELETE_ERROR",
+                        "Failed to delete group. Error code: ${response.code()}"
+                    )
+                    // 실패 처리 로직을 수행하세요.
+//                    callback(false) // 삭제 실패 시 false 전달
+                }
+            }
+
+            override fun onFailure(call: Call<GroupNameResponse>, t: Throwable) {
+                // 네트워크 오류 등의 이유로 API 호출이 실패한 경우
+                Log.e(
+                    "DELETE_ERROR",
+                    "Network error occurred. Message: ${t.message}"
+                )
+                // 실패 처리 로직을 수행하세요.
+//                callback(false) // 삭제 실패 시 false 전달
+            }
+        })
+    }
+
 }
 
 //

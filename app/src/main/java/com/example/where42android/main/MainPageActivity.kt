@@ -43,6 +43,7 @@ import com.example.where42android.fragment.MainFragment
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -109,11 +110,17 @@ class MainPageActivity : AppCompatActivity() {
         val intraId = receivedIntraId// Replace with the actual intraId
         Log.d("PageCheck", "intraId: ${intraId}")
 
-        sharedViewModel_profile.getMemberData(intraId, receivedToken)
+        val checkreissue = sharedViewModel_profile.getMemberData(this@MainPageActivity, intraId, receivedToken)
         Log.d("PageCheck", "intraId: getMemberData")
+        Log.d("PageCheck", "checkreissue : ${checkreissue}")
 
         // LiveData 객체 관찰
         sharedViewModel_profile.profileLiveData.observe(this) { member ->
+
+            if (member != null) {
+                Log.d("PageCheck", "member responsecode : ${member.responsecode} ")
+            }
+
             member?.let {
                 profile = member
                 userSettings.defaultGroup = member.defaultGroupId
@@ -129,11 +136,6 @@ class MainPageActivity : AppCompatActivity() {
                     .into(mainImage)
             }
         }
-
-        //location 박스 설정
-//        GlobalScope.launch(Dispatchers.Main) {
-//
-//        }
 
 
         binding.root.post {
@@ -153,22 +155,6 @@ class MainPageActivity : AppCompatActivity() {
             // 배경을 설정
             binding.locationInfo.background = gradientDrawable
         }
-
-//
-//        val locationTextView = findViewById<TextView>(R.id.location_info)
-//        val text = locationTextView.text.toString() // TextView에 표시되는 텍스트
-
-//        val locationTextView = findViewById<TextView>(R.id.location_info)
-//        locationTextView.post {
-//            val maxWidth = locationTextView.width // TextView의 최대 너비
-//            val textPaint = locationTextView.paint // TextView의 Paint 객체
-//            val text = locationTextView.text.toString() // TextView에 표시되는 텍스트
-//
-//            val textWidth = textPaint.measureText(text) // 텍스트의 폭 계산
-//            if (textWidth > maxWidth) {
-//                locationTextView.layoutParams.width = maxWidth // TextView의 너비를 최대 너비로 설정
-//            }
-//        }
 
 
         //1. header의 환경 설정 버튼을 눌렀을 때 -> SettingPage.kt로 가게 하기

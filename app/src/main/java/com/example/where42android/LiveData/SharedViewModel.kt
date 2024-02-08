@@ -1,3 +1,4 @@
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -59,6 +60,12 @@ class SharedViewModel_GroupsMembersList : ViewModel() {
         viewModel.getGroupMemberList(groupId)
     }
 
+    fun editGroupName(groupName:String, groupId:Int)
+    {
+        viewModel.editGroupName(groupName, groupId)
+    }
+
+
 
 }
 
@@ -71,10 +78,11 @@ class SharedViewModel_Profile (
     val profileLiveData: LiveData<Member?>
         get() = profile.profileLiveData
 
-    fun getMemberData(intraId: Int, token: String) {
+    fun getMemberData(context: Context, intraId: Int, token: String):Boolean {
         Log.e("ProfileList", "here")
-        profile.getMemberData(intraId, token)
+        return profile.getMemberData(intraId, token, context)
     }
+
     fun updateMemberComment(updateCommentRequest: UpdateCommentRequest, token: String)
     {
         profile.updateMemberComment(updateCommentRequest, token)

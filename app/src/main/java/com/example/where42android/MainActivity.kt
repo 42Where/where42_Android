@@ -116,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         val intraId = getIntraidFromSharedPreferences(this@MainActivity)
         val agreement = getAgreementFromSharedPreferences((this@MainActivity))
         val refreshtoken = getRefreshTokenFromSharedPreferences(this@MainActivity) ?: "norefresh"
+
         Log.e("refre", "memory token : ${token}")
         Log.e("refre", "memory retoken : ${refreshtoken}")
         val userSettings = UserSettings.getInstance()
@@ -134,23 +135,51 @@ class MainActivity : AppCompatActivity() {
             userSettings.refreshToken = refreshtoken
         }
 
+
         //agreement 동의를 하였고, token intraId, accestoken이 있으면 MainPageAcitivty로 넘기기 -> 이 코드는 나중에
 
 //        saveTokenToSharedPreferences(this, "a")
 //        userSettings.token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k"
+//
 
-        //여기서 getmember를 부르고 accesstoken이
+        val intraid : Int = intraId?.toInt() ?: -1
+        val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
+        CoroutineScope(Dispatchers.IO).launch{
+            try {
+                val response = memberAPI.getMember(intraid)
+                withContext(Dispatchers.IO) {
+                    when (response.code())
+                    {
+                        200 -> {
+                            Log.d("MainPageAcitivty_kt", "no login memberAPI SUC")
+                            val intent = Intent(this@MainActivity, MainPageActivity::class.java)
+                            intent.putExtra("TOKEN_KEY", token)
+                            intent.putExtra("INTRAID_KEY", intraId)
+                            intent.putExtra("AGREEMENT_KEY", agreement)
+                            startActivity(intent)
+                            finish()
+                        }
+                        else ->
+                        {
+                            Log.d("MainPageAcitivty_kt", "no login memberAPI response.code : ${response.code()}")
+                            //여기는 아무것도 없음. 밑 버튼이 보이게 해야됨
+                        }
+                    }
+                }
+            }
+            catch (e:IOException){
+                Log.d("MainPageAcitivty_kt", "no login memberAPI Fail")
+            }
+        }
 
+        //버튼을 눌렀을 때
         loginButton.setOnClickListener {
-
-
 //            val token = getTokenFromSharedPreferences(this@MainActivity) ?: "notoken"
 //            val intraId = getIntraidFromSharedPreferences(this@MainActivity)
 //            val agreement = getAgreementFromSharedPreferences((this@MainActivity))
 //            Log.d("MainActivity2", "Stored Token: ${token}")
 //            Log.d("MainActivity2", "Stored intraId: ${intraId}")
 //            Log.d("MainActivity2", "Stored agreement: ${agreement}")
-
 
             val intraid : Int = intraId?.toInt() ?: -1
             val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
@@ -162,6 +191,7 @@ class MainActivity : AppCompatActivity() {
                                 when (response.code())
                                 {
                                     200 -> {
+
                                         Log.d("token_check", "here1")
                                         Log.d("SUC", "SUC ${response.code()}")
                                         val intent = Intent(this@MainActivity, MainPageActivity::class.java)
@@ -171,9 +201,9 @@ class MainActivity : AppCompatActivity() {
                                         startActivity(intent)
                                         finish()
                                     }
-
                                     201 -> {
                                         //여기가 리다이렉트
+                                        Log.d("token_check", "here2")
                                         val headers = response.headers()
                                         val originalString = headers["redirectUrl"]
                                         val modifiedString =
@@ -191,7 +221,8 @@ class MainActivity : AppCompatActivity() {
                                     }
                                     else ->
                                     {
-
+                                        Log.d("token_check", "here3")
+                                        //이 자리는 다시 로그인 해주세요를 띄워야함.
                                     }
                                 }
                             }
@@ -200,6 +231,7 @@ class MainActivity : AppCompatActivity() {
                                 {
                                     401 -> {
                                         try {
+                                            Log.d("token_check", "here4")
                                             Log.e("Reissue_SUC", "refreshtoken : ${refreshtoken}")
                                             val reissueapi = RetrofitConnection.getInstance(refreshtoken).create(reissueAPI::class.java)
                                             val reissueResponse = reissueapi.reissueToken()
@@ -208,6 +240,7 @@ class MainActivity : AppCompatActivity() {
                                                 when (reissueResponse.code())
                                                 {
                                                     200 -> {
+                                                        Log.d("token_check", "here5")
                                                         Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse}")
                                                         Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.body()}")
                                                         Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.code()}")
@@ -234,16 +267,17 @@ class MainActivity : AppCompatActivity() {
 
                                                     }
                                                     // 추가적인 상태 코드에 대한 처리 필요
-                                                    else -> {
+                                                    else ->
+                                                    {
+                                                        Log.d("token_check", "here6")
                                                         Log.e("Reissue_SUC", "reissueResponse fail : ${reissueResponse}")
                                                         Log.e("Reissue_SUC", "reissueResponse fail: ${reissueResponse.code()}")
                                                         // 기본적으로 어떻게 처리할지 작성
                                                     }
                                                 }
                                             } else {
-                                                //401이며 리다이렉트로 보내야함.
-                                                // Reissue API 호출 실패 시 처리
-                                                // 기본적으로 어떻게 처리할지 작성
+                                                Log.d("token_check", "here7")
+                                                //401이며 Reissue API 호출 실패 시 처리 리다이렉트로 보내야함.
                                                 Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse}")
                                                 Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.body()}")
                                                 Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.headers()}")

@@ -94,11 +94,6 @@ class InRecyclerViewAdapter(
                         }
                     }
                     binding.root.post{
-//                        Glide.with(binding.root.context)
-//                            .load(item.emoji) // item.emoji에 이미지 URL이 있어야 합니다.
-//                            .placeholder(R.drawable.placeholder) // 로딩 중에 표시할 이미지
-//                            .error(R.drawable.placeholder) // 이미지 로드 실패 시 표시할 이미지
-//                            .into(binding.emoji) // 이미지를 표시할 ImageView입니다.
 
                         Glide.with(binding.root.context)
                             .load(item.emoji)
@@ -106,76 +101,13 @@ class InRecyclerViewAdapter(
                             .error(R.drawable.placeholder)
                             .skipMemoryCache(true)
                             .into(binding.emoji)
-
-//                            if (item.location == "퇴근") {
-//        //                    binding.location.setBackgroundColor(Color.WHITE) // 퇴근이면 배경을 흰색으로 설정
-//                            val drawable = ContextCompat.getDrawable(context, R.drawable.location_sharpe_leave)
-//
-//                            drawable?.let {
-//                                binding.location.background = it
-//                                val color = Color.parseColor("#132743")
-//                                binding.location.setTextColor(color)
-//                            }
-//                        }
                         val color = Color.parseColor("#132743")
 
 
                     }
                 }
 
-
-
-//                GlobalScope.launch(Dispatchers.Main) {
-////                    withContext(Dispatchers.Main) {
-////                        // UI 변경 작업
-////                        binding.location.setPadding(leftPadding, 0, rightPadding, 0)
-////                        // 여기서는 코루틴 밖에서 UI 갱신 작업을 수행하므로 문제를 일으키지 않아야 합니다.
-////                    }
-//
-//                    // 코루틴에서 추가 작업 수행
-////                    adjustBackgroundSizeWithPadding(binding.location, leftPadding, rightPadding)
-//
-//                    binding.emoji.setImageResource(R.drawable.placeholder) // placeholder는 원하는 기본 이미지 리소스로 변경
-//                    // 백그라운드 스레드에서 이미지 로딩 실행
-//                    Thread {
-//                        val bitmap = loadImage(item.emoji)
-//
-//                        // UI 업데이트는 메인(UI) 스레드에서 해야 합니다.
-//                        binding.root.post {
-//                            // 로드된 이미지가 null이 아니면 이미지뷰에 설정
-//                            bitmap?.let {
-//                                binding.emoji.setImageBitmap(it)
-//                            }
-//                        }
-//                    }.start()
-//
-//
-////                    // 배경 변경 - 조건에 따라
-////                    if (item.location == "퇴근") {
-//////                    binding.location.setBackgroundColor(Color.WHITE) // 퇴근이면 배경을 흰색으로 설정
-////                        val drawable = ContextCompat.getDrawable(context, R.drawable.location_sharpe_leave)
-////
-////                        drawable?.let {
-////                            binding.location.background = it
-////                            val color = Color.parseColor("#132743")
-////                            binding.location.setTextColor(color)
-////                        }
-////                    }
-//
-//                    //이게 훨씬 빠른데 속도가 너무 다르네,,,
-////                Glide.with(binding.root.context)
-////                    .load(item.emoji) // item.emoji에 이미지 URL이 있어야 합니다.
-////                    .placeholder(R.drawable.placeholder) // 로딩 중에 표시할 이미지
-////                    .error(R.drawable.placeholder) // 이미지 로드 실패 시 표시할 이미지
-////                    .into(binding.emoji) // 이미지를 표시할 ImageView입니다.
-//                }
-
-
                 binding.model = item
-
-
-
-
 
                 //------
 //

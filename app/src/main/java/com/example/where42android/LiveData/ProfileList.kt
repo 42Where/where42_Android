@@ -1,6 +1,10 @@
 package com.example.where42android.LiveData
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
+import android.view.View
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +18,11 @@ import com.example.where42android.Base_url_api_Retrofit.UpdateCommentRequest
 import com.example.where42android.Base_url_api_Retrofit.locationCustomMemberRequest
 import com.example.where42android.Base_url_api_Retrofit.locationCustomMemberResponse
 import com.example.where42android.Base_url_api_Retrofit.member_custom_location
+import com.example.where42android.Base_url_api_Retrofit.reissueAPI
+import com.example.where42android.MainActivity
+import com.example.where42android.UserSettings
+import com.example.where42android.WebView.CustomWebViewClient
+import com.example.where42android.main.MainPageActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +38,9 @@ class ProfileList private constructor(): ViewModel() {
     private val profile = MutableLiveData<Member?>()
     val profileLiveData: LiveData<Member?>
         get() = profile
+
+
+    val usersetting = UserSettings.getInstance()
 
     // 싱글톤으로 사용할 객체 선언
     companion object {
@@ -116,7 +128,7 @@ class ProfileList private constructor(): ViewModel() {
 //        })
 //    }
 
-    fun getMemberData(intraId: Int, token : String) {
+    fun getMemberData(intraId: Int, token : String, context:Context) : Boolean{
         val retrofitAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
         viewModelScope.launch {
             try {
@@ -124,6 +136,7 @@ class ProfileList private constructor(): ViewModel() {
                 if (response.isSuccessful) {
                     val member: Member? = response.body()
                     member?.let {
+                        member.responsecode = 3
                         profile.value = it
                         Log.e("ProfileList", "${profile.value}")
                     } ?: run {
@@ -136,14 +149,110 @@ class ProfileList private constructor(): ViewModel() {
                             inCluster = false,
                             agree = false,
                             defaultGroupId = -1,
-                            location = ""
+                            location = "",
+                            responsecode = 4
                         )
                         Log.d("ProfileList", "${profile.value}")
                     }
-                } else {
+                }
+                else
+                {
                     // Handle unsuccessful response
                     profile.value = null
                     Log.d("ProfileList", "error1")
+
+                    //reissue api 부르기
+                    try {
+                        Log.e("Reissue_SUC", "refreshtoken : ${usersetting.refreshToken}")
+                        val reissueapi = RetrofitConnection.getInstance(usersetting.refreshToken).create(
+                            reissueAPI::class.java)
+                        val reissueResponse = reissueapi.reissueToken()
+                        if (reissueResponse.isSuccessful)
+                        {
+                            when (reissueResponse.code())
+                            {
+                                200 -> {
+                                    Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse}")
+                                    Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.body()}")
+                                    Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.code()}")
+                                    val reissue = reissueResponse.body()?.refreshToken
+                                    Log.e("Reissue_SUC", "reissue : ${reissue}")
+                                    if (reissue != null)
+                                    {
+                                        usersetting.token = reissue
+                                        profile.value = Member(
+                                            intraId = -1,
+                                            intraName = "",
+                                            grade = "",
+                                            image = "",
+                                            comment = "",
+                                            inCluster = false,
+                                            agree = false,
+                                            defaultGroupId = -1,
+                                            location = "",
+                                            responsecode = 200
+                                        )
+//                                        saveaccesTokenToSharedPreferences(this@MainActivity, reissue)
+                                        Log.d("token_check", "here6")
+                                        Log.d("SUC", "SUC ${response.code()}")
+
+//                                        val intent = Intent(this@MainActivity, MainPageActivity::class.java)
+//                                        intent.putExtra("TOKEN_KEY", userSettings.token)
+//                                        intent.putExtra("INTRAID_KEY", intraId)
+//                                        intent.putExtra("AGREEMENT_KEY", agreement)
+//                                        startActivity(intent)
+//                                        finish()
+                                    }
+                                    else
+                                    {
+                                        usersetting.token = "notoken"
+//                                        saveaccesTokenToSharedPreferences(this@MainActivity, "notoken")
+                                    }
+
+                                }
+                                // 추가적인 상태 코드에 대한 처리 필요
+                                else ->
+                                {
+                                    Log.e("Reissue_SUC", "reissueResponse fail : ${reissueResponse}")
+                                    Log.e("Reissue_SUC", "reissueResponse fail: ${reissueResponse.code()}")
+                                    // 기본적으로 어떻게 처리할지 작성
+                                }
+                            }
+                        } else {
+                            //401이며 Reissue API 호출 실패 시 처리 리다이렉트로 보내야함. -> 그냥 MainActivity로 보내자
+
+//                            val intent = Intent(context, MainActivity::class.java)
+////                            intent.putExtra("TOKEN_KEY", userSettings.token)
+////                            intent.putExtra("INTRAID_KEY", intraId)
+////                            intent.putExtra("AGREEMENT_KEY", agreement)
+//                            startActivity(intent)
+//                            finish(context)
+
+//                            Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse}")
+//                            Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.body()}")
+//                            Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.headers()}")
+//                            Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.code()}")
+//                            val headers = response.headers()
+//                            val originalString = headers["redirectUrl"]
+//                            val modifiedString =
+//                                originalString?.replace("{", "")?.replace("}", "")
+//                            Log.d("SUC", "modifiedString : ${modifiedString}")
+//                            Log.e("herehere", "here1")
+//                            val customWebViewClient =
+//                                CustomWebViewClient(this@MainActivity, this@MainActivity)
+//                            Log.e("herehere", "here2")
+//                            runOnUiThread {
+//                                Log.e("herehere", "here3")
+//                                webView.visibility = View.VISIBLE
+//                                webView.webViewClient = customWebViewClient
+//                                if (modifiedString != null) {
+//                                    Log.e("herehere", "here4")
+//                                    webView.loadUrl(modifiedString)
+//                                }
+//                            }
+                        }
+                    } catch (reissueException: Exception) {
+                    }
                 }
             } catch (e: Exception) {
                 profile.value = null // Setting null in case of network failure or exceptions
@@ -152,7 +261,10 @@ class ProfileList private constructor(): ViewModel() {
                 e.printStackTrace()
             }
         }
-
+        if (profile.value == null)
+            return true
+        else
+            return false
     }
 
 
@@ -265,6 +377,7 @@ class ProfileList private constructor(): ViewModel() {
                             agree = false,
                             defaultGroupId = -1,
                             location = "",
+                            responsecode = -1
                         )
                         profile.postValue(newProfile)
                     }
