@@ -25,12 +25,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.53" />
+        app:layout_constraintGuide_percent="0.5" />
 
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
         android:id="@+id/btnFloor1"
-        android:text="X1클러스터"
+        android:text="3클러스터"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btnFloor2"
@@ -47,7 +47,7 @@
         />
 
     <android.widget.Button
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:id="@+id/btnFloor2"
         android:gravity="center"
         android:layout_width="150dp"
@@ -56,8 +56,7 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
-        android:text="X2클러스터"
-
+        android:text="4클러스터"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btnFloor3"
@@ -73,15 +72,14 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
-
-        android:text="반원테이블"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+        android:text="회의실"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
     <android.widget.Button
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/btnFloor4"
         android:gravity="center"
         android:layout_width="150dp"
@@ -90,14 +88,14 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
-        android:text="중앙테이블"
+        android:text="원형테이블"
         app:layout_constraintTop_toBottomOf="@id/btnFloor3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
     <android.widget.Button
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/btnFloor5"
         android:gravity="center"
         android:layout_width="150dp"
@@ -112,21 +110,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-    <android.widget.Button
-        android:layout_marginTop="10dp"
-        android:id="@+id/btnFloor6"
-        android:gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        style="@style/RoundedButton"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/gmarketsans_medium"
-        android:text="테라스"
-        app:layout_constraintTop_toBottomOf="@id/btnFloor5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

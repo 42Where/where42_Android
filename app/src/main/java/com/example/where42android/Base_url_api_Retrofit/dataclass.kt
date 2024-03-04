@@ -9,13 +9,31 @@ import java.util.Date
 import java.net.URLDecoder
 import java.util.Objects
 
+//search
+class searchMemberResponse : ArrayList<searchMemberResponse.searchMemberResponseItem>(){
+    data class searchMemberResponseItem(
+        val agree: Boolean,
+        val comment: String,
+        val friend: Boolean,
+        val image: String,
+        val inOrOut: Boolean,
+        val intraId: Int,
+        val intraName: String,
+        val location: String
+        )
+}
 
-// 응답 데이터 클래스
-data class ReissueResponse(
-    @SerializedName("refreshToken") val refreshToken: String
+
+//logout
+data class logoutResponse(
+    val logout: String
 )
 
 
+// 응답 데이터 클래스
+data class ReissueResponse(
+    val refreshToken: String
+)
 
 data class JoinResponse(
     val message: String
@@ -121,7 +139,8 @@ class groups_memberlist : ArrayList<groups_memberlist.groups_memberlistItem>(){
 //        val count: Int,
         val groupId: Int,
         var groupName: String,
-        val members: List<Member>
+        val members: List<Member>,
+        var toggle : Boolean
     ) {
         data class Member(
             val intraId: Int,
@@ -132,7 +151,7 @@ class groups_memberlist : ArrayList<groups_memberlist.groups_memberlistItem>(){
             val inCluster: Boolean,
             val agree: Boolean,
             val defaultGroupId: Int,
-            val location: String,
+            var location: String,
         )
 //        data class Member(
 //            val comment: String,

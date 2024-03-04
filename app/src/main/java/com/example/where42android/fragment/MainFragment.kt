@@ -1,11 +1,5 @@
 package com.example.where42android.fragment
 
-
-//import com.example.where42android.databinding.FragmentActivityMainPageBinding
-//import com.example.where42android.group_api.GroupViewModel
-//import com.example.where42android.group_api.GroupViewModelFactory
-
-
 import SharedViewModel_GroupsMembersList
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +11,7 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.where42android.Base_url_api_Retrofit.GroupMemberListService
 import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
@@ -26,17 +21,29 @@ import com.example.where42android.databinding.ActivityMainPageFragmentBinding
 import com.example.where42android.model.RecyclerInViewModel
 import com.example.where42android.model.RecyclerOutViewModel
 
+object GroupsList {
+    var newItemList = mutableListOf<RecyclerOutViewModel>()
+    var wentToWorkFriend = false
+
+    fun setToggleStat(setGroupsList: MutableList<RecyclerOutViewModel>) {
+        newItemList = setGroupsList
+    }
+
+    fun getGroupsList(): MutableList<RecyclerOutViewModel> {
+        return newItemList
+    }
+
+//    fun clearToggleStat() {
+//        togglestat.clear()
+//    }
+}
+
 
 class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
-
-
     private lateinit var binding: ActivityMainPageFragmentBinding
     private val token = receivedToken
-    private val retrofitAPI = RetrofitConnection.getInstance(token).create(GroupMemberListService::class.java)
     private val emptyItemList = mutableListOf<RecyclerOutViewModel>()
     private val intraid = IntraId
-
-//    private lateinit var viewModel: GroupsMembersList
 
     private lateinit var sharedViewModel: SharedViewModel_GroupsMembersList
     override fun onCreateView(
@@ -59,30 +66,29 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
             checkBox?.isChecked = !checkBox?.isChecked!!
         }
 
-//        checkBox?.setOnCheckedChangeListener { _, isChecked ->
-//            val adapter = binding.outRecyclerview.adapter as? OutRecyclerViewAdapter
-////            adapter?.setShowNonLeaveMembersOnly(isChecked)
-//            adapter?.setShowNonLeaveMembersOnly(isChecked)
-//        }
         checkBox?.setOnCheckedChangeListener { _, isChecked ->
+            Log.d("checkbox", "isChecked : ${isChecked}")
             val adapter = binding.outRecyclerview.adapter as? OutRecyclerViewAdapter
             adapter?.setShowNonLeaveMembersOnly(isChecked)
 
         }
-
-
         // Create ViewModel instance
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel_GroupsMembersList::class.java)
 //        viewModel = ViewModelProvider(this).get(GroupsMembersList::class.java)
 
         // Observe changes in LiveData
         sharedViewModel.groupsMembersListLiveData.observe(viewLifecycleOwner) { groupList ->
+            Log.d("datachange", "datachange1")
+            if (checkBox?.isChecked == true)
+            {
+                checkBox?.isChecked = false
+            }
             if (groupList.isNotEmpty()) {
+                Log.d("checkfreind", "checkfriend")
+                Log.d("boolean_check", " checkBox?.isChecked  : ${checkBox?.isChecked }")
                 val itemList = mutableListOf<RecyclerOutViewModel>()
-
                 groupList.forEach { groupDetail ->
                     val innerItemList = mutableListOf<RecyclerInViewModel>()
-
                     groupDetail.members.forEach { intraId ->
                         val recyclerInViewModel = RecyclerInViewModel(
                             emoji = intraId.image ?: "",
@@ -92,36 +98,45 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
                             included_group = groupDetail.groupId ?: -1,
                             intra_id = intraId.intraId ?: -1,
                         )
-                        Log.d("groupId", "id : ${groupDetail.groupId}")
+                        Log.d("groupId", "id : ${groupDetail.groupId} location :  ${intraId.location}")
                         innerItemList.add(recyclerInViewModel)
                     }
-
                     val recyclerOutViewModel = RecyclerOutViewModel(
                         title = groupDetail.groupName ?: "",
                         innerItemList,
                         groupId = groupDetail.groupId ?: 0,
-                        viewgroup = false
+                        viewgroup = groupDetail.toggle
                     )
-
+                    Log.d("title_check", "title_check : ${recyclerOutViewModel.title}")
                     itemList.add(recyclerOutViewModel)
                 }
 
-                // itemList에서 "default" 그룹을 찾아서 제거하고 다시 맨 뒤로 추가
-                val defaultGroup = itemList.firstOrNull { it.title == "default" }
+                val lastIndex = itemList.lastIndex
+//                val lastItem = itemList[lastIndex]
+                val defaultGroupIndex = itemList?.indexOfFirst { it.title == "친구 목록"}
+                if (lastIndex == defaultGroupIndex) {
+                    Log.d("LastItemCheck", "친구 목록이 마지막에 있습니다.")
+                } else {
+                    val defaultFriendListremove = itemList?.firstOrNull{it.title == "친구 목록"}
+                    if (defaultFriendListremove != null) {
+                        if (defaultGroupIndex != null) {
+                            itemList.removeAt(defaultGroupIndex)
+                            itemList.add(defaultFriendListremove)
+                        }
 
-                if (defaultGroup != null) {
-                    itemList.remove(defaultGroup)
-                    defaultGroup.title = "친구 목록"
-                    defaultGroup.viewgroup = true
-                    itemList.add(defaultGroup)
+                    }
+                    Log.d("LastItemCheck", "친구 목록이 마지막에 없습니다.")
                 }
 
+
+
+                Log.d("DiffUtil", "here1")
                 // Set up RecyclerView Adapter
                 val adapter = OutRecyclerViewAdapter(requireContext(), itemList, sharedViewModel)
                 binding.outRecyclerview.adapter = adapter
                 binding.outRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-
-
+                GroupsList.setToggleStat(itemList)
+                binding.progressBar.visibility = View.GONE
             }
             else {
                 // Handle empty or null data
@@ -132,8 +147,33 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
             }
         }
 
+        sharedViewModel.groupsMembersListLiveData.observeForever { groupList ->
+            Log.d("datachange", "datachange2")
+            // 데이터가 변경될 때 실행되는 코드
+        }
+
+
         // Call function to fetch data
 //        val intraId = 6 // Replace this with your memberId value
         sharedViewModel.getGroupMemberList(intraid, token)
+    }
+
+    class MyDiffUtil(
+        private val oldList: List<RecyclerOutViewModel>,
+        private val newList: List<RecyclerOutViewModel>
+    ) : DiffUtil.Callback() {
+
+        override fun getOldListSize(): Int {
+            return oldList.size
+        }
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].groupId == newList[newItemPosition].groupId
+        }
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
     }
 }

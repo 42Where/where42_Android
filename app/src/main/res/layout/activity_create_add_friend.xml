@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="model"
+            type="com.example.where42android.model.SearchRecyclerInViewModel"
+            />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/profile_card"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.042" />
+
+<!--        android:src="@drawable/profile_photo_example"-->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_photo"
+        android:layout_width="@dimen/profile_image"
+        android:layout_height="@dimen/profile_image"
+        android:src="@{model.emoji}"
+
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:civ_border_color="#95FFB5B5"
+        app:civ_border_overlay="true"
+        app:civ_border_width="2dp" />
+
+<!--        android:text="인트라 ID"-->
+<!--    <TextView-->
+<!--        android:id="@+id/intra_id"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="@dimen/intra_ID"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:gravity="bottom"-->
+<!--        android:text="@{model.intra_name}"-->
+<!--        android:fontFamily="@font/gmarketsans_bold"-->
+<!--        android:textSize="@dimen/font_small"-->
+<!--        app:layout_constraintStart_toEndOf="@id/profile_photo"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/guideline" />-->
+
+        <TextView
+            android:id="@+id/intra_id"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/intra_ID"
+            android:layout_marginStart="8dp"
+            android:paddingLeft="3dp"
+            android:gravity="center"
+            android:text="@{model.intra_name}"
+            android:fontFamily="@font/gmarketsans_bold"
+            android:textSize="@dimen/font_small"
+            app:layout_constraintStart_toEndOf="@id/profile_photo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+<!--            app:layout_constraintStart_toEndOf="@id/profile_photo"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/guideline" />-->
+
+<!--        android:text="코멘트코멘트코멘트"-->
+<!--    <TextView-->
+<!--        android:id="@+id/Comment"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="@dimen/comment"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@{model.comment}"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:fontFamily="@font/gmarketsans_medium"-->
+<!--        android:textSize="@dimen/font_small"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/guideline"-->
+<!--        app:layout_constraintStart_toEndOf="@id/profile_photo" />-->
+
+<!--        android:text="CX2R1S5CC"-->
+<!--    <TextView-->
+<!--        android:id="@+id/location_info"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="@dimen/comment"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:background="@drawable/location_shape_another_version"-->
+<!--        android:gravity="center"-->
+<!--        android:clipToOutline="true"-->
+<!--        android:text="@{model.location}"-->
+<!--        android:fontFamily="@font/gmarketsans_medium"-->
+<!--        android:textColor="#FCFDFF"-->
+<!--        android:textSize="@dimen/font_small"-->
+<!--        android:maxLines="1"-->
+<!--        android:ellipsize="end"-->
+<!--        app:layout_constraintStart_toEndOf="@id/intra_id"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/guideline"/>-->
+
+    <!--    android:layout_width="24dp"-->
+    <!--    android:layout_height="24dp"-->
+    <!--    android:layout_marginRight="6dp"-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.91" />
+
+
+<!--    android:layout_width="@dimen/newgroup_layout_padding_top_bottom"-->
+<!--    android:layout_height="@dimen/newgroup_layout_padding_top_bottom"-->
+<!--    <androidx.appcompat.widget.AppCompatImageButton-->
+<!--        android:id="@+id/add_member"-->
+<!--        android:layout_width="18dp"-->
+<!--        android:layout_height="18dp"-->
+<!--        android:background="@drawable/user_add"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/guideline2"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        />-->
+
+        <CheckBox
+            android:layout_width="@dimen/newgroup_layout_padding_top_bottom"
+            android:layout_height="@dimen/newgroup_layout_padding_top_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible"
+            android:buttonTint="#132743"
+            android:id="@+id/checkBox"/>
+
+
+<!--        &lt;!&ndash; Add ProgressBar &ndash;&gt;-->
+<!--        <ProgressBar-->
+<!--            android:id="@+id/progress_bar"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

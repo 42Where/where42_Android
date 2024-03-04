@@ -1,9 +1,13 @@
 package com.example.where42android.main
 
 import SharedViewModel_GroupsMembersList
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SearchView
@@ -46,19 +50,46 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
 
 //        viewModel = ViewModelProvider(this).get(GroupDetailViewModel::class.java)
 
+        val homeButton: ImageButton = findViewById(R.id.home_button)
+        homeButton.setOnClickListener {
+            try {
+                val intent = Intent(this, MainPageActivity::class.java)
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
         val groupIdNumber: Number = intent.getIntExtra("GROUP_ID", -1)
         val groupId : Int = groupIdNumber.toInt()
 
-
+        val createGroupButton: AppCompatButton = findViewById(R.id.delete_group_member)
+        val recyclerview : RecyclerView = findViewById(R.id.new_gorup_friend_list)
+        val nosearchmember : TextView = findViewById(R.id.noItemsTextView)
+        nosearchmember.text = "그룹에 삭제할 친구가 없습니다."
         //1. group member 보여주기
-        fetchMemberAllData(groupId)
+        fetchMemberAllData(groupId){ isSuccess ->
+            if (isSuccess)
+            {
+                createGroupButton.visibility = View.VISIBLE
+                recyclerview.visibility = View.VISIBLE
+                nosearchmember.visibility = View.GONE
+            }
+            else
+            {
+                createGroupButton.visibility = View.GONE
+                recyclerview.visibility = View.GONE
+                nosearchmember.visibility = View.VISIBLE
+            }
+        }
 
         val groupName: String? = intent.getStringExtra("GROUP_NAME")
         val groupChangeName : TextView = findViewById(R.id.GroupName)
         groupChangeName.text = groupName
 
-        val createGroupButton: AppCompatButton = findViewById(R.id.delete_group_member)
         createGroupButton.setOnClickListener {
             //2. 그룹 만들기 API 호출
 
@@ -68,13 +99,6 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
             //조건문 해야될 듯 만약 list에 아무것도 없으면 리턴 시키기
             // 여기서 가져온 선택된 항목들에 대해 원하는 작업 수행 가능
             // 예를 들어, 선택된 항목들의 이름을 로그에 출력하는 등의 동작 수행
-
-//            val members =  mutableListOf<String>()
-//            selectedItems.forEach { selectedItem ->
-//                Log.d("선택된 항목", "이름: ${selectedItem.intraName}")
-////                members.add(selectedItem.memberIntraName)
-//                members.add(selectedItem.intraName)
-//            }
 
             val members =  mutableListOf<Int>()
             selectedItems.forEach { selectedItem ->
@@ -120,7 +144,7 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
     }
 
     //group 안에 member 보여주기
-    private fun fetchMemberAllData(groupId:Int) {
+    private fun fetchMemberAllData(groupId:Int, callback: (Boolean) -> Unit) {
 //
         val userSettings = UserSettings.getInstance()
         val retrofitAPI =
@@ -139,14 +163,36 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
                     friendList?.let { members ->
                         // 받은 멤버 데이터를 friendProfileList에 추가
                         for (member in members) {
+                            if (member.location == null)
+                            {
+                                if (member.inCluster == true)
+                                {
+                                    member.location = "개포 클러스터 내"
+                                }
+                                else
+                                {
+                                    member.location = "퇴근"
+                                }
+                            }
                             friendProfileList.add(member)
                         }
                         updateAdapterData(friendProfileList)
+                        callback(true) // 성공적으로 처리되었으므로 true를 콜백으로 반환
+                    }
+                    if (friendList != null) {
+                        if (friendList.isEmpty()) {
+                            callback (false)
+                        }
+                        else
+                        {
+                            callback (true)
+                        }
                     }
                 }
                 else
                 {
                     Log.d("API Error", "API call successful. Response: $response")
+                    callback(false)
                 }
             }
             override fun onFailure(
@@ -154,6 +200,7 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
                 t: Throwable)
             {
                 // API 요청 자체가 실패한 경우 처리
+                callback(false)
             }
         })
     }

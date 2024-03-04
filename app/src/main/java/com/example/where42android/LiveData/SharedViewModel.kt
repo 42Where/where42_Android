@@ -3,15 +3,25 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.where42android.Base_url_api_Retrofit.AddMembersRequest
+import com.example.where42android.Base_url_api_Retrofit.CommentChangeMember
 import com.example.where42android.Base_url_api_Retrofit.Member
 import com.example.where42android.Base_url_api_Retrofit.NewGroupRequest
 import com.example.where42android.Base_url_api_Retrofit.NewGroupResponses
+import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
+import com.example.where42android.Base_url_api_Retrofit.SearchApiService
 import com.example.where42android.Base_url_api_Retrofit.UpdateCommentRequest
 import com.example.where42android.Base_url_api_Retrofit.groups_memberlist
 import com.example.where42android.Base_url_api_Retrofit.locationCustomMemberRequest
+import com.example.where42android.Base_url_api_Retrofit.searchMemberResponse
 import com.example.where42android.LiveData.GroupsMembersList
 import com.example.where42android.LiveData.ProfileList
+import com.example.where42android.UserSettings
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SharedViewModel_GroupsMembersList : ViewModel() {
 //    private val viewModel = GroupsMembersList() // 공유할 ViewModel 인스턴스
@@ -23,6 +33,7 @@ class SharedViewModel_GroupsMembersList : ViewModel() {
 
     // ViewModel에서 데이터 가져오는 함수
     fun getGroupMemberList(intraId: Int, token : String) {
+        Log.d("ViewModel", "ViewModel");
         viewModel.getGroupMemberList(intraId, token)
     }
 
@@ -65,7 +76,10 @@ class SharedViewModel_GroupsMembersList : ViewModel() {
         viewModel.editGroupName(groupName, groupId)
     }
 
-
+//    fun groupToggleChange(groupName : String, toggle : Boolean)
+//    {
+//        viewModel.groupToggleChange(groupName, toggle)
+//    }
 
 }
 
@@ -101,5 +115,104 @@ class SharedViewModel_Profile (
 //    fun updateComment(comment: String) {
 //        _commentLiveData.value = comment
 //    }
+}
+
+class SearchSharedViewModel : ViewModel() {
+    //    private val viewModel = GroupsMembersList() // 공유할 ViewModel 인스턴스
+    private val viewModel: SearchViewModel = SearchViewModel.getInstance()
+
+    // ViewModel의 LiveData를 가져옴
+    val searchListLiveData: LiveData<List<searchMemberResponse.searchMemberResponseItem>?>
+        get() = viewModel.searchListLiveData
+
+    // ViewModel에서 데이터 가져오는 함수
+    fun getSearchMemberList(searchMember:String) {
+        Log.d("ViewModel", "ViewModel");
+        viewModel.getSearchMemberList(searchMember)
+    }
+
 
 }
+
+class SearchViewModel private constructor(): ViewModel() {
+
+
+    private val searchList = MutableLiveData<List<searchMemberResponse.searchMemberResponseItem>?>()
+    val searchListLiveData: LiveData<List<searchMemberResponse.searchMemberResponseItem>?>
+        get() = searchList
+
+
+    val usersetting = UserSettings.getInstance()
+
+    // 싱글톤으로 사용할 객체 선언
+    companion object {
+        @Volatile
+        private var instance: SearchViewModel? = null
+
+        fun getInstance(): SearchViewModel {
+            return instance ?: synchronized(this) {
+                instance ?: SearchViewModel().also { instance = it }
+            }
+        }
+    }
+
+    fun getSearchMemberList(searchMember:String)
+    {
+//        val retrofitAPI = RetrofitConnection.getInstance(usersetting.token).create(SearchApiService::class.java)
+//        retrofitAPI.searchMember(searchMember).enqueue(object :
+//            Callback<List<searchMemberResponse.searchMemberResponseItem>> {
+//            override fun onResponse(
+//                call: Call<List<searchMemberResponse.searchMemberResponseItem>>,
+//                response: Response<List<searchMemberResponse.searchMemberResponseItem>>
+//            ) {
+//                if (response.isSuccessful) {
+//                    val searchMember: List<searchMemberResponse.searchMemberResponseItem>? = response.body()
+//                    Log.d("PrfoileList", "response : ${response}")
+//                    Log.d("ProfileList", "onResponse: Success searchMember : ${searchMember}")
+//                    Log.d("searchList", "searchList ${searchList.value}")
+//                        searchList.value = searchMember.orEmpty()
+//                } else {
+//                    Log.e("ProfileList", "onResponse: Failure")
+//                }
+//
+//            }
+//            override fun onFailure(call: Call<List<searchMemberResponse.searchMemberResponseItem>>, t: Throwable) {
+//                Log.e("respone2 fail", "response : ${t}")
+//                Log.e("respone2 fail", "fail")
+//                // Handle failure
+//                // For example, handle the failure accordingly
+//            }
+//        })
+
+        val retrofitAPI = RetrofitConnection.getInstance(usersetting.token).create(SearchApiService::class.java)
+        viewModelScope.launch {
+            try {
+                val response = retrofitAPI.searchMember(searchMember)
+                Log.d("searchList", "search response code : ${response.code()}")
+                if (response.isSuccessful)
+                {
+                    val searchListResponse = response.body()
+                    if (searchListResponse != null)
+                    {
+                        searchList.value = searchListResponse
+                    }
+                    else
+                    {
+                        searchList.value = null
+                    }
+                    Log.d("searchList", "searchList : ${searchListResponse}")
+                }
+                else
+                {
+
+                }
+            }
+            catch  (e: Exception)
+            {
+                Log.d("serachList", "searchList api fail ${e}" )
+            }
+        }
+    }
+}
+//}
+

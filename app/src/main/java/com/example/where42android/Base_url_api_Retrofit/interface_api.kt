@@ -1,29 +1,14 @@
 package com.example.where42android.Base_url_api_Retrofit
 
 
-import android.util.Log
-import com.example.where42android.Base_url_api_Retrofit.groups_memberlist
-import com.google.gson.GsonBuilder
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
-import okhttp3.ResponseBody.Companion.toResponseBody
-import okhttp3.logging.HttpLoggingInterceptor
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
-import retrofit2.Converter
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 import retrofit2.http.DELETE
-import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.PUT
@@ -31,14 +16,33 @@ import java.lang.reflect.Type
 import java.util.logging.Logger
 
 
+//search
+interface SearchApiService {
+    @GET("v3/search")
+    suspend fun searchMember(
+        @Query("keyWord") keyWord: String
+    ): Response<List<searchMemberResponse.searchMemberResponseItem>> // YourResponseModel에는 실제 응답 모델을 대입해야 합니다.
+}
+
+//interface SearchApiService {
+//    @GET("v3/search")
+//    fun searchMember(
+//        @Query("keyWord") keyWord: String
+//    ): Call<List<searchMemberResponse.searchMemberResponseItem>> // YourResponseModel에는 실제 응답 모델을 대입해야 합니다.
+//}
+//logout
+interface logoutAPI{
+    @POST("v3/logout")
+    suspend fun logout():Response<logoutResponse>
+}
+
 //reissue
 interface reissueAPI{
     // POST 요청을 위한 함수
-    @POST("/v3/jwt/reissue")
+    @POST("v3/jwt/reissue")
     suspend fun reissueToken(): Response<ReissueResponse>
 
 }
-
 
 
 //JOIN

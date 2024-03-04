@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="@dimen/activity_profile_popup_height"
     android:background="@drawable/bottom_popup_background"
     android:paddingTop="@dimen/profile_popup_layout_height_paddingTop"
     >
@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/activity_profile_popup_profile_height"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/profile"
         >
@@ -24,26 +24,27 @@
             app:layout_constraintGuide_percent="0.5" />
 
 
-
+<!--        android:layout_marginLeft="12dp"-->
+<!--        app:civ_border_width="2dp"-->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/emoji"
-            android:layout_width="75dp"
+            android:layout_width="@dimen/activity_profile_popup_emoji_width"
             android:layout_height="match_parent"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="@dimen/newgroup_image"
             android:src="@drawable/profile_photo_example"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:civ_border_color="#95FFB5B5"
             app:civ_border_overlay="true"
-            app:civ_border_width="2dp"
+            app:civ_border_width="@dimen/activity_profile_popup_emoji_civ_border_width"
             />
 
         <TextView
             android:id="@+id/intra_id"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/intra_ID"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
             android:text="jaeyojun"
             android:textSize="@dimen/font_small"
             android:gravity="bottom"
@@ -51,9 +52,7 @@
             app:layout_constraintStart_toEndOf="@id/emoji"
             app:layout_constraintBottom_toTopOf="@id/guideline" />
 
-
         <!--        android:text="@{model.intra_id}"-->
-
         <!--        android:text="코멘트코멘트코멘트"-->
         <!--        android:text="@{model.comment}"-->
         <TextView
@@ -62,7 +61,7 @@
             android:layout_height="@dimen/comment"
             android:gravity="center"
             android:text="hello"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
             android:fontFamily="@font/gmarketsans_medium"
             android:textSize="@dimen/font_small"
             app:layout_constraintStart_toEndOf="@id/emoji"
@@ -77,7 +76,7 @@
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/comment"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
             android:background="@drawable/location_shape"
             android:gravity="center"
             android:clipToOutline="true"
@@ -91,76 +90,19 @@
             app:layout_constraintBottom_toTopOf="@id/guideline"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-<!--            <View-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="1dp"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                android:layout_centerInParent="true"-->
-<!--                android:background="#132743"/>-->
-
-
-
-<!--                <android.widget.Button-->
-<!--                    android:id="@+id/Delete"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="60dp"-->
-<!--                    android:backgroundTint="@color/white"-->
-
-<!--                    app:layout_constraintTop_toBottomOf="@id/profile"-->
-<!--                    android:text="친구 삭제하기"-->
-<!--                    android:textColor="#B20000"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:textSize="20sp"-->
-<!--                    android:fontFamily="@font/gmarketsans_medium"/>-->
+<!--    android:paddingStart="24dp"-->
+<!--    android:layout_height="48dp"-->
     <android.widget.Button
         android:id="@+id/Delete"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:paddingStart="25dp"
+        android:layout_height="@dimen/search_header_layout_height_toolbar"
+        android:paddingStart="@dimen/newgroup_layout_padding_top"
         android:background="@drawable/activity_editgroup_button_selector"
         app:layout_constraintTop_toBottomOf="@id/profile"
         android:text="친구 삭제하기"
         android:textColor="#B30000"
         android:gravity="center_vertical"
-        android:textSize="14sp"
+        android:textSize="@dimen/group_font"
         android:fontFamily="@font/gmarketsans_medium"/>
-
-
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="30dp"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/profile"-->
-<!--        >-->
-
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="1dp"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:background="#132743"/>-->
-
-
-
-<!--            <android.widget.Button-->
-<!--                android:id="@+id/Delete"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="84dp"-->
-<!--                android:paddingStart="36dp"-->
-<!--                android:backgroundTint="@color/white"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                android:text="친구 삭제하기"-->
-<!--                android:textColor="#B20000"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:textSize="20sp"-->
-<!--                android:fontFamily="@font/gmarketsans_medium"/>-->
-
-
-
-
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

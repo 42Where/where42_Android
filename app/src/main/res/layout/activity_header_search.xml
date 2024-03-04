@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/layout_height_header"
+    android:paddingStart="@dimen/layout_height_padding"
+    android:paddingEnd="@dimen/layout_height_padding">
+
+    <ImageView
+        android:id="@+id/where42_logo"
+        android:layout_width="@dimen/where42_logo_width"
+        android:layout_height="@dimen/where42_logo_height"
+        android:background="@drawable/list_title_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/where42_logo" />
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/setting_button"-->
+<!--        android:layout_width="@dimen/header_setting_btn"-->
+<!--        android:layout_height="@dimen/header_setting_btn"-->
+<!--        android:src="@drawable/settings_icon"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:padding="0sp"-->
+<!--        android:backgroundTint="@android:color/transparent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/home_button"
+        android:layout_width="@dimen/header_home_btn"
+        android:layout_height="@dimen/header_home_btn"
+        android:scaleType="fitCenter"
+        android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/footer_home_icon"
+        android:padding="0sp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+
+<!--    <androidx.appcompat.widget.AppCompatImageButton-->
+<!--        android:id="@+id/add_member"-->
+<!--        android:layout_width="@dimen/header_home_btn"-->
+<!--        android:layout_height="@dimen/header_home_btn"-->
+<!--        android:background="@drawable/footer_search_icon"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        />-->
+
+<!--    android:layout_width="@dimen/filter_available_w" 165dp-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

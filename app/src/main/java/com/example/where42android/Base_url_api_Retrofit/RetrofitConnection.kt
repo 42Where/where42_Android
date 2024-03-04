@@ -78,11 +78,14 @@ class RetrofitConnection {
             return Interceptor { chain ->
                 //request.url -> Interceptor is invoked for URL: http://13.209.149.15:8080/v3/member?intraId=6
                 val request = chain.request()
-                Log.e("hello", "hello")
+                Log.e("createInterceptor_request", "request : ${request}, request : ${request.body}")
 
                 //response 출력
                 //->  Interceptor is invoked for URL: Response{protocol=h2, code=200, message=, url=https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=1251f8f333239c9642c220b6df4e6b8e6900155d80d1bb64}
                 val response = chain.proceed(request)
+                Log.e("createInterceptor_response", "response : ${response}, response.body() : ${response.body}")
+
+//                Log.d("woonshin", "re")
 
                 //requestURL JSON 처럼 만들어주기
                 val requestURL =  "{" + request.url + "}"
@@ -113,15 +116,15 @@ class RetrofitConnection {
 //                    return@Interceptor response
 //                }
                 Log.d("Interceptor", "code ${response.code}}")
-                val responseBodyString = response.body?.string() ?: ""
-                Log.d("Interceptor", "responseBodyString ${responseBodyString}}")
+                var responseBodyString = response.body?.string() ?: ""
+                Log.d("Interceptor", "responseBodyString ${responseBodyString}")
 
                 //이건 토큰 재발급
                 if (url.startsWith("http://13.209.149.15:8080") && response.code == 401)
                 {
+
                     Log.d("Interceptor", "url : ${url}")
-                    Log.d("Interceptor", "here")
-                    Log.d("Interceptor", "here2")
+                    Log.d("Interceptor", "url.startsWith(\"http://13.209.149.15:8080\") && response.code == 401")
 
                     val regex = Regex("errorCode=(\\d+), errorMessage=(.*?)\\)")
                     val matchResult = regex.find(responseBodyString)
@@ -152,6 +155,8 @@ class RetrofitConnection {
                 //여기는 token이 없음
                 else if (url.startsWith("https://auth.42.fr"))
                 {
+                    Log.d("Interceptor", "url.startsWith(\"https://auth.42.fr\")")
+
                     return@Interceptor response.newBuilder()
                         .code(201)
                         .addHeader("redirectUrl", requestURL)
@@ -160,7 +165,7 @@ class RetrofitConnection {
                 }
                 //이미 동의한 유저임
                 else if (response.code == 400 || response.code == 404) {
-                    Log.e("join_check", "${response.code}")
+                    Log.d("Interceptor", "response.code == 400 || response.code == 404)")
 //                    val customException = Gson().fromJson(responseBodyString, ErrorResponse::class.java)
 //                    val customExceptionJson = Gson().toJson(customException)
 //                    val mediaType = "application/json; charset=utf-8".toMediaType()
@@ -211,20 +216,32 @@ class RetrofitConnection {
 
                 }
                 else {
-//                    return@Interceptor response.newBuilder()
-//                        .code(200)
-//                        .message("CustomInterceptor: SUC")
-//                        .build()
+                    Log.d("Interceptor", "else")
                     Log.e("plz", "plz ${response}")
                     Log.e("plz", "plz body : ${response.body}")
-//                    Log.e("plz", "plz body2 : ${bodyString}")
-//                    return@Interceptor response
-//                    val responseBodyString = response.body?.string() ?: ""
-
                     Log.e("plz", "plz body : ${responseBodyString}")
 
+                    val doubleQuoteCount = responseBodyString.count { it == '"' }
+                    val curlyBraceCount = responseBodyString.count { it == '{' || it == '}' }
 
-//                    val responseBodyString = response.peekBody(Long.MAX_VALUE).string()
+                    Log.d("ResponseStringAnalysis", "Double quote count: $doubleQuoteCount")
+                    Log.d("ResponseStringAnalysis", "Curly brace count: $curlyBraceCount")
+                    if (responseBodyString == "[]")
+                    {
+//                        val modifiedResponseBodyString = "{" + responseBodyString + "}"
+//                        val modifiedResponseBodyString = "{ \"data\": $responseBodyString }"
+//                        responseBodyString = modifiedResponseBodyString
+                        val modifiedResponseBodyString = "[]"
+                        responseBodyString = modifiedResponseBodyString
+//                        Log.d("plz" , " plz : here")
+                    }
+                    else if (doubleQuoteCount < 2 && curlyBraceCount < 2) {
+                        Log.w("ResponseStringAnalysis", "Response body does not seem to be in expected JSON format.")
+                        val modifiedResponseBodyString = "{" + "\"logout\"" + ":" + "\"" + responseBodyString + "\"" + "}"
+                        responseBodyString = modifiedResponseBodyString
+                        Log.d("plz" , "responseBodyString : ${responseBodyString} ")
+                    }
+
                     return@Interceptor response.newBuilder()
                         .code(200) // 변경하고자 하는 새로운 HTTP 코드
                         .message("CustomInterceptor: SUC")

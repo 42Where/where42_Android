@@ -25,109 +25,129 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.51" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.06" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintGuide_percent="0.53" />
 
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="25dp"
         android:gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="48dp"
         style="@style/RoundedButton"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
         android:id="@+id/btnFloor1"
-        android:text="X1클러스터"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="1클러스터"
         app:layout_constraintBottom_toTopOf="@id/btnFloor2"
-
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
         />
 
     <android.widget.Button
-        android:layout_marginBottom="10dp"
+
         android:id="@+id/btnFloor2"
         android:gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         style="@style/RoundedButton"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
-        android:text="X2클러스터"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnFloor3"
+        android:text="2클러스터"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
         />
 
     <android.widget.Button
-
+        android:layout_marginTop="25dp"
         android:id="@+id/btnFloor3"
         android:gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         style="@style/RoundedButton"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
 
-        android:text="반원테이블"
-        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="회의실"
+        app:layout_constraintTop_toBottomOf="@id/btnFloor2"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
         />
 
     <android.widget.Button
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="25dp"
         android:id="@+id/btnFloor4"
         android:gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        style="@style/RoundedButton"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/gmarketsans_medium"
-        android:text="중앙테이블"
-        app:layout_constraintTop_toBottomOf="@id/btnFloor3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-    <android.widget.Button
-        android:layout_marginTop="10dp"
-        android:id="@+id/btnFloor5"
-        android:gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         style="@style/RoundedButton"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
         android:text="직선테이블"
-        app:layout_constraintTop_toBottomOf="@id/btnFloor4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnFloor5"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical2"
         />
 
     <android.widget.Button
-        android:layout_marginTop="10dp"
+        android:id="@+id/btnFloor5"
+        android:gravity="center"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="원형테이블"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical2"
+        />
+
+    <android.widget.Button
+        android:layout_marginTop="25dp"
         android:id="@+id/btnFloor6"
         android:gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="사각테이블"
+        app:layout_constraintTop_toBottomOf="@id/btnFloor5"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical2"
+        />
+
+    <android.widget.Button
+        android:layout_marginTop="25dp"
+        android:id="@+id/btnFloor7"
+        android:gravity="center"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         style="@style/RoundedButton"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
         android:text="테라스"
-        app:layout_constraintTop_toBottomOf="@id/btnFloor5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnFloor6"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical2"
         />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

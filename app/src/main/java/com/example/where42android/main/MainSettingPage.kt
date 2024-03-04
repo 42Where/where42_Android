@@ -2,41 +2,42 @@ package com.example.where42android.main
 
 import SharedViewModel_Profile
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
+import android.webkit.CookieManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.constraintlayout.widget.Guideline
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.where42android.Base_url_api_Retrofit.ApiObject
-import com.example.where42android.Base_url_api_Retrofit.CommentChangeMember
-import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection_data
+import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.example.where42android.Base_url_api_Retrofit.UpdateCommentRequest
 import com.example.where42android.Base_url_api_Retrofit.locationCustomMemberRequest
-import com.example.where42android.Base_url_api_Retrofit.locationCustomMemberResponse
-import com.example.where42android.Base_url_api_Retrofit.member_custom_location
+import com.example.where42android.Base_url_api_Retrofit.logoutAPI
+import com.example.where42android.MainActivity
 import com.example.where42android.R
-import com.example.where42android.SearchPage
 import com.example.where42android.UserSettings
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainSettingPage : AppCompatActivity() {
+
+    fun clearSharedPreferences(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply() // 또는 editor.commit()
+    }
+
     val userSettings = UserSettings.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,68 +45,103 @@ class MainSettingPage : AppCompatActivity() {
 
         val receivedIntent = intent
         val profileIntraId: Int = receivedIntent.getIntExtra("PROFILE_DATA", -1)
-
-
-//        val intraIdString: String? = receivedIntent.getStringExtra("INTRA_ID")
-//        Log.e("MainSettingPage", "intraIdString : ${intraIdString}")
-//        val intraId : Int = intraIdString?.toInt() ?: -1
-
         var intraId_class : Int = receivedIntent.getIntExtra("INTRA_ID", -1)
+
         var intraId = userSettings.intraId
         Log.e("MainSettingPage", "intraId : ${intraId}")
 
         val token: String? = receivedIntent.getStringExtra("TOKEN")
         Log.e("MainSettingPage", "token : ${token}")
 
-//        val token = "awd"
-//        val intraId = 5
+        //logout
+        val logoutButton : Button = this.findViewById(R.id.logout_button)
+        logoutButton.setOnClickListener {
+            val logout_dialog = Dialog(this)
+            logout_dialog.setContentView(R.layout.activity_editstatus_popup)
 
-        //환경 설정 텍스트 크기 자동으로 구하기
-//        fun adjustTextViewSize(textView: TextView) {
-//            val displayMetrics = textView.resources.displayMetrics
-//            val screenWidth = displayMetrics.widthPixels
-//
-//            val desiredWidth = screenWidth * 0.412 // 원하는 폭 (현재 레이아웃에서의 비율)
-//            val text = textView.text.toString()
-//
-//            // 적절한 텍스트 크기 계산
-//            var textSize = 74 // 초기 텍스트 크기
-//            var paint = Paint()
-//            paint.textSize = textSize.toFloat()
-//
-//            while (paint.measureText(text) > desiredWidth) {
-//                textSize--
-//                paint.textSize = textSize.toFloat()
-//            }
-//
-//            // TextView에 적절한 텍스트 크기 설정
-//            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
-//        }
-//        val myTextView = findViewById<TextView>(R.id.text_setting)
-//        adjustTextViewSize(myTextView)
+            logout_dialog.setCanceledOnTouchOutside(true)
+            logout_dialog.setCancelable(true)
+            logout_dialog.window?.setGravity(Gravity.CENTER)
+            logout_dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-//        //자리비움 설정
-//        val awaySettingButton : Button = this.findViewById(R.id.unavailable_button)
-//        awaySettingButton.setOnClickListener {
-//            val dialog = Dialog(this)
-//            dialog.setContentView(R.layout.activity_editstatus_popup)
-//
-//            dialog.setCanceledOnTouchOutside(true)
-//            dialog.setCancelable(true)
-//            dialog.window?.setGravity(Gravity.CENTER)
-//            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//
-//
-////            val title = dialog.findViewById<TextView>(R.id.title)
-//            val btnCancel = dialog.findViewById<Button>(R.id.cancel)
-//            val btnSubmit = dialog.findViewById<Button>(R.id.submit)
-//
-//            btnCancel.setOnClickListener {
-//                dialog.dismiss()
-//            }
-//            dialog.show()
-//
-//        }
+            val title = logout_dialog.findViewById<TextView>(R.id.title)
+            title.text = "정말 로그아웃 하시겠습니까?"
+
+
+            val cancel = logout_dialog.findViewById<Button>(R.id.cancel)
+            val submit = logout_dialog.findViewById<Button>(R.id.submit)
+            submit.setOnClickListener {
+                Log.e("logout", "submit")
+                //logout api 부르기
+                logout_dialog.dismiss()
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val usersetting = UserSettings.getInstance()
+                        Log.e("logout", "api 요청1")
+                        val logoutapi = RetrofitConnection.getInstance(usersetting.token).create(
+                            logoutAPI::class.java
+                        )
+                        Log.e("logout", "api 요청2")
+                        val logoutResponse = logoutapi.logout()
+                        Log.e("logout", "api 요청2")
+                        Log.e("logout", "api : ${logoutResponse.code()}")
+                        Log.e("logout", "api : ${logoutResponse.body()}")
+                        if (logoutResponse.isSuccessful)
+                        {
+                            when (logoutResponse.code()) {
+                                200 -> {
+                                    Log.e("logout", "logout Response : ${logoutResponse}")
+                                    Log.e(
+                                        "logout",
+                                        "logout Response : ${logoutResponse.body()}"
+                                    )
+                                    Log.e(
+                                        "logout",
+                                        "logout Response : ${logoutResponse.code()}"
+                                    )
+                                    //쿠키 지우기
+
+                                    val cookieManager = CookieManager.getInstance()
+                                    cookieManager.removeAllCookies(null)
+
+                                    //메모리 정보 지우기
+                                    clearSharedPreferences(this@MainSettingPage)
+
+
+                                    val intent = Intent(this@MainSettingPage, MainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+
+
+                                }
+                                // 추가적인 상태 코드에 대한 처리 필요
+                                else -> {
+//                                    Toast.makeText(this@MainSettingPage, "api 응답 코드 실패1 logout 안됨", Toast.LENGTH_SHORT).show()
+                                    Log.e("logout", "logout Response fail : ${logoutResponse}")
+                                    Log.e(
+                                        "logout",
+                                        "logout Response fail: ${logoutResponse.code()}"
+                                    )
+                                    // 기본적으로 어떻게 처리할지 작성
+                                }
+                            }
+                        } else {
+                            Log.e("logout", "api 응답 코드 실패2 logout 안됨")
+//                            Toast.makeText(this@MainSettingPage, "api 응답 코드 실패2 logout 안됨", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (reissueException: Exception) {
+                        Log.e("logout", "throw logout 안됨, ${reissueException}")
+
+//                        Toast.makeText(this@MainSettingPage, "throw logout 안됨", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            cancel.setOnClickListener {
+                logout_dialog.dismiss()
+            }
+            logout_dialog.show()
+        }
 
         //코멘트 설정 코드
         val commentButton: Button = this.findViewById(R.id.comment_button)
@@ -121,7 +157,6 @@ class MainSettingPage : AppCompatActivity() {
 
             val title = dialog.findViewById<TextView>(R.id.title)
             title.text = "코멘트 설정"
-
 
             val editText = dialog.findViewById<EditText>(R.id.input)
             val typeface = ResourcesCompat.getFont(this, R.font.gmarketsans_bold)
@@ -191,12 +226,11 @@ class MainSettingPage : AppCompatActivity() {
         val manualDigitSetting : Button = this.findViewById(R.id.place_setting_button)
         manualDigitSetting.setOnClickListener {
             val dialog = Dialog(this)
-            dialog.setContentView(R.layout.activity_editseat_popup)
+            dialog.setContentView(R.layout.activity_editseat_popup_version2)
             dialog.setCanceledOnTouchOutside(true)
             dialog.setCancelable(true)
             dialog.window?.setGravity(Gravity.CENTER)
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            val title = dialog.findViewById<TextView>(R.id.title)
 
             //1층
             val onefloor = dialog.findViewById<Button>(R.id.btnFloor1)
@@ -213,31 +247,31 @@ class MainSettingPage : AppCompatActivity() {
 
                 var openstudio = onefloordialog.findViewById<Button>(R.id.btnFloor1)
                 openstudio.setOnClickListener {
-                    changeSeatApi("1층 오픈스튜디오", intraId)
+                    changeSeatApi("1층 42LAB", intraId)
                     onefloordialog.dismiss()
                     dialog.dismiss()
                 }
 
                 var openlounge = onefloordialog.findViewById<Button>(R.id.btnFloor2)
                 openlounge.setOnClickListener {
-                    changeSeatApi("1층 오픈라운지", intraId)
+                    changeSeatApi("1층 오픈스튜디오", intraId)
                     onefloordialog.dismiss()
                     dialog.dismiss()
                 }
 
                 var LAB = onefloordialog.findViewById<Button>(R.id.btnFloor3)
                 LAB.setOnClickListener {
-                    changeSeatApi("1층 42LAB", intraId)
+                    changeSeatApi("1층 오락실", intraId)
                     onefloordialog.dismiss()
                     dialog.dismiss()
                 }
 
-                var youtubestudio = onefloordialog.findViewById<Button>(R.id.btnFloor4)
-                youtubestudio.setOnClickListener {
-                    changeSeatApi("1층 유튜브스튜디오", intraId)
-                    onefloordialog.dismiss()
-                    dialog.dismiss()
-                }
+//                var youtubestudio = onefloordialog.findViewById<Button>(R.id.btnFloor4)
+//                youtubestudio.setOnClickListener {
+//                    changeSeatApi("1층 유튜브스튜디오", intraId)
+//                    onefloordialog.dismiss()
+//                    dialog.dismiss()
+//                }
 
             }
 
@@ -245,7 +279,8 @@ class MainSettingPage : AppCompatActivity() {
             val second_fourfloor = dialog.findViewById<Button>(R.id.btnFloor2)
             second_fourfloor.setOnClickListener {
                 val second_fourfloordialog = Dialog(this)
-                second_fourfloordialog.setContentView(R.layout.activity_editseat2floor_4floor_popup)
+//                second_fourfloordialog.setContentView(R.layout.activity_editseat2floor_4floor_popup)
+                second_fourfloordialog.setContentView(R.layout.activity_editseat2floor_popup)
                 second_fourfloordialog.setCanceledOnTouchOutside(true)
                 second_fourfloordialog.setCancelable(true)
                 second_fourfloordialog.window?.setGravity(Gravity.CENTER)
@@ -254,46 +289,52 @@ class MainSettingPage : AppCompatActivity() {
 
                 var youtubestudio = second_fourfloordialog.findViewById<Button>(R.id.btnFloor1)
                 youtubestudio.setOnClickListener {
-                    changeSeatApi("2층 유튜브스튜디오", intraId)
+                    changeSeatApi("2층 1클러스터", intraId)
                     second_fourfloordialog.dismiss()
                     dialog.dismiss()
                 }
 
                 var oasis = second_fourfloordialog.findViewById<Button>(R.id.btnFloor2)
                 oasis.setOnClickListener {
-                    changeSeatApi("2층 오아시스", intraId)
+                    changeSeatApi("2층 2클러스터", intraId)
                     second_fourfloordialog.dismiss()
                     dialog.dismiss()
                 }
 
                 var meetingroomA = second_fourfloordialog.findViewById<Button>(R.id.btnFloor3)
                 meetingroomA.setOnClickListener {
-                    changeSeatApi("2층 회의실A", intraId)
+                    changeSeatApi("2층 회의실", intraId)
                     second_fourfloordialog.dismiss()
                     dialog.dismiss()
                 }
 
                 var meetingroomB = second_fourfloordialog.findViewById<Button>(R.id.btnFloor4)
                 meetingroomB.setOnClickListener {
-                    changeSeatApi("2층 회의실B", intraId)
+                    changeSeatApi("2층 직선테이블", intraId)
                     second_fourfloordialog.dismiss()
                     dialog.dismiss()
                 }
 
                 var stonetable = second_fourfloordialog.findViewById<Button>(R.id.btnFloor5)
                 stonetable.setOnClickListener {
-                    changeSeatApi("2층 스톤테이블", intraId)
+                    changeSeatApi("2층 원형테이블", intraId)
                     second_fourfloordialog.dismiss()
                     dialog.dismiss()
                 }
 
                 var studyplace = second_fourfloordialog.findViewById<Button>(R.id.btnFloor6)
                 studyplace.setOnClickListener {
-                    changeSeatApi("2층 기타학습공간", intraId)
+                    changeSeatApi("2층 사각테이블", intraId)
                     second_fourfloordialog.dismiss()
                     dialog.dismiss()
                 }
 
+                var Terrace = second_fourfloordialog.findViewById<Button>(R.id.btnFloor7)
+                Terrace.setOnClickListener {
+                    changeSeatApi("2층 테라스", intraId)
+                    second_fourfloordialog.dismiss()
+                    dialog.dismiss()
+                }
             }
 
             //3층
@@ -310,32 +351,52 @@ class MainSettingPage : AppCompatActivity() {
 
                 var oasis = third.findViewById<Button>(R.id.btnFloor1)
                 oasis.setOnClickListener {
-                    changeSeatApi("3층 오아시스", intraId)
+                    changeSeatApi("3층 X1클러스터", intraId)
                     third.dismiss()
                     dialog.dismiss()
                 }
 
                 var rectangleA = third.findViewById<Button>(R.id.btnFloor2)
                 rectangleA.setOnClickListener {
-                    changeSeatApi("3층 다각형책상A", intraId)
+                    changeSeatApi("3층 X2클러스터", intraId)
                     third.dismiss()
                     dialog.dismiss()
                 }
 
                 var rectangleB = third.findViewById<Button>(R.id.btnFloor3)
                 rectangleB.setOnClickListener {
-                    changeSeatApi("3층 다각형책상A", intraId)
+                    changeSeatApi("3층 반원테이블", intraId)
                     third.dismiss()
                     dialog.dismiss()
                 }
 
+                var centerTable = third.findViewById<Button>(R.id.btnFloor4)
+                centerTable.setOnClickListener {
+                    changeSeatApi("3층 중앙테이블", intraId)
+                    third.dismiss()
+                    dialog.dismiss()
+                }
+
+                var straightTable = third.findViewById<Button>(R.id.btnFloor5)
+                straightTable.setOnClickListener {
+                    changeSeatApi("3층 직선테이블", intraId)
+                    third.dismiss()
+                    dialog.dismiss()
+                }
+
+                var Terrace = third.findViewById<Button>(R.id.btnFloor6)
+                Terrace.setOnClickListener {
+                    changeSeatApi("3층 직선테이블", intraId)
+                    third.dismiss()
+                    dialog.dismiss()
+                }
             }
 
             //4층
             val four = dialog.findViewById<Button>(R.id.btnFloor4)
             four.setOnClickListener {
                 val four = Dialog(this)
-                four.setContentView(R.layout.activity_editseat2floor_4floor_popup)
+                four.setContentView(R.layout.activity_editseat4floor_5floor_popup)
                 four.setCanceledOnTouchOutside(true)
                 four.setCancelable(true)
                 four.window?.setGravity(Gravity.CENTER)
@@ -345,42 +406,35 @@ class MainSettingPage : AppCompatActivity() {
 
                 var youtubestudio = four.findViewById<Button>(R.id.btnFloor1)
                 youtubestudio.setOnClickListener {
-                    changeSeatApi("4층 유튜브스튜디오", intraId)
+                    changeSeatApi("4층 3클러스터", intraId)
                     four.dismiss()
                     dialog.dismiss()
                 }
 
                 var oasis = four.findViewById<Button>(R.id.btnFloor2)
                 oasis.setOnClickListener {
-                    changeSeatApi("4층 오아시스", intraId)
+                    changeSeatApi("4층 4클러스터", intraId)
                     four.dismiss()
                     dialog.dismiss()
                 }
 
                 var meetingroomA = four.findViewById<Button>(R.id.btnFloor3)
                 meetingroomA.setOnClickListener {
-                    changeSeatApi("4층 회의실A", intraId)
+                    changeSeatApi("4층 회의실", intraId)
                     four.dismiss()
                     dialog.dismiss()
                 }
 
                 var meetingroomB = four.findViewById<Button>(R.id.btnFloor4)
                 meetingroomB.setOnClickListener {
-                    changeSeatApi("4층 회의실B", intraId)
+                    changeSeatApi("4층 원형테이블", intraId)
                     four.dismiss()
                     dialog.dismiss()
                 }
 
                 var stonetable = four.findViewById<Button>(R.id.btnFloor5)
                 stonetable.setOnClickListener {
-                    changeSeatApi("4층 스톤테이블", intraId)
-                    four.dismiss()
-                    dialog.dismiss()
-                }
-
-                var studyplace = four.findViewById<Button>(R.id.btnFloor6)
-                studyplace.setOnClickListener {
-                    changeSeatApi("4층 기타학습공간", intraId)
+                    changeSeatApi("4층 직선테이블", intraId)
                     four.dismiss()
                     dialog.dismiss()
                 }
@@ -390,170 +444,89 @@ class MainSettingPage : AppCompatActivity() {
             val five = dialog.findViewById<Button>(R.id.btnFloor5)
             five.setOnClickListener {
                 val five = Dialog(this)
-                five.setContentView(R.layout.activity_editseat5floor_popup)
+                five.setContentView(R.layout.activity_editseat4floor_5floor_popup)
                 five.setCanceledOnTouchOutside(true)
                 five.setCancelable(true)
                 five.window?.setGravity(Gravity.CENTER)
                 five.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 five.show()
 
-
                 var oasis = five.findViewById<Button>(R.id.btnFloor1)
+                oasis.text = "5클러스터"
                 oasis.setOnClickListener {
-                    changeSeatApi("5층 오아시스", intraId)
+                    changeSeatApi("5층 5클러스터", intraId)
                     five.dismiss()
                     dialog.dismiss()
                 }
 
                 var chair = five.findViewById<Button>(R.id.btnFloor2)
+                chair.text = "6클러스터"
                 chair.setOnClickListener {
-                    changeSeatApi("5층 좌식공간", intraId)
+                    changeSeatApi("5층 6클러스터", intraId)
                     five.dismiss()
                     dialog.dismiss()
                 }
 
                 var stonetable = five.findViewById<Button>(R.id.btnFloor3)
+                stonetable.text = "집현전"
                 stonetable.setOnClickListener {
-                    changeSeatApi("5층 스톤테이블", intraId)
+                    changeSeatApi("5층 집현전", intraId)
                     five.dismiss()
                     dialog.dismiss()
                 }
 
                 var studyplace = five.findViewById<Button>(R.id.btnFloor4)
+                studyplace.text = "원형테이블"
                 studyplace.setOnClickListener {
-                    changeSeatApi("5층 기타학습공간", intraId)
+                    changeSeatApi("5층 원형테이블", intraId)
+                    five.dismiss()
+                    dialog.dismiss()
+                }
+
+                var Terrace = five.findViewById<Button>(R.id.btnFloor5)
+                Terrace.text = "직선테이블"
+                Terrace.setOnClickListener {
+                    changeSeatApi("5층 직선테이블", intraId)
                     five.dismiss()
                     dialog.dismiss()
                 }
             }
 
-            //지하/옥상
+            //옥상
             val rooftop_basement = dialog.findViewById<Button>(R.id.btnFloor6)
             rooftop_basement.setOnClickListener {
                 val rooftop_basement = Dialog(this)
-                rooftop_basement.setContentView(R.layout.activity_editseatrooftop_basement_popup)
+                rooftop_basement.setContentView(R.layout.activity_editseatrooftop_popup)
                 rooftop_basement.setCanceledOnTouchOutside(true)
                 rooftop_basement.setCancelable(true)
                 rooftop_basement.window?.setGravity(Gravity.CENTER)
                 rooftop_basement.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 rooftop_basement.show()
 
-
-
                 var openstudio = rooftop_basement.findViewById<Button>(R.id.btnFloor1)
                 openstudio.setOnClickListener {
-                    changeSeatApi("지하 오픈스튜디오", intraId)
+                    changeSeatApi("옥상 탁구대", intraId)
                     rooftop_basement.dismiss()
                     dialog.dismiss()
                 }
-
 
                 var pingPong = rooftop_basement.findViewById<Button>(R.id.btnFloor2)
                 pingPong.setOnClickListener {
-                    changeSeatApi("6층 탁구대", intraId)
-                    rooftop_basement.dismiss()
-                    dialog.dismiss()
-                }
-
-                var outdoorGarden = rooftop_basement.findViewById<Button>(R.id.btnFloor3)
-                outdoorGarden.setOnClickListener {
-                    changeSeatApi("6층 야외정원", intraId)
-                    rooftop_basement.dismiss()
-                    dialog.dismiss()
-                }
-
-                var studyplace = rooftop_basement.findViewById<Button>(R.id.btnFloor4)
-                studyplace.setOnClickListener {
-                    changeSeatApi("6층 기타학습공간", intraId)
+                    changeSeatApi("옥상 야외정원", intraId)
                     rooftop_basement.dismiss()
                     dialog.dismiss()
                 }
             }
 
+            //지하
+            val basement = dialog.findViewById<Button>(R.id.btnFloor7)
+            basement.setOnClickListener {
+                    changeSeatApi("지하", intraId)
+                    dialog.dismiss()
+            }
             dialog.show()
-
         }
 
-
-        //밑 옛날 버전
-//        //수동 자리 설정
-//        val manualDigitSetting : Button = this.findViewById(R.id.place_setting_button)
-//        manualDigitSetting.setOnClickListener {
-//            val dialog = Dialog(this)
-//
-//
-//            dialog.setContentView(R.layout.activity_edittext_popup)
-//
-//
-//
-//            dialog.setCanceledOnTouchOutside(true)
-//            dialog.setCancelable(true)
-//            dialog.window?.setGravity(Gravity.CENTER)
-//            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//
-//            val title = dialog.findViewById<TextView>(R.id.title)
-//            title.text = "수동 자리 설정"
-//
-//
-//            val editText = dialog.findViewById<EditText>(R.id.input)
-//            val typeface = ResourcesCompat.getFont(this, R.font.gmarketsans_bold)
-//            editText.typeface = typeface
-//            editText.hint = "설정할 자리를 입력해주세요"
-//
-//            val btnCancel = dialog.findViewById<Button>(R.id.cancel)
-//            val btnSubmit = dialog.findViewById<Button>(R.id.submit)
-//
-//
-//            btnCancel.setOnClickListener {
-//                dialog.dismiss()
-//            }
-//
-//            btnSubmit.setOnClickListener {
-//                val textcustomlocation : String = editText.text.toString().trim()
-//                val editlocationcustom = locationCustomMemberRequest(profileIntraId, textcustomlocation)
-//                val sharedViewModel = ViewModelProvider(this).get(SharedViewModel_Profile::class.java)
-////                sharedViewModel.updateComment(comment)
-//                // updateMemberComment 함수 호출
-//                if (token != null) {
-//                    sharedViewModel.updateMemberCustomLocaton(editlocationcustom, token)
-//                }
-//
-////                val retrofitAPI = RetrofitConnection_data.getInstance().create(member_custom_location::class.java)
-////                val textcustomlocation : String = editText.text.toString().trim()
-////                val editlocationcustom = locationCustomMemberRequest(profileIntraId, textcustomlocation)
-////                val call = retrofitAPI.customLocationChange(editlocationcustom)
-////
-////                call.enqueue(object : Callback<locationCustomMemberResponse> {
-////                    override fun onResponse(
-////                        call: Call<locationCustomMemberResponse>,
-////                        response: Response<locationCustomMemberResponse>
-////                    ) {
-////                        if (response.isSuccessful) {
-////                            val newGroupResponse  = response.body()
-////                            // 성공적으로 삭제되었으므로 적절한 처리를 수행합니다.
-////                        } else {
-////                            // API 호출에 실패한 경우
-////                            Log.e("DELETE_ERROR", "Failed to delete group. Error code: ${response.code()}")
-////
-////                        }
-////                    }
-////                    override fun onFailure(call: Call<locationCustomMemberResponse>, t: Throwable) {
-////
-////                        Log.e("CREATE_ERROR", "Network error occurred. Message: ${t.message}")
-////                    }
-////                })
-//                dialog.dismiss()
-//
-////                val intent = Intent(this@MainSettingPage, MainPageActivity::class.java)
-//                finish() //인텐트 종료
-////                startActivity(intent)
-//            }
-//            dialog.show()
-//
-//        }
-
-
-        //-------------------------------------- footer --------------------------------------
 
         //footer 홈, 검색 버튼
         val homeButton: ImageButton = this.findViewById(R.id.home_button)
@@ -570,13 +543,11 @@ class MainSettingPage : AppCompatActivity() {
 
 
         }
-
         val searchButton: ImageButton = this.findViewById(R.id.search_button)
-
         searchButton.setOnClickListener {
             try {
                 //Toast.makeText(this, "버튼을 클릭했습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, SearchPage::class.java)
+                val intent = Intent(this, MainSearchPage::class.java)
                 startActivity(intent)
                 finish()
             } catch (e: Exception) {
@@ -587,46 +558,16 @@ class MainSettingPage : AppCompatActivity() {
     }
 
     private fun changeSeatApi(changeseat: String, profileIntraId : Int) {
-
         val sharedViewModel = ViewModelProvider(this).get(SharedViewModel_Profile::class.java)
-//                sharedViewModel.updateComment(comment)
-                // updateMemberComment 함수 호출
-
-
-        val retrofitAPI = RetrofitConnection_data.getInstance().create(member_custom_location::class.java)
         val textcustomlocation : String = changeseat.trim()
         val editlocationcustom = locationCustomMemberRequest(profileIntraId, textcustomlocation)
-//        val call = retrofitAPI.customLocationChange(editlocationcustom)
-
         val token = userSettings.token
-
         if (token != null) {
             sharedViewModel.updateMemberCustomLocaton(editlocationcustom, token)
         }
-
         val intent = Intent(this@MainSettingPage, MainPageActivity::class.java)
         finish() //인텐트 종료
         startActivity(intent)
-
-//        call.enqueue(object : Callback<locationCustomMemberResponse> {
-//            override fun onResponse(
-//                call: Call<locationCustomMemberResponse>,
-//                response: Response<locationCustomMemberResponse>
-//            ) {
-//                if (response.isSuccessful) {
-//                    val newGroupResponse  = response.body()
-//                    // 성공적으로 삭제되었으므로 적절한 처리를 수행합니다.
-//                } else {
-//                    // API 호출에 실패한 경우
-//                    Log.e("DELETE_ERROR", "Failed to delete group. Error code: ${response.code()}")
-//
-//                }
-//            }
-//            override fun onFailure(call: Call<locationCustomMemberResponse>, t: Throwable) {
-//
-//                Log.e("CREATE_ERROR", "Network error occurred. Message: ${t.message}")
-//            }
-//        })
 
     }
 

@@ -148,4 +148,11 @@
     <!--activity_deletegroup_detail_list-->
     <dimen name="groupname_textsize_deletegroup">16sp</dimen>
 
+    <!--    activity_profile_popup-->
+    <dimen name="activity_profile_popup_height">100dp</dimen>
+    <dimen name="activity_profile_popup_profile_height">54dp</dimen>
+    <dimen name="activity_profile_popup_emoji_width">50dp</dimen>
+    <dimen name="activity_profile_popup_emoji_civ_border_width">1.4dp</dimen>
+    <dimen name="activity_profile_popup_textview_marginStart">5.4dp</dimen>
+
 </resources>

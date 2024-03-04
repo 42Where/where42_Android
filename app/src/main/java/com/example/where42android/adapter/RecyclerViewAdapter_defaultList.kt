@@ -50,7 +50,7 @@ class RecyclerViewAdapter_defaultList(
             // TODO: 체크된 항목 상태에 따라 UI 업데이트 로직 추가
 
             // 변경된 상태를 알리고 UI를 업데이트할 수 있도록 notifyDataSetChanged() 등을 호출합니다.
-            notifyDataSetChanged()
+//            notifyDataSetChanged()
         }
         // TODO: 기존의 onBindViewHolder() 코드 작성은 여기에 해당합니다.
     }
@@ -66,7 +66,8 @@ class RecyclerViewAdapter_defaultList(
         private val textViewComment: TextView =  itemView.findViewById(R.id.Comment)
 
 
-        fun bind(member: friendGroup_default_memberlist.friendGroup_default_memberlistItem) {
+        fun bind(member: friendGroup_default_memberlist.friendGroup_default_memberlistItem)
+        {
             Glide.with(context)
                 .load(member.image) // Assuming 'member.image' is the URL or path to the image
                 .placeholder(R.drawable.placeholder) // Placeholder image while loading
@@ -77,13 +78,14 @@ class RecyclerViewAdapter_defaultList(
             textViewGrade.text = member.intraName
             textViewComment.text = member.comment
             textViewLocation.text = member.location ?: "No comment available"
-
+            val leftPadding = 20 // 왼쪽 여백 값
+            val rightPadding = 20 // 오른쪽 여백 값
             GlobalScope.launch(Dispatchers.Main) {
+                if (textViewLocation.text != "퇴근") {
                     val leftPadding = 20 // 왼쪽 여백 값
                     val rightPadding = 20 // 오른쪽 여백 값
                     textViewLocation.setPadding(leftPadding, 0, rightPadding, 0)
                     adjustBackgroundSizeWithPadding(textViewLocation, leftPadding, rightPadding)
-
                     val color = Color.parseColor("#132743")
 //                        binding.location.setBackgroundColor(color)
 
@@ -91,7 +93,27 @@ class RecyclerViewAdapter_defaultList(
                     gradientDrawable.setColor(color)
                     gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
                     textViewLocation.background = gradientDrawable
-
+                }
+                else
+                {
+                    // UI 변경 작업
+                    textViewLocation.setPadding(leftPadding, 0, rightPadding, 0)
+                    adjustBackgroundSizeWithPadding(textViewLocation, leftPadding, rightPadding)
+                    adjustBackgroundSizeWithPadding(
+                        textViewLocation,
+                        leftPadding,
+                        rightPadding
+                    )
+                    val color = Color.parseColor("#132743")
+                    val gradientDrawable = GradientDrawable()
+                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+                    val strokeWidth = 2 // 테두리의 두께 설정
+                    val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
+                    gradientDrawable.setStroke(strokeWidth, strokeColor)
+                    // 배경을 설정
+                    textViewLocation.background = gradientDrawable
+                    textViewLocation.setTextColor(color)
+                }
             }
 
 
@@ -107,7 +129,7 @@ class RecyclerViewAdapter_defaultList(
                     checkedItems.add(member)
                 }
                 // 변경된 상태를 알리고 UI를 업데이트할 수 있도록 notifyDataSetChanged() 등을 호출합니다.
-                notifyDataSetChanged()
+//                notifyDataSetChanged()
             }
         }
     }

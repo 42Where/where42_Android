@@ -3,7 +3,6 @@ package com.example.where42android.main
 import SharedViewModel_GroupsMembersList
 import SharedViewModel_Profile
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -11,52 +10,47 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.where42android.Base_url_api_Retrofit.Member
 import com.example.where42android.Base_url_api_Retrofit.NewGroup
-import com.example.where42android.Base_url_api_Retrofit.NewGroupRequest
-import com.example.where42android.Base_url_api_Retrofit.NewGroupResponses
 import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.example.where42android.CreateGroupActivity
-import com.example.where42android.LiveData.GroupsMembersList
-import com.example.where42android.MainActivity
 import com.example.where42android.R
-import com.example.where42android.SearchPage
 import com.example.where42android.UserSettings
 import com.example.where42android.adapter.adjustBackgroundSizeWithPadding
 
 import com.example.where42android.databinding.ActivityMainPageBinding
 import com.example.where42android.fragment.MainFragment
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
-import java.net.SocketTimeoutException
-import kotlin.properties.Delegates
 
-interface OnOperationCompleteListener {
-    fun onOperationComplete()
+object friendListObject {
+    // HashMap 선언
+    private val myfriendList = HashMap<Int, String>()
+
+    // 추가 함수
+    fun addItem(key: Int, value: String) {
+        myfriendList[key] = value
+    }
+
+    // 삭제 함수
+    fun removeItem(key: Int) {
+        myfriendList.remove(key)
+    }
+
+    // 검색 함수
+    fun searchItem(key: Int): String? {
+        return myfriendList[key]
+    }
 }
-
-
 
 class MainPageActivity : AppCompatActivity() {
 
@@ -91,12 +85,13 @@ class MainPageActivity : AppCompatActivity() {
         val userSettings = UserSettings.getInstance()
         val receivedToken = userSettings.token
         val receivedIntraId = userSettings.intraId
-        Log.e("checkcheck", "here intraId : receive token ${receivedToken}")
-        Log.e("checkcheck", "here intraId : intraId ${receivedIntraId}")
+        val receivedrefreshToken = userSettings.refreshToken
+        val receivedargreement = userSettings.agreement
 
-//        Log.d("MainActivity", "Stored Token: ${receivedToken}")
-//        Log.d("MainActivity", "Stored intraId: ${receivedIntraId}")
-//        Log.d("MainActivity", "Stored agreement: ${receivedAgreement}")
+        Log.e("checkcheck", "here receivedToken : receive token ${receivedToken}")
+        Log.e("checkcheck", "here receivedrefreshToken : receive receivedrefreshToken ${receivedrefreshToken}")
+        Log.e("checkcheck", "here intraId : intraId ${receivedIntraId}")
+        Log.e("checkcheck", "here receivedargreement : intraId ${receivedargreement}")
 
 
 //        2. group list을 보여주기 위해 binding으로 MainFragment 설정
@@ -105,7 +100,6 @@ class MainPageActivity : AppCompatActivity() {
 //        2. 12_18 api를 통해 사용자 프로필 가져오기
         Log.d("PageCheck", "here")
         sharedViewModel_profile = ViewModelProvider(this).get(SharedViewModel_Profile::class.java)
-
 
         val intraId = receivedIntraId// Replace with the actual intraId
         Log.d("PageCheck", "intraId: ${intraId}")
@@ -116,11 +110,9 @@ class MainPageActivity : AppCompatActivity() {
 
         // LiveData 객체 관찰
         sharedViewModel_profile.profileLiveData.observe(this) { member ->
-
             if (member != null) {
                 Log.d("PageCheck", "member responsecode : ${member.responsecode} ")
             }
-
             member?.let {
                 profile = member
                 userSettings.defaultGroup = member.defaultGroupId
@@ -173,7 +165,7 @@ class MainPageActivity : AppCompatActivity() {
 //                finish()
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this, "환경 세팅 작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "환경 세팅 작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -185,7 +177,7 @@ class MainPageActivity : AppCompatActivity() {
         searchButton.setOnClickListener {
             try {
                 //Toast.makeText(this, "버튼을 클릭했습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, SearchPage::class.java)
+                val intent = Intent(this, MainSearchPage::class.java)
                 startActivity(intent)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -213,7 +205,6 @@ class MainPageActivity : AppCompatActivity() {
 
         //4. 새 그룹 기능 구현
         val newGroupButton: Button = binding.newGroupButton // 레이아웃 바인딩 객체에서 버튼 가져오기
-
 
         newGroupButton.setOnClickListener {
             val dialog = Dialog(this)
@@ -255,8 +246,6 @@ class MainPageActivity : AppCompatActivity() {
                 intent.putExtra("profileintraIdKey", profile.intraId)
                 intent.putExtra("groupIdKey", profile?.defaultGroupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
                 startActivity(intent)
-
-
                 dialog.dismiss()
             }
             dialog.show()

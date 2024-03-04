@@ -11,6 +11,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.webkit.CookieManager
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageButton
@@ -92,10 +93,15 @@ class MainActivity : AppCompatActivity() {
         private fun saveaccesTokenToSharedPreferences(context: Context, token: String) {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-
         editor.putString("AuthToken", token)
-
         }
+
+    fun clearSharedPreferences(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply() // 또는 editor.commit()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,80 +112,90 @@ class MainActivity : AppCompatActivity() {
         val loginButton = findViewById<ImageButton>(R.id.loginbutton)
         webView.settings.javaScriptEnabled = true // JavaScript 활성화 여부 설정
 
-//        val cookieManager = CookieManager.getInstance()
-//        cookieManager.removeAllCookies(null)
-//
+        val cookieManager = CookieManager.getInstance()
+        cookieManager.removeAllCookies(null)
+
 //        token 값 일부러 바꾸기 -> 나중에 삭제해야됨
 //        saveTokenToSharedPreferences(this, "a")
 
+//        clearSharedPreferences(this@MainActivity)
+
+
+
+
         val token = getTokenFromSharedPreferences(this@MainActivity) ?: "notoken"
-        val intraId = getIntraidFromSharedPreferences(this@MainActivity)
+        val intraId = getIntraidFromSharedPreferences(this@MainActivity)?.toInt() ?: -1
         val agreement = getAgreementFromSharedPreferences((this@MainActivity))
         val refreshtoken = getRefreshTokenFromSharedPreferences(this@MainActivity) ?: "norefresh"
 
         Log.e("refre", "memory token : ${token}")
         Log.e("refre", "memory retoken : ${refreshtoken}")
-        val userSettings = UserSettings.getInstance()
-        Log.e("refre", " token : ${userSettings.token}")
+        Log.e("refre", "memory agreement : ${agreement}")
+        Log.e("refre", "memory intraId : ${intraId}")
 
-
-
-        if (userSettings.token == "" || userSettings.intraId == -1)
+        //진짜 제일 처음 킬 때 memory, usersetting 전부 null임 -> 로그인 페이지
+        if (intraId == -1)
         {
-            userSettings.token = token
-            if (intraId != null)
-            {
-                userSettings.intraId = intraId.toInt()
-            }
-            userSettings.agreement = agreement.toBoolean()
-            userSettings.refreshToken = refreshtoken
+
         }
+        else {
 
 
-        //agreement 동의를 하였고, token intraId, accestoken이 있으면 MainPageAcitivty로 넘기기 -> 이 코드는 나중에
+            val userSettings = UserSettings.getInstance()
+            Log.e("refre", " token : ${userSettings.token}")
+
+            if (userSettings.token == "" || userSettings.intraId == -1) {
+                userSettings.token = token
+                if (intraId != null) {
+                    userSettings.intraId = intraId.toInt()
+                }
+                userSettings.agreement = agreement.toBoolean()
+                userSettings.refreshToken = refreshtoken
+            }
+
+
+            //agreement 동의를 하였고, token intraId, accestoken이 있으면 MainPageAcitivty로 넘기기 -> 이 코드는 나중에
 
 //        saveTokenToSharedPreferences(this, "a")
 //        userSettings.token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k"
 //
 
-        val intraid : Int = intraId?.toInt() ?: -1
-        val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
-        CoroutineScope(Dispatchers.IO).launch{
-            try {
-                val response = memberAPI.getMember(intraid)
-                withContext(Dispatchers.IO) {
-                    when (response.code())
-                    {
-                        200 -> {
-                            Log.d("MainPageAcitivty_kt", "no login memberAPI SUC")
-                            val intent = Intent(this@MainActivity, MainPageActivity::class.java)
-                            intent.putExtra("TOKEN_KEY", token)
-                            intent.putExtra("INTRAID_KEY", intraId)
-                            intent.putExtra("AGREEMENT_KEY", agreement)
-                            startActivity(intent)
-                            finish()
-                        }
-                        else ->
-                        {
-                            Log.d("MainPageAcitivty_kt", "no login memberAPI response.code : ${response.code()}")
-                            //여기는 아무것도 없음. 밑 버튼이 보이게 해야됨
+            val intraid: Int = intraId?.toInt() ?: -1
+            val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val response = memberAPI.getMember(intraid)
+                    withContext(Dispatchers.IO) {
+                        when (response.code()) {
+                            200 -> {
+                                Log.d("MainPageAcitivty_kt", "no login memberAPI SUC")
+                                val intent = Intent(this@MainActivity, MainPageActivity::class.java)
+                                intent.putExtra("TOKEN_KEY", token)
+                                intent.putExtra("INTRAID_KEY", intraId)
+                                intent.putExtra("AGREEMENT_KEY", agreement)
+                                startActivity(intent)
+                                finish()
+                            }
+
+                            else -> {
+                                Log.d(
+                                    "MainPageAcitivty_kt",
+                                    "no login memberAPI response.code : ${response.code()}"
+                                )
+                                //여기는 아무것도 없음. 밑 버튼이 보이게 해야됨
+                            }
                         }
                     }
+                } catch (e: IOException) {
+                    Log.d("MainPageAcitivty_kt", "no login memberAPI Fail")
                 }
-            }
-            catch (e:IOException){
-                Log.d("MainPageAcitivty_kt", "no login memberAPI Fail")
             }
         }
 
         //버튼을 눌렀을 때
         loginButton.setOnClickListener {
-//            val token = getTokenFromSharedPreferences(this@MainActivity) ?: "notoken"
-//            val intraId = getIntraidFromSharedPreferences(this@MainActivity)
-//            val agreement = getAgreementFromSharedPreferences((this@MainActivity))
-//            Log.d("MainActivity2", "Stored Token: ${token}")
-//            Log.d("MainActivity2", "Stored intraId: ${intraId}")
-//            Log.d("MainActivity2", "Stored agreement: ${agreement}")
+
+            var userSettings = UserSettings.getInstance()
 
             val intraid : Int = intraId?.toInt() ?: -1
             val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
@@ -235,6 +251,9 @@ class MainActivity : AppCompatActivity() {
                                             Log.e("Reissue_SUC", "refreshtoken : ${refreshtoken}")
                                             val reissueapi = RetrofitConnection.getInstance(refreshtoken).create(reissueAPI::class.java)
                                             val reissueResponse = reissueapi.reissueToken()
+                                            Log.d("token_check", "reissueResponse : ${reissueResponse.headers()}")
+                                            Log.d("token_check", "reissueResponse : ${reissueResponse.body()}")
+                                            Log.d("token_check", "reissueResponse : ${reissueResponse.code()}")
                                             if (reissueResponse.isSuccessful)
                                             {
                                                 when (reissueResponse.code())
@@ -264,7 +283,6 @@ class MainActivity : AppCompatActivity() {
                                                             userSettings.token = "notoken"
                                                             saveaccesTokenToSharedPreferences(this@MainActivity, "notoken")
                                                         }
-
                                                     }
                                                     // 추가적인 상태 코드에 대한 처리 필요
                                                     else ->
@@ -295,9 +313,14 @@ class MainActivity : AppCompatActivity() {
                                                     Log.e("herehere", "here3")
                                                     webView.visibility = VISIBLE
                                                     webView.webViewClient = customWebViewClient
+//                                                    webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
                                                     if (modifiedString != null) {
                                                         Log.e("herehere", "here4")
-                                                        webView.loadUrl(modifiedString)
+
+//                                                        webView.loadUrl(modifiedString)
+                                                        webView.loadUrl("https://test.where42.kr/")
+//                                                        webView.loadUrl("https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=41a172bbce265c02e6c0f91cab615f90dae945f51b0308c5")
+//                                                        webView.loadUrl("http://test.where42.kr/oauth2/authorization/42seoul")
                                                     }
                                                 }
                                             }

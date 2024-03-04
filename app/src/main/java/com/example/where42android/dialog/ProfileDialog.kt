@@ -10,15 +10,19 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.CookieManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.where42android.Base_url_api_Retrofit.GroupChangeName
 import com.example.where42android.Base_url_api_Retrofit.GroupNameRequest
 import com.example.where42android.Base_url_api_Retrofit.GroupNameResponse
 import com.example.where42android.Base_url_api_Retrofit.JoinAPI
 import com.example.where42android.Base_url_api_Retrofit.JoinResponse
 import com.example.where42android.Base_url_api_Retrofit.RetrofitConnection
+import com.example.where42android.Base_url_api_Retrofit.reissueAPI
 import com.example.where42android.R
 import com.example.where42android.UserSettings
 import com.example.where42android.main.MainAddGroupDetailList
@@ -32,6 +36,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.create
 import java.io.IOException
 
 class ProfileDialog (private val context: Context) {
@@ -68,6 +73,14 @@ class ProfileDialog (private val context: Context) {
 class AgreeDialog (private val context: Context) {
     private val agreedialog = Dialog(context)
 
+    fun saverefreshToSharedPreferences(context: Context, agreement: String?) {
+        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putString("RefreshToken", agreement)
+        editor.apply()
+    }
+
     fun saveAgreementToSharedPreferences(context: Context, agreement: String?) {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -95,16 +108,46 @@ class AgreeDialog (private val context: Context) {
             //Join api 호출해야됨
             Log.d("token_check", "api join token : ${token}")
             val retrofitAPI = RetrofitConnection.getInstance(token).create(JoinAPI::class.java)
-
-//            runBlocking {
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
                         val response = retrofitAPI.join(intraIdtoInt)
                         withContext(Dispatchers.Main) {
                             if (response.isSuccessful) {
+                                Log.d("join_api", "${response.body()}")
+                                Log.d("join_api", "${response.code()}")
+                                Log.d("join_api", "${response.headers()}")
+
+
                                 Log.e("join_api", "SUC")
-                                saveAgreementToSharedPreferences(context, "true")
-                                callback(true)
+
+//                                val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
+//                                Log.e("join_api", "http://13.209.149.15:8080/의 쿠키3: $cookies")
+
+                                //reissue 토큰
+                                val reissueapi = RetrofitConnection.getInstance(token).create(
+                                    reissueAPI::class.java)
+                                val reissueResponse = reissueapi.reissueToken()
+                                if (reissueResponse.isSuccessful)
+                                {
+                                    when(reissueResponse.code())
+                                    {
+                                        200 -> {
+                                            saverefreshToSharedPreferences(context, reissueResponse.body()?.refreshToken)
+                                            saveAgreementToSharedPreferences(context, "true")
+                                            callback(true)
+                                        }
+                                        else -> {
+                                            Log.d("join_api", "join_api_error else : ${response.code()}")
+                                            callback(false)
+                                        }
+                                    }
+
+                                }
+                                else
+                                {
+                                    Log.d("join_api", "join_api_error")
+                                    callback(false)
+                                }
                             }
                             else {
                                 Log.e("join_api", "fail1")
@@ -120,8 +163,6 @@ class AgreeDialog (private val context: Context) {
                                 }
                             }
                         }
-
-
                     } catch (e:IOException) {
                         Log.e ("join_check", "message : ${e.message}")
                         callback(false)
@@ -149,7 +190,6 @@ class AgreeDialog (private val context: Context) {
 //                    // 네트워크 실패 또는 예외 발생
 //                }
 //            })
-
 
             agreedialog.dismiss()
 
@@ -201,7 +241,6 @@ class GroupDialog (private val context: Context, val viewModel: SharedViewModel_
                 val noEditDefaultDialog = Dialog(context)
                 noEditDefaultDialog.setContentView(R.layout.activity_editstatus_popup)
 
-
                 val cancel = noEditDefaultDialog.findViewById<Button>(R.id.cancel)
                 cancel.visibility = View.GONE
 
@@ -211,8 +250,6 @@ class GroupDialog (private val context: Context, val viewModel: SharedViewModel_
 
                 noEditDefaultDialog.window?.setGravity(Gravity.CENTER)
                 noEditDefaultDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-
 
                 val submit = noEditDefaultDialog.findViewById<Button>(R.id.submit)
                 submit.setOnClickListener {

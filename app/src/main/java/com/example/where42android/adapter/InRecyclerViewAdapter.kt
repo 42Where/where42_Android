@@ -50,120 +50,123 @@ class InRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-//        val item = itemList[position]
-//        holder.bind(item)
         holder.bind(itemList[position])
-
     }
-
     override fun getItemCount(): Int {
         return itemList.size
     }
 
     inner class Holder(var binding: HolderRecyclerviewInMeberListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         private val context: Context = binding.root.context //ViewHolder 내부에서 context를 가져옴
-
         fun bind(item: RecyclerInViewModel) {
             with(binding) {
                 optionEdit.setOnClickListener {
                     showEditDialog(root.context, item)
                 }
-//            binding.optionEdit.setOnClickListener {
-//                showEditDialog(binding.root.context, item)
-//            }
+                if (item.location != "퇴근") {
+                    // 배경을 설정
+                    val color = Color.parseColor("#132743")
+                    val gradientDrawable = GradientDrawable()
+                    gradientDrawable.setColor(color)
+                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+                    location.background = gradientDrawable
+//                    location.setTextColor(color)
+                } else {
+                    // 배경을 설정
+                    val color = Color.parseColor("#132743")
+                    val gradientDrawable = GradientDrawable()
+                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+                    val strokeWidth = 2 // 테두리의 두께 설정
+                    val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
+                    gradientDrawable.setStroke(strokeWidth, strokeColor)
+                    location.background = gradientDrawable
+                    location.setTextColor(color)
+                }
 
-                GlobalScope.launch(Dispatchers.Main) {
-                    withContext(Dispatchers.Main) {
-////                        // UI 변경 작업
-                        val leftPadding = 20 // 왼쪽 여백 값
-                        val rightPadding = 20 // 오른쪽 여백 값
-                        binding.location.setPadding(leftPadding, 0, rightPadding, 0)
-                        adjustBackgroundSizeWithPadding(binding.location, leftPadding, rightPadding)
-
-                        val color = Color.parseColor("#132743")
-//                        binding.location.setBackgroundColor(color)
-
-                        val gradientDrawable = GradientDrawable()
-                        gradientDrawable.setColor(color)
-                        gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-
-                        // 배경을 설정
-                        binding.location.background = gradientDrawable
-                        }
-                    }
-                    binding.root.post{
-
+                    binding.root.post {
                         Glide.with(binding.root.context)
                             .load(item.emoji)
                             .placeholder(R.drawable.placeholder)
                             .error(R.drawable.placeholder)
                             .skipMemoryCache(true)
                             .into(binding.emoji)
-                        val color = Color.parseColor("#132743")
-
-
                     }
+                // 이미지 로드
+//                Glide.with(root.context)
+//                    .load(item.emoji)
+//                    .placeholder(R.drawable.placeholder)
+//                    .error(R.drawable.placeholder)
+//                    .skipMemoryCache(true)
+//                    .into(emoji)
+
+                // TextView의 내용이 변경될 때마다 배경의 크기를 조절
+                location.post {
+                    val leftPadding = 20 // 왼쪽 여백 값
+                    val rightPadding = 20 // 오른쪽 여백 값
+                    location.setPadding(leftPadding, 0, rightPadding, 0)
+                    adjustBackgroundSizeWithPadding(location, leftPadding, rightPadding)
                 }
-
-                binding.model = item
-
-                //------
+//                GlobalScope.launch(Dispatchers.IO) {
+//                    withContext(Dispatchers.Main) {
+//                            if (binding.location.text != "퇴근")
+//                            {
+//                                // UI 변경 작업
+//                                val leftPadding = 20 // 왼쪽 여백 값
+//                                val rightPadding = 20 // 오른쪽 여백 값
+//                                binding.location.setPadding(leftPadding, 0, rightPadding, 0)
+//                                adjustBackgroundSizeWithPadding(
+//                                    binding.location,
+//                                    leftPadding,
+//                                    rightPadding
+//                                )
 //
-//            GlobalScope.launch(Dispatchers.Main) {
-//                withContext(Dispatchers.Main) {
-//                    // UI 변경 작업
-//                    binding.location.setPadding(leftPadding, 0, rightPadding, 0)
-//                    // 여기서는 코루틴 밖에서 UI 갱신 작업을 수행하므로 문제를 일으키지 않아야 합니다.
-//                }
+//                                val color = Color.parseColor("#132743")
+//                                val gradientDrawable = GradientDrawable()
+//                                gradientDrawable.setColor(color)
+//                                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+//                                // 배경을 설정
+//                                binding.location.background = gradientDrawable
+//                            }
+//                            else
+//                            {
+//                                // UI 변경 작업
+//                                val leftPadding = 20 // 왼쪽 여백 값
+//                                val rightPadding = 20 // 오른쪽 여백 값
+//                                binding.location.setPadding(leftPadding, 0, rightPadding, 0)
+//                                adjustBackgroundSizeWithPadding(
+//                                    binding.location,
+//                                    leftPadding,
+//                                    rightPadding
+//                                )
+//                                val color = Color.parseColor("#132743")
+//                                val gradientDrawable = GradientDrawable()
+//                                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+//                                val strokeWidth = 2 // 테두리의 두께 설정
+//                                val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
+//                                gradientDrawable.setStroke(strokeWidth, strokeColor)
 //
-//                // 코루틴에서 추가 작업 수행
-//                adjustBackgroundSizeWithPadding(binding.location, leftPadding, rightPadding)
-//                binding.emoji.setImageResource(R.drawable.placeholder) // placeholder는 원하는 기본 이미지 리소스로 변경
-//                // 백그라운드 스레드에서 이미지 로딩 실행
-//                Thread {
-//                    val bitmap = loadImage(item.emoji)
-//
-//                    // UI 업데이트는 메인(UI) 스레드에서 해야 합니다.
-//                    binding.root.post {
-//                        // 로드된 이미지가 null이 아니면 이미지뷰에 설정
-//                        bitmap?.let {
-//                            binding.emoji.setImageBitmap(it)
+//                                // 배경을 설정
+//                                binding.location.background = gradientDrawable
+//                                binding.location.setTextColor(color)
+//                            }
 //                        }
 //                    }
-//                }.start()
-//
-//
-//                // 배경 변경 - 조건에 따라
-//                if (item.location == "퇴근") {
-////                    binding.location.setBackgroundColor(Color.WHITE) // 퇴근이면 배경을 흰색으로 설정
-//                    val drawable = ContextCompat.getDrawable(context, R.drawable.location_sharpe_leave)
-//
-//                    drawable?.let {
-//                        binding.location.background = it
+//                    binding.root.post{
+//                        Glide.with(binding.root.context)
+//                            .load(item.emoji)
+//                            .placeholder(R.drawable.placeholder)
+//                            .error(R.drawable.placeholder)
+//                            .skipMemoryCache(true)
+//                            .into(binding.emoji)
 //                        val color = Color.parseColor("#132743")
-//                        binding.location.setTextColor(color)
+//
 //                    }
-//                }
-//
-//                //이게 훨씬 빠른데 속도가 너무 다르네,,,
-////                Glide.with(binding.root.context)
-////                    .load(item.emoji) // item.emoji에 이미지 URL이 있어야 합니다.
-////                    .placeholder(R.drawable.placeholder) // 로딩 중에 표시할 이미지
-////                    .error(R.drawable.placeholder) // 이미지 로드 실패 시 표시할 이미지
-////                    .into(binding.emoji) // 이미지를 표시할 ImageView입니다.
-//                }
-//
-//
-//            binding.model = item
+                }
+                binding.model = item
             }
         }
     }
-
-
-
-
     private fun showEditDialog(context: Context, item: RecyclerInViewModel) {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.activity_profile_popup)
@@ -194,6 +197,10 @@ class InRecyclerViewAdapter(
         intraIdTextView.text = item.intra_name
         commentTextView.text = item.comment
         locationTextView.text = item.location
+        val leftPadding = 20 // 왼쪽 여백 값
+        val rightPadding = 20 // 오른쪽 여백 값
+        locationTextView.setPadding(leftPadding, 0, rightPadding, 0)
+        adjustBackgroundSizeWithPadding(locationTextView, leftPadding, rightPadding)
 
         val deleteFriend = dialog.findViewById<Button>(R.id.Delete)
 

@@ -1,17 +1,10 @@
 package com.example.where42android.LiveData
 
-import SharedViewModel_GroupsMembersList
-import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.where42android.Base_url_api_Retrofit.AddMembersRequest
-import com.example.where42android.Base_url_api_Retrofit.CommentChangeMember
 import com.example.where42android.Base_url_api_Retrofit.Deafult_friendGroup_memberlist
 import com.example.where42android.Base_url_api_Retrofit.GroupAddMemberlist
 import com.example.where42android.Base_url_api_Retrofit.GroupChangeName
@@ -20,7 +13,6 @@ import com.example.where42android.Base_url_api_Retrofit.GroupDeleteResponse
 import com.example.where42android.Base_url_api_Retrofit.GroupMemberListService
 import com.example.where42android.Base_url_api_Retrofit.GroupNameRequest
 import com.example.where42android.Base_url_api_Retrofit.GroupNameResponse
-import com.example.where42android.Base_url_api_Retrofit.Member
 import com.example.where42android.Base_url_api_Retrofit.MemberAPI
 import com.example.where42android.Base_url_api_Retrofit.NewGroup
 import com.example.where42android.Base_url_api_Retrofit.NewGroupRequest
@@ -31,8 +23,8 @@ import com.example.where42android.Base_url_api_Retrofit.deleteFriendListRequest
 import com.example.where42android.Base_url_api_Retrofit.deleteFriendListResponse
 import com.example.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.example.where42android.Base_url_api_Retrofit.groups_memberlist
-import com.example.where42android.CreateGroupActivity
 import com.example.where42android.UserSettings
+import com.example.where42android.main.friendListObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,6 +51,31 @@ class GroupsMembersList() : ViewModel() {
         }
     }
 
+//    fun groupToggleChange(groupName : String, toggle : Boolean)
+//    {
+////        val groupDetail =  groupsMembersList.value?.firstOrNull{it.groupName == groupName}
+////        if (groupDetail != null) {
+////            groupDetail.toggle = toggle
+////        }
+////        groupsMembersList.value
+//
+//        // 현재의 groupsMembersList 값을 가져옴
+//        val currentList = groupsMembersList.value
+//
+//        // groupName에 해당하는 groupDetail을 찾음
+//        val groupDetail = currentList?.firstOrNull { it.groupName == groupName }
+//
+//        // groupDetail이 null이 아니면 toggle 값을 변경
+//        groupDetail?.toggle = toggle
+//
+//        // 변경된 리스트를 다시 groupsMembersList에 설정
+//        // setValue 또는 postValue를 사용하여 변경된 값을 LiveData에 할당
+//        currentList?.let {
+//            groupsMembersList.value = it
+//        }
+//    }
+
+
     fun getGroupMemberList(intraId: Int, token: String) {
         val retrofitAPI =
             RetrofitConnection.getInstance(token).create(GroupMemberListService::class.java)
@@ -69,16 +86,64 @@ class GroupsMembersList() : ViewModel() {
                     response: Response<List<groups_memberlist.groups_memberlistItem>>
                 ) {
                     if (response.isSuccessful) {
-                        val groupList = response.body()
+                        val groupList = response.body()?.toMutableList()
+
+                        // default 그룹을 찾아서 이름 변경
+                        val defaultGroupIndex = groupList?.indexOfFirst { it.groupName == "default" }
+                        Log.d("Index", "Index : ${defaultGroupIndex}")
+                        if (defaultGroupIndex != -1) {
+                            val defaultGroup = defaultGroupIndex?.let { groupList?.get(it) }
+                            defaultGroup?.groupName = "친구 목록"
+                            if (defaultGroupIndex != null) {
+                                if (defaultGroup != null) {
+                                    groupList?.set(defaultGroupIndex, defaultGroup)
+                                }
+                            }
+                        }
+                        // 기존의 "친구 목록" 그룹이 있으면 삭제
+                        val existingFriendListIndex = groupList?.indexOfFirst { it.groupName == "친구 목록" }
+                        val defaultFriendList = groupList?.firstOrNull{it.groupName == "친구 목록"}
+                        if (existingFriendListIndex != -1) {
+                            if (existingFriendListIndex != null && defaultFriendList != null) {
+                                groupList.removeAt(existingFriendListIndex)
+                                groupList.add(defaultFriendList)
+                            }
+                        }
+                        if (groupList != null) {
+                            groupList.forEach { groupDetail ->
+                                if (groupDetail.groupName != "친구 목록")
+                                    groupDetail.toggle = false
+                                else {
+                                    groupDetail.toggle = true
+                                    groupDetail.members.forEach{defaultmembers ->
+                                        friendListObject.addItem(defaultmembers.intraId, defaultmembers.intraName)
+                                    }
+                                }
+                                groupDetail.members.forEach{member ->
+                                    if (member.location == null)
+                                    {
+                                        if (member.inCluster == true)
+                                        {
+                                            member.location = "개포 클러스터 내"
+                                        }
+                                        else
+                                        {
+                                            member.location = "퇴근"
+                                        }
+                                    }
+                                }
+
+                                Log.d("groupDetail", "Index : ${groupDetail.groupName}, toggle : ${groupDetail.toggle}")
+                            }
+                        }
+
                         groupsMembersList.value = groupList.orEmpty()
-//                    groupsMembersList.value = response.body()
 
                     } else {
                         // Handle unsuccessful response
                         groupsMembersList.value = emptyList()
                     }
                 }
-
                 override fun onFailure(
                     call: Call<List<groups_memberlist.groups_memberlistItem>>,
                     t: Throwable
@@ -145,7 +210,8 @@ class GroupsMembersList() : ViewModel() {
 //                            count = 0,
                             groupId = it.groupId,
                             groupName = it.groupName,
-                            members = emptyList() // 새로운 그룹이므로 멤버는 비어있는 리스트로 설정합니다.
+                            members = emptyList(), // 새로운 그룹이므로 멤버는 비어있는 리스트로 설정합니다.
+                            toggle = false
                         )
                         currentGroupList.add(newGroup)
                     }
@@ -292,37 +358,26 @@ class GroupsMembersList() : ViewModel() {
                             for (memberId in member) {
                                 // 현재 멤버 리스트에서 memberId와 동일한 intraId를 가진 멤버를 찾아 제외
                                 currentMembers.removeAll { it.intraId == memberId }
+
                             }
 
                             // 현재 그룹의 멤버 리스트를 업데이트
                             currentGroups[groupIndex] = currentGroup.copy(members = currentMembers)
                         }
-
+                        for (memberId in member) {
+                            // 현재 멤버 리스트에서 memberId와 동일한 intraId를 가진 멤버를 찾아 제외
+                            friendListObject.removeItem(memberId)
+                        }
                         // 업데이트된 그룹 리스트를 LiveData에 설정하여 UI를 업데이트
                         groupsMembersList.value = currentGroups
                     } else {
-//                        val currentMembers = groupsMembersList.value.orEmpty().toMutableList()
-//                        val groupIndex = currentMembers.indexOfFirst { it.groupId == groupId }
-//                        if (groupIndex != -1) {
-//                            val targetGroup = currentMembers[groupIndex]
-//                            val updatedMembers = targetGroup.members.filterNot { member.contains(it.intraId) }
-//                            currentMembers[groupIndex] = targetGroup.copy(members = updatedMembers)
-//                            groupsMembersList.value = currentMembers.toList()
-//                        }
-
-
                         // 현재 그룹 리스트를 가져옴
                         val currentGroups = groupsMembersList.value.orEmpty().toMutableList()
-
                         val groupIndex = currentGroups.indexOfFirst { it.groupId == groupId }
-
                         // 각 그룹을 순회
                         val currentGroup = currentGroups[groupIndex]
-
                         // 현재 그룹의 멤버 리스트를 가져옴
                         val currentMembers = currentGroup.members.toMutableList()
-
-
                         // member 리스트의 길이만큼 반복문 실행
                         for (memberId in member) {
                             // 현재 멤버 리스트에서 memberId와 동일한 intraId를 가진 멤버를 찾아 제외
@@ -331,8 +386,13 @@ class GroupsMembersList() : ViewModel() {
                         // 현재 그룹의 멤버 리스트를 업데이트
                         currentGroups[groupIndex] = currentGroup.copy(members = currentMembers)
                         // 업데이트된 그룹 리스트를 LiveData에 설정하여 UI를 업데이트
+                        for (memberId in member) {
+                            // 현재 멤버 리스트에서 memberId와 동일한 intraId를 가진 멤버를 찾아 제외
+                            friendListObject.removeItem(memberId)
+                        }
                         groupsMembersList.value = currentGroups
                     }
+
 
                 } else {
                     // 추가: 실패 응답 로그
@@ -350,10 +410,7 @@ class GroupsMembersList() : ViewModel() {
                 // For example, handle the failure accordingly
             }
         })
-
-
     }
-
 
     fun getGroupMemberList(groupId: Int) {
         val userSettings = UserSettings.getInstance()
@@ -370,23 +427,7 @@ class GroupsMembersList() : ViewModel() {
             ) {
                 if (response.isSuccessful) {
                     Log.d("defaultGroupMemberList", "${response.body()}")
-//                    val friendList = response.body()
-//                    friendList?.let { members ->
-//                        for (member in members) {
-//                            // 기존 LiveData에 새로운 값을 추가하기 위해 기존 값에 새로운 값(member)을 추가합니다.
-//                            val currentList = defaultGroupMemberList.value.orEmpty().toMutableList()
-//                            currentList.add(member)
-//                            Log.d("currentItem", "${currentList}")
-//                            defaultGroupMemberList.postValue(currentList)
-//                        }
-//                    }
                     Log.d("defaultGroupMemberList", "${response.body()}")
-//                    friendList?.let { members ->
-//                        // 받은 멤버 데이터를 friendProfileList에 추가
-//                        for (member in members) {
-//                            defaultGroupMemberList.value.add(member)
-//                        }
-//                    }
                     Log.e("viewModel suc", "here1")
                 } else {
                     // Handle unsuccessful response
@@ -402,10 +443,7 @@ class GroupsMembersList() : ViewModel() {
                 // Handle network failure
             }
         })
-
-
     }
-
 
 
     fun editGroupName(groupName:String, groupId:Int) {
@@ -461,79 +499,4 @@ class GroupsMembersList() : ViewModel() {
             }
         })
     }
-
 }
-
-//
-//    fun addMembersToGroup(groupId_members : AddMembersRequest) {
-//        val retrofitAPI2 = RetrofitConnection.getInstance().create(GroupAddMemberlist::class.java)
-//        //새로운 그룹에 member 추가하는 코드 작성!
-//        retrofitAPI2.addMembersToGroup(groupId_members).enqueue(object :
-//            Callback<List<addMembersResponse.addMembersResponseItem>> {
-//            override fun onResponse(
-//                call: Call<List<addMembersResponse.addMembersResponseItem>>,
-//                response: Response<List<addMembersResponse.addMembersResponseItem>>
-//            ) {
-//                if (response.isSuccessful)
-//                {
-//                    Log.e("groupsMembersList.value", "${groupsMembersList.value}")
-//                    val currentMembers = groupsMembersList.value.orEmpty().toMutableList()
-//                    val addedMembers = response.body() ?: emptyList()
-////
-//                    val isGroupIdExists = currentMembers.any { it.groupId == groupId_members.groupId }
-//                    Log.e("isGroupIdExists_here", "${isGroupIdExists}")
-////
-////                    if (isGroupIdExists) {
-////                        // 해당하는 groupId_members.groupId를 가진 그룹 찾기
-////                        val isGroupIdExists = currentMembers.indexOfFirst { it.groupId == groupId_members.groupId }
-////                        Log.e("isGroupIdExists1-1", "${isGroupIdExists}")
-////                        if (isGroupIdExists != -1) {
-////                            Log.e("isGroupIdExists1", "${isGroupIdExists}")
-////                            Log.e("isGroupIdExists1", "${isGroupIdExists}")
-////
-////                            // 해당하는 그룹에 멤버 추가
-////                            val newMembersList = addedMembers.map { member ->
-////                                groups_memberlist.groups_memberlistItem.Member(
-////                                    comment = member.comment ?: "",
-////                                    groupId = member.groupId ?: 0,
-////                                    groupName = member.groupName ?: "",
-////                                    image = member.image ?: "",
-////                                    inCluster = member.inCluster ?: false,
-////                                    location = member.location ?: "",
-////                                    memberIntraName = member.memberIntraName ?: ""
-////                                )
-////                            }
-////
-////                            // 해당하는 그룹의 멤버 리스트를 가져와서 새로운 멤버들을 추가
-////                            val targetGroupMembers =
-////                                currentMembers[isGroupIdExists].members.toMutableList()
-////                            targetGroupMembers.addAll(newMembersList)
-////                            currentMembers[isGroupIdExists] =
-////                                currentMembers[isGroupIdExists].copy(members = targetGroupMembers)
-////                        }
-////
-////                    }
-////                    // 변경된 목록을 LiveData에 설정하여 UI를 업데이트합니다.
-////                    Log.e("isGroupIdExists2", "${groupsMembersList.value}")
-////                    Log.e("isGroupIdExists2", "${currentMembers}")
-////                    groupsMembersList.value = currentMembers.toList()
-////                        val intent = Intent(this@CreateGroupActivity, MainPageActivity::class.java)
-////                        finish() //인텐트 종료
-////                        startActivity(intent)
-//                }
-//                else
-//                {
-//                    Log.d("groupmemberadd_error", "API call failed. Response: $response")
-//                }
-//            }
-//            override fun onFailure(
-//                call: Call<List<addMembersResponse.addMembersResponseItem>>,
-//                t: Throwable)
-//            {
-//                Log.d("groupmemberadd_error", "onFailure API call failed.")
-//                // API 요청 자체가 실패한 경우 처리
-//            }
-//        })
-//    }
-
-//}

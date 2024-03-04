@@ -29,26 +29,9 @@
 
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        style="@style/RoundedButton"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/gmarketsans_medium"
-        android:id="@+id/btnFloor1"
-        android:text="오픈스튜디오"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnFloor2"
-
-        />
-
     <android.widget.Button
 
-        android:id="@+id/btnFloor2"
+        android:id="@+id/btnFloor1"
         android:gravity="center"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -64,7 +47,7 @@
 
     <android.widget.Button
         android:layout_marginTop="20dp"
-        android:id="@+id/btnFloor3"
+        android:id="@+id/btnFloor2"
         android:gravity="center"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -73,27 +56,10 @@
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
         android:text="야외정원"
-        app:layout_constraintTop_toBottomOf="@id/btnFloor2"
+        app:layout_constraintTop_toBottomOf="@id/btnFloor1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
-
-    <android.widget.Button
-        android:layout_marginTop="20dp"
-        android:id="@+id/btnFloor4"
-        android:gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        style="@style/RoundedButton"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/gmarketsans_medium"
-        android:text="기타학습공간"
-        app:layout_constraintTop_toBottomOf="@id/btnFloor3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,7 @@ import com.example.where42android.MainActivity
 import com.example.where42android.UserSettings
 import com.example.where42android.WebView.CustomWebViewClient
 import com.example.where42android.main.MainPageActivity
+import com.example.where42android.main.friendListObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -137,6 +138,19 @@ class ProfileList private constructor(): ViewModel() {
                     val member: Member? = response.body()
                     member?.let {
                         member.responsecode = 3
+                        if (it.location == null)
+                        {
+                            if (it.inCluster == true)
+                            {
+                                it.location = "개포 클러스터 내"
+                            }
+                            else
+                            {
+                                it.location = "퇴근"
+                            }
+                        }
+
+                        friendListObject.addItem(it.intraId, it.intraName)
                         profile.value = it
                         Log.e("ProfileList", "${profile.value}")
                     } ?: run {

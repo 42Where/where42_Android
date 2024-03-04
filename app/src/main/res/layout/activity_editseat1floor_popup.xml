@@ -20,141 +20,65 @@
         android:fontFamily="@font/gmarketsans_bold" />
 
 
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
-
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.53" />
 
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            style="@style/RoundedButton"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/gmarketsans_medium"
-            android:id="@+id/btnFloor1"
-            android:text="오픈스튜디오"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btnFloor2"
-            android:layout_marginBottom="20dp"
-            />
 
-        <android.widget.Button
-            android:id="@+id/btnFloor2"
-            android:gravity="center"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            style="@style/RoundedButton"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/gmarketsans_medium"
-            android:text="오픈라운지"
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:id="@+id/btnFloor1"
+        android:text="42LAB"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnFloor2"
 
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
-            />
+        />
 
-        <android.widget.Button
-            android:layout_marginTop="20dp"
-            android:id="@+id/btnFloor3"
-            android:gravity="center"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            style="@style/RoundedButton"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/gmarketsans_medium"
+    <android.widget.Button
 
-            android:text="42LAB"
-            app:layout_constraintTop_toBottomOf="@id/btnFloor2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+        android:id="@+id/btnFloor2"
+        android:gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="오픈스튜다오"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+        />
 
-        <android.widget.Button
-            android:layout_marginTop="20dp"
-            android:id="@+id/btnFloor4"
-            android:gravity="center"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            style="@style/RoundedButton"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/gmarketsans_medium"
-            android:text="유튜브스튜디오"
-            app:layout_constraintTop_toBottomOf="@id/btnFloor3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
+    <android.widget.Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnFloor3"
+        android:gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="오락실"
+        app:layout_constraintTop_toBottomOf="@id/btnFloor2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    <!--    </androidx.cardview.widget.CardView>-->
-    <!-- 가로 가이드라인 -->
-    <!--    <androidx.constraintlayout.widget.Guideline-->
-    <!--        android:id="@+id/guideline_horizontal"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        app:layout_constraintGuide_percent="0.5" />-->
-    <!--    -->
-
-    <!--    &lt;!&ndash; 상단 왼쪽 박스 &ndash;&gt;-->
-    <!--    <View-->
-    <!--        android:id="@+id/box1"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="1dp"-->
-    <!--        android:background="#FF0000"-->
-    <!--        app:layout_constraintEnd_toStartOf="@id/guideline_vertical"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"/>-->
-
-    <!--    &lt;!&ndash; 상단 오른쪽 박스 &ndash;&gt;-->
-    <!--    <View-->
-    <!--        android:id="@+id/box2"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:background="#00FF00"-->
-    <!--        app:layout_constraintStart_toEndOf="@id/guideline_vertical"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"/>-->
-
-    <!--    &lt;!&ndash; 하단 왼쪽 박스 &ndash;&gt;-->
-    <!--    <View-->
-    <!--        android:id="@+id/box3"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:background="#0000FF"-->
-    <!--        app:layout_constraintEnd_toStartOf="@id/guideline_vertical"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
-
-    <!--    &lt;!&ndash; 하단 오른쪽 박스 &ndash;&gt;-->
-    <!--    <View-->
-    <!--        android:id="@+id/box4"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:background="#FFFF00"-->
-    <!--        app:layout_constraintStart_toEndOf="@id/guideline_vertical"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
-
 
