@@ -119,24 +119,22 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         // redirect_uri를 파싱하여 추출합니다.
 
 //        val checkredirect = redirectparseUri?.contains("http://13.209.149.15:8080/login/oauth2/code/42seoul")
-//        Log.e("onPageFinished", "redirectparseUri : ${redirectparseUri}")
 //        val redirectparseUri = url?.let { parseRedirectUri(it) }
 //        val checkredirect = redirectparseUri?.contains("http://test.where42.kr/oauth2/authorization/42seoul")
 
-        val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
-        Log.e("HeaderInfo_Page", "http://13.209.149.15:8080/의 쿠키2: $cookies")
+//        val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
+//        Log.e("HeaderInfo_Page", "http://13.209.149.15:8080/의 쿠키2: $cookies")
+//        val cookiess = CookieManager.getInstance().getCookie("https://test.where42.kr/")
+//        Log.e("HeaderInfo_Page", "https://test.where42.kr/의 쿠키2: $cookiess")
 
-        val cookiess = CookieManager.getInstance().getCookie("https://test.where42.kr/")
-        Log.e("HeaderInfo_Page", "https://test.where42.kr/의 쿠키2: $cookiess")
-
-//                || checkredirect == true
-        if (url != null && (url.startsWith("http://localhost:3000")))
+        // || checkredirect == true
+        if (url != null && (url.startsWith("https://test.where42.kr:3000")))
         {
-            val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
-            Log.e("HeaderInfo_Page", "http://13.209.149.15:8080/의 쿠키2: $cookies")
+//            val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
+//            Log.e("HeaderInfo_Page", "http://13.209.149.15:8080/의 쿠키2: $cookies")
 
-            val cookiess = CookieManager.getInstance().getCookie("https://test.where42.kr/")
-            Log.e("HeaderInfo_Page", "https://test.where42.kr/의 쿠키2: $cookiess")
+            val cookies = CookieManager.getInstance().getCookie("https://test.where42.kr/")
+            Log.e("HeaderInfo_Page", "https://test.where42.kr/의 쿠키2: $cookies")
             activity.runOnUiThread {
                 activity.findViewById<WebView>(R.id.webView).visibility = View.GONE
             }
