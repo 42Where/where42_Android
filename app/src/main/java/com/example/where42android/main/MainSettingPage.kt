@@ -48,10 +48,10 @@ class MainSettingPage : AppCompatActivity() {
         var intraId_class : Int = receivedIntent.getIntExtra("INTRA_ID", -1)
 
         var intraId = userSettings.intraId
-        Log.e("MainSettingPage", "intraId : ${intraId}")
+//        Log.e("MainSettingPage", "intraId : ${intraId}")
 
         val token: String? = receivedIntent.getStringExtra("TOKEN")
-        Log.e("MainSettingPage", "token : ${token}")
+//        Log.e("MainSettingPage", "token : ${token}")
 
         //logout
         val logoutButton : Button = this.findViewById(R.id.logout_button)
@@ -71,34 +71,34 @@ class MainSettingPage : AppCompatActivity() {
             val cancel = logout_dialog.findViewById<Button>(R.id.cancel)
             val submit = logout_dialog.findViewById<Button>(R.id.submit)
             submit.setOnClickListener {
-                Log.e("logout", "submit")
+//                Log.e("logout", "submit")
                 //logout api 부르기
                 logout_dialog.dismiss()
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
                         val usersetting = UserSettings.getInstance()
-                        Log.e("logout", "api 요청1")
+//                        Log.e("logout", "api 요청1")
                         val logoutapi = RetrofitConnection.getInstance(usersetting.token).create(
                             logoutAPI::class.java
                         )
-                        Log.e("logout", "api 요청2")
+//                        Log.e("logout", "api 요청2")
                         val logoutResponse = logoutapi.logout()
-                        Log.e("logout", "api 요청2")
-                        Log.e("logout", "api : ${logoutResponse.code()}")
-                        Log.e("logout", "api : ${logoutResponse.body()}")
+//                        Log.e("logout", "api 요청2")
+//                        Log.e("logout", "api : ${logoutResponse.code()}")
+//                        Log.e("logout", "api : ${logoutResponse.body()}")
                         if (logoutResponse.isSuccessful)
                         {
                             when (logoutResponse.code()) {
                                 200 -> {
-                                    Log.e("logout", "logout Response : ${logoutResponse}")
-                                    Log.e(
-                                        "logout",
-                                        "logout Response : ${logoutResponse.body()}"
-                                    )
-                                    Log.e(
-                                        "logout",
-                                        "logout Response : ${logoutResponse.code()}"
-                                    )
+//                                    Log.e("logout", "logout Response : ${logoutResponse}")
+//                                    Log.e(
+//                                        "logout",
+//                                        "logout Response : ${logoutResponse.body()}"
+//                                    )
+//                                    Log.e(
+//                                        "logout",
+//                                        "logout Response : ${logoutResponse.code()}"
+//                                    )
                                     //쿠키 지우기
 
                                     val cookieManager = CookieManager.getInstance()
@@ -117,20 +117,20 @@ class MainSettingPage : AppCompatActivity() {
                                 // 추가적인 상태 코드에 대한 처리 필요
                                 else -> {
 //                                    Toast.makeText(this@MainSettingPage, "api 응답 코드 실패1 logout 안됨", Toast.LENGTH_SHORT).show()
-                                    Log.e("logout", "logout Response fail : ${logoutResponse}")
-                                    Log.e(
-                                        "logout",
-                                        "logout Response fail: ${logoutResponse.code()}"
-                                    )
+//                                    Log.e("logout", "logout Response fail : ${logoutResponse}")
+//                                    Log.e(
+//                                        "logout",
+//                                        "logout Response fail: ${logoutResponse.code()}"
+//                                    )
                                     // 기본적으로 어떻게 처리할지 작성
                                 }
                             }
                         } else {
-                            Log.e("logout", "api 응답 코드 실패2 logout 안됨")
+//                            Log.e("logout", "api 응답 코드 실패2 logout 안됨")
 //                            Toast.makeText(this@MainSettingPage, "api 응답 코드 실패2 logout 안됨", Toast.LENGTH_SHORT).show()
                         }
                     } catch (reissueException: Exception) {
-                        Log.e("logout", "throw logout 안됨, ${reissueException}")
+//                        Log.e("logout", "throw logout 안됨, ${reissueException}")
 
 //                        Toast.makeText(this@MainSettingPage, "throw logout 안됨", Toast.LENGTH_SHORT).show()
                     }
@@ -172,7 +172,7 @@ class MainSettingPage : AppCompatActivity() {
                 val comment :String = editText.text.toString()
                 //intraid 바꿔주기
                 //JSON 만들기
-                Log.e("MainSettingPage", "intraId : ${intraId}")
+//                Log.e("MainSettingPage", "intraId : ${intraId}")
                 val updateRequest = UpdateCommentRequest(intraId, comment)
 
                 // SharedViewModel_Profile 인스턴스 생성

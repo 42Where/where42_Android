@@ -68,7 +68,7 @@ class MainAddGroupDetailList : AppCompatActivity() {
 
         val groupIdNumber: Number = intent.getIntExtra("GROUP_ID", -1)
         val groupId : Int = groupIdNumber.toInt()
-        Log.e("herehere", "here : ${groupId}")
+//        Log.e("herehere", "here : ${groupId}")
 
         val createGroupButton: AppCompatButton = findViewById(R.id.delete_group_member)
         createGroupButton.text = "멤버 추가하기"
@@ -108,7 +108,7 @@ class MainAddGroupDetailList : AppCompatActivity() {
 
             val members =  mutableListOf<Int>()
             selectedItems.forEach { selectedItem ->
-                Log.d("선택된 항목", "이름: ${selectedItem.intraName}")
+//                Log.d("선택된 항목", "이름: ${selectedItem.intraName}")
                 members.add(selectedItem.intraId)
             }
             val sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)

@@ -112,8 +112,8 @@ class MainActivity : AppCompatActivity() {
         val loginButton = findViewById<ImageButton>(R.id.loginbutton)
         webView.settings.javaScriptEnabled = true // JavaScript 활성화 여부 설정
 
-        val cookieManager = CookieManager.getInstance()
-        cookieManager.removeAllCookies(null)
+//        val cookieManager = CookieManager.getInstance()
+//        cookieManager.removeAllCookies(null)
 
 //        token 값 일부러 바꾸기 -> 나중에 삭제해야됨
 //        saveTokenToSharedPreferences(this, "a")
@@ -128,10 +128,10 @@ class MainActivity : AppCompatActivity() {
         val agreement = getAgreementFromSharedPreferences((this@MainActivity))
         val refreshtoken = getRefreshTokenFromSharedPreferences(this@MainActivity) ?: "norefresh"
 
-        Log.e("refre", "memory token : ${token}")
-        Log.e("refre", "memory retoken : ${refreshtoken}")
-        Log.e("refre", "memory agreement : ${agreement}")
-        Log.e("refre", "memory intraId : ${intraId}")
+//        Log.e("refre", "memory token : ${token}")
+//        Log.e("refre", "memory retoken : ${refreshtoken}")
+//        Log.e("refre", "memory agreement : ${agreement}")
+//        Log.e("refre", "memory intraId : ${intraId}")
 
         //진짜 제일 처음 킬 때 memory, usersetting 전부 null임 -> 로그인 페이지
         if (intraId == -1)
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
 
             val userSettings = UserSettings.getInstance()
-            Log.e("refre", " token : ${userSettings.token}")
+//            Log.e("refre", " token : ${userSettings.token}")
 
             if (userSettings.token == "" || userSettings.intraId == -1) {
                 userSettings.token = token
@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
                     withContext(Dispatchers.IO) {
                         when (response.code()) {
                             200 -> {
-                                Log.d("MainPageAcitivty_kt", "no login memberAPI SUC")
+//                                Log.d("MainPageAcitivty_kt", "no login memberAPI SUC")
                                 val intent = Intent(this@MainActivity, MainPageActivity::class.java)
                                 intent.putExtra("TOKEN_KEY", token)
                                 intent.putExtra("INTRAID_KEY", intraId)
@@ -178,16 +178,16 @@ class MainActivity : AppCompatActivity() {
                             }
 
                             else -> {
-                                Log.d(
-                                    "MainPageAcitivty_kt",
-                                    "no login memberAPI response.code : ${response.code()}"
-                                )
+//                                Log.d(
+//                                    "MainPageAcitivty_kt",
+//                                    "no login memberAPI response.code : ${response.code()}"
+//                                )
                                 //여기는 아무것도 없음. 밑 버튼이 보이게 해야됨
                             }
                         }
                     }
                 } catch (e: IOException) {
-                    Log.d("MainPageAcitivty_kt", "no login memberAPI Fail")
+//                    Log.d("MainPageAcitivty_kt", "no login memberAPI Fail")
                 }
             }
         }
@@ -208,8 +208,8 @@ class MainActivity : AppCompatActivity() {
                                 {
                                     200 -> {
 
-                                        Log.d("token_check", "here1")
-                                        Log.d("SUC", "SUC ${response.code()}")
+//                                        Log.d("token_check", "here1")
+//                                        Log.d("SUC", "SUC ${response.code()}")
                                         val intent = Intent(this@MainActivity, MainPageActivity::class.java)
                                         intent.putExtra("TOKEN_KEY", token)
                                         intent.putExtra("INTRAID_KEY", intraId)
@@ -219,12 +219,12 @@ class MainActivity : AppCompatActivity() {
                                     }
                                     201 -> {
                                         //여기가 리다이렉트
-                                        Log.d("token_check", "here2")
+//                                        Log.d("token_check", "here2")
                                         val headers = response.headers()
                                         val originalString = headers["redirectUrl"]
                                         val modifiedString =
                                             originalString?.replace("{", "")?.replace("}", "")
-                                        Log.d("SUC", "modifiedString : ${modifiedString}")
+//                                        Log.d("SUC", "modifiedString : ${modifiedString}")
                                         val customWebViewClient =
                                             CustomWebViewClient(this@MainActivity, this@MainActivity)
                                         runOnUiThread {
@@ -237,7 +237,7 @@ class MainActivity : AppCompatActivity() {
                                     }
                                     else ->
                                     {
-                                        Log.d("token_check", "here3")
+//                                        Log.d("token_check", "here3")
                                         //이 자리는 다시 로그인 해주세요를 띄워야함.
                                     }
                                 }
@@ -247,30 +247,30 @@ class MainActivity : AppCompatActivity() {
                                 {
                                     401 -> {
                                         try {
-                                            Log.d("token_check", "here4")
-                                            Log.e("Reissue_SUC", "refreshtoken : ${refreshtoken}")
+//                                            Log.d("token_check", "here4")
+//                                            Log.e("Reissue_SUC", "refreshtoken : ${refreshtoken}")
                                             val reissueapi = RetrofitConnection.getInstance(refreshtoken).create(reissueAPI::class.java)
                                             val reissueResponse = reissueapi.reissueToken()
-                                            Log.d("token_check", "reissueResponse : ${reissueResponse.headers()}")
-                                            Log.d("token_check", "reissueResponse : ${reissueResponse.body()}")
-                                            Log.d("token_check", "reissueResponse : ${reissueResponse.code()}")
+//                                            Log.d("token_check", "reissueResponse : ${reissueResponse.headers()}")
+//                                            Log.d("token_check", "reissueResponse : ${reissueResponse.body()}")
+//                                            Log.d("token_check", "reissueResponse : ${reissueResponse.code()}")
                                             if (reissueResponse.isSuccessful)
                                             {
                                                 when (reissueResponse.code())
                                                 {
                                                     200 -> {
-                                                        Log.d("token_check", "here5")
-                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse}")
-                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.body()}")
-                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.code()}")
+//                                                        Log.d("token_check", "here5")
+//                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse}")
+//                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.body()}")
+//                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.code()}")
                                                         val reissue = reissueResponse.body()?.refreshToken
-                                                        Log.e("Reissue_SUC", "reissue : ${reissue}")
+//                                                        Log.e("Reissue_SUC", "reissue : ${reissue}")
                                                         if (reissue != null)
                                                         {
                                                             userSettings.token = reissue
                                                             saveaccesTokenToSharedPreferences(this@MainActivity, reissue)
-                                                            Log.d("token_check", "here6")
-                                                            Log.d("SUC", "SUC ${response.code()}")
+//                                                            Log.d("token_check", "here6")
+//                                                            Log.d("SUC", "SUC ${response.code()}")
                                                             val intent = Intent(this@MainActivity, MainPageActivity::class.java)
                                                             intent.putExtra("TOKEN_KEY", userSettings.token)
                                                             intent.putExtra("INTRAID_KEY", intraId)
@@ -287,9 +287,9 @@ class MainActivity : AppCompatActivity() {
                                                     // 추가적인 상태 코드에 대한 처리 필요
                                                     else ->
                                                     {
-                                                        Log.d("token_check", "here6")
-                                                        Log.e("Reissue_SUC", "reissueResponse fail : ${reissueResponse}")
-                                                        Log.e("Reissue_SUC", "reissueResponse fail: ${reissueResponse.code()}")
+//                                                        Log.d("token_check", "here6")
+//                                                        Log.e("Reissue_SUC", "reissueResponse fail : ${reissueResponse}")
+//                                                        Log.e("Reissue_SUC", "reissueResponse fail: ${reissueResponse.code()}")
                                                         // 기본적으로 어떻게 처리할지 작성
                                                     }
                                                 }

@@ -34,13 +34,13 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
 
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-        Log.d("PageStatred", "url : ${url}")
+//        Log.d("PageStatred", "url : ${url}")
         super.onPageStarted(view, url, favicon)
     }
 
     private fun shouldSaveToken(url: String?): Boolean {
         // 특정 조건을 만족하면 토큰을 저장 예를 들어, URL에 "saveToken"이라는 문자열이 포함되어 있을 때
-        Log.e("ag", "ag ${url?.contains("https") != true}")
+//        Log.e("ag", "ag ${url?.contains("https") != true}")
         return url?.contains("https") != true
     }
 
@@ -58,8 +58,8 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         val intraid = uri.getQueryParameter("intraId")
         val agreement = uri.getQueryParameter("agreement")
 
-        Log.e("ParsedCookies", "saveTokenToSharedPreferences_intraid: $intraid")
-        Log.e("ParsedCookies", "saveTokenToSharedPreferences_agreement: $agreement")
+//        Log.e("ParsedCookies", "saveTokenToSharedPreferences_intraid: $intraid")
+//        Log.e("ParsedCookies", "saveTokenToSharedPreferences_agreement: $agreement")
 
         editor.putString("intraId", intraid)
         editor.putString("agreement", agreement)
@@ -96,7 +96,7 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
     private fun parseRedirectUri(url: String): String? {
         // url에서 redirect_uri를 파싱하여 추출하는 로직을 작성합니다.
         // 여기서는 간단한 예시를 보여드리겠습니다. 실제로는 더 복잡한 로직이 필요할 수 있습니다.
-        Log.e("onPageFinished", "parseRedirectUriurl : ${url}")
+//        Log.e("onPageFinished", "parseRedirectUriurl : ${url}")
         val splitUrl = url.split("redirect_uri=")
         if (splitUrl.size > 1) {
             // redirect_uri= 다음에 나오는 값을 추출합니다.
@@ -111,7 +111,7 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        Log.e("onPageFinished", "firsturl : ${url}")
+//        Log.e("onPageFinished", "firsturl : ${url}")
         // 특정 조건을 만족하면 토큰을 가져와서 SharedPreferences에 저장
 //                && shouldSaveToken(url)
 
@@ -134,7 +134,7 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
 //            Log.e("HeaderInfo_Page", "http://13.209.149.15:8080/의 쿠키2: $cookies")
 
             val cookies = CookieManager.getInstance().getCookie("https://test.where42.kr/")
-            Log.e("HeaderInfo_Page", "https://test.where42.kr/의 쿠키2: $cookies")
+//            Log.e("HeaderInfo_Page", "https://test.where42.kr/의 쿠키2: $cookies")
             activity.runOnUiThread {
                 activity.findViewById<WebView>(R.id.webView).visibility = View.GONE
             }
@@ -142,9 +142,9 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
             val jsessionId = cookiesMap["JSESSIONID"]
             val accessToken = cookiesMap["accessToken"]
             val refreshToken = cookiesMap["refreshToken"]
-            Log.e("ParsedCookies", "JSESSIONID: $jsessionId")
-            Log.e("ParsedCookies", "accessToken: $accessToken")
-            Log.e("ParsedCookies", "refreshToken: $refreshToken")
+//            Log.e("ParsedCookies", "JSESSIONID: $jsessionId")
+//            Log.e("ParsedCookies", "accessToken: $accessToken")
+//            Log.e("ParsedCookies", "refreshToken: $refreshToken")
 //            val token = retrieveTokenFromUrl(url)
 //            Log.e("onPageFinished", "${token}")
 //            saveTokenToSharedPreferences(token)
@@ -156,10 +156,10 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
                 saveTokenToSharedPreferences(accessToken ?: "", refreshToken ?: "", url)
             }
             val token1 = getTokenFromSharedPreferences(context) ?: "notoken"
-            Log.d("token_check", "Stored Token after_custom : ${token1}")
+//            Log.d("token_check", "Stored Token after_custom : ${token1}")
             //여기에 Dialog 넣어주면 될 듯
             val contexttoken = getTokenFromSharedPreferences(context) ?: "notoken"
-            Log.d("token_check", "Stored Token  contexttoken after_custom : ${contexttoken}")
+//            Log.d("token_check", "Stored Token  contexttoken after_custom : ${contexttoken}")
             val intraId = getIntraidFromSharedPreferences(context)
             val agreement = getAgreementFromSharedPreferences((context))
 

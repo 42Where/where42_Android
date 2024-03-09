@@ -90,7 +90,7 @@ class GroupsMembersList() : ViewModel() {
 
                         // default 그룹을 찾아서 이름 변경
                         val defaultGroupIndex = groupList?.indexOfFirst { it.groupName == "default" }
-                        Log.d("Index", "Index : ${defaultGroupIndex}")
+//                        Log.d("Index", "Index : ${defaultGroupIndex}")
                         if (defaultGroupIndex != -1) {
                             val defaultGroup = defaultGroupIndex?.let { groupList?.get(it) }
                             defaultGroup?.groupName = "친구 목록"
@@ -133,7 +133,7 @@ class GroupsMembersList() : ViewModel() {
                                     }
                                 }
 
-                                Log.d("groupDetail", "Index : ${groupDetail.groupName}, toggle : ${groupDetail.toggle}")
+//                                Log.d("groupDetail", "Index : ${groupDetail.groupName}, toggle : ${groupDetail.toggle}")
                             }
                         }
 
@@ -183,7 +183,7 @@ class GroupsMembersList() : ViewModel() {
 
             override fun onFailure(call: Call<GroupDeleteResponse>, t: Throwable) {
                 // 네트워크 오류 등의 이유로 API 호출이 실패한 경우
-                Log.e("DELETE_ERROR", "Network error occurred. Message: ${t.message}")
+//                Log.e("DELETE_ERROR", "Network error occurred. Message: ${t.message}")
                 _groupDeleted.postValue(false) // 삭제 실패 시 false를 LiveData로 전달
             }
         })
@@ -216,7 +216,7 @@ class GroupsMembersList() : ViewModel() {
                         currentGroupList.add(newGroup)
                     }
                     groupsMembersList.value = currentGroupList.toList()
-                    Log.d("YourActivity", "New Group ID: ")
+//                    Log.d("YourActivity", "New Group ID: ")
 
 //                    val intent = Intent(this@MainPageActivity, CreateGroupActivity::class.java)
 //                            //default 아이디 넣어주어야함.
@@ -226,13 +226,13 @@ class GroupsMembersList() : ViewModel() {
 //                    startActivity(intent)
                 } else {
                     // API 호출에 실패한 경우
-                    Log.e("DELETE_ERROR", "Failed to delete group. Error code: ${response.code()}")
+//                    Log.e("DELETE_ERROR", "Failed to delete group. Error code: ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<NewGroupResponses>, t: Throwable) {
 
-                Log.e("CREATE_ERROR", "Network error occurred. Message: ${t.message}")
+//                Log.e("CREATE_ERROR", "Network error occurred. Message: ${t.message}")
             }
         })
     }
@@ -241,7 +241,7 @@ class GroupsMembersList() : ViewModel() {
     fun addMembersToGroup(newgroupName: String, members: MutableList<Int>) {
 //        val newgroup = groupsMembersList.value?.any { it.groupName == newgroupName }
         val newgroup = groupsMembersList.value?.find { it.groupName == newgroupName }
-        Log.e("newgroup", "newgroup ${newgroup?.groupName}")
+//        Log.e("newgroup", "newgroup ${newgroup?.groupName}")
 
         val userSettings = UserSettings.getInstance()
         val retrofitAPI2 = RetrofitConnection.getInstance(userSettings.token)
@@ -258,13 +258,13 @@ class GroupsMembersList() : ViewModel() {
                     response: Response<List<addMembersResponse.addMembersResponseItem>>
                 ) {
                     if (response.isSuccessful) {
-                        Log.e("groupsMembersList.value", "${groupsMembersList.value}")
+//                        Log.e("groupsMembersList.value", "${groupsMembersList.value}")
                         val currentMembers = groupsMembersList.value.orEmpty().toMutableList()
                         val addedMembers = response.body() ?: emptyList()
                         //
                         val isGroupIdExists =
                             currentMembers.any { it.groupId == groupId_members.groupId }
-                        Log.e("isGroupIdExists_here", "${isGroupIdExists}")
+//                        Log.e("isGroupIdExists_here", "${isGroupIdExists}")
                         //
                         if (isGroupIdExists) {
                             // 해당하는 groupId_members.groupId를 가진 그룹 찾기
@@ -272,8 +272,8 @@ class GroupsMembersList() : ViewModel() {
                                 currentMembers.indexOfFirst { it.groupId == groupId_members.groupId }
                             Log.e("isGroupIdExists1-1", "${isGroupIdExists}")
                             if (isGroupIdExists != -1) {
-                                Log.e("isGroupIdExists1", "${isGroupIdExists}")
-                                Log.e("isGroupIdExists1", "${isGroupIdExists}")
+//                                Log.e("isGroupIdExists1", "${isGroupIdExists}")
+//                                Log.e("isGroupIdExists1", "${isGroupIdExists}")
 
                                 // 해당하는 그룹에 멤버 추가
                                 Log.e("addedMembers", "addedMembers : ${addedMembers}")

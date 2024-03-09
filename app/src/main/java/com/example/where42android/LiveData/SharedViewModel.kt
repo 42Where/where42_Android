@@ -33,7 +33,7 @@ class SharedViewModel_GroupsMembersList : ViewModel() {
 
     // ViewModel에서 데이터 가져오는 함수
     fun getGroupMemberList(intraId: Int, token : String) {
-        Log.d("ViewModel", "ViewModel");
+//        Log.d("ViewModel", "ViewModel");
         viewModel.getGroupMemberList(intraId, token)
     }
 
@@ -62,7 +62,7 @@ class SharedViewModel_GroupsMembersList : ViewModel() {
     //그룹에서 친구 삭제하기
     fun deleteFriendGroup (groupId: Int, member: MutableList<Int>)
     {
-        Log.e ("deleteFriendGroup", "GroupId : ${groupId}, member : ${member}")
+//        Log.e ("deleteFriendGroup", "GroupId : ${groupId}, member : ${member}")
         viewModel.deleteFriendGroup(groupId, member)
     }
 
@@ -93,7 +93,7 @@ class SharedViewModel_Profile (
         get() = profile.profileLiveData
 
     fun getMemberData(context: Context, intraId: Int, token: String):Boolean {
-        Log.e("ProfileList", "here")
+//        Log.e("ProfileList", "here")
         return profile.getMemberData(intraId, token, context)
     }
 
@@ -127,7 +127,7 @@ class SearchSharedViewModel : ViewModel() {
 
     // ViewModel에서 데이터 가져오는 함수
     fun getSearchMemberList(searchMember:String) {
-        Log.d("ViewModel", "ViewModel");
+//        Log.d("ViewModel", "ViewModel");
         viewModel.getSearchMemberList(searchMember)
     }
 

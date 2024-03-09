@@ -83,7 +83,7 @@ class SearchRecyclerViewAdapter(private val context: Context,
 
 
             val intraNameObject = intraNameObject.getcheckFriendList()
-            Log.d("intraNameObject", "intraNameObject : ${intraNameObject}")
+//            Log.d("intraNameObject", "intraNameObject : ${intraNameObject}")
             var checkName = false
             for (i in intraNameObject) {
                 if (i == item.intra_id)
@@ -91,7 +91,7 @@ class SearchRecyclerViewAdapter(private val context: Context,
                     checkName = true
                     binding.checkBox.isChecked = true
 
-                    Log.d("intraNameObject", "i : ${i}, item.intra_id : ${item.intra_name}")
+//                    Log.d("intraNameObject", "i : ${i}, item.intra_id : ${item.intra_name}")
                     break
                 }
             }

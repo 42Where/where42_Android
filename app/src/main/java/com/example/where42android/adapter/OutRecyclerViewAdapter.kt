@@ -137,9 +137,9 @@ class OutRecyclerViewAdapter (
 //                Log.d("innerrecyclerview", "inner : ${binding.innerRecyclerview}")
                 if (binding.model?.viewgroup == true)
                 {
-                    Log.d("groupDetail", "OutRecyclerViewAdapter : ${binding.model?.title}")
+//                    Log.d("groupDetail", "OutRecyclerViewAdapter : ${binding.model?.title}")
                     if (binding.model?.innerList?.isEmpty() == false) {
-                        Log.d("innerrecyclerview", "inner here : ${binding.model?.innerList}")
+//                        Log.d("innerrecyclerview", "inner here : ${binding.model?.innerList}")
                         binding.innerRecyclerview.visibility = View.VISIBLE // 내부 RecyclerView 보이기
                         binding.viewLine.visibility = View.GONE
 
@@ -155,7 +155,7 @@ class OutRecyclerViewAdapter (
 //                        ) }
 
                     } else {
-                        Log.d("innerrecyclerview", "inner : ${null}")
+//                        Log.d("innerrecyclerview", "inner : ${null}")
                         // Dialog 객체를 생성합니다.
                         val dialog = Dialog(context)
 
@@ -195,15 +195,15 @@ class OutRecyclerViewAdapter (
         }
         fun bind(item: RecyclerOutViewModel) {
             binding.model = item
-            Log.d("DiffUtil", "here3")
+//            Log.d("DiffUtil", "here3")
 
-            Log.d("boolean_check", " showNonLeaveMembersOnly : ${showNonLeaveMembersOnly}")
+//            Log.d("boolean_check", " showNonLeaveMembersOnly : ${showNonLeaveMembersOnly}")
 
 //            togglestat = MutableMap(binding.model.title, binding.model.viewgroup)
-            Log.d("innerrecyclerview", "togglestat : ${togglestat}")
+//            Log.d("innerrecyclerview", "togglestat : ${togglestat}")
 //            val toggle = togglestat[item.title]
             val toggle = ToggleStatManager.getToggleStat(item.title)
-            Log.d("innerrecyclerview", "togglestat item.title : ${item.title}, toggle : ${toggle}")
+//            Log.d("innerrecyclerview", "togglestat item.title : ${item.title}, toggle : ${toggle}")
             if (toggle == true)
             {
                 item.viewgroup = true
@@ -211,7 +211,7 @@ class OutRecyclerViewAdapter (
 
             if (item.title != "친구 목록" && item.viewgroup == false)
             {
-                Log.d("innerrecyclerview", "if 초기화 item.title : ${item.title}, item.viewgroup : ${item.viewgroup}")
+//                Log.d("innerrecyclerview", "if 초기화 item.title : ${item.title}, item.viewgroup : ${item.viewgroup}")
 //                Log.d("Togglestat Entry", "Togglestat Entry : ${item.title}")
 //                togglestat[item.title] = item.viewgroup
                 ToggleStatManager.setToggleStat(item.title, item.viewgroup)
