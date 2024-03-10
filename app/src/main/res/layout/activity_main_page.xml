@@ -5,7 +5,7 @@
     <data>
         <variable
             name="counter"
-            type="com.example.where42android.main.MainPageActivity" />
+            type="com.seoul.where42android.main.MainPageActivity" />
     </data>
 
 

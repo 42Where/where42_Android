@@ -5,7 +5,7 @@
     <data>
         <variable
             name="model"
-            type="com.example.where42android.model.RecyclerOutViewModel" />
+            type="com.seoul.where42android.model.RecyclerOutViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

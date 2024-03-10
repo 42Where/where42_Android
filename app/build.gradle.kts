@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.where42android"
+    namespace = "com.seoul.where42android"
     compileSdk = 34
 
     buildFeatures {
@@ -17,7 +17,7 @@ android {
 
 
     defaultConfig {
-        applicationId = "com.example.where42android"
+        applicationId = "com.seoul.where42android"
         minSdk = 30 //31
         targetSdk = 34
         versionCode = 1
