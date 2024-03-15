@@ -1,42 +1,31 @@
-package com.seoul.where42android
+package com.seoul.where42android.main
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
+import android.view.Gravity
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.webkit.CookieManager
-import android.webkit.WebSettings
 import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.seoul.where42android.Base_url_api_Retrofit.Member
 import com.seoul.where42android.Base_url_api_Retrofit.MemberAPI
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.WebView.CustomWebViewClient
-import com.seoul.where42android.dialog.AgreeDialog
-import com.seoul.where42android.main.MainPageActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.await
 import java.io.IOException
-import kotlin.properties.Delegates
-import com.seoul.where42android.Base_url_api_Retrofit.ApiObject.service
 import com.seoul.where42android.Base_url_api_Retrofit.reissueAPI
-import kotlinx.coroutines.async
-
+import com.seoul.where42android.R
 
 class UserSettings private constructor() {
     var token: String = ""
@@ -59,16 +48,15 @@ class UserSettings private constructor() {
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
-    private lateinit var customWebViewClient: CustomWebViewClient
 
 //    val intent = Intent(this, MainPageActivity::class.java)
-    fun saveTokenToSharedPreferences(context: Context, token: String) {
-        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-//        editor.putString("AuthToken", token)
-     editor.putString("AuthToken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k")
-        editor.apply()
-    }
+//    fun saveTokenToSharedPreferences(context: Context, token: String) {
+//        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+//        val editor = sharedPreferences.edit()
+////        editor.putString("AuthToken", token)
+//     editor.putString("AuthToken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k")
+//        editor.apply()
+//    }
 
     fun getTokenFromSharedPreferences(context: Context): String? {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
@@ -90,22 +78,54 @@ class MainActivity : AppCompatActivity() {
         return sharedPreferences.getString("RefreshToken", null)
     }
 
-        private fun saveaccesTokenToSharedPreferences(context: Context, token: String) {
+    fun saveaccesTokenToSharedPreferences(context: Context, token: String) {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("AuthToken", token)
-        }
-
-    fun clearSharedPreferences(context: Context) {
-        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply() // 또는 editor.commit()
     }
+
+//    fun clearSharedPreferences(context: Context) {
+//        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+//        val editor = sharedPreferences.edit()
+//        editor.clear()
+//        editor.apply() // 또는 editor.commit()
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //help Button
+        val helpButton = findViewById<ImageButton>(R.id.help_button)
+
+        helpButton.setOnClickListener{
+            val helpDialog = Dialog(this@MainActivity)
+            helpDialog.setContentView(R.layout.activity_help_popup)
+
+            helpDialog.window?.setGravity(Gravity.CENTER)
+            helpDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            val submit = helpDialog.findViewById<Button>(R.id.submit)
+            submit.setOnClickListener {
+                helpDialog.dismiss()
+            }
+
+            val noiton = helpDialog.findViewById<TextView>(R.id.noiton)
+            noiton.setOnClickListener {
+                // 웹 페이지 주소
+                val url = "https://befitting-balaur-414.notion.site/eff5de2f978a4164b52b68ad2ca2e05a"
+
+                // 웹 페이지로 이동하는 Intent 생성
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(url)
+                helpDialog.dismiss()
+                // Intent 실행
+                startActivity(intent)
+            }
+
+            helpDialog.show()
+        }
+
 
         //webView 초기화
         webView = findViewById(R.id.webView)
@@ -119,9 +139,6 @@ class MainActivity : AppCompatActivity() {
 //        saveTokenToSharedPreferences(this, "a")
 
 //        clearSharedPreferences(this@MainActivity)
-
-
-
 
         val token = getTokenFromSharedPreferences(this@MainActivity) ?: "notoken"
         val intraId = getIntraidFromSharedPreferences(this@MainActivity)?.toInt() ?: -1
@@ -139,20 +156,15 @@ class MainActivity : AppCompatActivity() {
 
         }
         else {
-
-
             val userSettings = UserSettings.getInstance()
 //            Log.e("refre", " token : ${userSettings.token}")
 
             if (userSettings.token == "" || userSettings.intraId == -1) {
                 userSettings.token = token
-                if (intraId != null) {
-                    userSettings.intraId = intraId.toInt()
-                }
+                userSettings.intraId = intraId
                 userSettings.agreement = agreement.toBoolean()
                 userSettings.refreshToken = refreshtoken
             }
-
 
             //agreement 동의를 하였고, token intraId, accestoken이 있으면 MainPageAcitivty로 넘기기 -> 이 코드는 나중에
 
@@ -160,7 +172,7 @@ class MainActivity : AppCompatActivity() {
 //        userSettings.token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k"
 //
 
-            val intraid: Int = intraId?.toInt() ?: -1
+            val intraid: Int = intraId
             val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
             CoroutineScope(Dispatchers.IO).launch {
                 try {
@@ -194,10 +206,8 @@ class MainActivity : AppCompatActivity() {
 
         //버튼을 눌렀을 때
         loginButton.setOnClickListener {
-
-            var userSettings = UserSettings.getInstance()
-
-            val intraid : Int = intraId?.toInt() ?: -1
+            val userSettings = UserSettings.getInstance()
+            val intraid : Int = intraId
             val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
             CoroutineScope(Dispatchers.IO).launch{
                 try {
@@ -324,7 +334,8 @@ class MainActivity : AppCompatActivity() {
                                                     }
                                                 }
                                             }
-                                        } catch (reissueException: Exception) {
+                                        } catch (reissueException: Exception)
+                                        {
                                         }
                                     }
                                     else -> {

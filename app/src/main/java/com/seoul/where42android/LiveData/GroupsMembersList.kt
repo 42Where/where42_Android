@@ -23,7 +23,7 @@ import com.seoul.where42android.Base_url_api_Retrofit.deleteFriendListRequest
 import com.seoul.where42android.Base_url_api_Retrofit.deleteFriendListResponse
 import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.seoul.where42android.Base_url_api_Retrofit.groups_memberlist
-import com.seoul.where42android.UserSettings
+import com.seoul.where42android.main.UserSettings
 import com.seoul.where42android.main.friendListObject
 import retrofit2.Call
 import retrofit2.Callback

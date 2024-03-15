@@ -20,7 +20,6 @@ import com.seoul.where42android.Base_url_api_Retrofit.GroupAddMemberlist
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.Base_url_api_Retrofit.addMembersResponse
 import com.seoul.where42android.R
-import com.seoul.where42android.UserSettings
 import com.seoul.where42android.databinding.ActivitySearchPageBinding
 import com.seoul.where42android.fragment.MainSearchFragment
 import retrofit2.Call

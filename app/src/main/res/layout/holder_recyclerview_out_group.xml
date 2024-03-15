@@ -38,6 +38,51 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+<!--        퇴근 안 함 사람 리스트-->
+        <TextView
+            android:id="@+id/numerator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:textColor="#132743"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/group_font"
+            app:layout_constraintStart_toEndOf="@id/text_view"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingStart="6dp"
+            android:paddingBottom="4dp"
+            android:paddingTop="6dp"
+            />
+
+        <TextView
+            android:id="@+id/slash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            android:textColor="#132743"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/group_font"
+            app:layout_constraintStart_toEndOf="@id/numerator"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="4dp"
+            android:paddingTop="6dp"
+            />
+
+        <TextView
+            android:id="@+id/denominator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:textColor="#132743"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/group_font"
+            app:layout_constraintStart_toEndOf="@id/slash"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="4dp"
+            android:paddingTop="6dp"
+            />
+
 <!--        app:layout_constraintBottom_toTopOf="@id/view_line"-->
             <LinearLayout
                 android:layout_width="60dp"

@@ -10,33 +10,21 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.CookieManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.seoul.where42android.Base_url_api_Retrofit.GroupChangeName
-import com.seoul.where42android.Base_url_api_Retrofit.GroupNameRequest
-import com.seoul.where42android.Base_url_api_Retrofit.GroupNameResponse
 import com.seoul.where42android.Base_url_api_Retrofit.JoinAPI
-import com.seoul.where42android.Base_url_api_Retrofit.JoinResponse
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.Base_url_api_Retrofit.reissueAPI
 import com.seoul.where42android.R
-import com.seoul.where42android.UserSettings
+import com.seoul.where42android.main.UserSettings
 import com.seoul.where42android.main.MainAddGroupDetailList
 import com.seoul.where42android.main.MainDeleteGroupDetailList
-import com.seoul.where42android.profile_list
+import com.seoul.where42android.model.profile_list
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.create
 import java.io.IOException
 
 class ProfileDialog (private val context: Context) {

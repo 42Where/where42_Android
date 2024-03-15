@@ -1,10 +1,7 @@
 package com.seoul.where42android.LiveData
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import android.view.View
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,19 +10,13 @@ import com.seoul.where42android.Base_url_api_Retrofit.CommentChangeMember
 import com.seoul.where42android.Base_url_api_Retrofit.Member
 import com.seoul.where42android.Base_url_api_Retrofit.MemberAPI
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
-import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection_data
 import com.seoul.where42android.Base_url_api_Retrofit.UpdateCommentRequest
 import com.seoul.where42android.Base_url_api_Retrofit.locationCustomMemberRequest
 import com.seoul.where42android.Base_url_api_Retrofit.locationCustomMemberResponse
 import com.seoul.where42android.Base_url_api_Retrofit.member_custom_location
 import com.seoul.where42android.Base_url_api_Retrofit.reissueAPI
-import com.seoul.where42android.MainActivity
-import com.seoul.where42android.UserSettings
-import com.seoul.where42android.WebView.CustomWebViewClient
-import com.seoul.where42android.main.MainPageActivity
+import com.seoul.where42android.main.UserSettings
 import com.seoul.where42android.main.friendListObject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,80 +45,6 @@ class ProfileList private constructor(): ViewModel() {
             }
         }
     }
-
-
-
-
-//    fun getMemberData(intraId: Int, token: String)
-//    {
-//        retrofitAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
-//        val call = retrofitAPI.getMember(intraId)
-//
-//        call.enqueue(object : Callback<Member> {
-//            override fun onResponse(
-//                call: Call<Member>,
-//                response: Response<Member>
-//            ) {
-////                Log.e("check2", "res Suc ${response}")
-////                Log.e("check2", "res Suc body ${response.body()}")
-//                Log.e("check2", "res Suc $response")
-//                Log.e("check2", "res Suc code ${response.code()}")
-//                Log.e("check2", "res Suc message ${response.message()}")
-////                val bodyString = response.body()?.string()
-////                Log.e("check2", "res Suc body $bodyString")
-//
-//                val res = response.body()
-//
-//                Log.e("check2", "res Suc ${res}")
-//                if (response.isSuccessful) {
-//                    val member: Member? = res
-//                    Log.e("check2", "member Suc ${member}")
-//                    member?.let {
-//                        profile.value = it
-//                        Log.e("check2", "Suc ${response.code()}")
-//                        Log.e("check2", "Suc ${token}")
-//                    } ?: run {
-//                        profile.value = Member(
-//                            intraId = -1,
-//                            intraName = "",
-//                            grade = "",
-//                            image = "",
-//                            comment = "",
-//                            inCluster = false,
-//                            agree = false,
-//                            defaultGroupId = -1,
-//                            location = ""
-//                        )
-//                        Log.d("check2", "run ${profile.value}")
-//                        Log.e("check2", "run ${token}")
-//                    }
-//                }
-//                else {
-//                    when (response.code()) {
-//                        401 -> {
-//                            //여기는 토큰이 만료되었다는 거임
-//                            profile.value = null
-//                            Log.d("check2", "401, ${response.headers()}, ${response}")
-//                            Log.e("check2", "401 ${token}")
-//                            //원래는 여기 reissue가 와야함.
-//
-//                        }
-//                        else -> {
-//                            // 기본적으로 어떻게 처리할지 작성
-//                        }
-//                    }
-////                    profile.value = null
-////                    Log.d("ProfileList", "error1")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<Member>, t: Throwable) {
-//                profile.value = null // Setting null in case of network failure or exceptions
-//                Log.d("ProfileList", "error : ${t.message}")
-//            }
-//
-//        })
-//    }
 
     fun getMemberData(intraId: Int, token : String, context:Context) : Boolean{
         val retrofitAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)

@@ -88,17 +88,11 @@ class InRecyclerViewAdapter(
                         Glide.with(binding.root.context)
                             .load(item.emoji)
                             .placeholder(R.drawable.placeholder)
-                            .error(R.drawable.placeholder)
+//                            .error(R.drawable.placeholder)
+                            .error(R.drawable.nointraimage)
                             .skipMemoryCache(true)
                             .into(binding.emoji)
                     }
-                // 이미지 로드
-//                Glide.with(root.context)
-//                    .load(item.emoji)
-//                    .placeholder(R.drawable.placeholder)
-//                    .error(R.drawable.placeholder)
-//                    .skipMemoryCache(true)
-//                    .into(emoji)
 
                 // TextView의 내용이 변경될 때마다 배경의 크기를 조절
                 location.post {
@@ -107,61 +101,6 @@ class InRecyclerViewAdapter(
                     location.setPadding(leftPadding, 0, rightPadding, 0)
                     adjustBackgroundSizeWithPadding(location, leftPadding, rightPadding)
                 }
-//                GlobalScope.launch(Dispatchers.IO) {
-//                    withContext(Dispatchers.Main) {
-//                            if (binding.location.text != "퇴근")
-//                            {
-//                                // UI 변경 작업
-//                                val leftPadding = 20 // 왼쪽 여백 값
-//                                val rightPadding = 20 // 오른쪽 여백 값
-//                                binding.location.setPadding(leftPadding, 0, rightPadding, 0)
-//                                adjustBackgroundSizeWithPadding(
-//                                    binding.location,
-//                                    leftPadding,
-//                                    rightPadding
-//                                )
-//
-//                                val color = Color.parseColor("#132743")
-//                                val gradientDrawable = GradientDrawable()
-//                                gradientDrawable.setColor(color)
-//                                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-//                                // 배경을 설정
-//                                binding.location.background = gradientDrawable
-//                            }
-//                            else
-//                            {
-//                                // UI 변경 작업
-//                                val leftPadding = 20 // 왼쪽 여백 값
-//                                val rightPadding = 20 // 오른쪽 여백 값
-//                                binding.location.setPadding(leftPadding, 0, rightPadding, 0)
-//                                adjustBackgroundSizeWithPadding(
-//                                    binding.location,
-//                                    leftPadding,
-//                                    rightPadding
-//                                )
-//                                val color = Color.parseColor("#132743")
-//                                val gradientDrawable = GradientDrawable()
-//                                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-//                                val strokeWidth = 2 // 테두리의 두께 설정
-//                                val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
-//                                gradientDrawable.setStroke(strokeWidth, strokeColor)
-//
-//                                // 배경을 설정
-//                                binding.location.background = gradientDrawable
-//                                binding.location.setTextColor(color)
-//                            }
-//                        }
-//                    }
-//                    binding.root.post{
-//                        Glide.with(binding.root.context)
-//                            .load(item.emoji)
-//                            .placeholder(R.drawable.placeholder)
-//                            .error(R.drawable.placeholder)
-//                            .skipMemoryCache(true)
-//                            .into(binding.emoji)
-//                        val color = Color.parseColor("#132743")
-//
-//                    }
                 }
                 binding.model = item
             }
@@ -191,7 +130,8 @@ class InRecyclerViewAdapter(
         Glide.with(context)
             .load(item.emoji) // item.emoji에는 이미지 URL이나 경로가 있어야 합니다.
             .placeholder(R.drawable.placeholder) // 로딩 중에 표시할 이미지
-            .error(R.drawable.placeholder) // 이미지 로드 실패 시 표시할 이미지
+//            .error(R.drawable.placeholder) // 이미지 로드 실패 시 표시할 이미지
+            .error(R.drawable.nointraimage)
             .into(emojiImageView) // CircleImageView에 이미지를 설정합니다.
 
         intraIdTextView.text = item.intra_name
@@ -259,5 +199,15 @@ class InRecyclerViewAdapter(
             }
         }
     }
+
+//    fun countNonRetiredLocations(): Int {
+//        var count = 0 // 퇴근이 아닌 위치에 대한 카운터 변수 초기화
+//        for (item in itemList) {
+//            if (item.location != "퇴근") { // 위치가 "퇴근"이 아닌 경우
+//                count++ // 카운터 증가
+//            }
+//        }
+//        return count // 카운터 반환
+//    }
 
 

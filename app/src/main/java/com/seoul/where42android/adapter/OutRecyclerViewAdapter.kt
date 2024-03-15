@@ -1,19 +1,16 @@
 package com.seoul.where42android.adapter
 
 import SharedViewModel_GroupsMembersList
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,10 +29,6 @@ object ToggleStatManager {
     fun getToggleStat(key: String): Boolean? {
         return togglestat[key]
     }
-
-    fun clearToggleStat() {
-        togglestat.clear()
-    }
 }
 
 //context: 어댑터를 생성할 때 전달되는 컨텍스트(액티비티, 프래그먼트 등)
@@ -49,7 +42,6 @@ class OutRecyclerViewAdapter (
     // 체크박스 상태를 저장하기 위한 변수
     private var showNonLeaveMembersOnly = false
     private var copyItemList: MutableList<RecyclerOutViewModel> = mutableListOf()
-    private var togglestat: MutableMap<String, Boolean> = mutableMapOf()
 
     init {
         // itemList의 복사본을 생성하여 copyItemList에 저장
@@ -102,6 +94,12 @@ class OutRecyclerViewAdapter (
             groupDialog.showGroupDialog(item.title, item.groupId) { success ->
             }
         }
+
+//        var item_size = item.innerList.size
+//        holder.binding.denominator.text = item_size.toString()
+//        holder.binding.numerator.text = item.comeCluster.toString()
+//        Log.e("itemcount", "${item.comeCluster.toString()}")
+
 //        // CheckBox 상태에 따라 필터링된 데이터를 업데이트합니다.
 //        if (showNonLeaveMembersOnly != holder.showNonLeaveMembersOnly) {
 //            holder.showNonLeaveMembersOnly = showNonLeaveMembersOnly
@@ -195,6 +193,14 @@ class OutRecyclerViewAdapter (
         }
         fun bind(item: RecyclerOutViewModel) {
             binding.model = item
+
+            val item_size = item.innerList.size
+
+            binding.denominator.text = item_size.toString()
+            binding.numerator.text = item.comeCluster.toString()
+//            var item_size = item.innerList.size
+//
+//            binding.denominator.text = item_size.toString()
 //            Log.d("DiffUtil", "here3")
 
 //            Log.d("boolean_check", " showNonLeaveMembersOnly : ${showNonLeaveMembersOnly}")

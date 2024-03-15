@@ -4,11 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.seoul.where42android.Base_url_api_Retrofit.AddMembersRequest
-import com.seoul.where42android.Base_url_api_Retrofit.CommentChangeMember
 import com.seoul.where42android.Base_url_api_Retrofit.Member
 import com.seoul.where42android.Base_url_api_Retrofit.NewGroupRequest
-import com.seoul.where42android.Base_url_api_Retrofit.NewGroupResponses
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.Base_url_api_Retrofit.SearchApiService
 import com.seoul.where42android.Base_url_api_Retrofit.UpdateCommentRequest
@@ -17,11 +14,8 @@ import com.seoul.where42android.Base_url_api_Retrofit.locationCustomMemberReques
 import com.seoul.where42android.Base_url_api_Retrofit.searchMemberResponse
 import com.seoul.where42android.LiveData.GroupsMembersList
 import com.seoul.where42android.LiveData.ProfileList
-import com.seoul.where42android.UserSettings
+import com.seoul.where42android.main.UserSettings
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SharedViewModel_GroupsMembersList : ViewModel() {
 //    private val viewModel = GroupsMembersList() // 공유할 ViewModel 인스턴스

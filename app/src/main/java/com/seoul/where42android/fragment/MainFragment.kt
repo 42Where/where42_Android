@@ -88,6 +88,7 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
                 Log.d("boolean_check", " checkBox?.isChecked  : ${checkBox?.isChecked }")
                 val itemList = mutableListOf<RecyclerOutViewModel>()
                 groupList.forEach { groupDetail ->
+                    var count = 0
                     val innerItemList = mutableListOf<RecyclerInViewModel>()
                     groupDetail.members.forEach { intraId ->
                         val recyclerInViewModel = RecyclerInViewModel(
@@ -98,6 +99,10 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
                             included_group = groupDetail.groupId ?: -1,
                             intra_id = intraId.intraId ?: -1,
                         )
+                        if (recyclerInViewModel.location != "퇴근")
+                        {
+                            count++
+                        }
                         Log.d("groupId", "id : ${groupDetail.groupId} location :  ${intraId.location}")
                         innerItemList.add(recyclerInViewModel)
                     }
@@ -105,7 +110,8 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
                         title = groupDetail.groupName ?: "",
                         innerItemList,
                         groupId = groupDetail.groupId ?: 0,
-                        viewgroup = groupDetail.toggle
+                        viewgroup = groupDetail.toggle,
+                        comeCluster = count
                     )
                     Log.d("title_check", "title_check : ${recyclerOutViewModel.title}")
                     itemList.add(recyclerOutViewModel)

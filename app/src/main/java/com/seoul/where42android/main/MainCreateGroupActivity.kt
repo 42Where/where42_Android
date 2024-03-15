@@ -1,8 +1,7 @@
-package com.seoul.where42android
+package com.seoul.where42android.main
 
 
 import SharedViewModel_GroupsMembersList
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -11,21 +10,18 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.seoul.where42android.Base_url_api_Retrofit.AddMembersRequest
 import com.seoul.where42android.Base_url_api_Retrofit.Deafult_friendGroup_memberlist
-import com.seoul.where42android.Base_url_api_Retrofit.GroupAddMemberlist
 import com.seoul.where42android.Base_url_api_Retrofit.NewGroupRequest
 import com.seoul.where42android.adapter.RecyclerViewAdapter_defaultList
 
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
-import com.seoul.where42android.Base_url_api_Retrofit.addMembersResponse
 import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
-import com.seoul.where42android.main.MainPageActivity
+import com.seoul.where42android.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CreateGroupActivity : AppCompatActivity() {
+class MainCreateGroupActivity : AppCompatActivity() {
 
     private lateinit var sharedViewModel: SharedViewModel_GroupsMembersList
 //    private val retrofitAPI = RetrofitConnection.getInstance().create(MemberallListService::class.java)

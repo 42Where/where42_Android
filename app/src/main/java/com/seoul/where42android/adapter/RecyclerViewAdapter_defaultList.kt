@@ -71,7 +71,8 @@ class RecyclerViewAdapter_defaultList(
             Glide.with(context)
                 .load(member.image) // Assuming 'member.image' is the URL or path to the image
                 .placeholder(R.drawable.placeholder) // Placeholder image while loading
-                .error(R.drawable.placeholder) // Error image if Glide fails to load
+//                .error(R.drawable.placeholder) // Error image if Glide fails to load
+                .error(R.drawable.nointraimage)
                 .into(textViewName)
 
 //            textViewGrade.text = member.memberIntraName

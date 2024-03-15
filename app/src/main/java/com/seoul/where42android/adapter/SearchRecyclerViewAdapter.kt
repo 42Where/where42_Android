@@ -1,26 +1,15 @@
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageButton
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.seoul.where42android.model.RecyclerOutViewModel
 import com.seoul.where42android.R
-import com.seoul.where42android.UserSettings
-import com.seoul.where42android.adapter.InRecyclerViewAdapter
 import com.seoul.where42android.databinding.ActivityCreateAddFriendBinding
-import com.seoul.where42android.databinding.ActivityMainSearchFragmentBinding
-import com.seoul.where42android.databinding.HolderRecyclerviewInMeberListBinding
 import com.seoul.where42android.main.friendListObject
 import com.seoul.where42android.main.intraNameObject
 import com.seoul.where42android.model.SearchRecyclerInViewModel
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -60,20 +49,21 @@ class SearchRecyclerViewAdapter(private val context: Context,
         RecyclerView.ViewHolder(binding.root)
     {
         fun bind(item: SearchRecyclerInViewModel) {
-            GlobalScope.launch(Dispatchers.IO) {
-                withContext(Dispatchers.Main) {
+//            GlobalScope.launch(Dispatchers.IO) {
+//                withContext(Dispatchers.Main) {
                     Glide.with(binding.root.context)
                         .load(item.emoji)
                         .placeholder(R.drawable.placeholder)
-                        .error(R.drawable.placeholder)
+//                        .error(R.drawable.placeholder)
+                        .error(R.drawable.nointraimage)
                         .skipMemoryCache(true)
                         .into(binding.profilePhoto)
                     val color = Color.parseColor("#132743")
                     binding.intraId.text = item.intra_name
 //                    binding.Comment.text = item.comment
 //                    binding.locationInfo.text = item.location
-                }
-            }
+//                }
+//            }
 
             if (friendListObject.searchItem(item.intra_id) != null)
             {

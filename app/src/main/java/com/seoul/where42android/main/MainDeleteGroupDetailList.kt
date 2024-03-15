@@ -18,7 +18,6 @@ import com.seoul.where42android.Base_url_api_Retrofit.Deafult_friendGroup_member
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.seoul.where42android.R
-import com.seoul.where42android.UserSettings
 import com.seoul.where42android.adapter.RecyclerViewAdapter_defaultList
 import retrofit2.Call
 import retrofit2.Callback

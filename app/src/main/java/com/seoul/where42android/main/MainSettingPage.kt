@@ -7,7 +7,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.webkit.CookieManager
 import android.widget.Button
@@ -22,9 +21,7 @@ import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.Base_url_api_Retrofit.UpdateCommentRequest
 import com.seoul.where42android.Base_url_api_Retrofit.locationCustomMemberRequest
 import com.seoul.where42android.Base_url_api_Retrofit.logoutAPI
-import com.seoul.where42android.MainActivity
 import com.seoul.where42android.R
-import com.seoul.where42android.UserSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

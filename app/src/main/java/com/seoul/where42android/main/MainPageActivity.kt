@@ -1,6 +1,5 @@
 package com.seoul.where42android.main
 
-import SharedViewModel_GroupsMembersList
 import SharedViewModel_Profile
 import android.app.Dialog
 import android.content.Intent
@@ -10,6 +9,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.EditText
@@ -18,18 +18,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.seoul.where42android.Base_url_api_Retrofit.Member
-import com.seoul.where42android.Base_url_api_Retrofit.NewGroup
-import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
-import com.seoul.where42android.CreateGroupActivity
 import com.seoul.where42android.R
-import com.seoul.where42android.UserSettings
 import com.seoul.where42android.adapter.adjustBackgroundSizeWithPadding
-
 import com.seoul.where42android.databinding.ActivityMainPageBinding
 import com.seoul.where42android.fragment.MainFragment
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 object friendListObject {
@@ -54,14 +54,8 @@ object friendListObject {
 
 class MainPageActivity : AppCompatActivity() {
 
-//    private val binding by lazy { ActivityMainPageBinding.inflate(layoutInflater) }
     lateinit var binding: ActivityMainPageBinding
     lateinit var profile : Member
-
-//    lateinit var progressBar: ProgressBar
-
-    private lateinit var sharedViewModel: SharedViewModel_GroupsMembersList
-
     private lateinit var sharedViewModel_profile: SharedViewModel_Profile
 
 
@@ -70,16 +64,11 @@ class MainPageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_page)
         binding = ActivityMainPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        progressBar = binding.myProgressBar // 프로그레스 바 찾기
-//        progressBar.visibility = View.VISIBLE
-
         //token 들고오기
-        val intent = intent
-        val receivedToken1 = intent.getStringExtra("TOKEN_KEY")?: "notoken"
-        val receivedIntraId1 = intent.getStringExtra("INTRAID_KEY")?.toInt() ?: -1
-
-        val receivedAgreement = intent.getStringExtra("AGREEMENT_KEY")
+//        val intent = intent
+//        val receivedToken1 = intent.getStringExtra("TOKEN_KEY")?: "notoken"
+//        val receivedIntraId1 = intent.getStringExtra("INTRAID_KEY")?.toInt() ?: -1
+//        val receivedAgreement = intent.getStringExtra("AGREEMENT_KEY")
 
 
         val userSettings = UserSettings.getInstance()
@@ -115,37 +104,52 @@ class MainPageActivity : AppCompatActivity() {
             }
             member?.let {
                 profile = member
-                userSettings.defaultGroup = member.defaultGroupId
-                val intraIdTextView = binding.intraId
-                intraIdTextView.text = member.intraName
-                binding.Comment.text = member.comment
-                binding.locationInfo.text = member.location
+
                 val mainImage = findViewById<CircleImageView>(R.id.profile_photo)
                 val imageUrl = member.image
                 Glide.with(this@MainPageActivity)
                     .load(imageUrl)
                     .apply(RequestOptions().circleCrop())
+                    .error(R.drawable.nointraimage)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) // 디스크 캐시 사용
                     .into(mainImage)
+                userSettings.defaultGroup = member.defaultGroupId
+                val intraIdTextView = binding.intraId
+                intraIdTextView.text = member.intraName
+                binding.Comment.text = member.comment
+                binding.locationInfo.text = member.location
             }
         }
-
 
         binding.root.post {
             val leftPadding = 20 // 왼쪽 여백 값
             val rightPadding = 20 // 오른쪽 여백 값
-            binding.locationInfo.setPadding(leftPadding, 0, rightPadding, 0)
-            adjustBackgroundSizeWithPadding(binding.locationInfo, leftPadding, rightPadding)
 
-
-            val color = Color.parseColor("#132743")
+            if (binding.locationInfo.text != "퇴근")
+            {
+                binding.locationInfo.setPadding(leftPadding, 0, rightPadding, 0)
+                adjustBackgroundSizeWithPadding(binding.locationInfo, leftPadding, rightPadding)
+                val color = Color.parseColor("#132743")
 //                        binding.location.setBackgroundColor(color)
-
-            val gradientDrawable = GradientDrawable()
-            gradientDrawable.setColor(color)
-            gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-
+                val gradientDrawable = GradientDrawable()
+                gradientDrawable.setColor(color)
+                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+                binding.locationInfo.background = gradientDrawable
+            }
+            else
+            {
+                binding.locationInfo.setPadding(leftPadding, 0, rightPadding, 0)
+                adjustBackgroundSizeWithPadding(binding.locationInfo, leftPadding, rightPadding)
+                val color = Color.parseColor("#132743")
+                val gradientDrawable = GradientDrawable()
+                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+                val strokeWidth = 2 // 테두리의 두께 설정
+                val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
+                gradientDrawable.setStroke(strokeWidth, strokeColor)
+                binding.locationInfo.background = gradientDrawable
+                binding.locationInfo.setTextColor(color)
+            }
             // 배경을 설정
-            binding.locationInfo.background = gradientDrawable
         }
 
 
@@ -230,21 +234,17 @@ class MainPageActivity : AppCompatActivity() {
             }
             btnSubmit.setOnClickListener {
                 //새그룹 버튼 확인 누르면 api 요청
-                val retrofitAPI = RetrofitConnection.getInstance(receivedToken).create(NewGroup::class.java)
                 //groupname, intraid 필요
                 val groupname : String = editText.text.toString()
                 //intraid 불러오자
-                val intra_id = profile.intraId
-
                 //JSON 만들어주기
                 //NewGroup @POST("v3/group")
 //                val newGroupRequest = NewGroupRequest(groupname, intra_id)
-
 //                sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
-                val intent = Intent(this@MainPageActivity, CreateGroupActivity::class.java)
+                val intent = Intent(this@MainPageActivity, MainCreateGroupActivity::class.java)
                 intent.putExtra("newgroupNameKey", groupname)
                 intent.putExtra("profileintraIdKey", profile.intraId)
-                intent.putExtra("groupIdKey", profile?.defaultGroupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
+                intent.putExtra("groupIdKey", profile.defaultGroupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
                 startActivity(intent)
                 dialog.dismiss()
             }

@@ -23,9 +23,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.TextView
-import com.seoul.where42android.MainActivity
 import com.seoul.where42android.R
-import com.seoul.where42android.UserSettings
+import com.seoul.where42android.main.UserSettings
 import com.seoul.where42android.dialog.AgreeDialog
 import com.seoul.where42android.main.MainPageActivity
 
