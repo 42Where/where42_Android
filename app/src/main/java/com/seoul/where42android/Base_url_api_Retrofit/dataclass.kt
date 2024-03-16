@@ -222,9 +222,9 @@ class addMembersResponse : ArrayList<addMembersResponse.addMembersResponseItem>(
         val inCluster: Boolean,
         val agree : Boolean,
         var defaultGroupId: Int,
-        val location: String,
+        var location: String,
 
-    )
+        )
 }
 
 //-------------------------------

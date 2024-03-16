@@ -278,6 +278,17 @@ class GroupsMembersList() : ViewModel() {
                                 // 해당하는 그룹에 멤버 추가
                                 Log.e("addedMembers", "addedMembers : ${addedMembers}")
                                 val newMembersList = addedMembers.map { member ->
+                                    if (member.location == null)
+                                    {
+                                        if (member.inCluster == true)
+                                        {
+                                            member.location = "개포 클러스터 내"
+                                        }
+                                        else
+                                        {
+                                            member.location = "퇴근"
+                                        }
+                                    }
                                     groups_memberlist.groups_memberlistItem.Member(
                                         comment = member.comment ?: "",
                                         image = member.image ?: "",
@@ -295,6 +306,7 @@ class GroupsMembersList() : ViewModel() {
                                 val targetGroupMembers =
                                     currentMembers[isGroupIdExists].members.toMutableList()
                                 targetGroupMembers.addAll(newMembersList)
+
                                 currentMembers[isGroupIdExists] =
                                     currentMembers[isGroupIdExists].copy(members = targetGroupMembers)
                             }

@@ -166,6 +166,17 @@ class MainCreateGroupActivity : AppCompatActivity() {
                     friendList?.let { members ->
                         // 받은 멤버 데이터를 friendProfileList에 추가
                         for (member in members) {
+                            if (member.location == null)
+                            {
+                                if (member.inCluster == true)
+                                {
+                                    member.location = "개포 클러스터 내"
+                                }
+                                else
+                                {
+                                    member.location = "퇴근"
+                                }
+                            }
                             friendProfileList.add(member)
                         }
                         updateAdapterData(friendProfileList)

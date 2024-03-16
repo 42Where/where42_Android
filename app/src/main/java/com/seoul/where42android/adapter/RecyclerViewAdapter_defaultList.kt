@@ -79,8 +79,9 @@ class RecyclerViewAdapter_defaultList(
 //            textViewGrade.text = member.memberIntraName
             textViewGrade.text = member.intraName
             textViewComment.text = member.comment
-            textViewLocation.text = member.location ?: "No comment available"
 
+            textViewLocation.text = member.location ?: "No comment available"
+            Log.d("location_Here", "text :  ${textViewLocation.text}")
             if (textViewLocation.text == "퇴근") {
 
                 textViewLocation.setBackgroundResource(R.drawable.location_outcluster)
