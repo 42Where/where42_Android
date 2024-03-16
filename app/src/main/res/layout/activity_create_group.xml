@@ -32,7 +32,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:iconifiedByDefault="false"
-                app:queryHint="input this input"
+                app:queryHint="친구를 검색하세요!"
                 android:background="@drawable/search_back_ground"
                 android:layout_marginRight="@dimen/newgroup_layout_padding_top_bottom"
                 android:layout_marginLeft="@dimen/newgroup_layout_padding_top_bottom"/>

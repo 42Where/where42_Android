@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.webkit.CookieManager
 import android.widget.Button
 import android.widget.EditText
@@ -180,35 +181,6 @@ class MainSettingPage : AppCompatActivity() {
                     sharedViewModel.updateMemberComment(updateRequest, token)
                 }
 
-//                val call = ApiObject.service.updateMemberComment(updateRequest)
-//                call.enqueue(object : Callback<CommentChangeMember> {
-//                    override fun onResponse(
-//                        call: Call<CommentChangeMember>,
-//                        response: Response<CommentChangeMember>
-//                    ) {
-//                        // 성공적으로 응답을 받았을 때 처리
-//                        if (response.isSuccessful) {
-//                            val result = response.body()
-//                            // 처리할 작업 수행
-//                        } else {
-//                            // 응답은 받았지만 실패했을 때 처리
-//                            val errorBody = response.errorBody()?.string()
-//                            val errorMessage = response.message() // HTTP 에러 메시지
-//                            val errorCode = response.code() // HTTP 에러 코드
-//
-//                            val detailedErrorMessage =
-//                                "Failed to update comment. Error code: $errorCode, Message: $errorMessage, Error Body: $errorBody"
-//                            Log.e("Update Error", detailedErrorMessage)
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<CommentChangeMember>, t: Throwable) {
-//                        // 요청 자체가 실패했을 때 처리
-//                        val errorMessage = "코멘트가 설정 되지 않아요! 안 되면 where42 team을 찾아주세요!."
-//                        Toast.makeText(this@MainSettingPage, errorMessage, Toast.LENGTH_SHORT).show()
-//                        Log.e("Network Error", "Retrofit Failure: ${t.message}")
-//                    }
-//                })
                 dialog.dismiss()
 //
 //                val intent = Intent(this@MainSettingPage, MainPageActivity::class.java)
@@ -222,306 +194,327 @@ class MainSettingPage : AppCompatActivity() {
         //수동 자리 설정
         val manualDigitSetting : Button = this.findViewById(R.id.place_setting_button)
         manualDigitSetting.setOnClickListener {
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.activity_editseat_popup_version2)
-            dialog.setCanceledOnTouchOutside(true)
-            dialog.setCancelable(true)
-            dialog.window?.setGravity(Gravity.CENTER)
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            if (userSettings.inCluster == false)
+            {
+                val nochange = Dialog(this)
+                nochange.setContentView(R.layout.activtiy_prohibition_popup)
+                nochange.setCanceledOnTouchOutside(true)
+                nochange.setCancelable(true)
+                nochange.window?.setGravity(Gravity.CENTER)
+                nochange.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-            //1층
-            val onefloor = dialog.findViewById<Button>(R.id.btnFloor1)
-            onefloor.setOnClickListener {
+                // 다이얼로그 안의 버튼 등의 View를 찾아서 이벤트를 처리할 수 있습니다.
+                val submitButton = nochange.findViewById<Button>(R.id.submit)
 
-                val onefloordialog = Dialog(this)
-                onefloordialog.setContentView(R.layout.activity_editseat1floor_popup)
-                onefloordialog.setCanceledOnTouchOutside(true)
-                onefloordialog.setCancelable(true)
-                onefloordialog.window?.setGravity(Gravity.CENTER)
-                onefloordialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                onefloordialog.show()
-
-
-                var openstudio = onefloordialog.findViewById<Button>(R.id.btnFloor1)
-                openstudio.setOnClickListener {
-                    changeSeatApi("1층 42LAB", intraId)
-                    onefloordialog.dismiss()
-                    dialog.dismiss()
+                // 확인 버튼 클릭 시 원하는 동작을 수행합니다.
+                submitButton.setOnClickListener {
+                    nochange.dismiss()
                 }
-
-                var openlounge = onefloordialog.findViewById<Button>(R.id.btnFloor2)
-                openlounge.setOnClickListener {
-                    changeSeatApi("1층 오픈스튜디오", intraId)
-                    onefloordialog.dismiss()
-                    dialog.dismiss()
-                }
-
-                var LAB = onefloordialog.findViewById<Button>(R.id.btnFloor3)
-                LAB.setOnClickListener {
-                    changeSeatApi("1층 오락실", intraId)
-                    onefloordialog.dismiss()
-                    dialog.dismiss()
-                }
-
-//                var youtubestudio = onefloordialog.findViewById<Button>(R.id.btnFloor4)
-//                youtubestudio.setOnClickListener {
-//                    changeSeatApi("1층 유튜브스튜디오", intraId)
-//                    onefloordialog.dismiss()
-//                    dialog.dismiss()
-//                }
-
+                nochange.show()
             }
+            else
+            {
+                val dialog = Dialog(this)
+                dialog.setContentView(R.layout.activity_editseat_popup_version2)
+                dialog.setCanceledOnTouchOutside(true)
+                dialog.setCancelable(true)
+                dialog.window?.setGravity(Gravity.CENTER)
+                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-            //2층
-            val second_fourfloor = dialog.findViewById<Button>(R.id.btnFloor2)
-            second_fourfloor.setOnClickListener {
-                val second_fourfloordialog = Dialog(this)
-//                second_fourfloordialog.setContentView(R.layout.activity_editseat2floor_4floor_popup)
-                second_fourfloordialog.setContentView(R.layout.activity_editseat2floor_popup)
-                second_fourfloordialog.setCanceledOnTouchOutside(true)
-                second_fourfloordialog.setCancelable(true)
-                second_fourfloordialog.window?.setGravity(Gravity.CENTER)
-                second_fourfloordialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                second_fourfloordialog.show()
+                //1층
+                val onefloor = dialog.findViewById<Button>(R.id.btnFloor1)
+                onefloor.setOnClickListener {
 
-                var youtubestudio = second_fourfloordialog.findViewById<Button>(R.id.btnFloor1)
-                youtubestudio.setOnClickListener {
-                    changeSeatApi("2층 1클러스터", intraId)
-                    second_fourfloordialog.dismiss()
-                    dialog.dismiss()
+                        val onefloordialog = Dialog(this)
+                        onefloordialog.setContentView(R.layout.activity_editseat1floor_popup)
+                        onefloordialog.setCanceledOnTouchOutside(true)
+                        onefloordialog.setCancelable(true)
+                        onefloordialog.window?.setGravity(Gravity.CENTER)
+                        onefloordialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        onefloordialog.show()
+
+
+                        var openstudio = onefloordialog.findViewById<Button>(R.id.btnFloor1)
+                        openstudio.setOnClickListener {
+                            changeSeatApi("1층 42LAB", intraId)
+                            onefloordialog.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var openlounge = onefloordialog.findViewById<Button>(R.id.btnFloor2)
+                        openlounge.setOnClickListener {
+                            changeSeatApi("1층 오픈스튜디오", intraId)
+                            onefloordialog.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var LAB = onefloordialog.findViewById<Button>(R.id.btnFloor3)
+                        LAB.setOnClickListener {
+                            changeSeatApi("1층 오락실", intraId)
+                            onefloordialog.dismiss()
+                            dialog.dismiss()
+                        }
+
+        //                var youtubestudio = onefloordialog.findViewById<Button>(R.id.btnFloor4)
+        //                youtubestudio.setOnClickListener {
+        //                    changeSeatApi("1층 유튜브스튜디오", intraId)
+        //                    onefloordialog.dismiss()
+        //                    dialog.dismiss()
+        //                }
+
+                    }
+
+                    //2층
+                    val second_fourfloor = dialog.findViewById<Button>(R.id.btnFloor2)
+                    second_fourfloor.setOnClickListener {
+                        val second_fourfloordialog = Dialog(this)
+        //                second_fourfloordialog.setContentView(R.layout.activity_editseat2floor_4floor_popup)
+                        second_fourfloordialog.setContentView(R.layout.activity_editseat2floor_popup)
+                        second_fourfloordialog.setCanceledOnTouchOutside(true)
+                        second_fourfloordialog.setCancelable(true)
+                        second_fourfloordialog.window?.setGravity(Gravity.CENTER)
+                        second_fourfloordialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        second_fourfloordialog.show()
+
+                        var youtubestudio = second_fourfloordialog.findViewById<Button>(R.id.btnFloor1)
+                        youtubestudio.setOnClickListener {
+                            changeSeatApi("2층 1클러스터", intraId)
+                            second_fourfloordialog.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var oasis = second_fourfloordialog.findViewById<Button>(R.id.btnFloor2)
+                        oasis.setOnClickListener {
+                            changeSeatApi("2층 2클러스터", intraId)
+                            second_fourfloordialog.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var meetingroomA = second_fourfloordialog.findViewById<Button>(R.id.btnFloor3)
+                        meetingroomA.setOnClickListener {
+                            changeSeatApi("2층 회의실", intraId)
+                            second_fourfloordialog.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var meetingroomB = second_fourfloordialog.findViewById<Button>(R.id.btnFloor4)
+                        meetingroomB.setOnClickListener {
+                            changeSeatApi("2층 직선테이블", intraId)
+                            second_fourfloordialog.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var stonetable = second_fourfloordialog.findViewById<Button>(R.id.btnFloor5)
+                        stonetable.setOnClickListener {
+                            changeSeatApi("2층 원형테이블", intraId)
+                            second_fourfloordialog.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var studyplace = second_fourfloordialog.findViewById<Button>(R.id.btnFloor6)
+                        studyplace.setOnClickListener {
+                            changeSeatApi("2층 사각테이블", intraId)
+                            second_fourfloordialog.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var Terrace = second_fourfloordialog.findViewById<Button>(R.id.btnFloor7)
+                        Terrace.setOnClickListener {
+                            changeSeatApi("2층 테라스", intraId)
+                            second_fourfloordialog.dismiss()
+                            dialog.dismiss()
+                        }
+                    }
+
+                    //3층
+                    val third = dialog.findViewById<Button>(R.id.btnFloor3)
+                    third.setOnClickListener {
+
+                        val third = Dialog(this)
+                        third.setContentView(R.layout.activity_editseat3floor_popup)
+                        third.setCanceledOnTouchOutside(true)
+                        third.setCancelable(true)
+                        third.window?.setGravity(Gravity.CENTER)
+                        third.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        third.show()
+
+                        var oasis = third.findViewById<Button>(R.id.btnFloor1)
+                        oasis.setOnClickListener {
+                            changeSeatApi("3층 X1클러스터", intraId)
+                            third.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var rectangleA = third.findViewById<Button>(R.id.btnFloor2)
+                        rectangleA.setOnClickListener {
+                            changeSeatApi("3층 X2클러스터", intraId)
+                            third.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var rectangleB = third.findViewById<Button>(R.id.btnFloor3)
+                        rectangleB.setOnClickListener {
+                            changeSeatApi("3층 반원테이블", intraId)
+                            third.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var centerTable = third.findViewById<Button>(R.id.btnFloor4)
+                        centerTable.setOnClickListener {
+                            changeSeatApi("3층 중앙테이블", intraId)
+                            third.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var straightTable = third.findViewById<Button>(R.id.btnFloor5)
+                        straightTable.setOnClickListener {
+                            changeSeatApi("3층 직선테이블", intraId)
+                            third.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var Terrace = third.findViewById<Button>(R.id.btnFloor6)
+                        Terrace.setOnClickListener {
+                            changeSeatApi("3층 직선테이블", intraId)
+                            third.dismiss()
+                            dialog.dismiss()
+                        }
+                    }
+
+                    //4층
+                    val four = dialog.findViewById<Button>(R.id.btnFloor4)
+                    four.setOnClickListener {
+                        val four = Dialog(this)
+                        four.setContentView(R.layout.activity_editseat4floor_5floor_popup)
+                        four.setCanceledOnTouchOutside(true)
+                        four.setCancelable(true)
+                        four.window?.setGravity(Gravity.CENTER)
+                        four.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        four.show()
+
+
+                        var youtubestudio = four.findViewById<Button>(R.id.btnFloor1)
+                        youtubestudio.setOnClickListener {
+                            changeSeatApi("4층 3클러스터", intraId)
+                            four.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var oasis = four.findViewById<Button>(R.id.btnFloor2)
+                        oasis.setOnClickListener {
+                            changeSeatApi("4층 4클러스터", intraId)
+                            four.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var meetingroomA = four.findViewById<Button>(R.id.btnFloor3)
+                        meetingroomA.setOnClickListener {
+                            changeSeatApi("4층 회의실", intraId)
+                            four.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var meetingroomB = four.findViewById<Button>(R.id.btnFloor4)
+                        meetingroomB.setOnClickListener {
+                            changeSeatApi("4층 원형테이블", intraId)
+                            four.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var stonetable = four.findViewById<Button>(R.id.btnFloor5)
+                        stonetable.setOnClickListener {
+                            changeSeatApi("4층 직선테이블", intraId)
+                            four.dismiss()
+                            dialog.dismiss()
+                        }
+                    }
+
+                    //5층
+                    val five = dialog.findViewById<Button>(R.id.btnFloor5)
+                    five.setOnClickListener {
+                        val five = Dialog(this)
+                        five.setContentView(R.layout.activity_editseat4floor_5floor_popup)
+                        five.setCanceledOnTouchOutside(true)
+                        five.setCancelable(true)
+                        five.window?.setGravity(Gravity.CENTER)
+                        five.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        five.show()
+
+                        var oasis = five.findViewById<Button>(R.id.btnFloor1)
+                        oasis.text = "5클러스터"
+                        oasis.setOnClickListener {
+                            changeSeatApi("5층 5클러스터", intraId)
+                            five.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var chair = five.findViewById<Button>(R.id.btnFloor2)
+                        chair.text = "6클러스터"
+                        chair.setOnClickListener {
+                            changeSeatApi("5층 6클러스터", intraId)
+                            five.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var stonetable = five.findViewById<Button>(R.id.btnFloor3)
+                        stonetable.text = "집현전"
+                        stonetable.setOnClickListener {
+                            changeSeatApi("5층 집현전", intraId)
+                            five.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var studyplace = five.findViewById<Button>(R.id.btnFloor4)
+                        studyplace.text = "원형테이블"
+                        studyplace.setOnClickListener {
+                            changeSeatApi("5층 원형테이블", intraId)
+                            five.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var Terrace = five.findViewById<Button>(R.id.btnFloor5)
+                        Terrace.text = "직선테이블"
+                        Terrace.setOnClickListener {
+                            changeSeatApi("5층 직선테이블", intraId)
+                            five.dismiss()
+                            dialog.dismiss()
+                        }
+                    }
+
+                    //옥상
+                    val rooftop_basement = dialog.findViewById<Button>(R.id.btnFloor6)
+                    rooftop_basement.setOnClickListener {
+                        val rooftop_basement = Dialog(this)
+                        rooftop_basement.setContentView(R.layout.activity_editseatrooftop_popup)
+                        rooftop_basement.setCanceledOnTouchOutside(true)
+                        rooftop_basement.setCancelable(true)
+                        rooftop_basement.window?.setGravity(Gravity.CENTER)
+                        rooftop_basement.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        rooftop_basement.show()
+
+                        var openstudio = rooftop_basement.findViewById<Button>(R.id.btnFloor1)
+                        openstudio.setOnClickListener {
+                            changeSeatApi("옥상 탁구대", intraId)
+                            rooftop_basement.dismiss()
+                            dialog.dismiss()
+                        }
+
+                        var pingPong = rooftop_basement.findViewById<Button>(R.id.btnFloor2)
+                        pingPong.setOnClickListener {
+                            changeSeatApi("옥상 야외정원", intraId)
+                            rooftop_basement.dismiss()
+                            dialog.dismiss()
+                        }
                 }
 
-                var oasis = second_fourfloordialog.findViewById<Button>(R.id.btnFloor2)
-                oasis.setOnClickListener {
-                    changeSeatApi("2층 2클러스터", intraId)
-                    second_fourfloordialog.dismiss()
-                    dialog.dismiss()
+                //지하
+                val basement = dialog.findViewById<Button>(R.id.btnFloor7)
+                basement.setOnClickListener {
+                        changeSeatApi("지하", intraId)
+                        dialog.dismiss()
                 }
-
-                var meetingroomA = second_fourfloordialog.findViewById<Button>(R.id.btnFloor3)
-                meetingroomA.setOnClickListener {
-                    changeSeatApi("2층 회의실", intraId)
-                    second_fourfloordialog.dismiss()
-                    dialog.dismiss()
-                }
-
-                var meetingroomB = second_fourfloordialog.findViewById<Button>(R.id.btnFloor4)
-                meetingroomB.setOnClickListener {
-                    changeSeatApi("2층 직선테이블", intraId)
-                    second_fourfloordialog.dismiss()
-                    dialog.dismiss()
-                }
-
-                var stonetable = second_fourfloordialog.findViewById<Button>(R.id.btnFloor5)
-                stonetable.setOnClickListener {
-                    changeSeatApi("2층 원형테이블", intraId)
-                    second_fourfloordialog.dismiss()
-                    dialog.dismiss()
-                }
-
-                var studyplace = second_fourfloordialog.findViewById<Button>(R.id.btnFloor6)
-                studyplace.setOnClickListener {
-                    changeSeatApi("2층 사각테이블", intraId)
-                    second_fourfloordialog.dismiss()
-                    dialog.dismiss()
-                }
-
-                var Terrace = second_fourfloordialog.findViewById<Button>(R.id.btnFloor7)
-                Terrace.setOnClickListener {
-                    changeSeatApi("2층 테라스", intraId)
-                    second_fourfloordialog.dismiss()
-                    dialog.dismiss()
-                }
+                dialog.show()
             }
-
-            //3층
-            val third = dialog.findViewById<Button>(R.id.btnFloor3)
-            third.setOnClickListener {
-
-                val third = Dialog(this)
-                third.setContentView(R.layout.activity_editseat3floor_popup)
-                third.setCanceledOnTouchOutside(true)
-                third.setCancelable(true)
-                third.window?.setGravity(Gravity.CENTER)
-                third.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                third.show()
-
-                var oasis = third.findViewById<Button>(R.id.btnFloor1)
-                oasis.setOnClickListener {
-                    changeSeatApi("3층 X1클러스터", intraId)
-                    third.dismiss()
-                    dialog.dismiss()
-                }
-
-                var rectangleA = third.findViewById<Button>(R.id.btnFloor2)
-                rectangleA.setOnClickListener {
-                    changeSeatApi("3층 X2클러스터", intraId)
-                    third.dismiss()
-                    dialog.dismiss()
-                }
-
-                var rectangleB = third.findViewById<Button>(R.id.btnFloor3)
-                rectangleB.setOnClickListener {
-                    changeSeatApi("3층 반원테이블", intraId)
-                    third.dismiss()
-                    dialog.dismiss()
-                }
-
-                var centerTable = third.findViewById<Button>(R.id.btnFloor4)
-                centerTable.setOnClickListener {
-                    changeSeatApi("3층 중앙테이블", intraId)
-                    third.dismiss()
-                    dialog.dismiss()
-                }
-
-                var straightTable = third.findViewById<Button>(R.id.btnFloor5)
-                straightTable.setOnClickListener {
-                    changeSeatApi("3층 직선테이블", intraId)
-                    third.dismiss()
-                    dialog.dismiss()
-                }
-
-                var Terrace = third.findViewById<Button>(R.id.btnFloor6)
-                Terrace.setOnClickListener {
-                    changeSeatApi("3층 직선테이블", intraId)
-                    third.dismiss()
-                    dialog.dismiss()
-                }
-            }
-
-            //4층
-            val four = dialog.findViewById<Button>(R.id.btnFloor4)
-            four.setOnClickListener {
-                val four = Dialog(this)
-                four.setContentView(R.layout.activity_editseat4floor_5floor_popup)
-                four.setCanceledOnTouchOutside(true)
-                four.setCancelable(true)
-                four.window?.setGravity(Gravity.CENTER)
-                four.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                four.show()
-
-
-                var youtubestudio = four.findViewById<Button>(R.id.btnFloor1)
-                youtubestudio.setOnClickListener {
-                    changeSeatApi("4층 3클러스터", intraId)
-                    four.dismiss()
-                    dialog.dismiss()
-                }
-
-                var oasis = four.findViewById<Button>(R.id.btnFloor2)
-                oasis.setOnClickListener {
-                    changeSeatApi("4층 4클러스터", intraId)
-                    four.dismiss()
-                    dialog.dismiss()
-                }
-
-                var meetingroomA = four.findViewById<Button>(R.id.btnFloor3)
-                meetingroomA.setOnClickListener {
-                    changeSeatApi("4층 회의실", intraId)
-                    four.dismiss()
-                    dialog.dismiss()
-                }
-
-                var meetingroomB = four.findViewById<Button>(R.id.btnFloor4)
-                meetingroomB.setOnClickListener {
-                    changeSeatApi("4층 원형테이블", intraId)
-                    four.dismiss()
-                    dialog.dismiss()
-                }
-
-                var stonetable = four.findViewById<Button>(R.id.btnFloor5)
-                stonetable.setOnClickListener {
-                    changeSeatApi("4층 직선테이블", intraId)
-                    four.dismiss()
-                    dialog.dismiss()
-                }
-            }
-
-            //5층
-            val five = dialog.findViewById<Button>(R.id.btnFloor5)
-            five.setOnClickListener {
-                val five = Dialog(this)
-                five.setContentView(R.layout.activity_editseat4floor_5floor_popup)
-                five.setCanceledOnTouchOutside(true)
-                five.setCancelable(true)
-                five.window?.setGravity(Gravity.CENTER)
-                five.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                five.show()
-
-                var oasis = five.findViewById<Button>(R.id.btnFloor1)
-                oasis.text = "5클러스터"
-                oasis.setOnClickListener {
-                    changeSeatApi("5층 5클러스터", intraId)
-                    five.dismiss()
-                    dialog.dismiss()
-                }
-
-                var chair = five.findViewById<Button>(R.id.btnFloor2)
-                chair.text = "6클러스터"
-                chair.setOnClickListener {
-                    changeSeatApi("5층 6클러스터", intraId)
-                    five.dismiss()
-                    dialog.dismiss()
-                }
-
-                var stonetable = five.findViewById<Button>(R.id.btnFloor3)
-                stonetable.text = "집현전"
-                stonetable.setOnClickListener {
-                    changeSeatApi("5층 집현전", intraId)
-                    five.dismiss()
-                    dialog.dismiss()
-                }
-
-                var studyplace = five.findViewById<Button>(R.id.btnFloor4)
-                studyplace.text = "원형테이블"
-                studyplace.setOnClickListener {
-                    changeSeatApi("5층 원형테이블", intraId)
-                    five.dismiss()
-                    dialog.dismiss()
-                }
-
-                var Terrace = five.findViewById<Button>(R.id.btnFloor5)
-                Terrace.text = "직선테이블"
-                Terrace.setOnClickListener {
-                    changeSeatApi("5층 직선테이블", intraId)
-                    five.dismiss()
-                    dialog.dismiss()
-                }
-            }
-
-            //옥상
-            val rooftop_basement = dialog.findViewById<Button>(R.id.btnFloor6)
-            rooftop_basement.setOnClickListener {
-                val rooftop_basement = Dialog(this)
-                rooftop_basement.setContentView(R.layout.activity_editseatrooftop_popup)
-                rooftop_basement.setCanceledOnTouchOutside(true)
-                rooftop_basement.setCancelable(true)
-                rooftop_basement.window?.setGravity(Gravity.CENTER)
-                rooftop_basement.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                rooftop_basement.show()
-
-                var openstudio = rooftop_basement.findViewById<Button>(R.id.btnFloor1)
-                openstudio.setOnClickListener {
-                    changeSeatApi("옥상 탁구대", intraId)
-                    rooftop_basement.dismiss()
-                    dialog.dismiss()
-                }
-
-                var pingPong = rooftop_basement.findViewById<Button>(R.id.btnFloor2)
-                pingPong.setOnClickListener {
-                    changeSeatApi("옥상 야외정원", intraId)
-                    rooftop_basement.dismiss()
-                    dialog.dismiss()
-                }
-            }
-
-            //지하
-            val basement = dialog.findViewById<Button>(R.id.btnFloor7)
-            basement.setOnClickListener {
-                    changeSeatApi("지하", intraId)
-                    dialog.dismiss()
-            }
-            dialog.show()
         }
 
 

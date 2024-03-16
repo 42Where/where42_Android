@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -118,39 +119,59 @@ class MainPageActivity : AppCompatActivity() {
                 intraIdTextView.text = member.intraName
                 binding.Comment.text = member.comment
                 binding.locationInfo.text = member.location
+                Log.d("checkIocation", "lo : ${binding.locationInfo.text}")
+                if (binding.locationInfo.text == "퇴근") {
+                    Log.d("checkIocation", "lo2 : ${binding.locationInfo.text}")
+                    binding.locationInfo.setBackgroundResource(R.drawable.location_outcluster)
+                    val strokeColor = Color.parseColor("#132743")
+//                    binding.locationInfo.setPadding(20, 0, 20, 0)
+                    binding.locationInfo.setTextColor(strokeColor)
+
+                }
+                binding.locationInfo.setPadding(20, 0, 20, 0)
             }
         }
 
-        binding.root.post {
-            val leftPadding = 20 // 왼쪽 여백 값
-            val rightPadding = 20 // 오른쪽 여백 값
-
-            if (binding.locationInfo.text != "퇴근")
-            {
-                binding.locationInfo.setPadding(leftPadding, 0, rightPadding, 0)
-                adjustBackgroundSizeWithPadding(binding.locationInfo, leftPadding, rightPadding)
-                val color = Color.parseColor("#132743")
-//                        binding.location.setBackgroundColor(color)
-                val gradientDrawable = GradientDrawable()
-                gradientDrawable.setColor(color)
-                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-                binding.locationInfo.background = gradientDrawable
-            }
-            else
-            {
-                binding.locationInfo.setPadding(leftPadding, 0, rightPadding, 0)
-                adjustBackgroundSizeWithPadding(binding.locationInfo, leftPadding, rightPadding)
-                val color = Color.parseColor("#132743")
-                val gradientDrawable = GradientDrawable()
-                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-                val strokeWidth = 2 // 테두리의 두께 설정
-                val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
-                gradientDrawable.setStroke(strokeWidth, strokeColor)
-                binding.locationInfo.background = gradientDrawable
-                binding.locationInfo.setTextColor(color)
-            }
+//        binding.root.post {
+//            val leftPadding = 20 // 왼쪽 여백 값
+//            val rightPadding = 20 // 오른쪽 여백 값
+//
+//            if (binding.locationInfo.text != "퇴근")
+//            {
+//                binding.locationInfo.setPadding(leftPadding, 0, rightPadding, 0)
+//                adjustBackgroundSizeWithPadding(binding.locationInfo, leftPadding, rightPadding)
+//                val color = Color.parseColor("#132743")
+////                        binding.location.setBackgroundColor(color)
+//                val gradientDrawable = GradientDrawable()
+//                gradientDrawable.setColor(color)
+//                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+//                binding.locationInfo.background = gradientDrawable
+//            }
+//            else
+//            {
+//                binding.locationInfo.setPadding(leftPadding, 0, rightPadding, 0)
+//                adjustBackgroundSizeWithPadding(binding.locationInfo, leftPadding, rightPadding)
+//                val color = Color.parseColor("#132743")
+//                val gradientDrawable = GradientDrawable()
+//                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+//                val strokeWidth = 2 // 테두리의 두께 설정
+//                val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
+//                gradientDrawable.setStroke(strokeWidth, strokeColor)
+//                binding.locationInfo.background = gradientDrawable
+//                binding.locationInfo.setTextColor(color)
+//            }
             // 배경을 설정
-        }
+//        }
+
+        val locationInfo = binding.locationInfo
+//        if (binding.locationInfo.text == "퇴근") {
+//            Log.d("checkIocation", "lo2 : ${binding.locationInfo.text}")
+//            locationInfo.setBackgroundResource(R.drawable.location_outcluster)
+//            val strokeColor = Color.parseColor("#132743")
+//            locationInfo.setTextColor(strokeColor)
+//
+//        }
+
 
 
         //1. header의 환경 설정 버튼을 눌렀을 때 -> SettingPage.kt로 가게 하기
@@ -198,8 +219,21 @@ class MainPageActivity : AppCompatActivity() {
                     val intent = Intent(this, MainPageActivity::class.java)
                     startActivity(intent)
                     finish()
-                } else
-                    Toast.makeText(this, "이미 로그인 페이지에 있습니다!", Toast.LENGTH_SHORT).show()
+                } else {
+//                    Toast.makeText(this, "이미 로그인 페이지에 있습니다!", Toast.LENGTH_SHORT).show()
+                    val nochange = Dialog(this)
+                    nochange.setContentView(R.layout.activity_prohibition_smalltext_popup)
+                    nochange.setCanceledOnTouchOutside(true)
+                    nochange.setCancelable(true)
+                    nochange.window?.setGravity(Gravity.CENTER)
+                    nochange.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    val submitButton = nochange.findViewById<Button>(R.id.submit)
+                    // 확인 버튼 클릭 시 원하는 동작을 수행합니다.
+                    submitButton.setOnClickListener {
+                        nochange.dismiss()
+                    }
+                    nochange.show()
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()

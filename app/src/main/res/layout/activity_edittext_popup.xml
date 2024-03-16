@@ -33,7 +33,7 @@
         android:textSize="@dimen/newgroup_textsize"
         android:fontFamily="@font/gmarketsans_bold"
         android:gravity="left|center"
-        android:hint="힌트"
+        android:hint="그룹 이름을 넣어주세요."
         android:paddingStart="@dimen/edittext_layout_padding"
         android:paddingEnd="@dimen/edittext_layout_padding"
         android:background="@drawable/text_edit_box"/>

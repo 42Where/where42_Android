@@ -4,6 +4,7 @@ package com.seoul.where42android.adapter
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,43 +80,54 @@ class RecyclerViewAdapter_defaultList(
             textViewGrade.text = member.intraName
             textViewComment.text = member.comment
             textViewLocation.text = member.location ?: "No comment available"
-            val leftPadding = 20 // 왼쪽 여백 값
-            val rightPadding = 20 // 오른쪽 여백 값
-            GlobalScope.launch(Dispatchers.Main) {
-                if (textViewLocation.text != "퇴근") {
-                    val leftPadding = 20 // 왼쪽 여백 값
-                    val rightPadding = 20 // 오른쪽 여백 값
-                    textViewLocation.setPadding(leftPadding, 0, rightPadding, 0)
-                    adjustBackgroundSizeWithPadding(textViewLocation, leftPadding, rightPadding)
-                    val color = Color.parseColor("#132743")
-//                        binding.location.setBackgroundColor(color)
 
-                    val gradientDrawable = GradientDrawable()
-                    gradientDrawable.setColor(color)
-                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-                    textViewLocation.background = gradientDrawable
-                }
-                else
-                {
-                    // UI 변경 작업
-                    textViewLocation.setPadding(leftPadding, 0, rightPadding, 0)
-                    adjustBackgroundSizeWithPadding(textViewLocation, leftPadding, rightPadding)
-                    adjustBackgroundSizeWithPadding(
-                        textViewLocation,
-                        leftPadding,
-                        rightPadding
-                    )
-                    val color = Color.parseColor("#132743")
-                    val gradientDrawable = GradientDrawable()
-                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-                    val strokeWidth = 2 // 테두리의 두께 설정
-                    val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
-                    gradientDrawable.setStroke(strokeWidth, strokeColor)
-                    // 배경을 설정
-                    textViewLocation.background = gradientDrawable
-                    textViewLocation.setTextColor(color)
-                }
+            if (textViewLocation.text == "퇴근") {
+
+                textViewLocation.setBackgroundResource(R.drawable.location_outcluster)
+                val strokeColor = Color.parseColor("#132743")
+//                    binding.locationInfo.setPadding(20, 0, 20, 0)
+                textViewLocation.setTextColor(strokeColor)
+
             }
+            textViewLocation.setPadding(20, 0, 20, 0)
+
+//            val leftPadding = 20 // 왼쪽 여백 값
+//            val rightPadding = 20 // 오른쪽 여백 값
+//            GlobalScope.launch(Dispatchers.Main) {
+//                if (textViewLocation.text != "퇴근") {
+//                    val leftPadding = 20 // 왼쪽 여백 값
+//                    val rightPadding = 20 // 오른쪽 여백 값
+//                    textViewLocation.setPadding(leftPadding, 0, rightPadding, 0)
+//                    adjustBackgroundSizeWithPadding(textViewLocation, leftPadding, rightPadding)
+//                    val color = Color.parseColor("#132743")
+////                        binding.location.setBackgroundColor(color)
+//
+//                    val gradientDrawable = GradientDrawable()
+//                    gradientDrawable.setColor(color)
+//                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+//                    textViewLocation.background = gradientDrawable
+//                }
+//                else
+//                {
+//                    // UI 변경 작업
+//                    textViewLocation.setPadding(leftPadding, 0, rightPadding, 0)
+//                    adjustBackgroundSizeWithPadding(textViewLocation, leftPadding, rightPadding)
+//                    adjustBackgroundSizeWithPadding(
+//                        textViewLocation,
+//                        leftPadding,
+//                        rightPadding
+//                    )
+//                    val color = Color.parseColor("#132743")
+//                    val gradientDrawable = GradientDrawable()
+//                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+//                    val strokeWidth = 2 // 테두리의 두께 설정
+//                    val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
+//                    gradientDrawable.setStroke(strokeWidth, strokeColor)
+//                    // 배경을 설정
+//                    textViewLocation.background = gradientDrawable
+//                    textViewLocation.setTextColor(color)
+//                }
+//            }
 
 
             val checkBox: CheckBox = itemView.findViewById(R.id.checkBox) // 체크박스 ID에 맞게 수정

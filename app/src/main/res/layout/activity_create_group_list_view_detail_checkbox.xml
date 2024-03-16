@@ -25,7 +25,7 @@
             android:id="@+id/profile_photo"
             android:layout_width="@dimen/profile_image"
             android:layout_height="@dimen/profile_image"
-            android:src="@drawable/profile_photo_example"
+            android:src="@drawable/nointraimage"
             app:layout_constraintStart_toEndOf="@id/guideline1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +37,7 @@
             android:id="@+id/intra_id"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/intra_ID"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
             android:gravity="bottom"
             android:text="인트라 ID"
             android:fontFamily="@font/gmarketsans_bold"
@@ -51,7 +51,7 @@
         android:layout_height="@dimen/comment"
         android:gravity="center"
         android:text="코멘트코멘트코멘트"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
         android:fontFamily="@font/gmarketsans_medium"
         android:textSize="@dimen/font_small"
         app:layout_constraintTop_toBottomOf="@id/guideline"
@@ -61,7 +61,7 @@
             android:id="@+id/location_info"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/comment"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
             android:background="@drawable/location_shape_another_version"
             android:gravity="center"
             android:clipToOutline="true"
@@ -95,17 +95,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:buttonTint="#132743"
         android:id="@+id/checkBox"/>
-<!--        <CheckBox-->
-<!--            android:layout_width="@dimen/newgroup_layout_padding_top_bottom"-->
-<!--            android:layout_height="@dimen/newgroup_layout_padding_top_bottom"-->
-<!--            android:layout_marginRight="@dimen/edittext_layout_padding"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            android:buttonTint="#132743"-->
-<!--            android:id="@+id/checkBox"/>-->
-
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

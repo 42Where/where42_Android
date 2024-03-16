@@ -28,9 +28,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{model.title}"
-            android:paddingStart="12dp"
-            android:paddingBottom="4dp"
-            android:paddingTop="6dp"
+            android:paddingStart="@dimen/newgroup_image"
+            android:paddingBottom="@dimen/CircleImageView_border"
+            android:paddingTop="@dimen/location_info"
             android:textColor="#132743"
             android:fontFamily="@font/gmarketsans_medium"
             android:textSize="@dimen/group_font"
@@ -50,9 +50,9 @@
             android:textSize="@dimen/group_font"
             app:layout_constraintStart_toEndOf="@id/text_view"
             app:layout_constraintTop_toTopOf="parent"
-            android:paddingStart="6dp"
-            android:paddingBottom="4dp"
-            android:paddingTop="6dp"
+            android:paddingStart="@dimen/location_info"
+            android:paddingBottom="@dimen/Comment"
+            android:paddingTop="@dimen/location_info"
             />
 
         <TextView
@@ -65,8 +65,8 @@
             android:textSize="@dimen/group_font"
             app:layout_constraintStart_toEndOf="@id/numerator"
             app:layout_constraintTop_toTopOf="parent"
-            android:paddingBottom="4dp"
-            android:paddingTop="6dp"
+            android:paddingBottom="@dimen/Comment"
+            android:paddingTop="@dimen/location_info"
             />
 
         <TextView
@@ -79,14 +79,14 @@
             android:textSize="@dimen/group_font"
             app:layout_constraintStart_toEndOf="@id/slash"
             app:layout_constraintTop_toTopOf="parent"
-            android:paddingBottom="4dp"
-            android:paddingTop="6dp"
+            android:paddingBottom="@dimen/Comment"
+            android:paddingTop="@dimen/location_info"
             />
 
 <!--        app:layout_constraintBottom_toTopOf="@id/view_line"-->
             <LinearLayout
-                android:layout_width="60dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/newgroup_button_width"
+                android:layout_height="@dimen/newgroup_button_height"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/view_line"
@@ -96,7 +96,7 @@
                     android:id="@+id/group_edit"
                     android:layout_width="@dimen/option_buttons_w"
                     android:layout_height="@dimen/option_buttons_h"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginEnd="@dimen/newgroup_image"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
                     android:src="@drawable/pencil_icon" />

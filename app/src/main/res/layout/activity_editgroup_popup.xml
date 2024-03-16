@@ -60,40 +60,40 @@
         android:id="@+id/EditName"
         android:layout_width="match_parent"
         android:layout_height="@dimen/group_Button_height"
-        android:paddingStart="36dp"
+        android:paddingStart="@dimen/newgroup_layout_padding_start_end"
         android:background="@drawable/activity_editgroup_button_selector"
         app:layout_constraintTop_toBottomOf="@id/groupname_layout"
         android:text="그룹 이름 수정하기"
         android:textColor="#4A6282"
         android:gravity="center_vertical"
-        android:textSize="20sp"
+        android:textSize="@dimen/create_group_button_textsize"
         android:fontFamily="@font/gmarketsans_medium"/>
 
     <android.widget.Button
         android:id="@+id/Edit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/group_Button_height"
-        android:paddingStart="36dp"
+        android:paddingStart="@dimen/newgroup_layout_padding_start_end"
         android:background="@drawable/activity_editgroup_button_selector"
         app:layout_constraintTop_toBottomOf="@id/EditName"
         app:layout_constraintBottom_toTopOf="@id/Delete"
         android:text="멤버 수정하기"
         android:textColor="#4A6282"
         android:gravity="center_vertical"
-        android:textSize="20sp"
+        android:textSize="@dimen/create_group_button_textsize"
         android:fontFamily="@font/gmarketsans_medium"/>
 
     <android.widget.Button
         android:id="@+id/Delete"
         android:layout_width="match_parent"
         android:layout_height="@dimen/group_Button_height"
-        android:paddingStart="36dp"
+        android:paddingStart="@dimen/newgroup_layout_padding_start_end"
         android:background="@drawable/activity_editgroup_button_selector_delete"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="그룹 삭제하기"
         android:textColor="@color/white"
         android:gravity="center_vertical"
-        android:textSize="20sp"
+        android:textSize="@dimen/create_group_button_textsize"
         android:fontFamily="@font/gmarketsans_medium"/>
 
 <!--    눌렀을 때 색        android:textColor="#B20000"-->

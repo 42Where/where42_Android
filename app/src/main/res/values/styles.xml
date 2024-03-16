@@ -19,6 +19,12 @@
         <item name="searchIcon">@drawable/footer_search_icon</item>
     </style>
 
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- queryHint에 적용할 폰트 설정 -->
+        <item name="android:textSize">16sp</item> <!-- 원하는 폰트 크기로 설정 -->
+        <item name="android:fontFamily">@font/gmarketsans_medium</item> <!-- 원하는 폰트 파일로 설정 -->
+    </style>
+
 
 
 </resources>

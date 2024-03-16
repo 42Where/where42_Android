@@ -64,25 +64,34 @@ class InRecyclerViewAdapter(
                 optionEdit.setOnClickListener {
                     showEditDialog(root.context, item)
                 }
-                if (item.location != "퇴근") {
-                    // 배경을 설정
-                    val color = Color.parseColor("#132743")
-                    val gradientDrawable = GradientDrawable()
-                    gradientDrawable.setColor(color)
-                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-                    location.background = gradientDrawable
-//                    location.setTextColor(color)
-                } else {
-                    // 배경을 설정
-                    val color = Color.parseColor("#132743")
-                    val gradientDrawable = GradientDrawable()
-                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-                    val strokeWidth = 2 // 테두리의 두께 설정
-                    val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
-                    gradientDrawable.setStroke(strokeWidth, strokeColor)
-                    location.background = gradientDrawable
-                    location.setTextColor(color)
+
+                if (item.location == "퇴근") {
+                    location.setBackgroundResource(R.drawable.location_outcluster)
+                    val strokeColor = Color.parseColor("#132743")
+                    location.setTextColor(strokeColor)
+//                    location.setBackgroundColor(strokeColor)
                 }
+
+
+//                if (item.location != "퇴근") {
+//                    // 배경을 설정
+//                    val color = Color.parseColor("#132743")
+//                    val gradientDrawable = GradientDrawable()
+//                    gradientDrawable.setColor(color)
+//                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+//                    location.background = gradientDrawable
+////                    location.setTextColor(color)
+//                } else {
+//                    // 배경을 설정
+//                    val color = Color.parseColor("#132743")
+//                    val gradientDrawable = GradientDrawable()
+//                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
+//                    val strokeWidth = 2 // 테두리의 두께 설정
+//                    val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
+//                    gradientDrawable.setStroke(strokeWidth, strokeColor)
+//                    location.background = gradientDrawable
+//                    location.setTextColor(color)
+//                }
 
                     binding.root.post {
                         Glide.with(binding.root.context)

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="414.75dp"
+    android:layout_width="@dimen/editstatus_layout_width"
+    android:layout_height="@dimen/editseat1floor_height"
     android:background="@drawable/center_popup_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -14,9 +14,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="장소를 선택해주세요"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/profile_popup_layout_height_paddingTop"
         android:textColor="#132743"
-        android:textSize="20sp"
+        android:textSize="@dimen/create_group_button_textsize"
         android:fontFamily="@font/gmarketsans_bold" />
 
 
@@ -28,14 +28,13 @@
         app:layout_constraintGuide_percent="0.53" />
 
 
-
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/list_padding_top_bottom"
         android:gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/activity_profile_popup_height"
         android:layout_height="wrap_content"
         style="@style/RoundedButton"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_medium_change"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
         android:id="@+id/btnFloor1"
@@ -47,13 +46,13 @@
         />
 
     <android.widget.Button
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/list_padding_top_bottom"
         android:id="@+id/btnFloor2"
         android:gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/activity_profile_popup_height"
         android:layout_height="wrap_content"
         style="@style/RoundedButton"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_medium_change"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
         android:text="X2클러스터"
@@ -67,10 +66,10 @@
 
         android:id="@+id/btnFloor3"
         android:gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/activity_profile_popup_height"
         android:layout_height="wrap_content"
         style="@style/RoundedButton"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_medium_change"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
 
@@ -81,13 +80,13 @@
         />
 
     <android.widget.Button
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/list_padding_top_bottom"
         android:id="@+id/btnFloor4"
         android:gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/activity_profile_popup_height"
         android:layout_height="wrap_content"
         style="@style/RoundedButton"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_medium_change"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
         android:text="중앙테이블"
@@ -97,13 +96,13 @@
         />
 
     <android.widget.Button
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/list_padding_top_bottom"
         android:id="@+id/btnFloor5"
         android:gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/activity_profile_popup_height"
         android:layout_height="wrap_content"
         style="@style/RoundedButton"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_medium_change"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
         android:text="직선테이블"
@@ -113,13 +112,13 @@
         />
 
     <android.widget.Button
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/list_padding_top_bottom"
         android:id="@+id/btnFloor6"
         android:gravity="center"
-        android:layout_width="150dp"
+        android:layout_width="@dimen/activity_profile_popup_height"
         android:layout_height="wrap_content"
         style="@style/RoundedButton"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_medium_change"
         android:textColor="@color/white"
         android:fontFamily="@font/gmarketsans_medium"
         android:text="테라스"

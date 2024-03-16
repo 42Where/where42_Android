@@ -26,8 +26,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline3"
         android:gravity="center"
-        android:layout_marginBottom="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="@dimen/newgroup_image"
+        android:layout_marginTop="@dimen/newgroup_image"
         >
 <!--        android:layout_marginTop="12dp"-->
 <!--        android:layout_marginBottom="12dp"-->
@@ -61,7 +61,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/newgroup_button_padding"
             />
 
     </LinearLayout>

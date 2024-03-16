@@ -36,7 +36,6 @@
         android:layout_width="@dimen/profile_image"
         android:layout_height="@dimen/profile_image"
         android:src="@{model.emoji}"
-
         app:layout_constraintStart_toEndOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,8 +60,8 @@
             android:id="@+id/intra_id"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/intra_ID"
-            android:layout_marginStart="8dp"
-            android:paddingLeft="3dp"
+            android:layout_marginStart="@dimen/list_padding_top_bottom"
+            android:paddingLeft="@dimen/CircleImageView_border"
             android:gravity="center"
             android:text="@{model.intra_name}"
             android:fontFamily="@font/gmarketsans_bold"
@@ -70,39 +69,6 @@
             app:layout_constraintStart_toEndOf="@id/profile_photo"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-<!--            app:layout_constraintStart_toEndOf="@id/profile_photo"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/guideline" />-->
-
-<!--        android:text="코멘트코멘트코멘트"-->
-<!--    <TextView-->
-<!--        android:id="@+id/Comment"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="@dimen/comment"-->
-<!--        android:gravity="center"-->
-<!--        android:text="@{model.comment}"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        android:fontFamily="@font/gmarketsans_medium"-->
-<!--        android:textSize="@dimen/font_small"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/guideline"-->
-<!--        app:layout_constraintStart_toEndOf="@id/profile_photo" />-->
-
-<!--        android:text="CX2R1S5CC"-->
-<!--    <TextView-->
-<!--        android:id="@+id/location_info"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="@dimen/comment"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        android:background="@drawable/location_shape_another_version"-->
-<!--        android:gravity="center"-->
-<!--        android:clipToOutline="true"-->
-<!--        android:text="@{model.location}"-->
-<!--        android:fontFamily="@font/gmarketsans_medium"-->
-<!--        android:textColor="#FCFDFF"-->
-<!--        android:textSize="@dimen/font_small"-->
-<!--        android:maxLines="1"-->
-<!--        android:ellipsize="end"-->
-<!--        app:layout_constraintStart_toEndOf="@id/intra_id"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/guideline"/>-->
 
     <!--    android:layout_width="24dp"-->
     <!--    android:layout_height="24dp"-->

@@ -33,6 +33,7 @@ class UserSettings private constructor() {
     var agreement: Boolean = false
     var defaultGroup : Int = -1
     var refreshToken : String = ""
+    var inCluster : Boolean = false
 
     companion object {
         @Volatile

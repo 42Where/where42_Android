@@ -59,14 +59,19 @@ class ProfileList private constructor(): ViewModel() {
                         {
                             if (it.inCluster == true)
                             {
+                                usersetting.inCluster = true
                                 it.location = "개포 클러스터 내"
                             }
                             else
                             {
+                                usersetting.inCluster = false
                                 it.location = "퇴근"
                             }
                         }
-
+                        else
+                        {
+                            usersetting.inCluster = true
+                        }
                         friendListObject.addItem(it.intraId, it.intraName)
                         profile.value = it
                         Log.e("ProfileList", "${profile.value}")
