@@ -27,21 +27,21 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
 
     val friendProfileList = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
 
-    private fun getSelectedItems(): List<friendGroup_default_memberlist.friendGroup_default_memberlistItem> {
-        val selectedItems = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
-        val friendRecyclerView: RecyclerView = findViewById(R.id.new_gorup_friend_list)
-        val friendRecyclerViewAdapter = friendRecyclerView.adapter as? RecyclerViewAdapter_defaultList
-
-        friendRecyclerViewAdapter?.let {
-            for (item in friendProfileList) {
-                if (item in it.checkedItems) {
-                    selectedItems.add(item)
-                }
-            }
-        }
-
-        return selectedItems
-    }
+//    private fun getSelectedItems(): List<friendGroup_default_memberlist.friendGroup_default_memberlistItem> {
+//        val selectedItems = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
+//        val friendRecyclerView: RecyclerView = findViewById(R.id.new_gorup_friend_list)
+//        val friendRecyclerViewAdapter = friendRecyclerView.adapter as? RecyclerViewAdapter_defaultList
+//
+//        friendRecyclerViewAdapter?.let {
+//            for (item in friendProfileList) {
+//                if (item in it.checkedItems) {
+//                    selectedItems.add(item)
+//                }
+//            }
+//        }
+//
+//        return selectedItems
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,22 +93,23 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
             //2. 그룹 만들기 API 호출
 
             // 체크된 체크박스가 있는 항목들 가져오기
-            val selectedItems = getSelectedItems()
+//            val selectedItems = getSelectedItems()
 
             //조건문 해야될 듯 만약 list에 아무것도 없으면 리턴 시키기
             // 여기서 가져온 선택된 항목들에 대해 원하는 작업 수행 가능
             // 예를 들어, 선택된 항목들의 이름을 로그에 출력하는 등의 동작 수행
 
-            val members =  mutableListOf<Int>()
-            selectedItems.forEach { selectedItem ->
-                Log.d("선택된 항목", "이름: ${selectedItem.intraName}")
-//                members.add(selectedItem.memberIntraName)
-                members.add(selectedItem.intraId)
-            }
+//            val members =  mutableListOf<Int>()
+//            selectedItems.forEach { selectedItem ->
+//                Log.d("선택된 항목", "이름: ${selectedItem.intraName}")
+////                members.add(selectedItem.memberIntraName)
+//                members.add(selectedItem.intraId)
+//            }
 
             val sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
 //            sharedViewModel.addMembersToGroup(groupId_members)
-            sharedViewModel.deleteFriendGroup(groupId, members)
+//            sharedViewModel.deleteFriendGroup(groupId, members)
+            sharedViewModel.deleteFriendGroup(groupId, friendCheckedList.getfriendCheckedList())
             finish()
         }
 

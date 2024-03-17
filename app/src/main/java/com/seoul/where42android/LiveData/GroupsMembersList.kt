@@ -24,6 +24,7 @@ import com.seoul.where42android.Base_url_api_Retrofit.deleteFriendListResponse
 import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.seoul.where42android.Base_url_api_Retrofit.groups_memberlist
 import com.seoul.where42android.main.UserSettings
+import com.seoul.where42android.main.friendCheckedList
 import com.seoul.where42android.main.friendListObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -249,6 +250,7 @@ class GroupsMembersList() : ViewModel() {
 
         val groupId_members = newgroup?.let { AddMembersRequest(it.groupId, members) }
 
+        Log.d("add_member" , "${members}")
         //새로운 그룹에 member 추가하는 코드 작성!
         if (groupId_members != null) {
             retrofitAPI2.addMembersToGroup(groupId_members).enqueue(object :
@@ -266,6 +268,7 @@ class GroupsMembersList() : ViewModel() {
                             currentMembers.any { it.groupId == groupId_members.groupId }
 //                        Log.e("isGroupIdExists_here", "${isGroupIdExists}")
                         //
+
                         if (isGroupIdExists) {
                             // 해당하는 groupId_members.groupId를 가진 그룹 찾기
                             val isGroupIdExists =
@@ -276,7 +279,7 @@ class GroupsMembersList() : ViewModel() {
 //                                Log.e("isGroupIdExists1", "${isGroupIdExists}")
 
                                 // 해당하는 그룹에 멤버 추가
-                                Log.e("addedMembers", "addedMembers : ${addedMembers}")
+//                                Log.e("addedMembers", "addedMembers : ${addedMembers}")
                                 val newMembersList = addedMembers.map { member ->
                                     if (member.location == null)
                                     {
@@ -312,12 +315,17 @@ class GroupsMembersList() : ViewModel() {
                             }
 
                         }
+                        else
+                        {
+
+                        }
                         //                    // 변경된 목록을 LiveData에 설정하여 UI를 업데이트합니다.
                         //                    Log.e("isGroupIdExists2", "${groupsMembersList.value}")
                         //                    Log.e("isGroupIdExists2", "${currentMembers}")
                         Log.e("gogoshing", "groupsMembersList : ${groupsMembersList.value}")
                         Log.e("gogoshing", "currentMembers : ${currentMembers.toList()}")
                         groupsMembersList.value = currentMembers.toList()
+                        friendCheckedList.clearItem()
 
                         //                        val intent = Intent(this@CreateGroupActivity, MainPageActivity::class.java)
                         //                        finish() //인텐트 종료
@@ -382,6 +390,7 @@ class GroupsMembersList() : ViewModel() {
                         }
                         // 업데이트된 그룹 리스트를 LiveData에 설정하여 UI를 업데이트
                         groupsMembersList.value = currentGroups
+                        friendCheckedList.clearItem()
                     } else {
                         // 현재 그룹 리스트를 가져옴
                         val currentGroups = groupsMembersList.value.orEmpty().toMutableList()
@@ -391,9 +400,13 @@ class GroupsMembersList() : ViewModel() {
                         // 현재 그룹의 멤버 리스트를 가져옴
                         val currentMembers = currentGroup.members.toMutableList()
                         // member 리스트의 길이만큼 반복문 실행
+                        Log.d("hereList", "here")
+
+                        Log.d("hereList", "${member}")
                         for (memberId in member) {
                             // 현재 멤버 리스트에서 memberId와 동일한 intraId를 가진 멤버를 찾아 제외
                             currentMembers.removeAll { it.intraId == memberId }
+                            Log.d("hereList", "${memberId}")
                         }
                         // 현재 그룹의 멤버 리스트를 업데이트
                         currentGroups[groupIndex] = currentGroup.copy(members = currentMembers)
@@ -402,6 +415,7 @@ class GroupsMembersList() : ViewModel() {
                             // 현재 멤버 리스트에서 memberId와 동일한 intraId를 가진 멤버를 찾아 제외
                             friendListObject.removeItem(memberId)
                         }
+                        friendCheckedList.clearItem()
                         groupsMembersList.value = currentGroups
                     }
 

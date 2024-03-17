@@ -19,13 +19,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.seoul.where42android.main.friendCheckedList
 
 class RecyclerViewAdapter_defaultList(
     private val context: Context,
     private val dataList: List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>,
     private val isEditable: Boolean
 ) : RecyclerView.Adapter<RecyclerViewAdapter_defaultList.ViewHolder>() {
-
     //checkBox
     // 각 항목의 체크 여부를 저장하기 위한 리스트
     val checkedItems = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
@@ -41,18 +41,35 @@ class RecyclerViewAdapter_defaultList(
         holder.bind(currentItem)
 
         // checkbox 항목이 클릭되었을 때의 처리
-        holder.itemView.setOnClickListener {
-            // 체크된 항목이면 리스트에서 제거하고, 그렇지 않으면 추가합니다.
-            if (currentItem in checkedItems) {
-                checkedItems.remove(currentItem)
-            } else {
-                checkedItems.add(currentItem)
-            }
-            // TODO: 체크된 항목 상태에 따라 UI 업데이트 로직 추가
+//        holder.itemView.setOnClickListener {
+//            Log.d("herehere", "a1")
+//            // 체크된 항목이면 리스트에서 제거하고, 그렇지 않으면 추가합니다.
+//            if (currentItem in checkedItems) {
+////                checkedItems.remove(currentItem)
+//                friendCheckedList.removeItem(currentItem.intraId)
+//                Log.d("herehere", "a2 : ${currentItem.intraId}")
+//            } else {
+////                checkedItems.add(currentItem)
+//                friendCheckedList.addItem(currentItem.intraId)
+//                Log.d("herehere", "a3 : ${currentItem.intraId}")
+//            }
+//            // TODO: 체크된 항목 상태에 따라 UI 업데이트 로직 추가
+//
+//            // 변경된 상태를 알리고 UI를 업데이트할 수 있도록 notifyDataSetChanged() 등을 호출합니다.
+////            notifyDataSetChanged()
+//        }
 
-            // 변경된 상태를 알리고 UI를 업데이트할 수 있도록 notifyDataSetChanged() 등을 호출합니다.
-//            notifyDataSetChanged()
-        }
+//        holder.checkBox.setOnClickListener {
+//            // 체크된 항목이면 리스트에서 제거하고, 그렇지 않으면 추가합니다.
+//            if (currentItem in checkedItems) {
+//                checkedItems.remove(currentItem)
+//            } else {
+//                checkedItems.add(currentItem)
+//            }
+//            // 변경된 상태를 알리고 UI를 업데이트할 수 있도록 notifyDataSetChanged() 등을 호출합니다.
+//            // notifyDataSetChanged()
+//        }
+
         // TODO: 기존의 onBindViewHolder() 코드 작성은 여기에 해당합니다.
     }
 
@@ -65,7 +82,7 @@ class RecyclerViewAdapter_defaultList(
         private val textViewGrade: TextView = itemView.findViewById(R.id.intra_id)
         private val textViewLocation: TextView = itemView.findViewById(R.id.location_info)
         private val textViewComment: TextView =  itemView.findViewById(R.id.Comment)
-
+        val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
 
         fun bind(member: friendGroup_default_memberlist.friendGroup_default_memberlistItem)
         {
@@ -92,55 +109,19 @@ class RecyclerViewAdapter_defaultList(
             }
             textViewLocation.setPadding(20, 0, 20, 0)
 
-//            val leftPadding = 20 // 왼쪽 여백 값
-//            val rightPadding = 20 // 오른쪽 여백 값
-//            GlobalScope.launch(Dispatchers.Main) {
-//                if (textViewLocation.text != "퇴근") {
-//                    val leftPadding = 20 // 왼쪽 여백 값
-//                    val rightPadding = 20 // 오른쪽 여백 값
-//                    textViewLocation.setPadding(leftPadding, 0, rightPadding, 0)
-//                    adjustBackgroundSizeWithPadding(textViewLocation, leftPadding, rightPadding)
-//                    val color = Color.parseColor("#132743")
-////                        binding.location.setBackgroundColor(color)
-//
-//                    val gradientDrawable = GradientDrawable()
-//                    gradientDrawable.setColor(color)
-//                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-//                    textViewLocation.background = gradientDrawable
-//                }
-//                else
-//                {
-//                    // UI 변경 작업
-//                    textViewLocation.setPadding(leftPadding, 0, rightPadding, 0)
-//                    adjustBackgroundSizeWithPadding(textViewLocation, leftPadding, rightPadding)
-//                    adjustBackgroundSizeWithPadding(
-//                        textViewLocation,
-//                        leftPadding,
-//                        rightPadding
-//                    )
-//                    val color = Color.parseColor("#132743")
-//                    val gradientDrawable = GradientDrawable()
-//                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-//                    val strokeWidth = 2 // 테두리의 두께 설정
-//                    val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
-//                    gradientDrawable.setStroke(strokeWidth, strokeColor)
-//                    // 배경을 설정
-//                    textViewLocation.background = gradientDrawable
-//                    textViewLocation.setTextColor(color)
-//                }
-//            }
-
-
-            val checkBox: CheckBox = itemView.findViewById(R.id.checkBox) // 체크박스 ID에 맞게 수정
             checkBox.isChecked = member in checkedItems
 
             // 체크박스 클릭 이벤트 처리
             checkBox.setOnClickListener {
                 // 체크된 항목이면 리스트에서 제거하고, 그렇지 않으면 추가합니다.
                 if (member in checkedItems) {
-                    checkedItems.remove(member)
+//                    checkedItems.remove(member)
+                    friendCheckedList.removeItem(member.intraId)
+                    Log.d("herehere", "a1 : ${member.intraId}")
                 } else {
-                    checkedItems.add(member)
+//                    checkedItems.add(member)
+                    Log.d("herehere", "a2 : ${member.intraId}")
+                    friendCheckedList.addItem(member.intraId)
                 }
                 // 변경된 상태를 알리고 UI를 업데이트할 수 있도록 notifyDataSetChanged() 등을 호출합니다.
 //                notifyDataSetChanged()

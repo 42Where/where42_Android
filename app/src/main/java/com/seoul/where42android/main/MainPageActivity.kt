@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.seoul.where42android.Base_url_api_Retrofit.Member
+import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.seoul.where42android.R
 import com.seoul.where42android.adapter.adjustBackgroundSizeWithPadding
 import com.seoul.where42android.databinding.ActivityMainPageBinding
@@ -50,6 +51,26 @@ object friendListObject {
     // 검색 함수
     fun searchItem(key: Int): String? {
         return myfriendList[key]
+    }
+
+}
+
+object friendCheckedList {
+    val checkedItemsInt = mutableListOf<Int>()
+    fun addItem(intraId : Int){
+        checkedItemsInt.add(intraId)
+    }
+
+    fun removeItem(intraId : Int){
+        checkedItemsInt.remove(intraId)
+    }
+
+    fun clearItem(){
+        checkedItemsInt.clear()
+    }
+
+    fun getfriendCheckedList(): MutableList<Int> {
+        return checkedItemsInt
     }
 }
 
