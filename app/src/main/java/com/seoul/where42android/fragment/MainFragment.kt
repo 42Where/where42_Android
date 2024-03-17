@@ -18,6 +18,7 @@ import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.R
 import com.seoul.where42android.adapter.OutRecyclerViewAdapter
 import com.seoul.where42android.databinding.ActivityMainPageFragmentBinding
+import com.seoul.where42android.main.friendListObject
 import com.seoul.where42android.model.RecyclerInViewModel
 import com.seoul.where42android.model.RecyclerOutViewModel
 
@@ -114,6 +115,10 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
                         comeCluster = count
                     )
                     Log.d("title_check", "title_check : ${recyclerOutViewModel.title}")
+                    if (!friendListObject.searchGroupName(recyclerOutViewModel.title))
+                    {
+                        friendListObject.groupAdd(recyclerOutViewModel.title)
+                    }
                     itemList.add(recyclerOutViewModel)
                 }
 

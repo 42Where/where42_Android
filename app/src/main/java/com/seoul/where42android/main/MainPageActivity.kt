@@ -37,6 +37,8 @@ import kotlinx.coroutines.withContext
 object friendListObject {
     // HashMap 선언
     private val myfriendList = HashMap<Int, String>()
+    //그룹 이름 저장
+    val groupNameList = mutableListOf<String>()
 
     // 추가 함수
     fun addItem(key: Int, value: String) {
@@ -53,6 +55,24 @@ object friendListObject {
         return myfriendList[key]
     }
 
+    fun groupAdd(name : String)
+    {
+        groupNameList.add(name)
+    }
+
+    fun groupRemove(name:String)
+    {
+        groupNameList.remove(name)
+    }
+
+    fun groupClear()
+    {
+        groupNameList.clear()
+    }
+
+    fun searchGroupName(name: String): Boolean {
+        return name in groupNameList
+    }
 }
 
 object friendCheckedList {
@@ -153,47 +173,6 @@ class MainPageActivity : AppCompatActivity() {
             }
         }
 
-//        binding.root.post {
-//            val leftPadding = 20 // 왼쪽 여백 값
-//            val rightPadding = 20 // 오른쪽 여백 값
-//
-//            if (binding.locationInfo.text != "퇴근")
-//            {
-//                binding.locationInfo.setPadding(leftPadding, 0, rightPadding, 0)
-//                adjustBackgroundSizeWithPadding(binding.locationInfo, leftPadding, rightPadding)
-//                val color = Color.parseColor("#132743")
-////                        binding.location.setBackgroundColor(color)
-//                val gradientDrawable = GradientDrawable()
-//                gradientDrawable.setColor(color)
-//                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-//                binding.locationInfo.background = gradientDrawable
-//            }
-//            else
-//            {
-//                binding.locationInfo.setPadding(leftPadding, 0, rightPadding, 0)
-//                adjustBackgroundSizeWithPadding(binding.locationInfo, leftPadding, rightPadding)
-//                val color = Color.parseColor("#132743")
-//                val gradientDrawable = GradientDrawable()
-//                gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-//                val strokeWidth = 2 // 테두리의 두께 설정
-//                val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
-//                gradientDrawable.setStroke(strokeWidth, strokeColor)
-//                binding.locationInfo.background = gradientDrawable
-//                binding.locationInfo.setTextColor(color)
-//            }
-            // 배경을 설정
-//        }
-
-        val locationInfo = binding.locationInfo
-//        if (binding.locationInfo.text == "퇴근") {
-//            Log.d("checkIocation", "lo2 : ${binding.locationInfo.text}")
-//            locationInfo.setBackgroundResource(R.drawable.location_outcluster)
-//            val strokeColor = Color.parseColor("#132743")
-//            locationInfo.setTextColor(strokeColor)
-//
-//        }
-
-
 
         //1. header의 환경 설정 버튼을 눌렀을 때 -> SettingPage.kt로 가게 하기
         val headerBinding = binding.header // Change to your actual ID for the included header
@@ -282,26 +261,48 @@ class MainPageActivity : AppCompatActivity() {
             val btnCancel = dialog.findViewById<Button>(R.id.cancel)
             val btnSubmit = dialog.findViewById<Button>(R.id.submit)
 
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             btnCancel.setOnClickListener {
                 dialog.dismiss()
             }
             btnSubmit.setOnClickListener {
+                //동일 이름 그룹 생성 막기
                 //새그룹 버튼 확인 누르면 api 요청
                 //groupname, intraid 필요
                 val groupname : String = editText.text.toString()
-                //intraid 불러오자
-                //JSON 만들어주기
-                //NewGroup @POST("v3/group")
+                if (friendListObject.searchGroupName(groupname))
+                {
+//                    //동일 이름 있음.
+                    val samegroup = Dialog(this)
+                    samegroup.setContentView(R.layout.activtiy_prohibition_popup)
+
+                    samegroup.setCanceledOnTouchOutside(true)
+                    samegroup.setCancelable(true)
+                    samegroup.window?.setGravity(Gravity.CENTER)
+                    samegroup.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    val textname = samegroup.findViewById<TextView>(R.id.title)
+                    textname.text = "동일 이름을 가진 그룹이 존재합니다."
+
+                    val btnSubmit = samegroup.findViewById<Button>(R.id.submit)
+                    btnSubmit.setOnClickListener {
+                        samegroup.dismiss()
+                    }
+                    samegroup.show()
+                }
+                else
+                {
+                    //intraid 불러오자
+                    //JSON 만들어주기
+                    //NewGroup @POST("v3/group")
 //                val newGroupRequest = NewGroupRequest(groupname, intra_id)
 //                sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
-                val intent = Intent(this@MainPageActivity, MainCreateGroupActivity::class.java)
-                intent.putExtra("newgroupNameKey", groupname)
-                intent.putExtra("profileintraIdKey", profile.intraId)
-                intent.putExtra("groupIdKey", profile.defaultGroupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
-                startActivity(intent)
-                dialog.dismiss()
+                    val intent = Intent(this@MainPageActivity, MainCreateGroupActivity::class.java)
+                    intent.putExtra("newgroupNameKey", groupname)
+                    intent.putExtra("profileintraIdKey", profile.intraId)
+                    intent.putExtra("groupIdKey", profile.defaultGroupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
+                    startActivity(intent)
+                    dialog.dismiss()
+                }
             }
             dialog.show()
         }

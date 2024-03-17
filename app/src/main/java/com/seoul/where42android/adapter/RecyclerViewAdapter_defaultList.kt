@@ -114,15 +114,25 @@ class RecyclerViewAdapter_defaultList(
             // 체크박스 클릭 이벤트 처리
             checkBox.setOnClickListener {
                 // 체크된 항목이면 리스트에서 제거하고, 그렇지 않으면 추가합니다.
-                if (member in checkedItems) {
+//                if (member in checkedItems) {
+////                    checkedItems.remove(member)
+//                    friendCheckedList.removeItem(member.intraId)
+//                    Log.d("herehere", "a1 : ${member.intraId}")
+//                } else {
+////                    checkedItems.add(member)
+//                    Log.d("herehere", "a2 : ${member.intraId}")
+//                    friendCheckedList.addItem(member.intraId)
+//                }
+
+                if (!checkBox.isChecked) {
 //                    checkedItems.remove(member)
                     friendCheckedList.removeItem(member.intraId)
-                    Log.d("herehere", "a1 : ${member.intraId}")
                 } else {
 //                    checkedItems.add(member)
-                    Log.d("herehere", "a2 : ${member.intraId}")
                     friendCheckedList.addItem(member.intraId)
                 }
+
+
                 // 변경된 상태를 알리고 UI를 업데이트할 수 있도록 notifyDataSetChanged() 등을 호출합니다.
 //                notifyDataSetChanged()
             }

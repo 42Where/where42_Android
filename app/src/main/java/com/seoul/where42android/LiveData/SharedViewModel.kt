@@ -60,7 +60,7 @@ class SharedViewModel_GroupsMembersList : ViewModel() {
         viewModel.deleteFriendGroup(groupId, member)
     }
 
-    fun getGroupMemberList (groupId: Int)
+    fun getGroupMemberList(groupId: Int)
     {
         viewModel.getGroupMemberList(groupId)
     }
