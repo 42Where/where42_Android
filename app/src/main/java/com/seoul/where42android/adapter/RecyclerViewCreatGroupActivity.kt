@@ -1,6 +1,5 @@
 package com.seoul.where42android.adapter
 
-
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
@@ -16,16 +15,16 @@ import com.seoul.where42android.R
 import de.hdodenhof.circleimageview.CircleImageView
 import com.seoul.where42android.main.friendCheckedList
 
-class RecyclerViewAdapter_defaultList(
+class RecyclerViewCreatGroupActivity(
     private val context: Context,
     private val dataList: List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>,
     private val isEditable: Boolean
-) : RecyclerView.Adapter<RecyclerViewAdapter_defaultList.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerViewCreatGroupActivity.ViewHolder>() {
     //checkBox
     // 각 항목의 체크 여부를 저장하기 위한 리스트
     val checkedItems = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
 
-
+    private var checkBoxClickListener: ((Boolean, Int) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.activity_create_group_list_view_detail_checkbox, parent, false)
         return ViewHolder(view)
@@ -40,6 +39,10 @@ class RecyclerViewAdapter_defaultList(
         return dataList.size
     }
 
+    // 클릭 리스너 설정 메서드
+    fun setOnCheckBoxClickListener(listener: (Boolean, Int) -> Unit) {
+        checkBoxClickListener = listener
+    }
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textViewName: CircleImageView = itemView.findViewById(R.id.profile_photo)
         private val textViewGrade: TextView = itemView.findViewById(R.id.intra_id)
@@ -72,11 +75,12 @@ class RecyclerViewAdapter_defaultList(
             }
             textViewLocation.setPadding(20, 0, 20, 0)
 
-//            checkBox.isChecked = member in checkedItems
 
+
+//            checkBox.isChecked = member in checkedItems
+            checkBox.isChecked = friendCheckedList.searchfriendChecked(member.intraId)
             // 체크박스 클릭 이벤트 처리
             checkBox.setOnClickListener {
-
                 if (!checkBox.isChecked) {
 //                    checkedItems.remove(member)
                     friendCheckedList.removeItem(member.intraId)
@@ -84,6 +88,7 @@ class RecyclerViewAdapter_defaultList(
 //                    checkedItems.add(member)
                     friendCheckedList.addItem(member.intraId)
                 }
+                checkBoxClickListener?.invoke(checkBox.isChecked, adapterPosition)
             }
         }
     }

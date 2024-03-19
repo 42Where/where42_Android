@@ -23,7 +23,7 @@
                 app:layout_constraintTop_toTopOf="@id/pr" />
 
 
-
+<!--        android:paddingTop="@dimen/location_info"-->
         <TextView
             android:id="@+id/text_view"
             android:layout_width="wrap_content"
@@ -31,9 +31,10 @@
             android:text="@{model.title}"
             android:paddingStart="@dimen/newgroup_image"
             android:paddingBottom="@dimen/CircleImageView_border"
-            android:paddingTop="@dimen/location_info"
+            android:paddingTop="@dimen/padding"
             android:textColor="#132743"
             android:fontFamily="@font/gmarketsans_medium"
+            android:gravity="bottom"
             android:textSize="@dimen/group_font"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,17 +50,19 @@
             android:textColor="#132743"
             android:fontFamily="@font/gmarketsans_medium"
             android:textSize="@dimen/group_font"
+            android:gravity="bottom"
             app:layout_constraintStart_toEndOf="@id/text_view"
             app:layout_constraintTop_toTopOf="parent"
             android:paddingStart="@dimen/location_info"
             android:paddingBottom="@dimen/Comment"
-            android:paddingTop="@dimen/location_info"
+            android:paddingTop="@dimen/padding"
             />
 
         <TextView
             android:id="@+id/slash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="bottom"
             android:text="/"
             android:textColor="#132743"
             android:fontFamily="@font/gmarketsans_medium"
@@ -67,7 +70,7 @@
             app:layout_constraintStart_toEndOf="@id/numerator"
             app:layout_constraintTop_toTopOf="parent"
             android:paddingBottom="@dimen/Comment"
-            android:paddingTop="@dimen/location_info"
+            android:paddingTop="@dimen/padding"
             />
 
         <TextView
@@ -76,12 +79,13 @@
             android:layout_height="wrap_content"
             android:text="12"
             android:textColor="#132743"
+            android:gravity="bottom"
             android:fontFamily="@font/gmarketsans_medium"
             android:textSize="@dimen/group_font"
             app:layout_constraintStart_toEndOf="@id/slash"
             app:layout_constraintTop_toTopOf="parent"
             android:paddingBottom="@dimen/Comment"
-            android:paddingTop="@dimen/location_info"
+            android:paddingTop="@dimen/padding"
             />
 
 <!--        app:layout_constraintBottom_toTopOf="@id/view_line"-->
@@ -98,6 +102,7 @@
                     android:layout_width="@dimen/option_buttons_w"
                     android:layout_height="@dimen/option_buttons_h"
                     android:layout_marginEnd="@dimen/newgroup_image"
+                    android:paddingTop="@dimen/padding_pencil"
                     android:background="@android:color/transparent"
                     android:scaleType="centerInside"
                     android:src="@drawable/pencil_icon" />

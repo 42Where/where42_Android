@@ -19,6 +19,7 @@ import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.seoul.where42android.R
 import com.seoul.where42android.adapter.RecyclerViewAdapter_defaultList
+import com.seoul.where42android.adapter.RecyclerViewCreatGroupActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -73,7 +74,7 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
         fetchMemberAllData(groupId){ isSuccess ->
             if (isSuccess)
             {
-                createGroupButton.visibility = View.VISIBLE
+//                createGroupButton.visibility = View.VISIBLE
                 recyclerview.visibility = View.VISIBLE
                 nosearchmember.visibility = View.GONE
             }
@@ -88,7 +89,7 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
         val groupName: String? = intent.getStringExtra("GROUP_NAME")
         val groupChangeName : TextView = findViewById(R.id.GroupName)
         groupChangeName.text = groupName
-
+        createGroupButton.visibility = View.GONE
         createGroupButton.setOnClickListener {
             //2. 그룹 만들기 API 호출
 
@@ -206,8 +207,25 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
     }
     private fun updateAdapterData(data: List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>) {
         val friendRecyclerView: RecyclerView = findViewById(R.id.new_gorup_friend_list)
-        val friendRecyclerViewAdapter = RecyclerViewAdapter_defaultList(this, data, false) // 데이터 타입 변경
+        val friendRecyclerViewAdapter = RecyclerViewCreatGroupActivity(this, data, false) // 데이터 타입 변경
         friendRecyclerView.layoutManager = LinearLayoutManager(this)
         friendRecyclerView.adapter = friendRecyclerViewAdapter
+
+        friendRecyclerViewAdapter.setOnCheckBoxClickListener { isChecked, position ->
+            // 클릭 이벤트 처리 코드 작성
+            val deleteGroupButton: AppCompatButton = findViewById(R.id.delete_group_member)
+            if (isChecked)
+            {
+                deleteGroupButton.visibility = View.VISIBLE
+            }
+            else
+            {
+                if (friendCheckedList.sizefriendCheckedList() == 0)
+                {
+                    deleteGroupButton.visibility=View.GONE
+                }
+            }
+        }
+
     }
 }

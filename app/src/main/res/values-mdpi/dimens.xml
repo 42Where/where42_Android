@@ -185,4 +185,6 @@
     <!--    search_page.xml-->
     <dimen name="add_member_width_height">23dp</dimen>
 
+    <dimen name="padding">2.7dp</dimen>
+    <dimen name="padding_pencil">0.5dp</dimen>
 </resources>

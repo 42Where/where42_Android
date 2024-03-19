@@ -10,10 +10,6 @@ import com.seoul.where42android.databinding.ActivityCreateAddFriendBinding
 import com.seoul.where42android.main.friendListObject
 import com.seoul.where42android.main.intraNameObject
 import com.seoul.where42android.model.SearchRecyclerInViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SearchRecyclerViewAdapter(private val context: Context,
     val itemList : MutableList<SearchRecyclerInViewModel>)

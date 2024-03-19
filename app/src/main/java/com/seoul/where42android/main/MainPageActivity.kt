@@ -5,11 +5,9 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.EditText
@@ -22,17 +20,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.seoul.where42android.Base_url_api_Retrofit.Member
-import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.seoul.where42android.R
-import com.seoul.where42android.adapter.adjustBackgroundSizeWithPadding
 import com.seoul.where42android.databinding.ActivityMainPageBinding
 import com.seoul.where42android.fragment.MainFragment
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 
 object friendListObject {
     // HashMap 선언
@@ -65,11 +56,6 @@ object friendListObject {
         groupNameList.remove(name)
     }
 
-    fun groupClear()
-    {
-        groupNameList.clear()
-    }
-
     fun searchGroupName(name: String): Boolean {
         return name in groupNameList
     }
@@ -89,8 +75,16 @@ object friendCheckedList {
         checkedItemsInt.clear()
     }
 
+    fun searchfriendChecked(name: Int): Boolean {
+        return name in checkedItemsInt
+    }
+
     fun getfriendCheckedList(): MutableList<Int> {
         return checkedItemsInt
+    }
+
+    fun sizefriendCheckedList(): Int {
+        return checkedItemsInt.size
     }
 }
 
@@ -283,8 +277,8 @@ class MainPageActivity : AppCompatActivity() {
                     val textname = samegroup.findViewById<TextView>(R.id.title)
                     textname.text = "동일 이름을 가진 그룹이 존재합니다."
 
-                    val btnSubmit = samegroup.findViewById<Button>(R.id.submit)
-                    btnSubmit.setOnClickListener {
+                    val btnsubmit = samegroup.findViewById<Button>(R.id.submit)
+                    btnsubmit.setOnClickListener {
                         samegroup.dismiss()
                     }
                     samegroup.show()

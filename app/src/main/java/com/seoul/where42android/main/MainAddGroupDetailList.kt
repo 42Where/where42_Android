@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +19,7 @@ import com.seoul.where42android.Base_url_api_Retrofit.Deafult_friendGroup_member
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.seoul.where42android.R
-import com.seoul.where42android.adapter.RecyclerViewAdapter_defaultList
+import com.seoul.where42android.adapter.RecyclerViewCreatGroupActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,7 +46,7 @@ class MainAddGroupDetailList : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_deletegroup_detail_list)
+        setContentView(R.layout.activity_addgroup_detail_list)
 
 //        viewModel = ViewModelProvider(this).get(GroupDetailViewModel::class.java)
 
@@ -69,17 +68,13 @@ class MainAddGroupDetailList : AppCompatActivity() {
 //        Log.e("herehere", "here : ${groupId}")
 
         val createGroupButton: AppCompatButton = findViewById(R.id.delete_group_member)
-        createGroupButton.text = "멤버 추가하기"
-        val backgroundColor = ContextCompat.getColor(this, R.color.blue_add)
-        createGroupButton.setBackgroundColor(backgroundColor)
-
         val recyclerview : RecyclerView = findViewById(R.id.new_gorup_friend_list)
         val nosearchmember : TextView = findViewById(R.id.noItemsTextView)
         //1. group member 보여주기 -> v3/group/groupmember/not-ingroup?groupId=(groupId) 사용
         fetchMemberAllData(groupId) { isSuccess ->
             if (isSuccess)
             {
-                createGroupButton.visibility = View.VISIBLE
+//                createGroupButton.visibility = View.VISIBLE
                 recyclerview.visibility = View.VISIBLE
                 nosearchmember.visibility = View.GONE
             }
@@ -97,7 +92,7 @@ class MainAddGroupDetailList : AppCompatActivity() {
 
         // 색상 리소스 가져오기
         // 배경색 설정
-
+        createGroupButton.visibility = View.GONE
         createGroupButton.setOnClickListener {
             //2. 그룹 만들기 API 호출
 
@@ -134,6 +129,7 @@ class MainAddGroupDetailList : AppCompatActivity() {
 
                 // 검색어에 따라 데이터 필터링
                 newText?.let { query ->
+//                    val searchText = query.toLowerCase().trim() // 입력된 검색어 소문자로 변환
                     val searchText = query.toLowerCase().trim() // 입력된 검색어 소문자로 변환
                     for (member in friendProfileList) {
                         val memberName = member.intraName.toLowerCase()
@@ -216,8 +212,25 @@ class MainAddGroupDetailList : AppCompatActivity() {
     }
     private fun updateAdapterData(data: List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>) {
         val friendRecyclerView: RecyclerView = findViewById(R.id.new_gorup_friend_list)
-        val friendRecyclerViewAdapter = RecyclerViewAdapter_defaultList(this, data, false) // 데이터 타입 변경
+        val friendRecyclerViewAdapter = RecyclerViewCreatGroupActivity(this, data, false) // 데이터 타입 변경
         friendRecyclerView.layoutManager = LinearLayoutManager(this)
         friendRecyclerView.adapter = friendRecyclerViewAdapter
+
+
+        friendRecyclerViewAdapter.setOnCheckBoxClickListener { isChecked, position ->
+            // 클릭 이벤트 처리 코드 작성
+            val deleteGroupButton: AppCompatButton = findViewById(R.id.delete_group_member)
+            if (isChecked)
+            {
+                deleteGroupButton.visibility = View.VISIBLE
+            }
+            else
+            {
+                if (friendCheckedList.sizefriendCheckedList() == 0)
+                {
+                    deleteGroupButton.visibility=View.GONE
+                }
+            }
+        }
     }
 }

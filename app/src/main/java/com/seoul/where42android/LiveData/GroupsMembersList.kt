@@ -176,6 +176,9 @@ class GroupsMembersList() : ViewModel() {
                     _groupDeleted.postValue(true) // 삭제 성공 시 true를 LiveData로 전달
                     val currentValue = groupsMembersList.value.orEmpty().toMutableList()
                     currentValue.removeAll { it.groupId == groupId }
+                    if (deletedGroup != null) {
+                        friendListObject.groupRemove(deletedGroup.groupName)
+                    }
                     groupsMembersList.value = currentValue
                 } else {
                     _groupDeleted.postValue(false) // 삭제 실패 시 false를 LiveData로 전달

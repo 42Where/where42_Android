@@ -152,6 +152,7 @@ class MainSearchPage : AppCompatActivity() {
         val searchButton : ImageButton = footerBinding.searchButton
         searchButton.visibility = View.GONE
 
+
         val homeButton: ImageButton = footerBinding.homeButton
         homeButton.setOnClickListener {
             try {
@@ -267,6 +268,7 @@ class MainSearchPage : AppCompatActivity() {
                 intraNameObject.setcheckFriendList(intraId)
             }
             binding.addMember.visibility = View.VISIBLE
+            binding.footer.guide.visibility = View.GONE
             Log.d("checkBoxClicked", " checked : ${checked}, position : ${position}, intraId : ${intraId}")
         } else {
             // 체크박스가 해제되었을 때 하단 버튼 숨김
@@ -274,6 +276,7 @@ class MainSearchPage : AppCompatActivity() {
             intraNameObject.removecheckFriendList(intraId)
             if (intraNameObject.sizeFriendList() == 0)
             {
+                binding.footer.guide.visibility = View.VISIBLE
                 binding.addMember.visibility = View.GONE
             }
         }

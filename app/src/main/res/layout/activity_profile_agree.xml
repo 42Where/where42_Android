@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/help_popup_width"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/agree_height"
     android:background="@drawable/center_popup_background"
     >
-    <!--    android:layout_width="@dimen/newgroup_layout_width"-->
-    <!--    android:layout_height="@dimen/newgroup_layout_height"-->
-    <!--    android:paddingTop="@dimen/newgroup_layout_padding_top_bottom"-->
-    <!--    android:paddingBottom="@dimen/newgroup_layout_padding_top_bottom"-->
-    <!--    android:paddingStart="@dimen/newgroup_layout_padding_start_end"-->
-    <!--    android:paddingEnd="@dimen/newgroup_layout_padding_start_end"-->
-
+<!--    android:layout_width="@dimen/help_popup_width"-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"

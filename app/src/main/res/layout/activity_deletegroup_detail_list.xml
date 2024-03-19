@@ -31,9 +31,7 @@
         android:layout_marginTop="@dimen/CircleImageView_border"
 
         >
-
 <!--        android:layout_marginRight="24dp"-->
-
 <!--        android:layout_marginLeft="24dp"-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -78,15 +76,14 @@
     <androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/CircleImageView_border"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tooblar"
+        app:layout_constraintBottom_toTopOf="@id/delete_group_member"
         >
-
-
 
 <!--        android:layout_marginStart="24dp"-->
 <!--        android:layout_marginEnd="24dp"-->
@@ -94,7 +91,7 @@
             android:id="@+id/new_gorup_friend_list"
             android:divider="#FFFFFF"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/newgroup_layout_padding_top_bottom"
             android:layout_marginEnd="@dimen/where42_logo_height"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -103,15 +100,40 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.425" />
+
+<!--    android:layout_marginBottom="@dimen/intra_name"-->
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="@dimen/add_member_width_height"
+        android:layout_height="@dimen/add_member_width_height"
+        android:text="친구삭제"
+        android:textColor="@color/white"
         android:id="@+id/delete_group_member"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/create_group_button_height"
-        android:background="@drawable/delete_friend_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="그룹에서 삭제"
-        android:textColor="@android:color/white"
+        android:visibility="visible"
         android:fontFamily="@font/gmarketsans_medium"
-        android:textSize="@dimen/create_group_button_textsize"
+        android:background="@drawable/shape_for_circle_red_button"
+        android:textSize="@dimen/new_group_font"
+        android:layout_marginBottom="@dimen/location_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
         />
+
+
+
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/delete_group_member"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/create_group_button_height"-->
+<!--        android:background="@drawable/delete_friend_button"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:text="그룹에서 삭제"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:fontFamily="@font/gmarketsans_medium"-->
+<!--        android:textSize="@dimen/create_group_button_textsize"-->
+<!--        />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
