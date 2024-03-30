@@ -18,7 +18,7 @@ android {
         applicationId = "com.seoul.where42android"
         minSdk = 26 //31
         targetSdk = 34
-        versionCode = 7
+        versionCode = 8
         versionName = "2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
