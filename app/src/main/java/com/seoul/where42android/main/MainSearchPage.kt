@@ -174,7 +174,7 @@ class MainSearchPage : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d("onQueryName", "query out : ${query}")
 
-                if (!query.isNullOrEmpty() && query.length < 10) {
+                if (!query.isNullOrEmpty() && query.length > 1) {
                     if (isValidQuery(query))
                     {
                         val Name = intraNameObject.getName()
@@ -220,7 +220,7 @@ class MainSearchPage : AppCompatActivity() {
                     cancel.visibility = View.GONE
 
                     val title = noEditDefaultDialog.findViewById<TextView>(R.id.title)
-                    title.text = "이름은 9글자 이내로 작성해주세요."
+                    title.text = "이름은 2글자 이상 입력해주세요."
 
                     noEditDefaultDialog.window?.setGravity(Gravity.CENTER)
                     noEditDefaultDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

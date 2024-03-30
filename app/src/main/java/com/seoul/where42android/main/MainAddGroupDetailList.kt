@@ -28,21 +28,15 @@ class MainAddGroupDetailList : AppCompatActivity() {
 
     val friendProfileList = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
 
-//    private fun getSelectedItems(): List<friendGroup_default_memberlist.friendGroup_default_memberlistItem> {
-//        val selectedItems = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
-//        val friendRecyclerView: RecyclerView = findViewById(R.id.new_gorup_friend_list)
-//        val friendRecyclerViewAdapter = friendRecyclerView.adapter as? RecyclerViewAdapter_defaultList
-//
-//        friendRecyclerViewAdapter?.let {
-//            for (item in friendProfileList) {
-//                if (item in it.checkedItems) {
-//                    selectedItems.add(item)
-//                }
-//            }
-//        }
-//
-//        return selectedItems
-//    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // 여기에 원하는 동작을 추가합니다.
+        // 예를 들어, 현재 액티비티를 종료하려면 finish() 메서드를 호출합니다.
+        friendCheckedList.clearItem()
+        finish()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +47,7 @@ class MainAddGroupDetailList : AppCompatActivity() {
         val homeButton: ImageButton = findViewById(R.id.home_button)
         homeButton.setOnClickListener {
             try {
+                friendCheckedList.clearItem()
                 val intent = Intent(this, MainPageActivity::class.java)
                 startActivity(intent)
                 finish()

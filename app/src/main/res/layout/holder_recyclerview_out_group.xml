@@ -24,6 +24,7 @@
 
 
 <!--        android:paddingTop="@dimen/location_info"-->
+<!--        android:paddingTop="@dimen/padding"-->
         <TextView
             android:id="@+id/text_view"
             android:layout_width="wrap_content"
@@ -31,12 +32,12 @@
             android:text="@{model.title}"
             android:paddingStart="@dimen/newgroup_image"
             android:paddingBottom="@dimen/CircleImageView_border"
-            android:paddingTop="@dimen/padding"
+            android:paddingTop="@dimen/newgroup_image"
             android:textColor="#132743"
             android:fontFamily="@font/gmarketsans_medium"
             android:gravity="bottom"
             android:textSize="@dimen/group_font"
-            android:textStyle="bold"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,7 +56,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:paddingStart="@dimen/location_info"
             android:paddingBottom="@dimen/Comment"
-            android:paddingTop="@dimen/padding"
+            android:paddingTop="@dimen/newgroup_image"
             />
 
         <TextView
@@ -70,7 +71,7 @@
             app:layout_constraintStart_toEndOf="@id/numerator"
             app:layout_constraintTop_toTopOf="parent"
             android:paddingBottom="@dimen/Comment"
-            android:paddingTop="@dimen/padding"
+            android:paddingTop="@dimen/newgroup_image"
             />
 
         <TextView
@@ -85,7 +86,7 @@
             app:layout_constraintStart_toEndOf="@id/slash"
             app:layout_constraintTop_toTopOf="parent"
             android:paddingBottom="@dimen/Comment"
-            android:paddingTop="@dimen/padding"
+            android:paddingTop="@dimen/newgroup_image"
             />
 
 <!--        app:layout_constraintBottom_toTopOf="@id/view_line"-->

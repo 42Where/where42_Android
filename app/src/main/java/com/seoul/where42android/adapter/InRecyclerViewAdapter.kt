@@ -101,6 +101,12 @@ class InRecyclerViewAdapter(
                             .error(R.drawable.nointraimage)
                             .skipMemoryCache(true)
                             .into(binding.emoji)
+
+                        if (item.location == "퇴근")
+                        {
+                            binding.emoji.borderWidth  = 0
+                        }
+
                     }
 
                 // TextView의 내용이 변경될 때마다 배경의 크기를 조절

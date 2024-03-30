@@ -162,6 +162,8 @@ class MainPageActivity : AppCompatActivity() {
 //                    binding.locationInfo.setPadding(20, 0, 20, 0)
                     binding.locationInfo.setTextColor(strokeColor)
 
+                    mainImage.borderWidth  = 0
+
                 }
                 binding.locationInfo.setPadding(20, 0, 20, 0)
             }

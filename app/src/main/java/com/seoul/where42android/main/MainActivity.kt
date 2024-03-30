@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.View.VISIBLE
+import android.webkit.CookieManager
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageButton
@@ -177,7 +178,8 @@ class MainActivity : AppCompatActivity() {
             val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
             CoroutineScope(Dispatchers.IO).launch {
                 try {
-                    val response = memberAPI.getMember(intraid)
+//                    val response = memberAPI.getMember(intraid)
+                    val response = memberAPI.getMember()
                     withContext(Dispatchers.IO) {
                         when (response.code()) {
                             200 -> {
@@ -212,7 +214,8 @@ class MainActivity : AppCompatActivity() {
             val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
             CoroutineScope(Dispatchers.IO).launch{
                 try {
-                        val response = memberAPI.getMember(intraid)
+//                        val response = memberAPI.getMember(intraid)
+                    val response = memberAPI.getMember()
                         withContext(Dispatchers.Main) {
                             if (response.isSuccessful) {
                                 when (response.code())
@@ -329,7 +332,8 @@ class MainActivity : AppCompatActivity() {
                                                         Log.e("herehere", "here4")
 
 //                                                        webView.loadUrl(modifiedString)
-                                                        webView.loadUrl("https://test.where42.kr/")
+                                                        webView.loadUrl("https://test.where42.kr/v3")
+
 //                                                        webView.loadUrl("https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=41a172bbce265c02e6c0f91cab615f90dae945f51b0308c5")
 //                                                        webView.loadUrl("http://test.where42.kr/oauth2/authorization/42seoul")
                                                     }

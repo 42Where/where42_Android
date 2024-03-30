@@ -27,6 +27,7 @@ class RetrofitConnection {
     companion object {
         // API 서버의 주소가 BASE_URL이 됩니다.
         private const val BASE_URL = "http://13.209.149.15:8080/"
+//        private const val BASE_URL = "http://test.where42.kr/"
         private var INSTANCE: Retrofit? = null
 
         fun getInstance(token: String): Retrofit {

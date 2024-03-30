@@ -18,7 +18,6 @@ import com.seoul.where42android.Base_url_api_Retrofit.Deafult_friendGroup_member
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.seoul.where42android.R
-import com.seoul.where42android.adapter.RecyclerViewAdapter_defaultList
 import com.seoul.where42android.adapter.RecyclerViewCreatGroupActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,21 +27,13 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
 
     val friendProfileList = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
 
-//    private fun getSelectedItems(): List<friendGroup_default_memberlist.friendGroup_default_memberlistItem> {
-//        val selectedItems = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
-//        val friendRecyclerView: RecyclerView = findViewById(R.id.new_gorup_friend_list)
-//        val friendRecyclerViewAdapter = friendRecyclerView.adapter as? RecyclerViewAdapter_defaultList
-//
-//        friendRecyclerViewAdapter?.let {
-//            for (item in friendProfileList) {
-//                if (item in it.checkedItems) {
-//                    selectedItems.add(item)
-//                }
-//            }
-//        }
-//
-//        return selectedItems
-//    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // 여기에 원하는 동작을 추가.
+        friendCheckedList.clearItem()
+        finish()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +45,7 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
         homeButton.setOnClickListener {
             try {
                 val intent = Intent(this, MainPageActivity::class.java)
+                friendCheckedList.clearItem()
                 startActivity(intent)
                 finish()
             } catch (e: Exception) {

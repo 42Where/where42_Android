@@ -33,7 +33,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:iconifiedByDefault="false"
-                app:queryHint="친구를 검색하세요!"
+                app:queryHint="2글자 이상 입력해주세요!"
                 android:background="@drawable/search_back_ground"
                 android:layout_marginRight="@dimen/newgroup_button_height"
                 android:layout_marginLeft="@dimen/newgroup_button_height"

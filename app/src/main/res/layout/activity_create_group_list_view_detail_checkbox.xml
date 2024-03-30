@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.94" />
+        app:layout_constraintGuide_percent="0.9"/>
 
     <CheckBox
         android:layout_width="@dimen/newgroup_layout_padding_top_bottom"

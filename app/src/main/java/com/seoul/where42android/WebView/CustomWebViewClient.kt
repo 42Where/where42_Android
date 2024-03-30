@@ -110,7 +110,7 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-//        Log.e("onPageFinished", "firsturl : ${url}")
+        Log.e("onPageFinished", "firsturl : ${url}")
         // 특정 조건을 만족하면 토큰을 가져와서 SharedPreferences에 저장
 //                && shouldSaveToken(url)
 
@@ -127,7 +127,8 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
 //        Log.e("HeaderInfo_Page", "https://test.where42.kr/의 쿠키2: $cookiess")
 
         // || checkredirect == true
-        if (url != null && (url.startsWith("https://test.where42.kr:3000")))
+//        if (url != null && (url.startsWith("https://test.where42.kr:3000")))
+        if (url != null && (url.startsWith("https://test.where42.kr/")))
         {
 //            val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
 //            Log.e("HeaderInfo_Page", "http://13.209.149.15:8080/의 쿠키2: $cookies")
@@ -138,66 +139,74 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
                 activity.findViewById<WebView>(R.id.webView).visibility = View.GONE
             }
             val cookiesMap = parseCookies(cookies)
-            val jsessionId = cookiesMap["JSESSIONID"]
-            val accessToken = cookiesMap["accessToken"]
-            val refreshToken = cookiesMap["refreshToken"]
-//            Log.e("ParsedCookies", "JSESSIONID: $jsessionId")
-//            Log.e("ParsedCookies", "accessToken: $accessToken")
-//            Log.e("ParsedCookies", "refreshToken: $refreshToken")
-//            val token = retrieveTokenFromUrl(url)
-//            Log.e("onPageFinished", "${token}")
-//            saveTokenToSharedPreferences(token)
-//            if (accessToken != null || refreshToken != null)
-//            {
-//                    saveTokenToSharedPreferences(accessToken, refreshToken, url)
-//            }
-            if (accessToken != null || refreshToken != null) {
-                saveTokenToSharedPreferences(accessToken ?: "", refreshToken ?: "", url)
-            }
-            val token1 = getTokenFromSharedPreferences(context) ?: "notoken"
-//            Log.d("token_check", "Stored Token after_custom : ${token1}")
-            //여기에 Dialog 넣어주면 될 듯
-            val contexttoken = getTokenFromSharedPreferences(context) ?: "notoken"
-//            Log.d("token_check", "Stored Token  contexttoken after_custom : ${contexttoken}")
-            val intraId = getIntraidFromSharedPreferences(context)
-            val agreement = getAgreementFromSharedPreferences((context))
 
-            val userSettings_agreement = UserSettings.getInstance().agreement
-
-            if (userSettings_agreement == false)
-            {
-                val agreeDialog = AgreeDialog(context)
-                agreeDialog.showAgreeDialog(contexttoken, intraId, agreement, context) { result ->
-                    if (result) {
-                        showMainPageActivity()
-                    } else {
-                        //동의를 하지 않았을 경우
-                        val noEditDefaultDialog = Dialog(context)
-                        noEditDefaultDialog.setContentView(R.layout.activity_editstatus_popup)
-
-
-                        val cancel = noEditDefaultDialog.findViewById<Button>(R.id.cancel)
-                        cancel.visibility = View.GONE
-
-                        val title = noEditDefaultDialog.findViewById<TextView>(R.id.title)
-                        title.text = "동의를 해야 서비스를 이용 가능합니다."
-//                            "친구 그룹은 이름을 바꿀 수 없습니다."
-
-                        noEditDefaultDialog.window?.setGravity(Gravity.CENTER)
-                        noEditDefaultDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-
-                        val submit = noEditDefaultDialog.findViewById<Button>(R.id.submit)
-                        submit.setOnClickListener {
-                            noEditDefaultDialog.dismiss()
-                        }
-                        noEditDefaultDialog.show()
+            //예외 처리
+            try {
+                    val jsessionId = cookiesMap["JSESSIONID"]
+                    val accessToken = cookiesMap["accessToken"]
+                    val refreshToken = cookiesMap["refreshToken"]
+        //            Log.e("ParsedCookies", "JSESSIONID: $jsessionId")
+        //            Log.e("ParsedCookies", "accessToken: $accessToken")
+        //            Log.e("ParsedCookies", "refreshToken: $refreshToken")
+        //            val token = retrieveTokenFromUrl(url)
+        //            Log.e("onPageFinished", "${token}")
+        //            saveTokenToSharedPreferences(token)
+        //            if (accessToken != null || refreshToken != null)
+        //            {
+        //                    saveTokenToSharedPreferences(accessToken, refreshToken, url)
+        //            }
+                    if (accessToken != null || refreshToken != null) {
+                        saveTokenToSharedPreferences(accessToken ?: "", refreshToken ?: "", url)
                     }
-                }
-            }
-            else
+                    val token1 = getTokenFromSharedPreferences(context) ?: "notoken"
+        //            Log.d("token_check", "Stored Token after_custom : ${token1}")
+                    //여기에 Dialog 넣어주면 될 듯
+                    val contexttoken = getTokenFromSharedPreferences(context) ?: "notoken"
+        //            Log.d("token_check", "Stored Token  contexttoken after_custom : ${contexttoken}")
+                    val intraId = getIntraidFromSharedPreferences(context)
+                    val agreement = getAgreementFromSharedPreferences((context))
+
+                    val userSettings_agreement = UserSettings.getInstance().agreement
+
+                    if (userSettings_agreement == false)
+                    {
+                        val agreeDialog = AgreeDialog(context)
+                        agreeDialog.showAgreeDialog(contexttoken, intraId, agreement, context) { result ->
+                            if (result) {
+                                showMainPageActivity()
+                            } else {
+                                //동의를 하지 않았을 경우
+                                val noEditDefaultDialog = Dialog(context)
+                                noEditDefaultDialog.setContentView(R.layout.activity_editstatus_popup)
+
+
+                                val cancel = noEditDefaultDialog.findViewById<Button>(R.id.cancel)
+                                cancel.visibility = View.GONE
+
+                                val title = noEditDefaultDialog.findViewById<TextView>(R.id.title)
+                                title.text = "동의를 해야 서비스를 이용 가능합니다."
+        //                            "친구 그룹은 이름을 바꿀 수 없습니다."
+
+                                noEditDefaultDialog.window?.setGravity(Gravity.CENTER)
+                                noEditDefaultDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+
+                                val submit = noEditDefaultDialog.findViewById<Button>(R.id.submit)
+                                submit.setOnClickListener {
+                                    noEditDefaultDialog.dismiss()
+                                }
+                                noEditDefaultDialog.show()
+                            }
+                        }
+                    }
+                    else
+                    {
+                        showMainPageActivity()
+                    }
+                    }
+            catch (e: Exception)
             {
-                showMainPageActivity()
+                e.printStackTrace()
             }
         }
     }
@@ -245,7 +254,9 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
     ): Boolean {
         val url = request?.url?.toString()
         // 특정 URL로의 로딩을 막기 위한 조건을 설정합니다.
-        if (url != null && url.startsWith("https://test.where42.kr:3000")) {
+        if (url != null && url.startsWith("https://test.where42.kr/"))
+//        if (url != null && url.startsWith("https://test.where42.kr:3000"))
+        {
             Log.d("WebView", "url : ${url}")
             // 해당 URL로의 로딩을 막습니다.
             return true

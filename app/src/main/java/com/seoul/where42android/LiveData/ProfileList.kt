@@ -50,7 +50,8 @@ class ProfileList private constructor(): ViewModel() {
         val retrofitAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
         viewModelScope.launch {
             try {
-                val response = retrofitAPI.getMember(intraId)
+                val response = retrofitAPI.getMember()
+//                val response = retrofitAPI.getMember(intraId)
                 if (response.isSuccessful) {
                     val member: Member? = response.body()
                     member?.let {

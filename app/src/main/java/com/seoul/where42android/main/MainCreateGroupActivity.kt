@@ -31,21 +31,7 @@ class MainCreateGroupActivity : AppCompatActivity() {
 //    private val retrofitAPI2 = RetrofitConnection.getInstance().create(GroupAddMemberlist::class.java)
 
     val friendProfileList = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
-//    private fun getSelectedItems(): List<friendGroup_default_memberlist.friendGroup_default_memberlistItem> {
-//        val selectedItems = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
-//        val friendRecyclerView: RecyclerView = findViewById(R.id.new_gorup_friend_list)
-//        val friendRecyclerViewAdapter = friendRecyclerView.adapter as? RecyclerViewAdapter_defaultList
-//
-//        friendRecyclerViewAdapter?.let {
-//            for (item in friendProfileList) {
-//                if (item in it.checkedItems) {
-//                    selectedItems.add(item)
-//                }
-//            }
-//        }
-//
-//        return selectedItems
-//    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

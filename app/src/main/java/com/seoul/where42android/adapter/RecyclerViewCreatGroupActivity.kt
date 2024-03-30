@@ -59,6 +59,7 @@ class RecyclerViewCreatGroupActivity(
                 .error(R.drawable.nointraimage)
                 .into(textViewName)
 
+
 //            textViewGrade.text = member.memberIntraName
             textViewGrade.text = member.intraName
             textViewComment.text = member.comment
@@ -71,6 +72,9 @@ class RecyclerViewCreatGroupActivity(
                 val strokeColor = Color.parseColor("#132743")
 //                    binding.locationInfo.setPadding(20, 0, 20, 0)
                 textViewLocation.setTextColor(strokeColor)
+
+
+                textViewName.borderWidth = 0
 
             }
             textViewLocation.setPadding(20, 0, 20, 0)

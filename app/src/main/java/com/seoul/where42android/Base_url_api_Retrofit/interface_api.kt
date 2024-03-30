@@ -57,7 +57,8 @@ interface JoinAPI{
 interface MemberAPI {
     @GET("v3/member")
 //    fun getMember(@Query("intraId") intraId: Int): Call<Member>
-    suspend fun getMember(@Query("intraId") intraId: Int): Response<Member>
+//    suspend fun getMember(@Query("intraId") intraId: Int): Response<Member>
+    suspend fun getMember(): Response<Member>
 
     @GET("v3/member/all")
     fun getMembers(): Call<List<Member>>
