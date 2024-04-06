@@ -22,7 +22,6 @@ class RecyclerViewCreatGroupActivity(
 ) : RecyclerView.Adapter<RecyclerViewCreatGroupActivity.ViewHolder>() {
     //checkBox
     // 각 항목의 체크 여부를 저장하기 위한 리스트
-    val checkedItems = mutableListOf<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
 
     private var checkBoxClickListener: ((Boolean, Int) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -64,8 +63,8 @@ class RecyclerViewCreatGroupActivity(
             textViewGrade.text = member.intraName
             textViewComment.text = member.comment
 
-            textViewLocation.text = member.location ?: "No comment available"
-            Log.d("location_Here", "text :  ${textViewLocation.text}")
+            textViewLocation.text = member.location
+//            Log.d("location_Here", "text :  ${textViewLocation.text}")
             if (textViewLocation.text == "퇴근") {
 
                 textViewLocation.setBackgroundResource(R.drawable.location_outcluster)

@@ -4,10 +4,7 @@ package com.seoul.where42android.Base_url_api_Retrofit
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonSyntaxException
 import okhttp3.Interceptor
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
@@ -15,10 +12,7 @@ import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import okhttp3.logging.HttpLoggingInterceptor
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Converter
-import retrofit2.Response
 import java.lang.reflect.Type
 
 
@@ -119,11 +113,11 @@ class RetrofitConnection {
 //                Log.d("Interceptor", "code ${response.code}}")
                 var responseBodyString = response.body?.string() ?: ""
 //                Log.d("Interceptor", "responseBodyString ${responseBodyString}")
-
+                val accessTokenPattern = "accessToken" // accessToken의 패턴에 따라 수정
                 //이건 토큰 재발급
                 if (url.startsWith("http://13.209.149.15:8080") && response.code == 401)
                 {
-
+//                    Log.d("Interceptor", "2")
 //                    Log.d("Interceptor", "url : ${url}")
 //                    Log.d("Interceptor", "url.startsWith(\"http://13.209.149.15:8080\") && response.code == 401")
 
@@ -157,7 +151,7 @@ class RetrofitConnection {
                 else if (url.startsWith("https://auth.42.fr"))
                 {
 //                    Log.d("Interceptor", "url.startsWith(\"https://auth.42.fr\")")
-
+//                    Log.d("Interceptor", "3")
                     return@Interceptor response.newBuilder()
                         .code(201)
                         .addHeader("redirectUrl", requestURL)
@@ -206,17 +200,44 @@ class RetrofitConnection {
                         )
 
                         val jsonString = Gson().toJson(jsonObject)
-
                         println(jsonString)
-
                     return@Interceptor response.newBuilder()
                         .code(200)
                         .body(jsonString.toResponseBody())
                         .build()
 
-
                 }
-                else {
+                //reissue
+                else if (responseBodyString.contains(accessTokenPattern))
+                {
+//                    Log.d("Interceptor", "4)3")
+//                    return@Interceptor response
+//                    val jsonObject = JSONObject(responseBodyString)
+//
+//                    val newResponseBody = ResponseBody.create("application/json".toMediaTypeOrNull(), jsonObject.toString())
+//
+//
+//
+//
+//                    val newResponse = response.newBuilder()
+//                        .code(200) // 변경하고자 하는 새로운 HTTP 코드
+//                        .message(responseBodyString)
+//                        .body(newResponseBody)// accessToken을 body로 설정
+//                        .build()
+//
+//                    return@Interceptor newResponse
+                    return@Interceptor response.newBuilder()
+                        .code(200) // 변경하고자 하는 새로운 HTTP 코드
+                        .message(responseBodyString)
+                        //.body(response.body) // 기존의 body를 그대로 사용
+//                        .body(bodyString)
+//                        .body(response.peekBody(Long.MAX_VALUE))
+                        .body(responseBodyString.toResponseBody(response.body?.contentType()))
+                        .build()
+                }
+                else
+                {
+//                    Log.d("Interceptor", "4)")
 //                    Log.d("Interceptor", "else")
 //                    Log.e("plz", "plz ${response}")
 //                    Log.e("plz", "plz body : ${response.body}")
@@ -228,7 +249,7 @@ class RetrofitConnection {
 //                    Log.d("ResponseStringAnalysis", "Double quote count: $doubleQuoteCount")
 //                    Log.d("ResponseStringAnalysis", "Curly brace count: $curlyBraceCount")
                     if (responseBodyString == "[]")
-                    {
+                    {     Log.d("Interceptor", "5")
 //                        val modifiedResponseBodyString = "{" + responseBodyString + "}"
 //                        val modifiedResponseBodyString = "{ \"data\": $responseBodyString }"
 //                        responseBodyString = modifiedResponseBodyString
@@ -237,12 +258,14 @@ class RetrofitConnection {
 //                        Log.d("plz" , " plz : here")
                     }
                     else if (doubleQuoteCount < 2 && curlyBraceCount < 2) {
+//                        Log.d("Interceptor", "6")
 //                        Log.w("ResponseStringAnalysis", "Response body does not seem to be in expected JSON format.")
                         val modifiedResponseBodyString = "{" + "\"logout\"" + ":" + "\"" + responseBodyString + "\"" + "}"
                         responseBodyString = modifiedResponseBodyString
 //                        Log.d("plz" , "responseBodyString : ${responseBodyString} ")
                     }
 
+//                    Log.d("Interceptor", "here : ${responseBodyString.toResponseBody(response.body?.contentType())}")
                     return@Interceptor response.newBuilder()
                         .code(200) // 변경하고자 하는 새로운 HTTP 코드
                         .message("CustomInterceptor: SUC")
@@ -276,90 +299,5 @@ class RetrofitConnection {
             }
         }
 
-//        class NullOnEmptyConverterFactory : Converter.Factory() {
-//            fun converterFactory() = this
-//            override fun responseBodyConverter(
-//                type: Type,
-//                annotations: Array<out Annotation>,
-//                retrofit: Retrofit) = object : Converter<ResponseBody, Any?> {
-//                val nextResponseBodyConverter = retrofit.nextResponseBodyConverter<Any?>(converterFactory(), type, annotations)
-//                override fun convert(value: ResponseBody): Any? {
-//                    Log.e("herenull", "where?")
-//                    Log.e("herenull", "value : ${value}?")
-//                    Log.e("herenull", "type : ${type}?")
-//                    Log.e("herenull", "value len : ${value.contentLength()}")
-//                    return if (value.contentLength() != 0L) {
-//                        try {
-//                            Log.e("herenull", "where?1")
-//                            Log.e("herenull", "value : ${nextResponseBodyConverter.convert(value)}")
-//                            nextResponseBodyConverter.convert(value)
-//                        } catch (e: Exception) {
-//                            Log.e("herenull", "where?2")
-//                            e.printStackTrace()
-//                            getDefaultForType(type)
-//                        }
-//                    } else {
-//                        Log.e("herenull", "where?3")
-//                        getDefaultForType(type)
-//                    }
-//                }
-//
-//                private fun getDefaultForType(type: Type): Any? {
-//                    // 여기에서 기본값을 설정하거나, 타입에 따라 다른 기본값을 설정할 수 있습니다.
-//                    // 예를 들어, 클래스 타입인 경우에는 빈 인스턴스를 생성하여 반환할 수 있습니다.
-//                    return when (type) {
-//                        String::class.java -> ""
-//                        Int::class.java -> 0
-//                        Boolean::class.java -> false
-//                        // 기타 타입에 대한 기본값을 설정할 수 있음
-//                        else -> null
-//                    }
-//
-//                }
-//
-////                override fun convert(value: ResponseBody) =
-////                    if (value.contentLength() != 0L)
-////                    {
-////                        try{
-////                            Log.e("nextResponseBodyConverter", "valuee : ${nextResponseBodyConverter}?")
-////                            Log.e("herenull", "value a: ${nextResponseBodyConverter.convert(value)}")
-////                            nextResponseBodyConverter.convert(value)
-////                        }catch (e:Exception){
-////                            e.printStackTrace()
-////                            null
-////                        }
-////                    } else{
-////                        Log.e("nextResponseBodyConverter", "valuee : ${nextResponseBodyConverter}?")
-////                        Log.e("herenull", "value a: ${nextResponseBodyConverter.convert(value)}")
-////                        null
-////                    }
-//
-//            }
-//        }
-
-    }
-}
-
-
-class RetrofitConnection_data {
-
-    companion object {
-        private const val BASE_URL = "http://13.209.149.15:8080/"
-        private var INSTANCE: Retrofit? = null
-
-        fun getInstance(): Retrofit {
-            if (INSTANCE == null) {
-                val gson = GsonBuilder()
-                    .setLenient()
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS")
-                    .create()
-
-                INSTANCE = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build()
-            }
-            return INSTANCE!!
-        }
     }
 }

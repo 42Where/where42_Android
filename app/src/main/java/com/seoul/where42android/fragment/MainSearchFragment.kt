@@ -1,10 +1,8 @@
 package com.seoul.where42android.fragment
 
 import SearchRecyclerViewAdapter
-import SearchSharedViewModel
 import SearchViewModel
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.seoul.where42android.databinding.ActivityMainSearchFragmentBinding
 import com.seoul.where42android.main.MainSearchPage
-import com.seoul.where42android.model.RecyclerOutViewModel
 import com.seoul.where42android.model.SearchRecyclerInViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.*
@@ -27,7 +24,7 @@ class MainSearchFragment(val intraName: String) : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = ActivityMainSearchFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,9 +43,9 @@ class MainSearchFragment(val intraName: String) : Fragment() {
                     CoroutineScope(Dispatchers.IO).launch {
                         searchList.forEach { searchDetail ->
                             val searchItem = SearchRecyclerInViewModel(
-                                emoji = searchDetail.image ?: "", // 각각의 필드에 맞게 값 설정
-                                intra_name = searchDetail.intraName ?: "",
-                                intra_id = searchDetail.intraId ?: 0
+                                emoji = searchDetail.image, // 각각의 필드에 맞게 값 설정
+                                intra_name = searchDetail.intraName,
+                                intra_id = searchDetail.intraId
                             )
                             itemList.add(searchItem)
                         }
@@ -83,11 +80,12 @@ class MainSearchFragment(val intraName: String) : Fragment() {
                         }
                     }
 
-                    Log.d("SaerchFragment", "SearchFragment here")
+//                    Log.d("SaerchFragment", "SearchFragment here")
                 }
             }
             else
-            {Log.d("SaerchFragment", "SearchFragment here")
+            {
+//                Log.d("SaerchFragment", "SearchFragment here")
             }
         }
         // 데이터 요청

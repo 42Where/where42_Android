@@ -9,9 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.view.View.VISIBLE
-import android.webkit.CookieManager
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageButton
@@ -27,6 +25,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import com.seoul.where42android.Base_url_api_Retrofit.reissueAPI
 import com.seoul.where42android.R
+import org.json.JSONObject
 
 class UserSettings private constructor() {
     var token: String = ""
@@ -115,7 +114,8 @@ class MainActivity : AppCompatActivity() {
             val noiton = helpDialog.findViewById<TextView>(R.id.noiton)
             noiton.setOnClickListener {
                 // 웹 페이지 주소
-                val url = "https://befitting-balaur-414.notion.site/eff5de2f978a4164b52b68ad2ca2e05a"
+//                val url = "https://befitting-balaur-414.notion.site/eff5de2f978a4164b52b68ad2ca2e05a"
+                val url = "https://holy-seatbelt-ff0.notion.site/where42-Android-d776288e21a0407dbbf1dc237063e306?pvs=4"
 
                 // 웹 페이지로 이동하는 Intent 생성
                 val intent = Intent(Intent.ACTION_VIEW)
@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity() {
 //        userSettings.token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k"
 //
 
-            val intraid: Int = intraId
+//            val intraid: Int = intraId
             val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
             CoroutineScope(Dispatchers.IO).launch {
                 try {
@@ -210,7 +210,7 @@ class MainActivity : AppCompatActivity() {
         //버튼을 눌렀을 때
         loginButton.setOnClickListener {
             val userSettings = UserSettings.getInstance()
-            val intraid : Int = intraId
+//            val intraid : Int = intraId
             val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
             CoroutineScope(Dispatchers.IO).launch{
                 try {
@@ -277,12 +277,22 @@ class MainActivity : AppCompatActivity() {
 //                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse}")
 //                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.body()}")
 //                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.code()}")
+//                                                        Log.e("Reissue_SUC", "reissue : ${reissueResponse}")
+//                                                        Log.e("Reissue_SUC", "reissue : ${reissueResponse.body()}")
+//                                                        Log.e("Reissue_SUC", "reissue : ${reissueResponse.message()}")
                                                         val reissue = reissueResponse.body()?.refreshToken
+                                                        val reissue_message = reissueResponse.message()
+                                                        val jsonObject = JSONObject(reissue_message)
+                                                        val reissueToken = jsonObject.optString("accessToken", "")
+
+
 //                                                        Log.e("Reissue_SUC", "reissue : ${reissue}")
-                                                        if (reissue != null)
+//                                                        Log.e("Reissue_SUC", "reissueToken : ${reissueToken}")
+                                                        if (reissueToken != "")
                                                         {
-                                                            userSettings.token = reissue
-                                                            saveaccesTokenToSharedPreferences(this@MainActivity, reissue)
+//                                                            Log.e("Reissue_SUC", "reissueToken2 : ${reissueToken}")
+                                                            userSettings.token = reissueToken
+                                                            saveaccesTokenToSharedPreferences(this@MainActivity, reissueToken)
 //                                                            Log.d("token_check", "here6")
 //                                                            Log.d("SUC", "SUC ${response.code()}")
                                                             val intent = Intent(this@MainActivity, MainPageActivity::class.java)
@@ -308,28 +318,28 @@ class MainActivity : AppCompatActivity() {
                                                     }
                                                 }
                                             } else {
-                                                Log.d("token_check", "here7")
-                                                //401이며 Reissue API 호출 실패 시 처리 리다이렉트로 보내야함.
-                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse}")
-                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.body()}")
-                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.headers()}")
-                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.code()}")
+//                                                Log.d("token_check", "here7")
+//                                                //401이며 Reissue API 호출 실패 시 처리 리다이렉트로 보내야함.
+//                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse}")
+//                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.body()}")
+//                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.headers()}")
+//                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.code()}")
                                                 val headers = response.headers()
                                                 val originalString = headers["redirectUrl"]
                                                 val modifiedString =
                                                     originalString?.replace("{", "")?.replace("}", "")
-                                                Log.d("SUC", "modifiedString : ${modifiedString}")
-                                                Log.e("herehere", "here1")
+//                                                Log.d("SUC", "modifiedString : ${modifiedString}")
+//                                                Log.e("herehere", "here1")
                                                 val customWebViewClient =
                                                     CustomWebViewClient(this@MainActivity, this@MainActivity)
-                                                Log.e("herehere", "here2")
+//                                                Log.e("herehere", "here2")
                                                 runOnUiThread {
-                                                    Log.e("herehere", "here3")
+//                                                    Log.e("herehere", "here3")
                                                     webView.visibility = VISIBLE
                                                     webView.webViewClient = customWebViewClient
 //                                                    webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
                                                     if (modifiedString != null) {
-                                                        Log.e("herehere", "here4")
+//                                                        Log.e("herehere", "here4")
 
 //                                                        webView.loadUrl(modifiedString)
                                                         webView.loadUrl("https://test.where42.kr/v3")
@@ -350,7 +360,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     catch (e:IOException){
-                        Log.e("fail" , " fail")
+//                        Log.e("fail" , " fail")
                     }
             }
         }

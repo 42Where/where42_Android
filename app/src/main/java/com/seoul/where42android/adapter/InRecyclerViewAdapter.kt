@@ -4,35 +4,20 @@ package com.seoul.where42android.adapter
 import SharedViewModel_GroupsMembersList
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import android.view.Gravity
-
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.seoul.where42android.R
 import com.seoul.where42android.databinding.HolderRecyclerviewInMeberListBinding
-import com.seoul.where42android.fragment.loadImage
 import com.seoul.where42android.main.MainPageActivity
 import com.seoul.where42android.model.RecyclerInViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.*
-import java.net.URL
-
 
 class InRecyclerViewAdapter(
     context: Context,
@@ -58,7 +43,7 @@ class InRecyclerViewAdapter(
 
     inner class Holder(var binding: HolderRecyclerviewInMeberListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val context: Context = binding.root.context //ViewHolder 내부에서 context를 가져옴
+
         fun bind(item: RecyclerInViewModel) {
             with(binding) {
                 optionEdit.setOnClickListener {
@@ -179,7 +164,7 @@ class InRecyclerViewAdapter(
 
             submit.setOnClickListener {
                 //여기가 친구 삭제하기 버튼 수락
-                var sharedViewModel = ViewModelProvider(context as MainPageActivity).get(
+                val sharedViewModel = ViewModelProvider(context as MainPageActivity).get(
                     SharedViewModel_GroupsMembersList::class.java
                 )
 

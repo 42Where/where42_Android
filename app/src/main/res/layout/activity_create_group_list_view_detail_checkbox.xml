@@ -63,7 +63,7 @@
             android:layout_height="@dimen/comment"
             android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
             android:background="@drawable/location_shape_another_version"
-            android:gravity="center"
+            android:gravity="bottom"
             android:clipToOutline="true"
             android:text="CX2R1S5CC"
             android:fontFamily="@font/gmarketsans_medium"

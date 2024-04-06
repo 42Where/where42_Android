@@ -1,5 +1,4 @@
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +53,7 @@ class SearchRecyclerViewAdapter(private val context: Context,
                         .error(R.drawable.nointraimage)
                         .skipMemoryCache(true)
                         .into(binding.profilePhoto)
-                    val color = Color.parseColor("#132743")
+
                     binding.intraId.text = item.intra_name
 //                    binding.Comment.text = item.comment
 //                    binding.locationInfo.text = item.location
@@ -70,11 +69,11 @@ class SearchRecyclerViewAdapter(private val context: Context,
 
             val intraNameObject = intraNameObject.getcheckFriendList()
 //            Log.d("intraNameObject", "intraNameObject : ${intraNameObject}")
-            var checkName = false
+//            var checkName = false
             for (i in intraNameObject) {
                 if (i == item.intra_id)
                 {
-                    checkName = true
+//                    checkName = true
                     binding.checkBox.isChecked = true
 
 //                    Log.d("intraNameObject", "i : ${i}, item.intra_id : ${item.intra_name}")

@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
-import android.widget.ListView
 import androidx.appcompat.widget.SearchView
 import android.widget.ImageButton
 import android.widget.TextView
@@ -69,7 +68,6 @@ object intraNameObject {
 class MainSearchPage : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
-    private lateinit var listView: ListView
 //    private lateinit var adapter: ArrayAdapter<String>
 
     lateinit var binding: ActivitySearchPageBinding
@@ -104,7 +102,7 @@ class MainSearchPage : AppCompatActivity() {
                     response: Response<List<addMembersResponse.addMembersResponseItem>>
                 ) {
                     if (response.isSuccessful) {
-                        Log.d("SearchPageAddFriend", "SearchPageAddFriend : ${response.body()}")
+//                        Log.d("SearchPageAddFriend", "SearchPageAddFriend : ${response.body()}")
                         intraNameObject.clearName()
                         intraNameObject.clearIntList()
                         for (item in response.body()!!) {
@@ -123,7 +121,7 @@ class MainSearchPage : AppCompatActivity() {
                     call: Call<List<addMembersResponse.addMembersResponseItem>>,
                     t: Throwable
                 ) {
-                    Log.d("groupmemberadd_error", "onFailure API call failed.")
+//                    Log.d("groupmemberadd_error", "onFailure API call failed.")
                     // API 요청 자체가 실패한 경우 처리
                 }
             })
@@ -172,15 +170,15 @@ class MainSearchPage : AppCompatActivity() {
         // 검색 기능 구현
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("onQueryName", "query out : ${query}")
+//                Log.d("onQueryName", "query out : ${query}")
 
                 if (!query.isNullOrEmpty() && query.length > 1) {
                     if (isValidQuery(query))
                     {
                         val Name = intraNameObject.getName()
                         if ( Name != query) {
-                            val name = query ?: ""
-                            Log.d("onQueryName", "name : ${name}")
+                            val name = query
+//                            Log.d("onQueryName", "name : ${name}")
                             supportFragmentManager.beginTransaction()
                                 .replace(binding.container.id, MainSearchFragment(name)).commit()
                             intraNameObject.setName(query)
@@ -258,18 +256,18 @@ class MainSearchPage : AppCompatActivity() {
                     flag = true
                 }
             }
-            Log.d("intraNameObject", "flag : ${flag}, intraId : ${intraId}")
+//            Log.d("intraNameObject", "flag : ${flag}, intraId : ${intraId}")
 
             // 체크박스가 체크되었을 때 하단에 버튼 표시
             // 버튼을 추가하고 필요한 동작 수행
             if (flag == false) 
             {
-                Log.d("intraNameObject", "flag : ${flag}, intraId : ${intraId}")
+//                Log.d("intraNameObject", "flag : ${flag}, intraId : ${intraId}")
                 intraNameObject.setcheckFriendList(intraId)
             }
             binding.addMember.visibility = View.VISIBLE
             binding.footer.guide.visibility = View.GONE
-            Log.d("checkBoxClicked", " checked : ${checked}, position : ${position}, intraId : ${intraId}")
+//            Log.d("checkBoxClicked", " checked : ${checked}, position : ${position}, intraId : ${intraId}")
         } else {
             // 체크박스가 해제되었을 때 하단 버튼 숨김
             // 필요한 동작 수행

@@ -20,42 +20,11 @@ import com.seoul.where42android.R
 import com.seoul.where42android.main.UserSettings
 import com.seoul.where42android.main.MainAddGroupDetailList
 import com.seoul.where42android.main.MainDeleteGroupDetailList
-import com.seoul.where42android.model.profile_list
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
-
-class ProfileDialog (private val context: Context) {
-    private val dialog = Dialog(context)
-
-    fun showProfileDialog(profile: profile_list) {
-        dialog.setContentView(R.layout.activity_profile_popup)
-
-        dialog.setCanceledOnTouchOutside(true)
-        dialog.setCancelable(true)
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window?.setGravity(Gravity.BOTTOM)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val info_intradId = dialog.findViewById<TextView>(R.id.intra_id)
-        // 다른 TextView들도 위와 같이 가져오세요.
-
-        info_intradId.text = profile.intraId
-
-        val btnDelete = dialog.findViewById<Button>(R.id.Delete)
-
-        btnDelete.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
-}
-
 
 
 class AgreeDialog (private val context: Context) {
@@ -94,19 +63,19 @@ class AgreeDialog (private val context: Context) {
             val intraIdtoInt = intraId?.toInt()?: -1
 
             //Join api 호출해야됨
-            Log.d("token_check", "api join token : ${token}")
+//            Log.d("token_check", "api join token : ${token}")
             val retrofitAPI = RetrofitConnection.getInstance(token).create(JoinAPI::class.java)
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
                         val response = retrofitAPI.join(intraIdtoInt)
                         withContext(Dispatchers.Main) {
                             if (response.isSuccessful) {
-                                Log.d("join_api", "${response.body()}")
-                                Log.d("join_api", "${response.code()}")
-                                Log.d("join_api", "${response.headers()}")
+//                                Log.d("join_api", "${response.body()}")
+//                                Log.d("join_api", "${response.code()}")
+//                                Log.d("join_api", "${response.headers()}")
 
 
-                                Log.e("join_api", "SUC")
+//                                Log.e("join_api", "SUC")
 
 //                                val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
 //                                Log.e("join_api", "http://13.209.149.15:8080/의 쿠키3: $cookies")
@@ -125,7 +94,7 @@ class AgreeDialog (private val context: Context) {
                                             callback(true)
                                         }
                                         else -> {
-                                            Log.d("join_api", "join_api_error else : ${response.code()}")
+//                                            Log.d("join_api", "join_api_error else : ${response.code()}")
                                             callback(false)
                                         }
                                     }
@@ -133,12 +102,12 @@ class AgreeDialog (private val context: Context) {
                                 }
                                 else
                                 {
-                                    Log.d("join_api", "join_api_error")
+//                                    Log.d("join_api", "join_api_error")
                                     callback(false)
                                 }
                             }
                             else {
-                                Log.e("join_api", "fail1")
+//                                Log.e("join_api", "fail1")
                                 when (response.code()){
                                     400 -> {
                                         Log.e("join_api", "fail1")
@@ -152,33 +121,11 @@ class AgreeDialog (private val context: Context) {
                             }
                         }
                     } catch (e:IOException) {
-                        Log.e ("join_check", "message : ${e.message}")
+//                        Log.e ("join_check", "message : ${e.message}")
                         callback(false)
                     }
 
                 }
-//            }
-//            val call = retrofitAPI.join(intraId?.toInt() ?: -1)
-//            call.enqueue(object : retrofit2.Callback<JoinResponse> {
-//                override fun onResponse(call: Call<JoinResponse>, response: Response<JoinResponse>) {
-//                    if (response.isSuccessful) {
-//                        val joinResponse = response.body()
-//                        // joinResponse를 이용하여 응답 처리
-//                        Log.e("joinResponse", "joinResponse : ${joinResponse}" )
-//                        callback(true)
-//                    } else {
-//                        // 서버 응답이 실패인 경우
-//                        Log.e("joinResponse", "joinResponse f: ${response}")
-//                        callback(true)
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<JoinResponse>, t: Throwable) {
-//                    Log.e("joinResponse", "joinResponse fa : ${t.message}")
-//                    // 네트워크 실패 또는 예외 발생
-//                }
-//            })
-
             agreedialog.dismiss()
 
         }

@@ -43,7 +43,7 @@ class MainCreateGroupActivity : AppCompatActivity() {
         val profileIntraId = intent.getIntExtra("profileintraIdKey", -1)
         val groupId = intent.getIntExtra("groupIdKey", -1)
         //여기로 groupid 받아옴 여기에 이제 checkbox 선택된 members 넣어주면 됨
-        Log.e("check_newGroup", "recive :  ${groupId.toString()}")
+//        Log.e("check_newGroup", "recive :  ${groupId.toString()}")
 
 
         //2. 그룹 만들기
@@ -60,12 +60,12 @@ class MainCreateGroupActivity : AppCompatActivity() {
         createGroupButton.setOnClickListener {
             sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
 //            sharedViewModel.addMembersToGroup(groupId_members)
-            Log.d("whatproblem", " members : ${friendCheckedList.getfriendCheckedList()}")
+//            Log.d("whatproblem", " members : ${friendCheckedList.getfriendCheckedList()}")
             sharedViewModel.addMembersToGroup(newgroupName.toString(), friendCheckedList.getfriendCheckedList())
             finish()
         }
 
-        Log.d("CALL", "fucking here")
+//        Log.d("CALL", "fucking here")
 
 
         //검색바 기능
@@ -114,8 +114,8 @@ class MainCreateGroupActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful)
                 {
-                    Log.d("CALL", "fucking here3")
-                    Log.d("CALL2", "API call successful. Response: $response")
+//                    Log.d("CALL", "fucking here3")
+//                    Log.d("CALL2", "API call successful. Response: $response")
                     val friendList = response.body()
                     friendList?.let { members ->
                         // 받은 멤버 데이터를 friendProfileList에 추가
@@ -138,7 +138,7 @@ class MainCreateGroupActivity : AppCompatActivity() {
                 }
                 else
                 {
-                    Log.d("API Error", "API call successful. Response: $response")
+//                    Log.d("API Error", "API call successful. Response: $response")
                 }
             }
             override fun onFailure(

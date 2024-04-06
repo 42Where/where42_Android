@@ -107,36 +107,37 @@ class MainPageActivity : AppCompatActivity() {
 //        val receivedAgreement = intent.getStringExtra("AGREEMENT_KEY")
 
 
+
         val userSettings = UserSettings.getInstance()
         val receivedToken = userSettings.token
         val receivedIntraId = userSettings.intraId
         val receivedrefreshToken = userSettings.refreshToken
         val receivedargreement = userSettings.agreement
 
-        Log.e("checkcheck", "here receivedToken : receive token ${receivedToken}")
-        Log.e("checkcheck", "here receivedrefreshToken : receive receivedrefreshToken ${receivedrefreshToken}")
-        Log.e("checkcheck", "here intraId : intraId ${receivedIntraId}")
-        Log.e("checkcheck", "here receivedargreement : intraId ${receivedargreement}")
+//        Log.e("checkcheck", "here receivedToken : receive token ${receivedToken}")
+//        Log.e("checkcheck", "here receivedrefreshToken : receive receivedrefreshToken ${receivedrefreshToken}")
+//        Log.e("checkcheck", "here intraId : intraId ${receivedIntraId}")
+//        Log.e("checkcheck", "here receivedargreement : intraId ${receivedargreement}")
 
 
 //        2. group list을 보여주기 위해 binding으로 MainFragment 설정
         supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment(receivedToken, receivedIntraId)).commit()
 
 //        2. 12_18 api를 통해 사용자 프로필 가져오기
-        Log.d("PageCheck", "here")
+//        Log.d("PageCheck", "here")
         sharedViewModel_profile = ViewModelProvider(this).get(SharedViewModel_Profile::class.java)
 
         val intraId = receivedIntraId// Replace with the actual intraId
-        Log.d("PageCheck", "intraId: ${intraId}")
+//        Log.d("PageCheck", "intraId: ${intraId}")
 
         val checkreissue = sharedViewModel_profile.getMemberData(this@MainPageActivity, intraId, receivedToken)
-        Log.d("PageCheck", "intraId: getMemberData")
-        Log.d("PageCheck", "checkreissue : ${checkreissue}")
+//        Log.d("PageCheck", "intraId: getMemberData")
+//        Log.d("PageCheck", "checkreissue : ${checkreissue}")
 
         // LiveData 객체 관찰
         sharedViewModel_profile.profileLiveData.observe(this) { member ->
             if (member != null) {
-                Log.d("PageCheck", "member responsecode : ${member.responsecode} ")
+//                Log.d("PageCheck", "member responsecode : ${member.responsecode} ")
             }
             member?.let {
                 profile = member
@@ -154,9 +155,9 @@ class MainPageActivity : AppCompatActivity() {
                 intraIdTextView.text = member.intraName
                 binding.Comment.text = member.comment
                 binding.locationInfo.text = member.location
-                Log.d("checkIocation", "lo : ${binding.locationInfo.text}")
+//                Log.d("checkIocation", "lo : ${binding.locationInfo.text}")
                 if (binding.locationInfo.text == "퇴근") {
-                    Log.d("checkIocation", "lo2 : ${binding.locationInfo.text}")
+//                    Log.d("checkIocation", "lo2 : ${binding.locationInfo.text}")
                     binding.locationInfo.setBackgroundResource(R.drawable.location_outcluster)
                     val strokeColor = Color.parseColor("#132743")
 //                    binding.locationInfo.setPadding(20, 0, 20, 0)
@@ -170,6 +171,19 @@ class MainPageActivity : AppCompatActivity() {
         }
 
 
+        val refresh = binding.swipe
+        // 새로고침 이벤트 처리
+        refresh.setOnRefreshListener {
+            // 여기에 새로고침을 위한 작업을 수행하세요.
+            val fragment = MainFragment(receivedToken, receivedIntraId) // 현재 프래그먼트를 다시 생성
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(binding.container.id, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+            // 작업이 완료되면 아래 코드를 호출하여 새로 고침을 종료합니다.
+            refresh.isRefreshing = false
+        }
+
         //1. header의 환경 설정 버튼을 눌렀을 때 -> SettingPage.kt로 가게 하기
         val headerBinding = binding.header // Change to your actual ID for the included header
         val settingButton: ImageButton = headerBinding.settingButton
@@ -180,7 +194,7 @@ class MainPageActivity : AppCompatActivity() {
                 //값 넘겨주기
                 intent.putExtra("PROFILE_DATA", profile.intraId)
                 intent.putExtra("TOKEN", receivedToken)
-                Log.e("MainSettingPage", "receivedIntraId : ${receivedIntraId}")
+//                Log.e("MainSettingPage", "receivedIntraId : ${receivedIntraId}")
                 intent.putExtra("INTRA_ID", receivedIntraId)
                 startActivity(intent)
 //                finish()
@@ -284,6 +298,24 @@ class MainPageActivity : AppCompatActivity() {
                         samegroup.dismiss()
                     }
                     samegroup.show()
+                }
+                else if (groupname.length > 20)
+                {
+                    val longgroupname = Dialog(this)
+                    longgroupname.setContentView(R.layout.activtiy_prohibition_popup)
+
+                    longgroupname.setCanceledOnTouchOutside(true)
+                    longgroupname.setCancelable(true)
+                    longgroupname.window?.setGravity(Gravity.CENTER)
+                    longgroupname.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    val textname = longgroupname.findViewById<TextView>(R.id.title)
+                    textname.text = "그룹 이름은 20이하로 해주세요."
+
+                    val btnsubmit = longgroupname.findViewById<Button>(R.id.submit)
+                    btnsubmit.setOnClickListener {
+                        longgroupname.dismiss()
+                    }
+                    longgroupname.show()
                 }
                 else
                 {

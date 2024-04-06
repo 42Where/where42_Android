@@ -8,12 +8,18 @@
             type="com.seoul.where42android.main.MainPageActivity" />
     </data>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".main.MainPageActivity"
+        android:layout_height="match_parent"
+        tools:context=".main.MainPageActivity"
     >
+
 
     <include
         android:id="@+id/header"
@@ -273,4 +279,5 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

@@ -150,8 +150,8 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
             ) {
                 if (response.isSuccessful)
                 {
-                    Log.d("CALL", "fucking here3")
-                    Log.d("CALL2", "API call successful. Response: $response")
+//                    Log.d("CALL", "fucking here3")
+//                    Log.d("CALL2", "API call successful. Response: $response")
                     val friendList = response.body()
                     friendList?.let { members ->
                         // 받은 멤버 데이터를 friendProfileList에 추가
@@ -184,7 +184,7 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
                 }
                 else
                 {
-                    Log.d("API Error", "API call successful. Response: $response")
+//                    Log.d("API Error", "API call successful. Response: $response")
                     callback(false)
                 }
             }

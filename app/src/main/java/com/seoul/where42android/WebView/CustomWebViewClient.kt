@@ -37,17 +37,17 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         super.onPageStarted(view, url, favicon)
     }
 
-    private fun shouldSaveToken(url: String?): Boolean {
-        // 특정 조건을 만족하면 토큰을 저장 예를 들어, URL에 "saveToken"이라는 문자열이 포함되어 있을 때
-//        Log.e("ag", "ag ${url?.contains("https") != true}")
-        return url?.contains("https") != true
-    }
+//    private fun shouldSaveToken(url: String?): Boolean {
+//        // 특정 조건을 만족하면 토큰을 저장 예를 들어, URL에 "saveToken"이라는 문자열이 포함되어 있을 때
+////        Log.e("ag", "ag ${url?.contains("https") != true}")
+//        return url?.contains("https") != true
+//    }
 
-    private fun retrieveTokenFromUrl(url: String?): String {
-        // 특정 방식으로 URL에서 토큰을 추출
-        // 여기서는 간단하게 URL의 일부를 토큰으로 사용하는 예시를 보여줍니다.
-        return url?.substringAfter("token=") ?: ""
-    }
+//    private fun retrieveTokenFromUrl(url: String?): String {
+//        // 특정 방식으로 URL에서 토큰을 추출
+//        // 여기서는 간단하게 URL의 일부를 토큰으로 사용하는 예시를 보여줍니다.
+//        return url?.substringAfter("token=") ?: ""
+//    }
 
     private fun saveTokenToSharedPreferences(accesstoken: String, refreshToken:String, url: String) {
         val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
@@ -92,21 +92,21 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
 
         return cookieMap
     }
-    private fun parseRedirectUri(url: String): String? {
-        // url에서 redirect_uri를 파싱하여 추출하는 로직을 작성합니다.
-        // 여기서는 간단한 예시를 보여드리겠습니다. 실제로는 더 복잡한 로직이 필요할 수 있습니다.
-//        Log.e("onPageFinished", "parseRedirectUriurl : ${url}")
-        val splitUrl = url.split("redirect_uri=")
-        if (splitUrl.size > 1) {
-            // redirect_uri= 다음에 나오는 값을 추출합니다.
-            val redirectUriPart = splitUrl[1]
-            // & 기호 이전의 부분을 가져와서 반환합니다.
-            val redirectUri = redirectUriPart.substringBefore("&")
-            // URL 디코딩을 수행하여 반환합니다.
-            return Uri.decode(redirectUri)
-        }
-        return null
-    }
+//    private fun parseRedirectUri(url: String): String? {
+//        // url에서 redirect_uri를 파싱하여 추출하는 로직을 작성합니다.
+//        // 여기서는 간단한 예시를 보여드리겠습니다. 실제로는 더 복잡한 로직이 필요할 수 있습니다.
+////        Log.e("onPageFinished", "parseRedirectUriurl : ${url}")
+//        val splitUrl = url.split("redirect_uri=")
+//        if (splitUrl.size > 1) {
+//            // redirect_uri= 다음에 나오는 값을 추출합니다.
+//            val redirectUriPart = splitUrl[1]
+//            // & 기호 이전의 부분을 가져와서 반환합니다.
+//            val redirectUri = redirectUriPart.substringBefore("&")
+//            // URL 디코딩을 수행하여 반환합니다.
+//            return Uri.decode(redirectUri)
+//        }
+//        return null
+//    }
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
@@ -257,7 +257,7 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         if (url != null && url.startsWith("https://test.where42.kr/"))
 //        if (url != null && url.startsWith("https://test.where42.kr:3000"))
         {
-            Log.d("WebView", "url : ${url}")
+//            Log.d("WebView", "url : ${url}")
             // 해당 URL로의 로딩을 막습니다.
             return true
         }
@@ -274,10 +274,10 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         val token = getTokenFromSharedPreferences(context)
         val refreshtoken = getrefreshToSharedPreferences(context)
 
-        Log.d("customWebView", "Stored Token: ${token}")
-        Log.d("customWebView", "Stored intraId: ${intraId}")
-        Log.d("customWebView", "Stored agreement: ${agreement}")
-        Log.d("customWebView", "Stored refreshtoken: ${refreshtoken}")
+//        Log.d("customWebView", "Stored Token: ${token}")
+//        Log.d("customWebView", "Stored intraId: ${intraId}")
+//        Log.d("customWebView", "Stored agreement: ${agreement}")
+//        Log.d("customWebView", "Stored refreshtoken: ${refreshtoken}")
 
 
 //        Log.d("customWebView", "Stored Token: ${token}")

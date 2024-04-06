@@ -1,13 +1,7 @@
 package com.seoul.where42android.Base_url_api_Retrofit
 
-import com.google.gson.annotations.SerializedName
-import retrofit2.http.PUT
-import java.time.LocalDateTime
 import java.util.Date
 
-
-import java.net.URLDecoder
-import java.util.Objects
 
 //search
 class searchMemberResponse : ArrayList<searchMemberResponse.searchMemberResponseItem>(){
@@ -39,10 +33,10 @@ data class JoinResponse(
     val message: String
 )
 
-data class CustomException(
-    val errorCode: Int,
-    val errorMessage: String
-)
+//data class CustomException(
+//    val errorCode: Int,
+//    val errorMessage: String
+//)
 
 //Member
 data class Member(

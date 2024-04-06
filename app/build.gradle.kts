@@ -18,9 +18,8 @@ android {
         applicationId = "com.seoul.where42android"
         minSdk = 26 //31
         targetSdk = 34
-        versionCode = 9
-        versionName = "2.1"
-
+        versionCode = 10
+        versionName = "2.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -44,7 +43,7 @@ android {
 
 dependencies {
 
-
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")

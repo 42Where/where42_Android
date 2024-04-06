@@ -44,7 +44,7 @@ class MainSettingPage : AppCompatActivity() {
         val profileIntraId: Int = receivedIntent.getIntExtra("PROFILE_DATA", -1)
         var intraId_class : Int = receivedIntent.getIntExtra("INTRA_ID", -1)
 
-        var intraId = userSettings.intraId
+        val intraId = userSettings.intraId
 //        Log.e("MainSettingPage", "intraId : ${intraId}")
 
         val token: String? = receivedIntent.getStringExtra("TOKEN")
@@ -233,21 +233,21 @@ class MainSettingPage : AppCompatActivity() {
                         onefloordialog.show()
 
 
-                        var openstudio = onefloordialog.findViewById<Button>(R.id.btnFloor1)
+                        val openstudio = onefloordialog.findViewById<Button>(R.id.btnFloor1)
                         openstudio.setOnClickListener {
                             changeSeatApi("1층 42LAB", intraId)
                             onefloordialog.dismiss()
                             dialog.dismiss()
                         }
 
-                        var openlounge = onefloordialog.findViewById<Button>(R.id.btnFloor2)
+                        val openlounge = onefloordialog.findViewById<Button>(R.id.btnFloor2)
                         openlounge.setOnClickListener {
                             changeSeatApi("1층 오픈스튜디오", intraId)
                             onefloordialog.dismiss()
                             dialog.dismiss()
                         }
 
-                        var LAB = onefloordialog.findViewById<Button>(R.id.btnFloor3)
+                        val LAB = onefloordialog.findViewById<Button>(R.id.btnFloor3)
                         LAB.setOnClickListener {
                             changeSeatApi("1층 오락실", intraId)
                             onefloordialog.dismiss()
@@ -275,49 +275,49 @@ class MainSettingPage : AppCompatActivity() {
                         second_fourfloordialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                         second_fourfloordialog.show()
 
-                        var youtubestudio = second_fourfloordialog.findViewById<Button>(R.id.btnFloor1)
+                        val youtubestudio = second_fourfloordialog.findViewById<Button>(R.id.btnFloor1)
                         youtubestudio.setOnClickListener {
                             changeSeatApi("2층 1클러스터", intraId)
                             second_fourfloordialog.dismiss()
                             dialog.dismiss()
                         }
 
-                        var oasis = second_fourfloordialog.findViewById<Button>(R.id.btnFloor2)
+                        val oasis = second_fourfloordialog.findViewById<Button>(R.id.btnFloor2)
                         oasis.setOnClickListener {
                             changeSeatApi("2층 2클러스터", intraId)
                             second_fourfloordialog.dismiss()
                             dialog.dismiss()
                         }
 
-                        var meetingroomA = second_fourfloordialog.findViewById<Button>(R.id.btnFloor3)
+                        val meetingroomA = second_fourfloordialog.findViewById<Button>(R.id.btnFloor3)
                         meetingroomA.setOnClickListener {
                             changeSeatApi("2층 회의실", intraId)
                             second_fourfloordialog.dismiss()
                             dialog.dismiss()
                         }
 
-                        var meetingroomB = second_fourfloordialog.findViewById<Button>(R.id.btnFloor4)
+                        val meetingroomB = second_fourfloordialog.findViewById<Button>(R.id.btnFloor4)
                         meetingroomB.setOnClickListener {
                             changeSeatApi("2층 직선테이블", intraId)
                             second_fourfloordialog.dismiss()
                             dialog.dismiss()
                         }
 
-                        var stonetable = second_fourfloordialog.findViewById<Button>(R.id.btnFloor5)
+                        val stonetable = second_fourfloordialog.findViewById<Button>(R.id.btnFloor5)
                         stonetable.setOnClickListener {
                             changeSeatApi("2층 원형테이블", intraId)
                             second_fourfloordialog.dismiss()
                             dialog.dismiss()
                         }
 
-                        var studyplace = second_fourfloordialog.findViewById<Button>(R.id.btnFloor6)
+                        val studyplace = second_fourfloordialog.findViewById<Button>(R.id.btnFloor6)
                         studyplace.setOnClickListener {
                             changeSeatApi("2층 사각테이블", intraId)
                             second_fourfloordialog.dismiss()
                             dialog.dismiss()
                         }
 
-                        var Terrace = second_fourfloordialog.findViewById<Button>(R.id.btnFloor7)
+                        val Terrace = second_fourfloordialog.findViewById<Button>(R.id.btnFloor7)
                         Terrace.setOnClickListener {
                             changeSeatApi("2층 테라스", intraId)
                             second_fourfloordialog.dismiss()
@@ -329,60 +329,60 @@ class MainSettingPage : AppCompatActivity() {
                     val third = dialog.findViewById<Button>(R.id.btnFloor3)
                     third.setOnClickListener {
 
-                        val third = Dialog(this)
-                        third.setContentView(R.layout.activity_editseat3floor_popup)
-                        third.setCanceledOnTouchOutside(true)
-                        third.setCancelable(true)
-                        third.window?.setGravity(Gravity.CENTER)
-                        third.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                        third.show()
+                        val thirdd = Dialog(this)
+                        thirdd.setContentView(R.layout.activity_editseat3floor_popup)
+                        thirdd.setCanceledOnTouchOutside(true)
+                        thirdd.setCancelable(true)
+                        thirdd.window?.setGravity(Gravity.CENTER)
+                        thirdd.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        thirdd.show()
 
-                        var oasis = third.findViewById<Button>(R.id.btnFloor1)
+                        val oasis = thirdd.findViewById<Button>(R.id.btnFloor1)
                         oasis.setOnClickListener {
                             changeSeatApi("3층 X1클러스터", intraId)
-                            third.dismiss()
+                            thirdd.dismiss()
                             dialog.dismiss()
                         }
 
-                        var rectangleA = third.findViewById<Button>(R.id.btnFloor2)
+                        val rectangleA = thirdd.findViewById<Button>(R.id.btnFloor2)
                         rectangleA.setOnClickListener {
                             changeSeatApi("3층 X2클러스터", intraId)
-                            third.dismiss()
+                            thirdd.dismiss()
                             dialog.dismiss()
                         }
 
-                        var rectangleB = third.findViewById<Button>(R.id.btnFloor3)
+                        val rectangleB = thirdd.findViewById<Button>(R.id.btnFloor3)
                         rectangleB.setOnClickListener {
                             changeSeatApi("3층 반원테이블", intraId)
-                            third.dismiss()
+                            thirdd.dismiss()
                             dialog.dismiss()
                         }
 
-                        var centerTable = third.findViewById<Button>(R.id.btnFloor4)
+                        val centerTable = thirdd.findViewById<Button>(R.id.btnFloor4)
                         centerTable.setOnClickListener {
                             changeSeatApi("3층 중앙테이블", intraId)
-                            third.dismiss()
+                            thirdd.dismiss()
                             dialog.dismiss()
                         }
 
-                        var straightTable = third.findViewById<Button>(R.id.btnFloor5)
+                        val straightTable = thirdd.findViewById<Button>(R.id.btnFloor5)
                         straightTable.setOnClickListener {
                             changeSeatApi("3층 직선테이블", intraId)
-                            third.dismiss()
+                            thirdd.dismiss()
                             dialog.dismiss()
                         }
 
-                        var Terrace = third.findViewById<Button>(R.id.btnFloor6)
+                        val Terrace = thirdd.findViewById<Button>(R.id.btnFloor6)
                         Terrace.setOnClickListener {
                             changeSeatApi("3층 직선테이블", intraId)
-                            third.dismiss()
+                            thirdd.dismiss()
                             dialog.dismiss()
                         }
                     }
 
                     //4층
-                    val four = dialog.findViewById<Button>(R.id.btnFloor4)
-                    four.setOnClickListener {
+                    val fourr = dialog.findViewById<Button>(R.id.btnFloor4)
+                    fourr.setOnClickListener {
                         val four = Dialog(this)
                         four.setContentView(R.layout.activity_editseat4floor_5floor_popup)
                         four.setCanceledOnTouchOutside(true)
@@ -392,35 +392,35 @@ class MainSettingPage : AppCompatActivity() {
                         four.show()
 
 
-                        var youtubestudio = four.findViewById<Button>(R.id.btnFloor1)
+                        val youtubestudio = four.findViewById<Button>(R.id.btnFloor1)
                         youtubestudio.setOnClickListener {
                             changeSeatApi("4층 3클러스터", intraId)
                             four.dismiss()
                             dialog.dismiss()
                         }
 
-                        var oasis = four.findViewById<Button>(R.id.btnFloor2)
+                        val oasis = four.findViewById<Button>(R.id.btnFloor2)
                         oasis.setOnClickListener {
                             changeSeatApi("4층 4클러스터", intraId)
                             four.dismiss()
                             dialog.dismiss()
                         }
 
-                        var meetingroomA = four.findViewById<Button>(R.id.btnFloor3)
+                        val meetingroomA = four.findViewById<Button>(R.id.btnFloor3)
                         meetingroomA.setOnClickListener {
                             changeSeatApi("4층 회의실", intraId)
                             four.dismiss()
                             dialog.dismiss()
                         }
 
-                        var meetingroomB = four.findViewById<Button>(R.id.btnFloor4)
+                        val meetingroomB = four.findViewById<Button>(R.id.btnFloor4)
                         meetingroomB.setOnClickListener {
                             changeSeatApi("4층 원형테이블", intraId)
                             four.dismiss()
                             dialog.dismiss()
                         }
 
-                        var stonetable = four.findViewById<Button>(R.id.btnFloor5)
+                        val stonetable = four.findViewById<Button>(R.id.btnFloor5)
                         stonetable.setOnClickListener {
                             changeSeatApi("4층 직선테이블", intraId)
                             four.dismiss()
@@ -429,8 +429,8 @@ class MainSettingPage : AppCompatActivity() {
                     }
 
                     //5층
-                    val five = dialog.findViewById<Button>(R.id.btnFloor5)
-                    five.setOnClickListener {
+                    val fivee = dialog.findViewById<Button>(R.id.btnFloor5)
+                    fivee.setOnClickListener {
                         val five = Dialog(this)
                         five.setContentView(R.layout.activity_editseat4floor_5floor_popup)
                         five.setCanceledOnTouchOutside(true)
@@ -439,7 +439,7 @@ class MainSettingPage : AppCompatActivity() {
                         five.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                         five.show()
 
-                        var oasis = five.findViewById<Button>(R.id.btnFloor1)
+                        val oasis = five.findViewById<Button>(R.id.btnFloor1)
                         oasis.text = "5클러스터"
                         oasis.setOnClickListener {
                             changeSeatApi("5층 5클러스터", intraId)
@@ -447,7 +447,7 @@ class MainSettingPage : AppCompatActivity() {
                             dialog.dismiss()
                         }
 
-                        var chair = five.findViewById<Button>(R.id.btnFloor2)
+                        val chair = five.findViewById<Button>(R.id.btnFloor2)
                         chair.text = "6클러스터"
                         chair.setOnClickListener {
                             changeSeatApi("5층 6클러스터", intraId)
@@ -455,7 +455,7 @@ class MainSettingPage : AppCompatActivity() {
                             dialog.dismiss()
                         }
 
-                        var stonetable = five.findViewById<Button>(R.id.btnFloor3)
+                        val stonetable = five.findViewById<Button>(R.id.btnFloor3)
                         stonetable.text = "집현전"
                         stonetable.setOnClickListener {
                             changeSeatApi("5층 집현전", intraId)
@@ -463,7 +463,7 @@ class MainSettingPage : AppCompatActivity() {
                             dialog.dismiss()
                         }
 
-                        var studyplace = five.findViewById<Button>(R.id.btnFloor4)
+                        val studyplace = five.findViewById<Button>(R.id.btnFloor4)
                         studyplace.text = "원형테이블"
                         studyplace.setOnClickListener {
                             changeSeatApi("5층 원형테이블", intraId)
@@ -471,7 +471,7 @@ class MainSettingPage : AppCompatActivity() {
                             dialog.dismiss()
                         }
 
-                        var Terrace = five.findViewById<Button>(R.id.btnFloor5)
+                        val Terrace = five.findViewById<Button>(R.id.btnFloor5)
                         Terrace.text = "직선테이블"
                         Terrace.setOnClickListener {
                             changeSeatApi("5층 직선테이블", intraId)
@@ -481,8 +481,8 @@ class MainSettingPage : AppCompatActivity() {
                     }
 
                     //옥상
-                    val rooftop_basement = dialog.findViewById<Button>(R.id.btnFloor6)
-                    rooftop_basement.setOnClickListener {
+                    val rooftop_basemented = dialog.findViewById<Button>(R.id.btnFloor6)
+                    rooftop_basemented.setOnClickListener {
                         val rooftop_basement = Dialog(this)
                         rooftop_basement.setContentView(R.layout.activity_editseatrooftop_popup)
                         rooftop_basement.setCanceledOnTouchOutside(true)
@@ -491,14 +491,14 @@ class MainSettingPage : AppCompatActivity() {
                         rooftop_basement.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                         rooftop_basement.show()
 
-                        var openstudio = rooftop_basement.findViewById<Button>(R.id.btnFloor1)
+                        val openstudio = rooftop_basement.findViewById<Button>(R.id.btnFloor1)
                         openstudio.setOnClickListener {
                             changeSeatApi("옥상 탁구대", intraId)
                             rooftop_basement.dismiss()
                             dialog.dismiss()
                         }
 
-                        var pingPong = rooftop_basement.findViewById<Button>(R.id.btnFloor2)
+                        val pingPong = rooftop_basement.findViewById<Button>(R.id.btnFloor2)
                         pingPong.setOnClickListener {
                             changeSeatApi("옥상 야외정원", intraId)
                             rooftop_basement.dismiss()

@@ -9,11 +9,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 import retrofit2.http.DELETE
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Header
 import retrofit2.http.PUT
-import java.lang.reflect.Type
-import java.util.logging.Logger
 
 
 //search
@@ -60,8 +56,8 @@ interface MemberAPI {
 //    suspend fun getMember(@Query("intraId") intraId: Int): Response<Member>
     suspend fun getMember(): Response<Member>
 
-    @GET("v3/member/all")
-    fun getMembers(): Call<List<Member>>
+//    @GET("v3/member/all")
+//    fun getMembers(): Call<List<Member>>
 
     @POST("v3/member/comment")
     fun updateMemberComment(
@@ -77,13 +73,13 @@ interface MemberAPI {
 
 
 
-interface MemberallListService {
-
-    // Define endpoint and query parameter
-    @GET("/v3/member/all")
-    fun getMemberAllList(): Call<List<MemberAll.MemberAllItem>>
-}
-
+//interface MemberallListService {
+//
+//    // Define endpoint and query parameter
+//    @GET("/v3/member/all")
+//    fun getMemberAllList(): Call<List<MemberAll.MemberAllItem>>
+//}
+//
 
 //Group
 

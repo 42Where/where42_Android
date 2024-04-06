@@ -68,7 +68,7 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
         }
 
         checkBox?.setOnCheckedChangeListener { _, isChecked ->
-            Log.d("checkbox", "isChecked : ${isChecked}")
+//            Log.d("checkbox", "isChecked : ${isChecked}")
             val adapter = binding.outRecyclerview.adapter as? OutRecyclerViewAdapter
             adapter?.setShowNonLeaveMembersOnly(isChecked)
 
@@ -79,14 +79,14 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
 
         // Observe changes in LiveData
         sharedViewModel.groupsMembersListLiveData.observe(viewLifecycleOwner) { groupList ->
-            Log.d("datachange", "datachange1")
+//            Log.d("datachange", "datachange1")
             if (checkBox?.isChecked == true)
             {
                 checkBox?.isChecked = false
             }
             if (groupList.isNotEmpty()) {
-                Log.d("checkfreind", "checkfriend")
-                Log.d("boolean_check", " checkBox?.isChecked  : ${checkBox?.isChecked }")
+//                Log.d("checkfreind", "checkfriend")
+//                Log.d("boolean_check", " checkBox?.isChecked  : ${checkBox?.isChecked }")
                 val itemList = mutableListOf<RecyclerOutViewModel>()
                 groupList.forEach { groupDetail ->
                     var count = 0
@@ -104,7 +104,7 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
                         {
                             count++
                         }
-                        Log.d("groupId", "id : ${groupDetail.groupId} location :  ${intraId.location}")
+//                        Log.d("groupId", "id : ${groupDetail.groupId} location :  ${intraId.location}")
                         innerItemList.add(recyclerInViewModel)
                     }
                     val recyclerOutViewModel = RecyclerOutViewModel(
@@ -114,7 +114,7 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
                         viewgroup = groupDetail.toggle,
                         comeCluster = count
                     )
-                    Log.d("title_check", "title_check : ${recyclerOutViewModel.title}")
+//                    Log.d("title_check", "title_check : ${recyclerOutViewModel.title}")
                     if (!friendListObject.searchGroupName(recyclerOutViewModel.title))
                     {
                         friendListObject.groupAdd(recyclerOutViewModel.title)
@@ -126,7 +126,7 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
 //                val lastItem = itemList[lastIndex]
                 val defaultGroupIndex = itemList?.indexOfFirst { it.title == "친구 목록"}
                 if (lastIndex == defaultGroupIndex) {
-                    Log.d("LastItemCheck", "친구 목록이 마지막에 있습니다.")
+//                    Log.d("LastItemCheck", "친구 목록이 마지막에 있습니다.")
                 } else {
                     val defaultFriendListremove = itemList?.firstOrNull{it.title == "친구 목록"}
                     if (defaultFriendListremove != null) {
@@ -136,12 +136,12 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
                         }
 
                     }
-                    Log.d("LastItemCheck", "친구 목록이 마지막에 없습니다.")
+//                    Log.d("LastItemCheck", "친구 목록이 마지막에 없습니다.")
                 }
 
 
 
-                Log.d("DiffUtil", "here1")
+//                Log.d("DiffUtil", "here1")
                 // Set up RecyclerView Adapter
                 val adapter = OutRecyclerViewAdapter(requireContext(), itemList, sharedViewModel)
                 binding.outRecyclerview.adapter = adapter
@@ -159,7 +159,7 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
         }
 
         sharedViewModel.groupsMembersListLiveData.observeForever { groupList ->
-            Log.d("datachange", "datachange2")
+//            Log.d("datachange", "datachange2")
             // 데이터가 변경될 때 실행되는 코드
         }
 

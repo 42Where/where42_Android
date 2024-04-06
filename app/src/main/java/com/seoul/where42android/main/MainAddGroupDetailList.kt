@@ -102,7 +102,7 @@ class MainAddGroupDetailList : AppCompatActivity() {
             val sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
 
 //            sharedViewModel.deleteFriendGroup(groupId, members)
-            Log.d("whatproblem", " members : ${friendCheckedList.getfriendCheckedList()}")
+//            Log.d("whatproblem", " members : ${friendCheckedList.getfriendCheckedList()}")
             if (groupName != null) {
 //                sharedViewModel.addMembersToGroup(groupName, members)
                 sharedViewModel.addMembersToGroup(groupName, friendCheckedList.getfriendCheckedList())
@@ -157,10 +157,10 @@ class MainAddGroupDetailList : AppCompatActivity() {
             ) {
                 if (response.isSuccessful)
                 {
-                    Log.d("CALL", "fucking here3")
-                    Log.d("CALL2", "API call successful. Response: $response")
+//                    Log.d("CALL", "fucking here3")
+//                    Log.d("CALL2", "API call successful. Response: $response")
                     val friendList = response.body()
-                    Log.d("CALL3", "friendList: ${friendList}")
+//                    Log.d("CALL3", "friendList: ${friendList}")
                     friendList?.let { members ->
                         // 받은 멤버 데이터를 friendProfileList에 추가
                         for (member in members) {
@@ -192,7 +192,7 @@ class MainAddGroupDetailList : AppCompatActivity() {
                 }
                 else
                 {
-                    Log.d("API Error", "API call successful. Response: $response")
+//                    Log.d("API Error", "API call successful. Response: $response")
                     callback(false) // 실패한 경우 false를 콜백으로 반환
                 }
             }
