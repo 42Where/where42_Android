@@ -26,9 +26,9 @@ class SharedViewModel_GroupsMembersList : ViewModel() {
 
 
     // ViewModel에서 데이터 가져오는 함수
-    fun getGroupMemberList(intraId: Int, token : String) {
+    fun getGroupMemberList(intraId: Int, token : String, Context:Context) {
 //        Log.d("ViewModel", "ViewModel");
-        viewModel.getGroupMemberList(intraId, token)
+        viewModel.getGroupMemberList(intraId, token, Context)
     }
 
     // ViewModel에서 그룹 삭제하는 함수

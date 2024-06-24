@@ -128,12 +128,12 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
 
         // || checkredirect == true
 //        if (url != null && (url.startsWith("https://test.where42.kr:3000")))
-        if (url != null && (url.startsWith("https://test.where42.kr/")))
+        if (url != null && (url.startsWith("https://where42.kr/")))
         {
 //            val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
 //            Log.e("HeaderInfo_Page", "http://13.209.149.15:8080/의 쿠키2: $cookies")
 
-            val cookies = CookieManager.getInstance().getCookie("https://test.where42.kr/")
+            val cookies = CookieManager.getInstance().getCookie("https://where42.kr/")
 //            Log.e("HeaderInfo_Page", "https://test.where42.kr/의 쿠키2: $cookies")
             activity.runOnUiThread {
                 activity.findViewById<WebView>(R.id.webView).visibility = View.GONE
@@ -254,7 +254,7 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
     ): Boolean {
         val url = request?.url?.toString()
         // 특정 URL로의 로딩을 막기 위한 조건을 설정합니다.
-        if (url != null && url.startsWith("https://test.where42.kr/"))
+        if (url != null && url.startsWith("https://where42.kr/"))
 //        if (url != null && url.startsWith("https://test.where42.kr:3000"))
         {
 //            Log.d("WebView", "url : ${url}")

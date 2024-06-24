@@ -121,7 +121,7 @@ class MainPageActivity : AppCompatActivity() {
 
 
 //        2. group list을 보여주기 위해 binding으로 MainFragment 설정
-        supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment(receivedToken, receivedIntraId)).commit()
+        supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment(receivedToken, receivedIntraId, this@MainPageActivity)).commit()
 
 //        2. 12_18 api를 통해 사용자 프로필 가져오기
 //        Log.d("PageCheck", "here")
@@ -175,7 +175,7 @@ class MainPageActivity : AppCompatActivity() {
         // 새로고침 이벤트 처리
         refresh.setOnRefreshListener {
             // 여기에 새로고침을 위한 작업을 수행하세요.
-            val fragment = MainFragment(receivedToken, receivedIntraId) // 현재 프래그먼트를 다시 생성
+            val fragment = MainFragment(receivedToken, receivedIntraId, this@MainPageActivity) // 현재 프래그먼트를 다시 생성
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(binding.container.id, fragment)
             transaction.addToBackStack(null)

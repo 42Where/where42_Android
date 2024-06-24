@@ -1,6 +1,7 @@
 package com.seoul.where42android.fragment
 
 import SharedViewModel_GroupsMembersList
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -40,11 +41,12 @@ object GroupsList {
 }
 
 
-class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
+class MainFragment(receivedToken : String, IntraId : Int, Context : Context) : Fragment() {
     private lateinit var binding: ActivityMainPageFragmentBinding
     private val token = receivedToken
     private val emptyItemList = mutableListOf<RecyclerOutViewModel>()
     private val intraid = IntraId
+    private val Context = Context
 
     private lateinit var sharedViewModel: SharedViewModel_GroupsMembersList
     override fun onCreateView(
@@ -166,25 +168,6 @@ class MainFragment(receivedToken : String, IntraId : Int) : Fragment() {
 
         // Call function to fetch data
 //        val intraId = 6 // Replace this with your memberId value
-        sharedViewModel.getGroupMemberList(intraid, token)
-    }
-
-    class MyDiffUtil(
-        private val oldList: List<RecyclerOutViewModel>,
-        private val newList: List<RecyclerOutViewModel>
-    ) : DiffUtil.Callback() {
-
-        override fun getOldListSize(): Int {
-            return oldList.size
-        }
-        override fun getNewListSize(): Int {
-            return newList.size
-        }
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].groupId == newList[newItemPosition].groupId
-        }
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition] == newList[newItemPosition]
-        }
+        sharedViewModel.getGroupMemberList(intraid, token, Context)
     }
 }

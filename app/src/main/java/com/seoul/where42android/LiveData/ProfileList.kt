@@ -1,7 +1,19 @@
 package com.seoul.where42android.LiveData
 
+import android.app.Activity
+import android.app.Dialog
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +27,8 @@ import com.seoul.where42android.Base_url_api_Retrofit.locationCustomMemberReques
 import com.seoul.where42android.Base_url_api_Retrofit.locationCustomMemberResponse
 import com.seoul.where42android.Base_url_api_Retrofit.member_custom_location
 import com.seoul.where42android.Base_url_api_Retrofit.reissueAPI
+import com.seoul.where42android.R
+import com.seoul.where42android.main.MainPageActivity
 import com.seoul.where42android.main.UserSettings
 import com.seoul.where42android.main.friendListObject
 import kotlinx.coroutines.launch
@@ -133,12 +147,6 @@ class ProfileList private constructor(): ViewModel() {
                                         Log.d("token_check", "here6")
                                         Log.d("SUC", "SUC ${response.code()}")
 
-//                                        val intent = Intent(this@MainActivity, MainPageActivity::class.java)
-//                                        intent.putExtra("TOKEN_KEY", userSettings.token)
-//                                        intent.putExtra("INTRAID_KEY", intraId)
-//                                        intent.putExtra("AGREEMENT_KEY", agreement)
-//                                        startActivity(intent)
-//                                        finish()
                                     }
                                     else
                                     {
@@ -156,37 +164,50 @@ class ProfileList private constructor(): ViewModel() {
                                 }
                             }
                         } else {
-                            //401이며 Reissue API 호출 실패 시 처리 리다이렉트로 보내야함. -> 그냥 MainActivity로 보내자
 
-//                            val intent = Intent(context, MainActivity::class.java)
-////                            intent.putExtra("TOKEN_KEY", userSettings.token)
-////                            intent.putExtra("INTRAID_KEY", intraId)
-////                            intent.putExtra("AGREEMENT_KEY", agreement)
-//                            startActivity(intent)
-//                            finish(context)
+                            val reissueapi = RetrofitConnection.getInstance(usersetting.refreshToken).create(reissueAPI::class.java)
+                            val reissueResponse = reissueapi.reissueToken()
+                            when (response.code())
+                            {
+                                //성공
+                                200 -> {
+                                    usersetting.token = reissueResponse.toString()
+                                    //화면이 새로고침
+                                    (context as Activity).recreate()
+                                }
+                                //401이며 Reissue API 호출 실패 시 처리 리다이렉트로 보내야함.
+                                401 -> {
+                                    //다시 로그인 해달라는 걸 띄우고 MainActivity로 보내자.
+                                    val dialog = Dialog(context)
+                                    dialog.setContentView(R.layout.activity_editstatus_popup)
 
-//                            Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse}")
-//                            Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.body()}")
-//                            Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.headers()}")
-//                            Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.code()}")
-//                            val headers = response.headers()
-//                            val originalString = headers["redirectUrl"]
-//                            val modifiedString =
-//                                originalString?.replace("{", "")?.replace("}", "")
-//                            Log.d("SUC", "modifiedString : ${modifiedString}")
-//                            Log.e("herehere", "here1")
-//                            val customWebViewClient =
-//                                CustomWebViewClient(this@MainActivity, this@MainActivity)
-//                            Log.e("herehere", "here2")
-//                            runOnUiThread {
-//                                Log.e("herehere", "here3")
-//                                webView.visibility = View.VISIBLE
-//                                webView.webViewClient = customWebViewClient
-//                                if (modifiedString != null) {
-//                                    Log.e("herehere", "here4")
-//                                    webView.loadUrl(modifiedString)
-//                                }
-//                            }
+                                    dialog.setCanceledOnTouchOutside(true)
+                                    dialog.setCancelable(true)
+                                    dialog.window?.setGravity(Gravity.CENTER)
+                                    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+
+                                    val editText = dialog.findViewById<TextView>(R.id.title)
+                                    editText.text = "다시 로그인을 해주세요"
+
+                                    val btnCancel = dialog.findViewById<Button>(R.id.cancel)
+                                    btnCancel.visibility = View.GONE
+                                    val btnSubmit = dialog.findViewById<Button>(R.id.submit)
+                                    btnSubmit.setOnClickListener {
+                                        //MainActivity로 보내야됨.
+//                                        위 코드에서 getLaunchIntentForPackage() 함수는 현재 앱의 런처 액티비티의 Intent를 가져옵니다. 이후에 addFlags() 함수를 사용하여 새로운 태스크를 시작하고, 기존의 태스크를 제거하는 플래그를 추가합니다. 그리고 마지막으로 startActivity() 함수를 호출하여 앱을 다시 시작합니다.
+                                        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+                                        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                        intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                        context.startActivity(intent)
+
+                                        dialog.dismiss()
+                                    }
+                                    dialog.show()
+                                }
+                            }
+
+
                         }
                     } catch (reissueException: Exception) {
                     }
@@ -203,83 +224,6 @@ class ProfileList private constructor(): ViewModel() {
         else
             return false
     }
-
-
-//
-//
-//        viewModelScope.launch {
-//            try {
-//                val response = retrofitAPI.getMember(intraId)
-//                if (response.isSuccessful) {
-//                    val member: Member? = response.body()
-//                    member?.let {
-//                        profile.value = it
-//                        Log.e("ProfileList", "${profile.value}")
-//                    } ?: run {
-//                        profile.value = Member(
-//                            intraId = -1,
-//                            intraName = "",
-//                            grade = "",
-//                            image = "",
-//                            comment = "",
-//                            inCluster = false,
-//                            agree = false,
-//                            defaultGroupId = -1,
-//                            location = ""
-//                        )
-//                        Log.d("ProfileList", "${profile.value}")
-//                    }
-//                } else {
-//                    // Handle unsuccessful response
-//                    profile.value = null
-//                    Log.d("ProfileList", "error1")
-//                }
-//            } catch (e: Exception) {
-//                profile.value = null // Setting null in case of network failure or exceptions
-//                Log.d("ProfileList", "error2")
-//                e.printStackTrace()
-//            }
-//        }
-//
-//    }
-
-
-//    fun getMemberData(intraId: Int) {
-//        viewModelScope.launch {
-//            try {
-//                val response = retrofitAPI.getMember(intraId)
-//                if (response.isSuccessful) {
-//                    val member: Member? = response.body()
-//                    member?.let {
-//                        profile.value = it
-//                        Log.e("ProfileList", "${profile.value}")
-//                    } ?: run {
-//                        profile.value = Member(
-//                            intraId = -1,
-//                            intraName = "",
-//                            grade = "",
-//                            image = "",
-//                            comment = "",
-//                            inCluster = false,
-//                            agree = false,
-//                            defaultGroupId = -1,
-//                            location = ""
-//                        )
-//                        Log.d("ProfileList", "${profile.value}")
-//                    }
-//                } else {
-//                    // Handle unsuccessful response
-//                    profile.value = null
-//                    Log.d("ProfileList", "error1")
-//                }
-//            } catch (e: Exception) {
-//                profile.value = null // Setting null in case of network failure or exceptions
-//                Log.d("ProfileList", "error2")
-//                e.printStackTrace()
-//            }
-//        }
-//
-//    }
 
     fun updateMemberComment(updateCommentRequest: UpdateCommentRequest, token: String) {
         Log.d("ProfileList", "updateMemberComment : ${profile.value}")

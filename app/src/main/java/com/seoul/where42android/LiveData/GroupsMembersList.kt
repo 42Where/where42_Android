@@ -1,9 +1,22 @@
 package com.seoul.where42android.LiveData
 
+import android.app.Activity
+import android.app.Dialog
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.seoul.where42android.Base_url_api_Retrofit.AddMembersRequest
 import com.seoul.where42android.Base_url_api_Retrofit.Deafult_friendGroup_memberlist
 import com.seoul.where42android.Base_url_api_Retrofit.GroupAddMemberlist
@@ -23,9 +36,13 @@ import com.seoul.where42android.Base_url_api_Retrofit.deleteFriendListRequest
 import com.seoul.where42android.Base_url_api_Retrofit.deleteFriendListResponse
 import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.seoul.where42android.Base_url_api_Retrofit.groups_memberlist
+import com.seoul.where42android.Base_url_api_Retrofit.reissueAPI
+import com.seoul.where42android.R
 import com.seoul.where42android.main.UserSettings
 import com.seoul.where42android.main.friendCheckedList
 import com.seoul.where42android.main.friendListObject
+
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,11 +52,6 @@ class GroupsMembersList() : ViewModel() {
     val groupsMembersListLiveData: LiveData<List<groups_memberlist.groups_memberlistItem>>
         get() = groupsMembersList
     val userSetting = UserSettings.getInstance()
-
-//    fun init(sharedViewModel: SharedViewModel_GroupsMembersList) {
-//        this.sharedViewModel = sharedViewModel
-//    }
-
 
     companion object {
         @Volatile
@@ -52,32 +64,8 @@ class GroupsMembersList() : ViewModel() {
         }
     }
 
-//    fun groupToggleChange(groupName : String, toggle : Boolean)
-//    {
-////        val groupDetail =  groupsMembersList.value?.firstOrNull{it.groupName == groupName}
-////        if (groupDetail != null) {
-////            groupDetail.toggle = toggle
-////        }
-////        groupsMembersList.value
-//
-//        // 현재의 groupsMembersList 값을 가져옴
-//        val currentList = groupsMembersList.value
-//
-//        // groupName에 해당하는 groupDetail을 찾음
-//        val groupDetail = currentList?.firstOrNull { it.groupName == groupName }
-//
-//        // groupDetail이 null이 아니면 toggle 값을 변경
-//        groupDetail?.toggle = toggle
-//
-//        // 변경된 리스트를 다시 groupsMembersList에 설정
-//        // setValue 또는 postValue를 사용하여 변경된 값을 LiveData에 할당
-//        currentList?.let {
-//            groupsMembersList.value = it
-//        }
-//    }
 
-
-    fun getGroupMemberList(intraId: Int, token: String) {
+    fun getGroupMemberList(intraId: Int, token: String, context:Context) {
         val retrofitAPI =
             RetrofitConnection.getInstance(token).create(GroupMemberListService::class.java)
         retrofitAPI.getGroupMemberList(intraId)
@@ -141,8 +129,58 @@ class GroupsMembersList() : ViewModel() {
                         groupsMembersList.value = groupList.orEmpty()
 
                     } else {
+                        groupsMembersList.value =
+                            emptyList() // Setting an empty list in case of network failure
                         // Handle unsuccessful response
-                        groupsMembersList.value = emptyList()
+                        viewModelScope.launch {
+                            try {
+                                val reissueapi =
+                                    RetrofitConnection.getInstance(userSetting.refreshToken)
+                                        .create(reissueAPI::class.java)
+                                val reissueResponse = reissueapi.reissueToken()
+                                when (reissueResponse.code()) {
+                                    // 성공
+                                    200 -> {
+                                        val reissue = reissueResponse.body()?.refreshToken
+                                        userSetting.token = reissueResponse.toString()
+                                        //화면이 새로고침
+                                        (context as Activity).recreate()
+                                    }
+                                    401 -> {
+                                        //다시 로그인 해달라는 걸 띄우고 MainActivity로 보내자.
+                                        val dialog = Dialog(context)
+                                        dialog.setContentView(R.layout.activity_editstatus_popup)
+
+                                        dialog.setCanceledOnTouchOutside(true)
+                                        dialog.setCancelable(true)
+                                        dialog.window?.setGravity(Gravity.CENTER)
+                                        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+                                        val editText = dialog.findViewById<TextView>(R.id.title)
+
+                                        editText.text = "다시 로그인을 해주세요"
+
+                                        val btnCancel = dialog.findViewById<Button>(R.id.cancel)
+                                        btnCancel.visibility = View.GONE
+                                        val btnSubmit = dialog.findViewById<Button>(R.id.submit)
+                                        btnSubmit.setOnClickListener {
+                                            //MainActivity로 보내야됨.
+//                                        위 코드에서 getLaunchIntentForPackage() 함수는 현재 앱의 런처 액티비티의 Intent를 가져옵니다. 이후에 addFlags() 함수를 사용하여 새로운 태스크를 시작하고, 기존의 태스크를 제거하는 플래그를 추가합니다. 그리고 마지막으로 startActivity() 함수를 호출하여 앱을 다시 시작합니다.
+                                            val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+                                            intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                            intent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                            context.startActivity(intent)
+
+                                            dialog.dismiss()
+                                        }
+                                        dialog.show()
+                                    }
+
+                                }
+                            } catch (e: Exception) {
+                                // 예외 발생 시 처리
+                            }
+                        }
                     }
                 }
                 override fun onFailure(

@@ -54,35 +54,12 @@ class InRecyclerViewAdapter(
                     location.setBackgroundResource(R.drawable.location_outcluster)
                     val strokeColor = Color.parseColor("#132743")
                     location.setTextColor(strokeColor)
-//                    location.setBackgroundColor(strokeColor)
                 }
-
-
-//                if (item.location != "퇴근") {
-//                    // 배경을 설정
-//                    val color = Color.parseColor("#132743")
-//                    val gradientDrawable = GradientDrawable()
-//                    gradientDrawable.setColor(color)
-//                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-//                    location.background = gradientDrawable
-////                    location.setTextColor(color)
-//                } else {
-//                    // 배경을 설정
-//                    val color = Color.parseColor("#132743")
-//                    val gradientDrawable = GradientDrawable()
-//                    gradientDrawable.cornerRadius = 40f // radius 값 설정 (단위는 pixel)
-//                    val strokeWidth = 2 // 테두리의 두께 설정
-//                    val strokeColor = Color.parseColor("#132743") // 테두리의 색상 설정
-//                    gradientDrawable.setStroke(strokeWidth, strokeColor)
-//                    location.background = gradientDrawable
-//                    location.setTextColor(color)
-//                }
 
                     binding.root.post {
                         Glide.with(binding.root.context)
                             .load(item.emoji)
                             .placeholder(R.drawable.placeholder)
-//                            .error(R.drawable.placeholder)
                             .error(R.drawable.nointraimage)
                             .skipMemoryCache(true)
                             .into(binding.emoji)
@@ -94,14 +71,14 @@ class InRecyclerViewAdapter(
 
                     }
 
-                // TextView의 내용이 변경될 때마다 배경의 크기를 조절
                 location.post {
-                    val leftPadding = 20 // 왼쪽 여백 값
-                    val rightPadding = 20 // 오른쪽 여백 값
+                    val leftPadding = 20
+                    val rightPadding = 20
                     location.setPadding(leftPadding, 0, rightPadding, 0)
                     adjustBackgroundSizeWithPadding(location, leftPadding, rightPadding)
                 }
                 }
+
                 binding.model = item
             }
         }
@@ -199,15 +176,5 @@ class InRecyclerViewAdapter(
             }
         }
     }
-
-//    fun countNonRetiredLocations(): Int {
-//        var count = 0 // 퇴근이 아닌 위치에 대한 카운터 변수 초기화
-//        for (item in itemList) {
-//            if (item.location != "퇴근") { // 위치가 "퇴근"이 아닌 경우
-//                count++ // 카운터 증가
-//            }
-//        }
-//        return count // 카운터 반환
-//    }
 
 

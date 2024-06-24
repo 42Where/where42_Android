@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.seoul.where42android.Base_url_api_Retrofit.MemberAPI
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.WebView.CustomWebViewClient
@@ -94,6 +95,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //다크 모드 제한 코드
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
 
         //help Button
@@ -261,40 +264,21 @@ class MainActivity : AppCompatActivity() {
                                 {
                                     401 -> {
                                         try {
-//                                            Log.d("token_check", "here4")
-//                                            Log.e("Reissue_SUC", "refreshtoken : ${refreshtoken}")
                                             val reissueapi = RetrofitConnection.getInstance(refreshtoken).create(reissueAPI::class.java)
                                             val reissueResponse = reissueapi.reissueToken()
-//                                            Log.d("token_check", "reissueResponse : ${reissueResponse.headers()}")
-//                                            Log.d("token_check", "reissueResponse : ${reissueResponse.body()}")
-//                                            Log.d("token_check", "reissueResponse : ${reissueResponse.code()}")
                                             if (reissueResponse.isSuccessful)
                                             {
                                                 when (reissueResponse.code())
                                                 {
                                                     200 -> {
-//                                                        Log.d("token_check", "here5")
-//                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse}")
-//                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.body()}")
-//                                                        Log.e("Reissue_SUC", "reissueResponse : ${reissueResponse.code()}")
-//                                                        Log.e("Reissue_SUC", "reissue : ${reissueResponse}")
-//                                                        Log.e("Reissue_SUC", "reissue : ${reissueResponse.body()}")
-//                                                        Log.e("Reissue_SUC", "reissue : ${reissueResponse.message()}")
                                                         val reissue = reissueResponse.body()?.refreshToken
                                                         val reissue_message = reissueResponse.message()
                                                         val jsonObject = JSONObject(reissue_message)
                                                         val reissueToken = jsonObject.optString("accessToken", "")
-
-
-//                                                        Log.e("Reissue_SUC", "reissue : ${reissue}")
-//                                                        Log.e("Reissue_SUC", "reissueToken : ${reissueToken}")
                                                         if (reissueToken != "")
                                                         {
-//                                                            Log.e("Reissue_SUC", "reissueToken2 : ${reissueToken}")
                                                             userSettings.token = reissueToken
                                                             saveaccesTokenToSharedPreferences(this@MainActivity, reissueToken)
-//                                                            Log.d("token_check", "here6")
-//                                                            Log.d("SUC", "SUC ${response.code()}")
                                                             val intent = Intent(this@MainActivity, MainPageActivity::class.java)
                                                             intent.putExtra("TOKEN_KEY", userSettings.token)
                                                             intent.putExtra("INTRAID_KEY", intraId)
@@ -308,42 +292,25 @@ class MainActivity : AppCompatActivity() {
                                                             saveaccesTokenToSharedPreferences(this@MainActivity, "notoken")
                                                         }
                                                     }
-                                                    // 추가적인 상태 코드에 대한 처리 필요
                                                     else ->
                                                     {
-//                                                        Log.d("token_check", "here6")
-//                                                        Log.e("Reissue_SUC", "reissueResponse fail : ${reissueResponse}")
-//                                                        Log.e("Reissue_SUC", "reissueResponse fail: ${reissueResponse.code()}")
                                                         // 기본적으로 어떻게 처리할지 작성
                                                     }
                                                 }
                                             } else {
-//                                                Log.d("token_check", "here7")
 //                                                //401이며 Reissue API 호출 실패 시 처리 리다이렉트로 보내야함.
-//                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse}")
-//                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.body()}")
-//                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.headers()}")
-//                                                Log.e("Reissue_SUC", "reissueResponse fail1: ${reissueResponse.code()}")
                                                 val headers = response.headers()
                                                 val originalString = headers["redirectUrl"]
                                                 val modifiedString =
                                                     originalString?.replace("{", "")?.replace("}", "")
-//                                                Log.d("SUC", "modifiedString : ${modifiedString}")
-//                                                Log.e("herehere", "here1")
                                                 val customWebViewClient =
                                                     CustomWebViewClient(this@MainActivity, this@MainActivity)
-//                                                Log.e("herehere", "here2")
                                                 runOnUiThread {
-//                                                    Log.e("herehere", "here3")
                                                     webView.visibility = VISIBLE
                                                     webView.webViewClient = customWebViewClient
-//                                                    webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
                                                     if (modifiedString != null) {
-//                                                        Log.e("herehere", "here4")
-
-//                                                        webView.loadUrl(modifiedString)
-                                                        webView.loadUrl("https://test.where42.kr/v3")
-
+                                                        webView.loadUrl("https://where42.kr/v3")
+//                                                        webView.loadUrl("https://test.where42.kr/v3")
 //                                                        webView.loadUrl("https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=41a172bbce265c02e6c0f91cab615f90dae945f51b0308c5")
 //                                                        webView.loadUrl("http://test.where42.kr/oauth2/authorization/42seoul")
                                                     }
