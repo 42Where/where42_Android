@@ -17,9 +17,9 @@ android {
     defaultConfig {
         applicationId = "com.seoul.where42android"
         minSdk = 26 //31
-        targetSdk = 34
-        versionCode = 11
-        versionName = "2.3"
+        targetSdk = 33
+        versionCode = 12
+        versionName = "2.4"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
