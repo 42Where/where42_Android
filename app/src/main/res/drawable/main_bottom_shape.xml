@@ -8,7 +8,7 @@
 <!--&lt;!&ndash;            <corners android:topLeftRadius="-100dp" android:topRightRadius="-100dp"/>&ndash;&gt;-->
 <!--        </shape>-->
 <!--    </item>-->
-     아랫부분은 사각형 모양으로 유지하는 Shape Drawable
+<!--     아랫부분은 사각형 모양으로 유지하는 Shape Drawable-->
     <item>
         <shape android:shape="rectangle">
             <solid android:color="#132743"/>

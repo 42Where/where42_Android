@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="model"
+            type="com.seoul.where42android.model.RecyclerOutViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/Comment"
+        android:id="@+id/pr"
+        >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="#30132743"
+                android:layout_centerInParent="true"
+                app:layout_constraintTop_toTopOf="@id/pr" />
+
+
+<!--        android:paddingTop="@dimen/location_info"-->
+<!--        android:paddingTop="@dimen/padding"-->
+        <TextView
+            android:id="@+id/text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{model.title}"
+            android:paddingStart="@dimen/newgroup_image"
+            android:paddingBottom="@dimen/CircleImageView_border"
+            android:paddingTop="@dimen/newgroup_image"
+            android:textColor="#132743"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:gravity="bottom"
+            android:textSize="@dimen/group_font"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+<!--        퇴근 안 함 사람 리스트-->
+        <TextView
+            android:id="@+id/numerator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:textColor="#132743"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/group_font"
+            android:gravity="bottom"
+            app:layout_constraintStart_toEndOf="@id/text_view"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingStart="@dimen/location_info"
+            android:paddingBottom="@dimen/Comment"
+            android:paddingTop="@dimen/newgroup_image"
+            />
+
+        <TextView
+            android:id="@+id/slash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:text="/"
+            android:textColor="#132743"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/group_font"
+            app:layout_constraintStart_toEndOf="@id/numerator"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="@dimen/Comment"
+            android:paddingTop="@dimen/newgroup_image"
+            />
+
+        <TextView
+            android:id="@+id/denominator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:textColor="#132743"
+            android:gravity="bottom"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/group_font"
+            app:layout_constraintStart_toEndOf="@id/slash"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="@dimen/Comment"
+            android:paddingTop="@dimen/newgroup_image"
+            />
+
+<!--        app:layout_constraintBottom_toTopOf="@id/view_line"-->
+            <LinearLayout
+                android:layout_width="@dimen/newgroup_button_width"
+                android:layout_height="@dimen/newgroup_button_height"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/view_line"
+                android:gravity="center" >
+
+                <ImageButton
+                    android:id="@+id/group_edit"
+                    android:layout_width="@dimen/option_buttons_w"
+                    android:layout_height="@dimen/option_buttons_h"
+                    android:layout_marginEnd="@dimen/newgroup_image"
+                    android:paddingTop="@dimen/padding_pencil"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/pencil_icon" />
+
+                <ImageButton
+                    android:id="@+id/group_toggle"
+                    android:layout_width="@dimen/option_buttons_w"
+                    android:layout_height="@dimen/option_buttons_h"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/fold_icon" />
+            </LinearLayout>
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="#30132743"
+            android:layout_centerInParent="true"
+            app:layout_constraintBottom_toBottomOf="@id/text_view"
+            android:visibility="gone"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/inner_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/text_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

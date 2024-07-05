@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/constraintLayout">
 
 <!--16/1280=0.012-->
     <androidx.constraintlayout.widget.Guideline
@@ -56,14 +57,24 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.658" />
 
-    <ImageView
+<!--    <ImageView-->
+<!--        android:id="@+id/help_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintHeight_default="percent"-->
+<!--        app:layout_constraintHeight_percent="0.0484"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:src="@drawable/help_button"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/guideline2"-->
+<!--        app:layout_constraintTop_toTopOf="@id/guideline1" />-->
+
+    <ImageButton
         android:id="@+id/help_button"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.0484"
-        android:adjustViewBounds="true"
+        android:layout_width="@dimen/header_setting_btn"
+        android:layout_height="@dimen/header_setting_btn"
         android:src="@drawable/help_button"
+        android:padding="0sp"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintTop_toTopOf="@id/guideline1" />
 
@@ -116,6 +127,7 @@
         app:layout_constraintTop_toBottomOf="@id/guideline6"/>
 
     <ImageButton
+        android:id="@+id/loginbutton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
@@ -130,5 +142,22 @@
         app:layout_constraintTop_toTopOf="@id/guideline7"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.4218" />
+
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+<!--    <WebView-->
+<!--        android:id="@+id/webView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/loginbutton"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintBottom_toBottomOf="parent" />-->
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/editstatus_layout_width"
+    android:layout_height="@dimen/editseat1floor_height"
+    android:background="@drawable/center_popup_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="장소를 선택해주세요"
+        android:layout_marginTop="@dimen/profile_popup_layout_height_paddingTop"
+        android:textColor="#132743"
+        android:textSize="@dimen/create_group_button_textsize"
+        android:fontFamily="@font/gmarketsans_bold" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.51" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.06" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.53" />
+
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginBottom="@dimen/main_profile_card_padding"
+        android:gravity="center"
+        android:layout_width="@dimen/profile_popup_detail_layout_height"
+        android:layout_height="48dp"
+        style="@style/RoundedButton"
+        android:textSize="@dimen/create_group_button_textsize"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:id="@+id/btnFloor1"
+        android:text="1층"
+        app:layout_constraintBottom_toTopOf="@id/btnFloor2"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        />
+
+    <android.widget.Button
+        android:id="@+id/btnFloor2"
+        android:gravity="center"
+        android:layout_width="@dimen/profile_popup_detail_layout_height"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="@dimen/create_group_button_textsize"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="2층"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        app:layout_constraintTop_toBottomOf="@id/guideline_horizontal"
+        />
+
+    <android.widget.Button
+        android:layout_marginTop="@dimen/main_profile_card_padding"
+        android:id="@+id/btnFloor3"
+        android:gravity="center"
+        android:layout_width="@dimen/profile_popup_detail_layout_height"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="@dimen/create_group_button_textsize"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="3층"
+        app:layout_constraintTop_toBottomOf="@id/btnFloor2"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+        />
+
+    <android.widget.Button
+        android:layout_marginBottom="@dimen/main_profile_card_padding"
+        android:id="@+id/btnFloor4"
+        android:gravity="center"
+        android:layout_width="@dimen/profile_popup_detail_layout_height"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="@dimen/create_group_button_textsize"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="4층"
+        app:layout_constraintBottom_toTopOf="@id/btnFloor5"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical2"
+        />
+
+    <android.widget.Button
+        android:id="@+id/btnFloor5"
+        android:gravity="center"
+        android:layout_width="@dimen/profile_popup_detail_layout_height"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="@dimen/create_group_button_textsize"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="5층"
+        app:layout_constraintBottom_toTopOf="@id/guideline_horizontal"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical2"
+        />
+
+    <android.widget.Button
+        android:layout_marginTop="@dimen/main_profile_card_padding"
+        android:id="@+id/btnFloor6"
+        android:gravity="center"
+        android:layout_width="@dimen/profile_popup_detail_layout_height"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="@dimen/create_group_button_textsize"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="옥상"
+        app:layout_constraintTop_toBottomOf="@id/btnFloor5"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical2"
+        />
+
+    <android.widget.Button
+        android:layout_marginTop="@dimen/main_profile_card_padding"
+        android:id="@+id/btnFloor7"
+        android:gravity="center"
+        android:layout_width="@dimen/profile_popup_detail_layout_height"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButton"
+        android:textSize="@dimen/create_group_button_textsize"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="지하"
+        app:layout_constraintTop_toBottomOf="@id/btnFloor6"
+        app:layout_constraintStart_toEndOf="@id/guideline_vertical2"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

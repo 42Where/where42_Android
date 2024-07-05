@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="model"
+            type="com.seoul.where42android.model.RecyclerInViewModel"
+            />
+    </data>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profile_card"
+        >
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+
+
+<!--        CircleImageView guideLine-->
+<!--        30 / 720 = 0.0416-->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.042" />
+
+<!--        android:src="@{model.emoji}"-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/emoji"
+            android:layout_width="@dimen/profile_image"
+            android:layout_height="@dimen/profile_image"
+            android:src="@{model.emoji}"
+            app:layout_constraintStart_toEndOf="@id/guideline1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:civ_border_color="#95FFB5B5"
+            app:civ_border_overlay="true"
+            app:civ_border_width="2dp"
+            />
+
+<!--        android:text="@{model.intra_id}"-->
+        <TextView
+            android:id="@+id/intra_name"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/intra_ID"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
+            android:text="@{model.intra_name}"
+            android:textSize="@dimen/font_small"
+            android:gravity="bottom"
+            android:fontFamily="@font/gmarketsans_bold"
+            app:layout_constraintStart_toEndOf="@id/emoji"
+            app:layout_constraintBottom_toTopOf="@id/guideline" />
+
+<!--        android:text="코멘트코멘트코멘트"-->
+<!--        android:text="@{model.comment}"-->
+        <TextView
+            android:id="@+id/text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/comment"
+            android:gravity="center"
+            android:text="@{model.comment}"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/font_small"
+            app:layout_constraintStart_toEndOf="@id/emoji"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+
+            />
+
+<!--        android:text="CX2R1S5"-->
+<!--        android:text="@{model.location}"-->
+<!--        android:layout_height="@dimen/location_h"-->
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/comment"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
+            android:background="@drawable/location_shape_another_version"
+            android:gravity="bottom"
+            android:clipToOutline="true"
+            android:text="@{model.location}"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textColor="#FCFDFF"
+            android:textSize="@dimen/font_small"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/intra_name"
+            app:layout_constraintBottom_toTopOf="@id/guideline"/>
+
+        <android.widget.ImageButton
+            android:layout_width="@dimen/list_padding_start_end"
+            android:layout_height="@dimen/list_padding_start_end"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:background="@drawable/option_button"
+            android:textSize="@dimen/filter_available_font"
+            android:layout_marginRight="@dimen/newgroup_button_padding"
+            android:id="@+id/option_edit"
+            android:buttonTint="#132743"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

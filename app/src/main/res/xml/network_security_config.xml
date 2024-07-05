@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<domain-config cleartextTrafficPermitted="true">-->
+<!--    <domain includeSubdomains="true">13.209.149.15</domain>-->
+<!--    <domain includeSubdomains="true">api.xxx.com</domain>-->
+<!--</domain-config>-->
+<network-security-config>
+<!--    <base-config cleartextTrafficPermitted="true" />-->
+<!--    <domain-config cleartextTrafficPermitted="false">-->
+<!--        <domain includeSubdomains="true">where42.kr</domain>-->
+<!--    </domain-config>-->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">where42.kr</domain>
+        <domain includeSubdomains="true">13.209.149.15</domain>
+    </domain-config>
+</network-security-config>

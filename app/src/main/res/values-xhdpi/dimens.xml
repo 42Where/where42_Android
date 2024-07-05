@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    list_view_detail-->
-    <dimen name="profile_card">49dp</dimen>
-    <dimen name="profile_card_padding">8dp</dimen>
-    <dimen name="profile_image">32dp</dimen>
-    <dimen name="intra_ID">14dp</dimen>
-    <dimen name="location_w">83.5dp</dimen>
-    <dimen name="location_h">18dp</dimen>
-    <dimen name="comment">14dp</dimen>
-    <dimen name="see_more">12dp</dimen>
-    <dimen name="font_small">12sp</dimen>
     <!--    activity_main_page-->
-    <dimen name="main_profile_card">96dp</dimen>
+    <dimen name="main_profile_card">86.5dp</dimen>
     <dimen name="main_profile_card_padding">16dp</dimen>
-    <dimen name="main_profile_image">64dp</dimen>
-    <dimen name="main_intra_ID">18.5dp</dimen>
-    <dimen name="main_location_w">99dp</dimen>
-    <dimen name="main_location_h">20dp</dimen>
+
+    <dimen name="main_profile_image">56dp</dimen>
+
+    <dimen name="main_intra_ID_width">71.5dp</dimen>
+    <dimen name="main_intra_ID_height">18.5dp</dimen>
+
+
+    <dimen name="main_location_w">71.5dp</dimen>
+    <dimen name="main_location_h">16dp</dimen>
+
     <dimen name="main_comment">14dp</dimen>
-    <dimen name="font_medium">16sp</dimen>
+
+    <dimen name="font_medium_change">12sp</dimen>
+
+
+    <dimen name="CircleImageView_border">2dp</dimen>
+
+    <dimen name="newgroup_image">8dp</dimen>
+    <dimen name="newgroup_image_paddingLeft">9.4dp</dimen>
+
+
+    <dimen name="button_text_top">1.3dp</dimen>
+
+
+
     <dimen name="buttons_w">173dp</dimen>
     <dimen name="buttons_h">18dp</dimen>
     <dimen name="new_group_w">57dp</dimen>
@@ -28,16 +37,42 @@
     <dimen name="filter_available_h">18dp</dimen>
     <dimen name="filter_available_font">10sp</dimen>
     <dimen name="list_titlebar_h">28dp</dimen>
-    <dimen name="group_font">14sp</dimen>
+
+
+
+    <dimen name="intra_name">8dp</dimen>
+    <dimen name="location_info">4dp</dimen>
+    <dimen name="Comment">2dp</dimen>
+    <dimen name="checkBox">10dp</dimen>
+
+    <!--    <dimen name="group_font">14sp</dimen>-->
+    <dimen name="group_font">10sp</dimen>
+    <!--    <dimen name="group_font_count">10sp</dimen>-->
+
     <dimen name="friend_font">10sp</dimen>
     <dimen name="list_padding_start_end">12dp</dimen>
     <dimen name="list_padding_top_bottom">6dp</dimen>
     <dimen name="divider">1dp</dimen>
-    <dimen name="option_buttons_w">8dp</dimen>
-    <dimen name="option_buttons_h">8dp</dimen>
+    <dimen name="option_buttons_w">10.5dp</dimen>
+    <dimen name="option_buttons_h">10.5dp</dimen>
+
+    <!--    list_view_detail-->
+
+    <dimen name="intra_ID">14dp</dimen>
+    <dimen name="location_w">83.5dp</dimen>
+    <dimen name="location_h">18dp</dimen>
+    <dimen name="comment">14dp</dimen>
+    <dimen name="see_more">12dp</dimen>
+
+
 
 
     <!--    세팅 페이지 버튼-->
+
+    <dimen name="setting_page_text_setting_width">162dp</dimen>
+    <dimen name="setting_page_text_setting_height">62.5dp</dimen>
+    <dimen name="setting_page_text_size">32sp</dimen>
+
     <dimen name="setting_width">148dp</dimen>
     <dimen name="setting_height">57dp</dimen>
     <dimen name="setting_button_text">24sp</dimen>
@@ -45,7 +80,8 @@
     <!--    header-->
     <dimen name="layout_height_header">32dp</dimen>
     <dimen name="layout_height_padding">6dp</dimen>
-    <dimen name="where42_logo_width">87dp</dimen>
+<!--    <dimen name="where42_logo_width">87dp</dimen>-->
+    <dimen name="where42_logo_width">66dp</dimen>
     <dimen name="where42_logo_height">21dp</dimen>
     <dimen name="header_setting_btn">24dp</dimen>
 
@@ -60,7 +96,15 @@
     <!--    new_group_popup-->
     <dimen name="newgroup_layout_width">247.5dp</dimen>
     <dimen name="newgroup_layout_height">106dp</dimen>
+    <dimen name="editstatus_layout_width">200dp</dimen>
+    <dimen name="editstatus_layout_height">74dp</dimen>
+
+
+    <dimen name="newgroup_layout_padding_bottom">21.3dp</dimen>
+    <dimen name="newgroup_layout_padding_top">16dp</dimen>
+
     <dimen name="newgroup_layout_padding_top_bottom">16dp</dimen>
+
     <dimen name="newgroup_layout_padding_start_end">24dp</dimen>
     <dimen name="newgroup_textsize">10sp</dimen>
     <dimen name="edittext_layout_width">199.5dp</dimen>
@@ -78,4 +122,67 @@
     <!--    create_group-->
     <dimen name="create_group_button_height">44dp</dimen>
     <dimen name="create_group_button_textsize">14sp</dimen>
+
+    <!--    holder_recylcer_in_member_list.xml-->
+    <dimen name="profile_image">32dp</dimen>
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="profile_card">42dp</dimen>
+
+    <!--    activity_editgroup_popup-->
+    <dimen name="editgroup_layout_height">152dp</dimen>
+    <dimen name="groupname_textview_height">26dp</dimen>
+    <dimen name="groupname_textsize">9sp</dimen>
+    <dimen name="group_Button_height">42dp</dimen>
+
+    <!--    activiy_profile_popup.xml-->
+    <dimen name="profile_popup_layout_height">90dp</dimen>
+    <dimen name="profile_popup_layout_height_paddingTop">14dp</dimen>
+
+
+    <dimen name="profile_popup_detail_layout_height">80dp</dimen>
+
+    <!--    actvitiy_editgroupmember_popup.xml-->
+    <dimen name="editgroupmember_button_width">85dp</dimen>
+    <dimen name="editgroupmember_button_height">35dp</dimen>
+
+    <!--activity_deletegroup_detail_list-->
+    <dimen name="groupname_textsize_deletegroup">16sp</dimen>
+
+    <!--    activity_profile_popup-->
+    <dimen name="activity_profile_popup_height">100dp</dimen>
+    <dimen name="activity_profile_popup_profile_height">54dp</dimen>
+    <dimen name="activity_profile_popup_emoji_width">50dp</dimen>
+    <dimen name="activity_profile_popup_emoji_civ_border_width">1.4dp</dimen>
+    <dimen name="activity_profile_popup_textview_marginStart">5.4dp</dimen>
+
+    <!--    actiivty_help_pop.xml-->
+    <dimen name="help_popup_width">268dp</dimen>
+    <dimen name="help_popup_height">210dp</dimen>
+    <dimen name="help_popup_font">20sp</dimen>
+    <dimen name="help_popup_font_small">8sp</dimen>
+    <dimen name="help_popup_gamil_width">154dp</dimen>
+
+    <!--    activity_editseat1fllor_popup.xml-->
+    <dimen name="editseat1floor_height">276.5dp</dimen>
+
+    <!--    activity_editseat2fllor_popup.xml-->
+    <dimen name="editseat2floor_button_width">86dp</dimen>
+
+    <!--    main_search_fragment.xml-->
+    <dimen name="noitems_marginTop">228dp</dimen>
+
+    <!--    activity_profile_agree.xml-->
+    <dimen name="agree_height">231dp</dimen>
+    <dimen name="agree_text_size_9">6sp</dimen>
+
+    <!--    activity_prohibition_smalltext_popup.xml-->
+    <dimen name="prohibition_smalltext_width">180dp</dimen>
+    <dimen name="prohibition_smalltext_height">88dp</dimen>
+
+
+    <!--    search_page.xml-->
+    <dimen name="add_member_width_height">46dp</dimen>
+
+    <dimen name="padding">5.4dp</dimen>
+    <dimen name="padding_pencil">1dp</dimen>
 </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#CCCCCC" /> <!-- 눌렀을 때 색상 -->
+        </shape>
+    </item>
+    <!-- 기본 배경색 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" /> <!-- 기본 배경색 -->
+        </shape>
+    </item>
+</selector>

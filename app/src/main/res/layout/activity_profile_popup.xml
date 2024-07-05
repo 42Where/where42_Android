@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/activity_profile_popup_height"
+    android:background="@drawable/bottom_popup_background"
+    android:paddingTop="@dimen/profile_popup_layout_height_paddingTop"
+    >
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_profile_popup_profile_height"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/profile"
+        >
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+
+<!--        android:layout_marginLeft="12dp"-->
+<!--        app:civ_border_width="2dp"-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/emoji"
+            android:layout_width="@dimen/activity_profile_popup_emoji_width"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/newgroup_image"
+            android:src="@drawable/profile_photo_example"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:civ_border_color="#95FFB5B5"
+            app:civ_border_overlay="true"
+            app:civ_border_width="@dimen/activity_profile_popup_emoji_civ_border_width"
+            />
+
+        <TextView
+            android:id="@+id/intra_id"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/intra_ID"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
+            android:text="jaeyojun"
+            android:textSize="@dimen/font_small"
+            android:gravity="bottom"
+            android:fontFamily="@font/gmarketsans_bold"
+            app:layout_constraintStart_toEndOf="@id/emoji"
+            app:layout_constraintBottom_toTopOf="@id/guideline" />
+
+        <!--        android:text="@{model.intra_id}"-->
+        <!--        android:text="코멘트코멘트코멘트"-->
+        <!--        android:text="@{model.comment}"-->
+        <TextView
+            android:id="@+id/text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/comment"
+            android:gravity="center"
+            android:text="hello"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textSize="@dimen/font_small"
+            app:layout_constraintStart_toEndOf="@id/emoji"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+
+            />
+
+        <!--        android:text="CX2R1S5"-->
+        <!--        android:text="@{model.location}"-->
+        <!--        android:layout_height="@dimen/location_h"-->
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/comment"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
+            android:background="@drawable/location_shape"
+            android:gravity="center"
+            android:clipToOutline="true"
+            android:text="c1r8s4"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textColor="#FCFDFF"
+            android:textSize="@dimen/font_small"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/intra_id"
+            app:layout_constraintBottom_toTopOf="@id/guideline"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    android:paddingStart="24dp"-->
+<!--    android:layout_height="48dp"-->
+    <android.widget.Button
+        android:id="@+id/Delete"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_header_layout_height_toolbar"
+        android:paddingStart="@dimen/newgroup_layout_padding_top"
+        android:background="@drawable/activity_editgroup_button_selector"
+        app:layout_constraintTop_toBottomOf="@id/profile"
+        android:text="친구 삭제하기"
+        android:textColor="#B30000"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/group_font"
+        android:fontFamily="@font/gmarketsans_medium"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
