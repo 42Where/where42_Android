@@ -137,6 +137,10 @@ class MainActivity : AppCompatActivity() {
         val loginButton = findViewById<ImageButton>(R.id.loginbutton)
         webView.settings.javaScriptEnabled = true // JavaScript 활성화 여부 설정
 
+        // HTTPS 트래픽 허용
+        webView.settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+
+
 //        val cookieManager = CookieManager.getInstance()
 //        cookieManager.removeAllCookies(null)
 
