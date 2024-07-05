@@ -124,7 +124,7 @@
     <dimen name="create_group_button_textsize">14sp</dimen>
 
     <!--    holder_recylcer_in_member_list.xml-->
-    <dimen name="profile_image">32dp</dimen>
+    <dimen name="profile_image">48dp</dimen>
     <dimen name="font_small">12sp</dimen>
     <dimen name="profile_card">42dp</dimen>
 
