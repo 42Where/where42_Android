@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Google Play Services 관련 클래스 난독화 방지
+-keep class com.google.android.gms.** { *; }
+-keep class com.google.firebase.** { *; }
+
+
+# Firebase 라이브러리 난독화 방지 (필요한 경우 추가)
+# -keep class com.google.firebase.** { *; }
+
+# Glide 난독화 방지
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public class * extends com.bumptech.glide.module.LibraryGlideModule

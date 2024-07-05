@@ -108,11 +108,13 @@ class MainActivity : AppCompatActivity() {
 
             helpDialog.window?.setGravity(Gravity.CENTER)
             helpDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            // 다이얼로그 밖을 터치하면 다이얼로그를 닫음
+            helpDialog.setCanceledOnTouchOutside(true)
 
-            val submit = helpDialog.findViewById<Button>(R.id.submit)
-            submit.setOnClickListener {
-                helpDialog.dismiss()
-            }
+//            val submit = helpDialog.findViewById<Button>(R.id.submit)
+//            submit.setOnClickListener {
+//                helpDialog.dismiss()
+//            }
 
             val noiton = helpDialog.findViewById<TextView>(R.id.noiton)
             noiton.setOnClickListener {

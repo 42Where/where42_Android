@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/help_popup_width"
+    android:layout_width="@dimen/newgroup_layout_width"
     android:layout_height="@dimen/help_popup_height"
     android:background="@drawable/center_popup_background"
     >
+<!--    android:layout_width="@dimen/help_popup_width"-->
+<!--    android:layout_height="@dimen/help_popup_height"-->
+
+
     <!--    android:layout_width="@dimen/newgroup_layout_width"-->
     <!--    android:layout_height="@dimen/newgroup_layout_height"-->
     <!--    android:paddingTop="@dimen/newgroup_layout_padding_top_bottom"-->
@@ -105,15 +109,15 @@
 
     <android.widget.Button
         android:id="@+id/noiton"
-        android:layout_width="@dimen/profile_popup_detail_layout_height"
-        android:layout_height="@dimen/edittext_layout_height"
+        android:layout_width="@dimen/profile_popup_layout_height"
+        android:layout_height="@dimen/profile_image"
         android:background="@drawable/submit_button"
         app:layout_constraintTop_toBottomOf="@id/guideline11"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="Noiton 보기"
         android:textColor="@color/white"
-        android:textSize="@dimen/help_popup_font_small"
+        android:textSize="@dimen/font_medium_change"
         android:fontFamily="@font/gmarketsans_medium"
         android:textAllCaps="false"
         android:paddingRight="@dimen/list_padding_top_bottom"
@@ -148,7 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.69" />
 
     <TextView
 
@@ -172,13 +176,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.76" />
+        app:layout_constraintGuide_percent="0.79" />
 
     <TextView
         android:background="@drawable/submit_button"
         android:id="@+id/detail5"
         android:layout_width="@dimen/help_popup_gamil_width"
-        android:layout_height="@dimen/newgroup_button_height"
+        android:layout_height="@dimen/edittext_layout_height"
         app:layout_constraintTop_toBottomOf="@id/guideline7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -195,34 +199,34 @@
     <!--    &lt;!&ndash;    app:layout_constraintEnd_toStartOf="@id/submit"&ndash;&gt;-->
     <!--&lt;!&ndash;    app:layout_constraintTop_toBottomOf="@id/title"&ndash;&gt;-->
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline8"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintGuide_percent="0.87" />-->
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.77" />
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline9"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintGuide_percent="0.8" />-->
 
-    <android.widget.Button
-        android:id="@+id/submit"
-        android:layout_width="@dimen/newgroup_button_width"
-        android:layout_height="@dimen/edittext_layout_height"
-        android:background="@drawable/submit_button"
-        app:layout_constraintTop_toBottomOf="@id/guideline8"
-        app:layout_constraintStart_toEndOf="@id/guideline9"
-        android:paddingStart="@dimen/newgroup_button_padding"
-        android:paddingEnd="@dimen/newgroup_button_padding"
-        android:text="확인"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:textSize="@dimen/newgroup_button_textsize"
-        android:fontFamily="@font/gmarketsans_medium"/>
+<!--    <android.widget.Button-->
+<!--        android:id="@+id/submit"-->
+<!--        android:layout_width="@dimen/newgroup_button_width"-->
+<!--        android:layout_height="@dimen/edittext_layout_height"-->
+<!--        android:background="@drawable/submit_button"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/guideline8"-->
+<!--        app:layout_constraintStart_toEndOf="@id/guideline9"-->
+<!--        android:paddingStart="@dimen/newgroup_button_padding"-->
+<!--        android:paddingEnd="@dimen/newgroup_button_padding"-->
+<!--        android:text="확인"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:gravity="center"-->
+<!--        android:textSize="@dimen/newgroup_button_textsize"-->
+<!--        android:fontFamily="@font/gmarketsans_medium"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
