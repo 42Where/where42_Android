@@ -92,44 +92,44 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
 
-        //help Button
+//        //help Button
         val helpButton = findViewById<ImageButton>(R.id.help_button)
 
         helpButton.setOnClickListener{
             val intent = Intent(this@MainActivity, MainHelpPage::class.java)
             startActivity(intent)
 //            finish()
-
-
-//            Log.d("MainAcitivty", "helpbutton")
-//            val helpDialog = Dialog(this@MainActivity)
-//            helpDialog.setContentView(R.layout.activity_help_popup)
 //
-//            helpDialog.window?.setGravity(Gravity.CENTER)
-//            helpDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//            // 다이얼로그 밖을 터치하면 다이얼로그를 닫음
-////            helpDialog.setCanceledOnTouchOutside(true)
 //
-////            val submit = helpDialog.findViewById<Button>(R.id.submit)
-////            submit.setOnClickListener {
+////            Log.d("MainAcitivty", "helpbutton")
+////            val helpDialog = Dialog(this@MainActivity)
+////            helpDialog.setContentView(R.layout.activity_help_popup)
+////
+////            helpDialog.window?.setGravity(Gravity.CENTER)
+////            helpDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+////            // 다이얼로그 밖을 터치하면 다이얼로그를 닫음
+//////            helpDialog.setCanceledOnTouchOutside(true)
+////
+//////            val submit = helpDialog.findViewById<Button>(R.id.submit)
+//////            submit.setOnClickListener {
+//////                helpDialog.dismiss()
+//////            }
+////
+////            val noiton = helpDialog.findViewById<TextView>(R.id.noiton)
+////            noiton.setOnClickListener {
+////                // 웹 페이지 주소
+//////                val url = "https://befitting-balaur-414.notion.site/eff5de2f978a4164b52b68ad2ca2e05a"
+////                val url = "https://holy-seatbelt-ff0.notion.site/where42-Android-d776288e21a0407dbbf1dc237063e306?pvs=4"
+////
+////                // 웹 페이지로 이동하는 Intent 생성
+////                val intent = Intent(Intent.ACTION_VIEW)
+////                intent.data = Uri.parse(url)
 ////                helpDialog.dismiss()
+////                // Intent 실행
+////                startActivity(intent)
 ////            }
-//
-//            val noiton = helpDialog.findViewById<TextView>(R.id.noiton)
-//            noiton.setOnClickListener {
-//                // 웹 페이지 주소
-////                val url = "https://befitting-balaur-414.notion.site/eff5de2f978a4164b52b68ad2ca2e05a"
-//                val url = "https://holy-seatbelt-ff0.notion.site/where42-Android-d776288e21a0407dbbf1dc237063e306?pvs=4"
-//
-//                // 웹 페이지로 이동하는 Intent 생성
-//                val intent = Intent(Intent.ACTION_VIEW)
-//                intent.data = Uri.parse(url)
-//                helpDialog.dismiss()
-//                // Intent 실행
-//                startActivity(intent)
-//            }
-//
-//            helpDialog.show()
+////
+////            helpDialog.show()
         }
 
 

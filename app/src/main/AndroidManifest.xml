@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+<!--    <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />-->
     <uses-permission android:name="android.permission.INTERNET" />
     <application
 
@@ -14,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Where42Android"
         android:usesCleartextTraffic="true"
-        tools:targetApi="34Z">
+        tools:targetApi="34">
 
         <activity
             android:name=".main.MainSearchPage"

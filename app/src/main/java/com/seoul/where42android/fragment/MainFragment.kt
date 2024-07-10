@@ -3,7 +3,6 @@ package com.seoul.where42android.fragment
 import SharedViewModel_GroupsMembersList
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,7 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.seoul.where42android.Base_url_api_Retrofit.GroupMemberListService
-import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.R
 import com.seoul.where42android.adapter.OutRecyclerViewAdapter
 import com.seoul.where42android.databinding.ActivityMainPageFragmentBinding
@@ -168,6 +164,11 @@ class MainFragment(receivedToken : String, IntraId : Int, Context : Context) : F
 
         // Call function to fetch data
 //        val intraId = 6 // Replace this with your memberId value
+        sharedViewModel.getGroupMemberList(intraid, token, Context)
+    }
+
+    fun refreshData() {
+        // ViewModel을 사용하여 데이터를 다시 로드하는 로직
         sharedViewModel.getGroupMemberList(intraid, token, Context)
     }
 }
