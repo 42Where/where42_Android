@@ -121,7 +121,9 @@ class MainPageActivity : AppCompatActivity() {
 
 
 //        2. group list을 보여주기 위해 binding으로 MainFragment 설정
-        supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment(receivedToken, receivedIntraId, this@MainPageActivity)).commit()
+        val mainFragment = MainFragment(receivedToken, receivedIntraId, this@MainPageActivity)
+        supportFragmentManager.beginTransaction().replace(binding.container.id, mainFragment).commit()
+//        supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment(receivedToken, receivedIntraId, this@MainPageActivity)).commit()
 
 //        2. 12_18 api를 통해 사용자 프로필 가져오기
 //        Log.d("PageCheck", "here")
@@ -171,18 +173,37 @@ class MainPageActivity : AppCompatActivity() {
         }
 
 
-        val refresh = binding.swipe
-        // 새로고침 이벤트 처리
-        refresh.setOnRefreshListener {
-            // 여기에 새로고침을 위한 작업을 수행하세요.
-            val fragment = MainFragment(receivedToken, receivedIntraId, this@MainPageActivity) // 현재 프래그먼트를 다시 생성
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(binding.container.id, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
-            // 작업이 완료되면 아래 코드를 호출하여 새로 고침을 종료합니다.
-            refresh.isRefreshing = false
-        }
+//        val refresh = binding.swipe
+//        val scrollView = binding.container
+//
+//        // 새로고침 이벤트 처리
+//        refresh.setOnRefreshListener {
+//            // 여기에 새로고침을 위한 작업을 수행하세요.
+//            val fragment = MainFragment(receivedToken, receivedIntraId, this@MainPageActivity) // 현재 프래그먼트를 다시 생성
+//            val transaction = supportFragmentManager.beginTransaction()
+//            transaction.replace(binding.container.id, fragment)
+//            transaction.addToBackStack(null)
+//            transaction.commit()
+//            // 작업이 완료되면 아래 코드를 호출하여 새로 고침을 종료합니다.
+//            refresh.isRefreshing = false
+//        }
+//
+//        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, _, _, _ ->
+//            refresh.isEnabled = (v.scrollY == 0)
+//        })
+
+//        // 새로고침 이벤트 처리
+//        val refresh = binding.swipe
+//        refresh.setOnRefreshListener {
+//            // 여기에 새로고침을 위한 작업을 수행하세요.
+////            val fragment = MainFragment(receivedToken, receivedIntraId, this@MainPageActivity) // 현재 프래그먼트를 다시 생성
+////            val transaction = supportFragmentManager.beginTransaction()
+////            transaction.replace(binding.container.id, fragment)
+////            transaction.addToBackStack(null)
+////            transaction.commit()
+//            // 작업이 완료되면 아래 코드를 호출하여 새로 고침을 종료합니다.
+//            refresh.isRefreshing = false
+//        }
 
         //1. header의 환경 설정 버튼을 눌렀을 때 -> SettingPage.kt로 가게 하기
         val headerBinding = binding.header // Change to your actual ID for the included header
@@ -224,30 +245,46 @@ class MainPageActivity : AppCompatActivity() {
         val homeButton : ImageButton = footerBinding.homeButton
 
         homeButton.setOnClickListener {
+//
             try {
-                if (this::class.java != MainPageActivity::class.java) {
-                    val intent = Intent(this, MainPageActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-//                    Toast.makeText(this, "이미 로그인 페이지에 있습니다!", Toast.LENGTH_SHORT).show()
-                    val nochange = Dialog(this)
-                    nochange.setContentView(R.layout.activity_prohibition_smalltext_popup)
-                    nochange.setCanceledOnTouchOutside(true)
-                    nochange.setCancelable(true)
-                    nochange.window?.setGravity(Gravity.CENTER)
-                    nochange.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    val submitButton = nochange.findViewById<Button>(R.id.submit)
-                    // 확인 버튼 클릭 시 원하는 동작을 수행합니다.
-                    submitButton.setOnClickListener {
-                        nochange.dismiss()
-                    }
-                    nochange.show()
-                }
+                mainFragment.refreshData()
+
+//                // 프래그먼트를 다시 생성하여 화면 새로고침
+//                val fragment = MainFragment(receivedToken, receivedIntraId, this@MainPageActivity)
+//                val transaction = supportFragmentManager.beginTransaction()
+//                transaction.replace(binding.container.id, fragment)
+//                transaction.addToBackStack(null)
+//                transaction.commit()
             } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("errorerror" , e.toString())
+//                e.printStackTrace()
+//                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
+
+//            try {
+//                if (this::class.java != MainPageActivity::class.java) {
+//                    val intent = Intent(this, MainPageActivity::class.java)
+//                    startActivity(intent)
+//                    finish()
+//                } else {
+////                    Toast.makeText(this, "이미 로그인 페이지에 있습니다!", Toast.LENGTH_SHORT).show()
+//                    val nochange = Dialog(this)
+//                    nochange.setContentView(R.layout.activity_prohibition_smalltext_popup)
+//                    nochange.setCanceledOnTouchOutside(true)
+//                    nochange.setCancelable(true)
+//                    nochange.window?.setGravity(Gravity.CENTER)
+//                    nochange.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//                    val submitButton = nochange.findViewById<Button>(R.id.submit)
+//                    // 확인 버튼 클릭 시 원하는 동작을 수행합니다.
+//                    submitButton.setOnClickListener {
+//                        nochange.dismiss()
+//                    }
+//                    nochange.show()
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+//            }
         }
 
 

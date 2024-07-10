@@ -1,19 +1,12 @@
 package com.seoul.where42android.main
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.View.VISIBLE
 import android.webkit.WebView
-import android.widget.Button
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.seoul.where42android.Base_url_api_Retrofit.MemberAPI
@@ -99,38 +92,44 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
 
-        //help Button
+//        //help Button
         val helpButton = findViewById<ImageButton>(R.id.help_button)
 
         helpButton.setOnClickListener{
-            val helpDialog = Dialog(this@MainActivity)
-            helpDialog.setContentView(R.layout.activity_help_popup)
-
-            helpDialog.window?.setGravity(Gravity.CENTER)
-            helpDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            // 다이얼로그 밖을 터치하면 다이얼로그를 닫음
-            helpDialog.setCanceledOnTouchOutside(true)
-
-//            val submit = helpDialog.findViewById<Button>(R.id.submit)
-//            submit.setOnClickListener {
-//                helpDialog.dismiss()
-//            }
-
-            val noiton = helpDialog.findViewById<TextView>(R.id.noiton)
-            noiton.setOnClickListener {
-                // 웹 페이지 주소
-//                val url = "https://befitting-balaur-414.notion.site/eff5de2f978a4164b52b68ad2ca2e05a"
-                val url = "https://holy-seatbelt-ff0.notion.site/where42-Android-d776288e21a0407dbbf1dc237063e306?pvs=4"
-
-                // 웹 페이지로 이동하는 Intent 생성
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(url)
-                helpDialog.dismiss()
-                // Intent 실행
-                startActivity(intent)
-            }
-
-            helpDialog.show()
+            val intent = Intent(this@MainActivity, MainHelpPage::class.java)
+            startActivity(intent)
+//            finish()
+//
+//
+////            Log.d("MainAcitivty", "helpbutton")
+////            val helpDialog = Dialog(this@MainActivity)
+////            helpDialog.setContentView(R.layout.activity_help_popup)
+////
+////            helpDialog.window?.setGravity(Gravity.CENTER)
+////            helpDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+////            // 다이얼로그 밖을 터치하면 다이얼로그를 닫음
+//////            helpDialog.setCanceledOnTouchOutside(true)
+////
+//////            val submit = helpDialog.findViewById<Button>(R.id.submit)
+//////            submit.setOnClickListener {
+//////                helpDialog.dismiss()
+//////            }
+////
+////            val noiton = helpDialog.findViewById<TextView>(R.id.noiton)
+////            noiton.setOnClickListener {
+////                // 웹 페이지 주소
+//////                val url = "https://befitting-balaur-414.notion.site/eff5de2f978a4164b52b68ad2ca2e05a"
+////                val url = "https://holy-seatbelt-ff0.notion.site/where42-Android-d776288e21a0407dbbf1dc237063e306?pvs=4"
+////
+////                // 웹 페이지로 이동하는 Intent 생성
+////                val intent = Intent(Intent.ACTION_VIEW)
+////                intent.data = Uri.parse(url)
+////                helpDialog.dismiss()
+////                // Intent 실행
+////                startActivity(intent)
+////            }
+////
+////            helpDialog.show()
         }
 
 
@@ -254,6 +253,7 @@ class MainActivity : AppCompatActivity() {
                                             webView.visibility = VISIBLE
                                             webView.webViewClient = customWebViewClient
                                             if (modifiedString != null) {
+                                                Log.d("MainActivty", "third");
                                                 webView.loadUrl(modifiedString)
                                             }
                                         }
@@ -277,7 +277,7 @@ class MainActivity : AppCompatActivity() {
                                                 when (reissueResponse.code())
                                                 {
                                                     200 -> {
-                                                        val reissue = reissueResponse.body()?.refreshToken
+//                                                        val reissue = reissueResponse.body()?.refreshToken
                                                         val reissue_message = reissueResponse.message()
                                                         val jsonObject = JSONObject(reissue_message)
                                                         val reissueToken = jsonObject.optString("accessToken", "")
@@ -315,7 +315,10 @@ class MainActivity : AppCompatActivity() {
                                                     webView.visibility = VISIBLE
                                                     webView.webViewClient = customWebViewClient
                                                     if (modifiedString != null) {
-                                                        webView.loadUrl("https://where42.kr/v3")
+                                                        Log.d("MainActivty", "second");
+//                                                        webView.loadUrl("https://api.where42.kr/login/oauth2")
+//                                                        webView.loadUrl("https://api.where42.kr/oauth2/authorization/42seoul")
+                                                        webView.loadUrl("https://api.where42.kr/v3")
 //                                                        webView.loadUrl("https://test.where42.kr/v3")
 //                                                        webView.loadUrl("https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=41a172bbce265c02e6c0f91cab615f90dae945f51b0308c5")
 //                                                        webView.loadUrl("http://test.where42.kr/oauth2/authorization/42seoul")
