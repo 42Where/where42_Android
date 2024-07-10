@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Where42Android"
         android:usesCleartextTraffic="true"
-        tools:targetApi="34">
+        tools:targetApi="34Z">
 
         <activity
             android:name=".main.MainSearchPage"
@@ -35,6 +35,7 @@
         <activity android:name=".main.MainSettingPage" />
         <activity android:name=".main.MainDeleteGroupDetailList" />
         <activity android:name=".main.MainAddGroupDetailList"/>
+        <activity android:name=".main.MainHelpPage" />
     </application>
 
 </manifest>

@@ -5,6 +5,9 @@
     android:layout_height="wrap_content"
     android:background="@drawable/center_popup_background"
     >
+
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
