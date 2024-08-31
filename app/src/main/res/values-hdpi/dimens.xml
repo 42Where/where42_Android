@@ -106,8 +106,8 @@
     <dimen name="newgroup_textsize">7.5sp</dimen>
     <dimen name="edittext_layout_width">149.625dp</dimen>
     <dimen name="edittext_layout_height">15dp</dimen>
-    <dimen name="edittext_layout_margin">9</dimen>
-    <dimen name="edittext_layout_padding">3</dimen>
+    <dimen name="edittext_layout_margin">9dp</dimen>
+    <dimen name="edittext_layout_padding">3dp</dimen>
 
     <dimen name="newgroup_button_width">30dp</dimen>
     <dimen name="newgroup_button_height">12dp</dimen>
