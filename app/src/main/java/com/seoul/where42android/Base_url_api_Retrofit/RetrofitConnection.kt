@@ -26,6 +26,7 @@ class RetrofitConnection {
 
         fun getInstance(token: String): Retrofit {
             val tokenInterceptor = addToken(token)
+            val cookieInterceptor = addCookieInterceptor(token)
 
 //            if (INSTANCE == null)
 //            {  // null인 경우에만 생성
@@ -45,6 +46,7 @@ class RetrofitConnection {
                     .addInterceptor(interceptor) // 생성한 Interceptor 추가
                     .addInterceptor(tokenInterceptor)
                     .addInterceptor(loggingInterceptor)
+                    .addInterceptor(cookieInterceptor)
 
                 INSTANCE = Retrofit.Builder()
                     .baseUrl(BASE_URL)  // API 베이스 URL 설정
@@ -55,6 +57,19 @@ class RetrofitConnection {
                     .build()
 //            }
             return INSTANCE!!
+        }
+        // 쿠키를 추가하는 Interceptor
+        private fun addCookieInterceptor(refreshToken: String): Interceptor {
+            return Interceptor { chain ->
+                val originalRequest = chain.request()
+
+                // 쿠키를 추가하여 새로운 요청을 만듭니다.
+                val newRequest = originalRequest.newBuilder()
+                    .header("Cookie", "refreshToken=$refreshToken") // 쿠키 헤더에 refreshToken 추가
+                    .build()
+
+                chain.proceed(newRequest)
+            }
         }
 
         private fun addToken(token: String) : Interceptor {
@@ -112,6 +127,7 @@ class RetrofitConnection {
 //                }
 //                Log.d("Interceptor", "code ${response.code}}")
                 var responseBodyString = response.body?.string() ?: ""
+                Log.d("MainActivty", "third8");
 //                Log.d("Interceptor", "responseBodyString ${responseBodyString}")
                 val accessTokenPattern = "accessToken" // accessToken의 패턴에 따라 수정
                 //이건 토큰 재발급
@@ -152,6 +168,7 @@ class RetrofitConnection {
                 {
 //                    Log.d("Interceptor", "url.startsWith(\"https://auth.42.fr\")")
 //                    Log.d("Interceptor", "3")
+                    Log.d("MainActivty", "third9");
                     return@Interceptor response.newBuilder()
                         .code(201)
                         .addHeader("redirectUrl", requestURL)
@@ -210,6 +227,7 @@ class RetrofitConnection {
                 //reissue
                 else if (responseBodyString.contains(accessTokenPattern))
                 {
+                    Log.d("MainActivty", "third10");
 //                    Log.d("Interceptor", "4)3")
 //                    return@Interceptor response
 //                    val jsonObject = JSONObject(responseBodyString)
@@ -237,6 +255,7 @@ class RetrofitConnection {
                 }
                 else
                 {
+                    Log.d("MainActivty", "third11");
 //                    Log.d("Interceptor", "4)")
 //                    Log.d("Interceptor", "else")
 //                    Log.e("plz", "plz ${response}")

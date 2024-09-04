@@ -98,38 +98,6 @@ class MainActivity : AppCompatActivity() {
         helpButton.setOnClickListener{
             val intent = Intent(this@MainActivity, MainHelpPage::class.java)
             startActivity(intent)
-//            finish()
-//
-//
-////            Log.d("MainAcitivty", "helpbutton")
-////            val helpDialog = Dialog(this@MainActivity)
-////            helpDialog.setContentView(R.layout.activity_help_popup)
-////
-////            helpDialog.window?.setGravity(Gravity.CENTER)
-////            helpDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-////            // 다이얼로그 밖을 터치하면 다이얼로그를 닫음
-//////            helpDialog.setCanceledOnTouchOutside(true)
-////
-//////            val submit = helpDialog.findViewById<Button>(R.id.submit)
-//////            submit.setOnClickListener {
-//////                helpDialog.dismiss()
-//////            }
-////
-////            val noiton = helpDialog.findViewById<TextView>(R.id.noiton)
-////            noiton.setOnClickListener {
-////                // 웹 페이지 주소
-//////                val url = "https://befitting-balaur-414.notion.site/eff5de2f978a4164b52b68ad2ca2e05a"
-////                val url = "https://holy-seatbelt-ff0.notion.site/where42-Android-d776288e21a0407dbbf1dc237063e306?pvs=4"
-////
-////                // 웹 페이지로 이동하는 Intent 생성
-////                val intent = Intent(Intent.ACTION_VIEW)
-////                intent.data = Uri.parse(url)
-////                helpDialog.dismiss()
-////                // Intent 실행
-////                startActivity(intent)
-////            }
-////
-////            helpDialog.show()
         }
 
 
@@ -155,10 +123,10 @@ class MainActivity : AppCompatActivity() {
         val agreement = getAgreementFromSharedPreferences((this@MainActivity))
         val refreshtoken = getRefreshTokenFromSharedPreferences(this@MainActivity) ?: "norefresh"
 
-//        Log.e("refre", "memory token : ${token}")
-//        Log.e("refre", "memory retoken : ${refreshtoken}")
-//        Log.e("refre", "memory agreement : ${agreement}")
-//        Log.e("refre", "memory intraId : ${intraId}")
+        Log.e("refre", "memory token : ${token}")
+        Log.e("refre", "memory retoken : ${refreshtoken}")
+        Log.e("refre", "memory agreement : ${agreement}")
+        Log.e("refre", "memory intraId : ${intraId}")
 
         //진짜 제일 처음 킬 때 memory, usersetting 전부 null임 -> 로그인 페이지
         if (intraId == -1)
@@ -174,6 +142,11 @@ class MainActivity : AppCompatActivity() {
                 userSettings.intraId = intraId
                 userSettings.agreement = agreement.toBoolean()
                 userSettings.refreshToken = refreshtoken
+
+                Log.e("refre", "memory token : ${token}")
+                Log.e("refre", "memory retoken : ${refreshtoken}")
+                Log.e("refre", "memory agreement : ${agreement}")
+                Log.e("refre", "memory intraId : ${intraId}")
             }
 
             //agreement 동의를 하였고, token intraId, accestoken이 있으면 MainPageAcitivty로 넘기기 -> 이 코드는 나중에
@@ -230,7 +203,7 @@ class MainActivity : AppCompatActivity() {
                                 {
                                     200 -> {
 
-//                                        Log.d("token_check", "here1")
+                                        Log.d("token_check", "here1")
 //                                        Log.d("SUC", "SUC ${response.code()}")
                                         val intent = Intent(this@MainActivity, MainPageActivity::class.java)
                                         intent.putExtra("TOKEN_KEY", token)
@@ -270,13 +243,17 @@ class MainActivity : AppCompatActivity() {
                                 {
                                     401 -> {
                                         try {
+                                            Log.d("MainActivty", "third3");
                                             val reissueapi = RetrofitConnection.getInstance(refreshtoken).create(reissueAPI::class.java)
                                             val reissueResponse = reissueapi.reissueToken()
+                                            Log.d("MainActivty", "third4");
                                             if (reissueResponse.isSuccessful)
                                             {
                                                 when (reissueResponse.code())
                                                 {
                                                     200 -> {
+
+                                                        Log.d("MainActivty", "third4");
 //                                                        val reissue = reissueResponse.body()?.refreshToken
                                                         val reissue_message = reissueResponse.message()
                                                         val jsonObject = JSONObject(reissue_message)
@@ -294,16 +271,23 @@ class MainActivity : AppCompatActivity() {
                                                         }
                                                         else
                                                         {
+                                                            Log.d("MainActivty", "third5");
                                                             userSettings.token = "notoken"
                                                             saveaccesTokenToSharedPreferences(this@MainActivity, "notoken")
                                                         }
                                                     }
+                                                    201 -> {
+                                                        Log.d("MainActivty", "third12");
+                                                    }
+
                                                     else ->
                                                     {
+                                                        Log.d("MainActivty", "third6");
                                                         // 기본적으로 어떻게 처리할지 작성
                                                     }
                                                 }
                                             } else {
+                                                Log.d("MainActivty", "third7");
 //                                                //401이며 Reissue API 호출 실패 시 처리 리다이렉트로 보내야함.
                                                 val headers = response.headers()
                                                 val originalString = headers["redirectUrl"]
@@ -330,6 +314,7 @@ class MainActivity : AppCompatActivity() {
                                         }
                                     }
                                     else -> {
+                                        Log.d("MainActivty", "third8");
                                     }
                                 }
                             }
