@@ -145,9 +145,9 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
                     val jsessionId = cookiesMap["JSESSIONID"]
                     val accessToken = cookiesMap["accessToken"]
                     val refreshToken = cookiesMap["refreshToken"]
-        //            Log.e("ParsedCookies", "JSESSIONID: $jsessionId")
-        //            Log.e("ParsedCookies", "accessToken: $accessToken")
-        //            Log.e("ParsedCookies", "refreshToken: $refreshToken")
+                    Log.e("ParsedCookies", "JSESSIONID: $jsessionId")
+                    Log.e("ParsedCookies", "accessToken: $accessToken")
+                    Log.e("ParsedCookies", "refreshToken: $refreshToken")
         //            val token = retrieveTokenFromUrl(url)
         //            Log.e("onPageFinished", "${token}")
         //            saveTokenToSharedPreferences(token)
