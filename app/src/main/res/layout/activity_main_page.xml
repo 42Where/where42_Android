@@ -123,16 +123,7 @@
 
             />
 
-<!--        android:layout_width="@dimen/main_location_w"-->
-<!--        "@dimen/location_info" == 6dp -->
-<!--        android:layout_height="@dimen/main_intra_ID_height"-->
-<!--        android:textSize="@dimen/font_medium_change"-->
-<!--        android:textColor="#FCFDFF"-->
-
-
-
-<!--        android:text="코멘트코멘트코멘트"-->
-<!--        android:layout_marginTop="3dp" -->
+<!--        android:text="@{counter.profile.comment}"-->
         <TextView
             android:id="@+id/Comment"
             android:layout_width="wrap_content"
@@ -140,7 +131,6 @@
             android:layout_marginLeft="@dimen/intra_name"
             android:layout_marginTop="@dimen/Comment"
             android:gravity="center"
-            android:text="@{counter.profile.comment}"
             android:fontFamily="@font/gmarketsans_medium"
             android:textSize="@dimen/font_small"
             app:layout_constraintTop_toTopOf="@id/guideline2"

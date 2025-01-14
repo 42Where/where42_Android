@@ -1,7 +1,8 @@
 package com.seoul.where42android.fragment
 
 import SearchRecyclerViewAdapter
-import SearchViewModel
+import android.content.Context
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.seoul.where42android.ViewModel.SharedViewModelSearch
 import com.seoul.where42android.databinding.ActivityMainSearchFragmentBinding
 import com.seoul.where42android.main.MainSearchPage
 import com.seoul.where42android.model.SearchRecyclerInViewModel
@@ -17,9 +19,32 @@ import kotlinx.coroutines.*
 
 
 
-class MainSearchFragment(val intraName: String) : Fragment() {
+class MainSearchFragment() : Fragment() {
     private lateinit var binding: ActivityMainSearchFragmentBinding
     private lateinit var adapter: SearchRecyclerViewAdapter
+    private var intraName: String = ""
+    private lateinit var context: Context
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            intraName = it.getString("NAME").toString()
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        this.context = context
+    }
+
+    companion object {
+        fun newInstance(intraName: String): MainSearchFragment {
+            val fragment = MainSearchFragment()
+            val args = Bundle()
+            args.putString("NAME", intraName)
+            fragment.arguments = args
+            return fragment
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,11 +55,10 @@ class MainSearchFragment(val intraName: String) : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // ViewModel 초기화
-        val searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        val SharedViewModelSearch = ViewModelProvider(this).get(SharedViewModelSearch::class.java)
         // Observer 등록
-        searchViewModel.searchListLiveData.observe(viewLifecycleOwner) { searchList ->
+        SharedViewModelSearch.searchListLiveData.observe(viewLifecycleOwner) { searchList ->
 
             if (searchList != null) {
                 if (searchList.isNotEmpty()) {
@@ -89,6 +113,6 @@ class MainSearchFragment(val intraName: String) : Fragment() {
             }
         }
         // 데이터 요청
-        searchViewModel.getSearchMemberList(intraName)
+        SharedViewModelSearch.getSearchMemberList(intraName, context)
     }
 }

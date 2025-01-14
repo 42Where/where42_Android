@@ -1,6 +1,6 @@
 package com.seoul.where42android.dialog
 
-import SharedViewModel_GroupsMembersList
+import com.seoul.where42android.ViewModel.SharedViewModelGroupsMembers
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -13,135 +13,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import com.seoul.where42android.Base_url_api_Retrofit.JoinAPI
-import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
-import com.seoul.where42android.Base_url_api_Retrofit.reissueAPI
 import com.seoul.where42android.R
 import com.seoul.where42android.main.UserSettings
 import com.seoul.where42android.main.MainAddGroupDetailList
 import com.seoul.where42android.main.MainDeleteGroupDetailList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.IOException
 
-
-class AgreeDialog (private val context: Context) {
-    private val agreedialog = Dialog(context)
-
-    fun saverefreshToSharedPreferences(context: Context, agreement: String?) {
-        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        editor.putString("RefreshToken", agreement)
-        editor.apply()
-    }
-
-    fun saveAgreementToSharedPreferences(context: Context, agreement: String?) {
-        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-//        editor.putString("AuthToken", token)
-        editor.putString("agreement", agreement)
-        editor.apply()
-    }
-
-
-    fun showAgreeDialog(token:String, intraId: String?, agreement:String?, context: Context, callback: (Boolean) -> Unit)
-    {
-        agreedialog.setContentView(R.layout.activity_profile_agree)
-        agreedialog.setCanceledOnTouchOutside(true)
-        agreedialog.setCancelable(true)
-
-        agreedialog.window?.setGravity(Gravity.CENTER)
-        agreedialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val btnCancel = agreedialog.findViewById<TextView>(R.id.cancel)
-        val btnSubmit = agreedialog.findViewById<Button>(R.id.submit)
-        btnSubmit.setOnClickListener {
-
-            val intraIdtoInt = intraId?.toInt()?: -1
-
-            //Join api 호출해야됨
-//            Log.d("token_check", "api join token : ${token}")
-            val retrofitAPI = RetrofitConnection.getInstance(token).create(JoinAPI::class.java)
-                CoroutineScope(Dispatchers.IO).launch {
-                    try {
-                        val response = retrofitAPI.join(intraIdtoInt)
-                        withContext(Dispatchers.Main) {
-                            if (response.isSuccessful) {
-//                                Log.d("join_api", "${response.body()}")
-//                                Log.d("join_api", "${response.code()}")
-//                                Log.d("join_api", "${response.headers()}")
-
-
-//                                Log.e("join_api", "SUC")
-
-//                                val cookies = CookieManager.getInstance().getCookie("http://13.209.149.15:8080/")
-//                                Log.e("join_api", "http://13.209.149.15:8080/의 쿠키3: $cookies")
-
-                                //reissue 토큰
-                                val reissueapi = RetrofitConnection.getInstance(token).create(
-                                    reissueAPI::class.java)
-                                val reissueResponse = reissueapi.reissueToken()
-                                if (reissueResponse.isSuccessful)
-                                {
-                                    when(reissueResponse.code())
-                                    {
-                                        200 -> {
-                                            saverefreshToSharedPreferences(context, reissueResponse.body()?.refreshToken)
-                                            saveAgreementToSharedPreferences(context, "true")
-                                            callback(true)
-                                        }
-                                        else -> {
-//                                            Log.d("join_api", "join_api_error else : ${response.code()}")
-                                            callback(false)
-                                        }
-                                    }
-
-                                }
-                                else
-                                {
-//                                    Log.d("join_api", "join_api_error")
-                                    callback(false)
-                                }
-                            }
-                            else {
-//                                Log.e("join_api", "fail1")
-                                when (response.code()){
-                                    400 -> {
-                                        Log.e("join_api", "fail1")
-                                        callback(false)
-                                    }
-                                    401 -> {
-                                        Log.e("join_api", "fail2")
-                                        callback(false)
-                                    }
-                                }
-                            }
-                        }
-                    } catch (e:IOException) {
-//                        Log.e ("join_check", "message : ${e.message}")
-                        callback(false)
-                    }
-
-                }
-            agreedialog.dismiss()
-
-        }
-
-        btnCancel.setOnClickListener {
-
-            agreedialog.dismiss()
-            callback(false)
-        }
-        agreedialog.show()
-    }
-}
-
-
-
-class GroupDialog (private val context: Context, val viewModel: SharedViewModel_GroupsMembersList) {
+class GroupDialog (private val context: Context, val viewModel: SharedViewModelGroupsMembers) {
     private val usersetting = UserSettings.getInstance()
     private val dialog = Dialog(context)
 
@@ -223,38 +100,18 @@ class GroupDialog (private val context: Context, val viewModel: SharedViewModel_
 
                     if (groupName.isNotEmpty()) {
                         Log.d("here2", "here2")
-                        viewModel.editGroupName(groupName, groupId.toInt())
+                        viewModel.editGroupName(groupName, groupId.toInt(), context)
                         editdialog.dismiss()
                         dialog.dismiss()
-
-                    } else {
-
                     }
-
                 }
                 editdialog.show()
             }
-
-//            dialog.dismiss() // 기존 GroupDialog 닫기
-//            val retrofitAPI = RetrofitConnection.getInstance().create(GroupChangeName::class.java)
-//            val groupNameChange = groupId.toInt()
-//            val call = retrofitAPI.groupChangeName(groupIdToDelete)
-//
-//            dialog.dismiss()
 
         }
 
         //멤버 수정하기
         btnEdit.setOnClickListener {
-//            dialog.dismiss()
-//            val intent = Intent(context, MainDeleteGroupDetailList::class.java) // YourNextActivity에는 이동하길 원하는 액티비티를 명시합니다.
-//            intent.putExtra("GROUP_ID", groupId) // groupId는 int 형태로 가정
-//            intent.putExtra("GROUP_NAME", name) // name은 String 형태로 가정
-//            context.startActivity(intent) // 액티비티 전환
-//            finish() // 현재 액티비티 종료 (선택사항)
-
-
-
             //피그마에서 추가된 멤버 추가하기, 멤버 수정하기 부분을 선택할 수 있는 창을 만들어야함.
             val editMember = Dialog(context)
             editMember.setContentView(R.layout.activity_editgroupmember_popup)
@@ -337,36 +194,7 @@ class GroupDialog (private val context: Context, val viewModel: SharedViewModel_
                 }
 
                 btnSubmit.setOnClickListener {
-                    viewModel.deleteGroup(groupId.toInt())
-//                val retrofitAPI = RetrofitConnection.getInstance().create(GroupDelete::class.java)
-//                val groupIdToDelete = groupId.toInt() // 여기에 삭제하려는 groupId를 설정하세요.
-//                val call = retrofitAPI.deleteGroup(groupIdToDelete)
-//
-//                call.enqueue(object : Callback<GroupDeleteResponse> {
-//                    override fun onResponse(
-//                        call: Call<GroupDeleteResponse>,
-//                        response: Response<GroupDeleteResponse>
-//                    ) {
-//                        if (response.isSuccessful) {
-//                            val deletedGroup = response.body()
-////                            callback(true) // 삭제 성공 시 true 전달
-//                            // 성공적으로 삭제되었으므로 적절한 처리를 수행합니다.
-//
-//                        } else {
-//                            // API 호출에 실패한 경우
-//                            Log.e("DELETE_ERROR", "Failed to delete group. Error code: ${response.code()}")
-//                            // 실패 처리 로직을 수행하세요.
-////                            callback(false) // 삭제 실패 시 false 전달
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<GroupDeleteResponse>, t: Throwable) {
-//                        // 네트워크 오류 등의 이유로 API 호출이 실패한 경우
-//                        Log.e("DELETE_ERROR", "Network error occurred. Message: ${t.message}")
-//                        // 실패 처리 로직을 수행하세요.
-////                        callback(false) // 삭제 실패 시 false 전달
-//                    }
-//                })
+                    viewModel.deleteGroup(groupId.toInt(), context)
                     deletegroup.dismiss()
                     dialog.dismiss()
                 }

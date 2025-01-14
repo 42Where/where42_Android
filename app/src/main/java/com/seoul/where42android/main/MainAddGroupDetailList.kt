@@ -1,7 +1,7 @@
 package com.seoul.where42android.main
 
 
-import SharedViewModel_GroupsMembersList
+import com.seoul.where42android.ViewModel.SharedViewModelGroupsMembers
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +20,11 @@ import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.Base_url_api_Retrofit.friendGroup_default_memberlist
 import com.seoul.where42android.R
 import com.seoul.where42android.adapter.RecyclerViewCreatGroupActivity
+import com.seoul.where42android.utils.ApiUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,7 +41,6 @@ class MainAddGroupDetailList : AppCompatActivity() {
         friendCheckedList.clearItem()
         finish()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,13 +103,13 @@ class MainAddGroupDetailList : AppCompatActivity() {
 ////                Log.d("선택된 항목", "이름: ${selectedItem.intraName}")
 //                members.add(selectedItem.intraId)
 //            }
-            val sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
+            val sharedViewModel = ViewModelProvider(this).get(SharedViewModelGroupsMembers::class.java)
 
 //            sharedViewModel.deleteFriendGroup(groupId, members)
 //            Log.d("whatproblem", " members : ${friendCheckedList.getfriendCheckedList()}")
             if (groupName != null) {
 //                sharedViewModel.addMembersToGroup(groupName, members)
-                sharedViewModel.addMembersToGroup(groupName, friendCheckedList.getfriendCheckedList())
+                sharedViewModel.addMembersToGroup(groupName, friendCheckedList.getfriendCheckedList(), this@MainAddGroupDetailList)
                 finish()
             }
         }
@@ -144,67 +148,115 @@ class MainAddGroupDetailList : AppCompatActivity() {
     }
 
     //group 안에 member 보여주기
-    private fun fetchMemberAllData(groupId:Int, callback: (Boolean) -> Unit) {
-//
-        val userSettings = UserSettings.getInstance()
-        val retrofitAPI =
-            RetrofitConnection.getInstance(userSettings.token).create(Deafult_friendGroup_memberlist::class.java)
-        retrofitAPI.getGroupMembersNotInGroup(groupId).enqueue(object :
-            Callback<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>> {
-            override fun onResponse(
-                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
-                response: Response<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
-            ) {
-                if (response.isSuccessful)
-                {
-//                    Log.d("CALL", "fucking here3")
-//                    Log.d("CALL2", "API call successful. Response: $response")
+    private fun fetchMemberAllData(groupId: Int, callback: (Boolean) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                // ApiUtils를 사용하여 API 요청 수행
+                val response = ApiUtils.performApiRequest(this@MainAddGroupDetailList) { accessToken ->
+                    val retrofitAPI = RetrofitConnection.getInstance(accessToken)
+                        .create(Deafult_friendGroup_memberlist::class.java)
+                    retrofitAPI.getGroupMembersNotInGroup(groupId)
+                }
+
+                // 응답 처리
+                if (response != null && response.isSuccessful) {
                     val friendList = response.body()
-//                    Log.d("CALL3", "friendList: ${friendList}")
+
                     friendList?.let { members ->
                         // 받은 멤버 데이터를 friendProfileList에 추가
-                        for (member in members) {
-                            if (member.location == null)
-                            {
-                                if (member.inCluster == true)
-                                {
-                                    member.location = "개포 클러스터 내"
-                                }
-                                else
-                                {
-                                    member.location = "퇴근"
-                                }
+                        members.forEach { member ->
+                            if (member.location == null) {
+                                member.location = if (member.inCluster == true) "개포" else "퇴근"
                             }
                             friendProfileList.add(member)
                         }
-                        updateAdapterData(friendProfileList)
+                        withContext(Dispatchers.Main) {
+                            updateAdapterData(friendProfileList)
+                        }
                         callback(true) // 성공적으로 처리되었으므로 true를 콜백으로 반환
+                    } ?: withContext(Dispatchers.Main) {
+                        callback(false) // friendList가 null인 경우 처리
                     }
-                    if (friendList != null) {
-                        if (friendList.isEmpty()) {
-                            callback (false)
-                        }
-                        else
-                        {
-                            callback (true)
-                        }
+                } else {
+                    // API 실패 처리
+                    withContext(Dispatchers.Main) {
+                        Log.e("fetchMemberAllData", "API 요청 실패: ${response?.code()} - ${response?.message()}")
+                        callback(false) // 실패한 경우 false를 콜백으로 반환
                     }
                 }
-                else
-                {
-//                    Log.d("API Error", "API call successful. Response: $response")
-                    callback(false) // 실패한 경우 false를 콜백으로 반환
+            } catch (e: Exception) {
+                // 예외 처리
+                withContext(Dispatchers.Main) {
+                    Log.e("fetchMemberAllData", "멤버 데이터 가져오는 중 오류 발생", e)
+                    callback(false) // 예외 발생 시 false를 콜백으로 반환
                 }
             }
-            override fun onFailure(
-                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
-                t: Throwable)
-            {
-                // API 요청 자체가 실패한 경우 처리
-                callback(false) // 실패한 경우 false를 콜백으로 반환
-            }
-        })
+        }
     }
+
+//    private fun fetchMemberAllData(groupId:Int, callback: (Boolean) -> Unit) {
+//
+//        val userSettings = UserSettings.getInstance()
+//        val retrofitAPI =
+//            RetrofitConnection.getInstance(userSettings.token).create(Deafult_friendGroup_memberlist::class.java)
+//        retrofitAPI.getGroupMembersNotInGroup(groupId).enqueue(object :
+//            Callback<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>> {
+//            override fun onResponse(
+//                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
+//                response: Response<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
+//            ) {
+//                if (response.isSuccessful)
+//                {
+////                    Log.d("CALL", "fucking here3")
+////                    Log.d("CALL2", "API call successful. Response: $response")
+//                    val friendList = response.body()
+////                    Log.d("CALL3", "friendList: ${friendList}")
+//                    friendList?.let { members ->
+//                        // 받은 멤버 데이터를 friendProfileList에 추가
+//                        for (member in members) {
+//                            if (member.location == null)
+//                            {
+//                                if (member.inCluster == true)
+//                                {
+//                                    member.location = "개포"
+//                                }
+//                                else
+//                                {
+//                                    member.location = "퇴근"
+//                                }
+//                            }
+//                            friendProfileList.add(member)
+//                        }
+//                        updateAdapterData(friendProfileList)
+//                        callback(true) // 성공적으로 처리되었으므로 true를 콜백으로 반환
+//                    }
+//                    if (friendList != null) {
+//                        if (friendList.isEmpty()) {
+//                            callback (false)
+//                        }
+//                        else
+//                        {
+//                            callback (true)
+//                        }
+//                    }
+//                }
+//                else
+//                {
+////                    Log.d("API Error", "API call successful. Response: $response")
+//                    callback(false) // 실패한 경우 false를 콜백으로 반환
+//                }
+//            }
+//            override fun onFailure(
+//                call: Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>,
+//                t: Throwable)
+//            {
+//                // API 요청 자체가 실패한 경우 처리
+//                callback(false) // 실패한 경우 false를 콜백으로 반환
+//            }
+//        })
+//    }
+
+
     private fun updateAdapterData(data: List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>) {
         val friendRecyclerView: RecyclerView = findViewById(R.id.new_gorup_friend_list)
         val friendRecyclerViewAdapter = RecyclerViewCreatGroupActivity(this, data, false) // 데이터 타입 변경

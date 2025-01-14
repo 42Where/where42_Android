@@ -8,19 +8,24 @@
     >
     <!--    android:layout_width="@dimen/newgroup_layout_width"-->
     <!--    android:layout_height="@dimen/newgroup_layout_height"-->
-<!--    android:paddingTop="@dimen/newgroup_layout_padding_top_bottom"-->
-<!--    android:paddingBottom="@dimen/newgroup_layout_padding_top_bottom"-->
-<!--    android:paddingStart="@dimen/newgroup_layout_padding_start_end"-->
-<!--    android:paddingEnd="@dimen/newgroup_layout_padding_start_end"-->
+    <!--    android:paddingTop="@dimen/newgroup_layout_padding_top_bottom"-->
+    <!--    android:paddingBottom="@dimen/newgroup_layout_padding_top_bottom"-->
+    <!--    android:paddingStart="@dimen/newgroup_layout_padding_start_end"-->
+    <!--    android:paddingEnd="@dimen/newgroup_layout_padding_start_end"-->
 
-<!--    32 / 148 = 0.2162-->
+    <!--    32 / 148 = 0.2162-->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.216" />
-
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -28,31 +33,40 @@
         app:layout_constraintTop_toBottomOf="@id/guideline1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="자리비움으로 설정하시겠습니까?"
+        android:text="awdawd"
+        android:textColor="#132743"
+        android:textSize="@dimen/newgroup_textsize"
+        android:fontFamily="@font/gmarketsans_bold" />
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="취소"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textColor="#132743"
         android:textSize="@dimen/newgroup_textsize"
         android:fontFamily="@font/gmarketsans_bold" />
 
     <!--    32  + 28 + 24/ 148 = 0.5675-->
-<!--    <androidx.constraintlayout.widget.Guideline-->
-<!--        android:id="@+id/guideline2"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        app:layout_constraintGuide_percent="0.568" />-->
+    <!--    <androidx.constraintlayout.widget.Guideline-->
+    <!--        android:id="@+id/guideline2"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        app:layout_constraintGuide_percent="0.568" />-->
 
     <android.widget.Button
         android:id="@+id/cancel"
         android:layout_width="@dimen/newgroup_button_width"
         android:layout_height="@dimen/newgroup_button_height"
         android:background="@drawable/cancel_button"
+        app:layout_constraintTop_toBottomOf="@id/title2"
+        app:layout_constraintEnd_toEndOf="@id/title2"
         app:layout_constraintEnd_toStartOf="@id/submit"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintEnd_toEndOf="@id/title"
-        android:layout_marginTop="@dimen/profile_popup_layout_height_paddingTop"
-        android:paddingStart="@dimen/newgroup_button_padding"
-        android:paddingEnd="@dimen/newgroup_button_padding"
-        android:layout_marginEnd="@dimen/newgroup_button_marginend"
+        android:layout_marginRight="@dimen/checkBox"
+        android:layout_marginTop="@dimen/list_padding_top_bottom"
         android:text="취소"
         android:textColor="#132743"
         android:gravity="center"
@@ -64,11 +78,9 @@
         android:layout_width="@dimen/newgroup_button_width"
         android:layout_height="@dimen/newgroup_button_height"
         android:background="@drawable/submit_button"
-        android:layout_marginTop="@dimen/profile_popup_layout_height_paddingTop"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintEnd_toEndOf="@id/title"
-        android:paddingStart="@dimen/newgroup_button_padding"
-        android:paddingEnd="@dimen/newgroup_button_padding"
+        android:layout_marginTop="@dimen/list_padding_top_bottom"
+        app:layout_constraintTop_toBottomOf="@id/title2"
+        app:layout_constraintEnd_toEndOf="@id/title2"
         android:text="확인"
         android:textColor="@color/white"
         android:gravity="center"

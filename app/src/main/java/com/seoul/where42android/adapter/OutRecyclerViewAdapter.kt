@@ -1,6 +1,6 @@
 package com.seoul.where42android.adapter
 
-import SharedViewModel_GroupsMembersList
+import com.seoul.where42android.ViewModel.SharedViewModelGroupsMembers
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -36,7 +36,7 @@ object ToggleStatManager {
 class OutRecyclerViewAdapter (
     val context: Context,
     var itemList: MutableList<RecyclerOutViewModel>,
-    val viewModel : SharedViewModel_GroupsMembersList,
+    val viewModel : SharedViewModelGroupsMembers,
     ): RecyclerView.Adapter<OutRecyclerViewAdapter.Holder>() {
 
     // 체크박스 상태를 저장하기 위한 변수
@@ -254,7 +254,7 @@ class OutRecyclerViewAdapter (
             } else {
                 binding.innerRecyclerview.visibility = View.GONE // 내부 RecyclerView 숨기기
             }
-            binding.innerRecyclerview.adapter = InRecyclerViewAdapter(context, item.innerList)
+            binding.innerRecyclerview.adapter = InRecyclerViewAdapter(context, item.innerList, item.title)
             binding.innerRecyclerview.layoutManager = LinearLayoutManager(context)
         }
     }

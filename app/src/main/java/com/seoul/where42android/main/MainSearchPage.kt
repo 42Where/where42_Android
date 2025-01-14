@@ -17,13 +17,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.seoul.where42android.Base_url_api_Retrofit.AddMembersRequest
 import com.seoul.where42android.Base_url_api_Retrofit.GroupAddMemberlist
 import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
-import com.seoul.where42android.Base_url_api_Retrofit.addMembersResponse
 import com.seoul.where42android.R
 import com.seoul.where42android.databinding.ActivitySearchPageBinding
 import com.seoul.where42android.fragment.MainSearchFragment
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.seoul.where42android.utils.ApiUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 object intraNameObject {
     private var Name = ""
@@ -68,8 +69,6 @@ object intraNameObject {
 class MainSearchPage : AppCompatActivity() {
 
     private lateinit var searchView: SearchView
-//    private lateinit var adapter: ArrayAdapter<String>
-
     lateinit var binding: ActivitySearchPageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,46 +84,70 @@ class MainSearchPage : AppCompatActivity() {
 
 
         //친구 추가 버튼
+        // 친구 추가 버튼
         val addFriendButton = binding.addMember
-        addFriendButton.setOnClickListener{
+        addFriendButton.setOnClickListener {
             val userSetting = UserSettings.getInstance()
+            val addMemberList = intraNameObject.getcheckFriendList()
+            val groupIdMember = AddMembersRequest(userSetting.defaultGroup, addMemberList)
 
+            // CoroutineScope 선언
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    // ApiUtils를 사용하여 API 요청 수행
+                    val response = ApiUtils.performApiRequest(this@MainSearchPage) { accessToken ->
+                        val retrofitAPI2 = RetrofitConnection.getInstance(accessToken)
+                            .create(GroupAddMemberlist::class.java)
+                        retrofitAPI2.addMembersToGroup(groupIdMember)
+                    }
 
-            val retrofitAPI2 = RetrofitConnection.getInstance(userSetting.token)
-                .create(GroupAddMemberlist::class.java)
-            val add_member = intraNameObject.getcheckFriendList()
-            val groupId_member = AddMembersRequest( userSetting.defaultGroup, add_member)
-
-            retrofitAPI2.addMembersToGroup(groupId_member).enqueue(object :
-                Callback<List<addMembersResponse.addMembersResponseItem>> {
-                override fun onResponse(
-                    call: Call<List<addMembersResponse.addMembersResponseItem>>,
-                    response: Response<List<addMembersResponse.addMembersResponseItem>>
-                ) {
-                    if (response.isSuccessful) {
-//                        Log.d("SearchPageAddFriend", "SearchPageAddFriend : ${response.body()}")
-                        intraNameObject.clearName()
-                        intraNameObject.clearIntList()
-                        for (item in response.body()!!) {
-                            friendListObject.addItem(item.intraId, item.intraName)
+                    if (response != null && response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            // 성공적으로 응답 데이터를 처리
+                            intraNameObject.clearName()
+                            intraNameObject.clearIntList()
+                            responseBody.forEach { item ->
+                                friendListObject.addItem(item.intraId, item.intraName)
+                            }
+                            // UI 업데이트 및 페이지 이동
+                            withContext(Dispatchers.Main) {
+                                val intent = Intent(this@MainSearchPage, MainPageActivity::class.java)
+                                finish() // 현재 Activity 종료
+                                startActivity(intent)
+                            }
+                        } else {
+                            // 응답 데이터가 없는 경우
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(
+                                    this@MainSearchPage,
+                                    "응답 데이터가 없습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                        val intent = Intent(this@MainSearchPage, MainPageActivity::class.java)
-                        finish() //인텐트 종료
-                        startActivity(intent)
+                    } else {
+                        // 요청 실패
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                this@MainSearchPage,
+                                "API 요청이 실패했습니다: ${response?.code() ?: "응답 없음"}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                    else
-                    {
-
+                } catch (e: Exception) {
+                    // 예외 처리
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@MainSearchPage,
+                            "친구 추가 중 오류가 발생했습니다.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+                    Log.e("AddFriendError", "Error adding friends", e)
                 }
-                override fun onFailure(
-                    call: Call<List<addMembersResponse.addMembersResponseItem>>,
-                    t: Throwable
-                ) {
-//                    Log.d("groupmemberadd_error", "onFailure API call failed.")
-                    // API 요청 자체가 실패한 경우 처리
-                }
-            })
+            }
         }
 
         //헤더
@@ -132,19 +155,6 @@ class MainSearchPage : AppCompatActivity() {
         val settingbutton : ImageButton = headerBinding.settingButton
         settingbutton.visibility = View.GONE
 
-//        val homeButton: ImageButton = headerBinding.homeButton
-//        homeButton.setOnClickListener {
-//            try {
-//                intraNameObject.clearName()
-//                intraNameObject.clearIntList()
-//                val intent = Intent(this, MainPageActivity::class.java)
-//                startActivity(intent)
-//                finish()
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-//            }
-//        }
         //footer
         val footerBinding = binding.footer
         val searchButton : ImageButton = footerBinding.searchButton
@@ -179,8 +189,14 @@ class MainSearchPage : AppCompatActivity() {
                         if ( Name != query) {
                             val name = query
 //                            Log.d("onQueryName", "name : ${name}")
+//                            supportFragmentManager.beginTransaction()
+//                                .replace(binding.container.id, MainSearchFragment(name)).commit()
+
+
+                            val mainserachFragment = MainSearchFragment.newInstance(name)
                             supportFragmentManager.beginTransaction()
-                                .replace(binding.container.id, MainSearchFragment(name)).commit()
+                                .replace(binding.container.id, mainserachFragment)
+                                .commit()
                             intraNameObject.setName(query)
                         }
                     }

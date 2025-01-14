@@ -1,7 +1,7 @@
 package com.seoul.where42android.adapter
 
 
-import SharedViewModel_GroupsMembersList
+import com.seoul.where42android.ViewModel.SharedViewModelGroupsMembers
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -22,7 +22,7 @@ import com.seoul.where42android.model.RecyclerInViewModel
 class InRecyclerViewAdapter(
     context: Context,
     val itemList: MutableList<RecyclerInViewModel>,
-
+    val itemName : String
    ): RecyclerView.Adapter<InRecyclerViewAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -47,7 +47,7 @@ class InRecyclerViewAdapter(
         fun bind(item: RecyclerInViewModel) {
             with(binding) {
                 optionEdit.setOnClickListener {
-                    showEditDialog(root.context, item)
+                    showEditDialog(root.context, item, itemName)
                 }
 
                 if (item.location == "퇴근") {
@@ -83,7 +83,7 @@ class InRecyclerViewAdapter(
             }
         }
     }
-    private fun showEditDialog(context: Context, item: RecyclerInViewModel) {
+    private fun showEditDialog(context: Context, item: RecyclerInViewModel, itemName: String) {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.activity_profile_popup)
 
@@ -127,27 +127,29 @@ class InRecyclerViewAdapter(
             // 삭제 버튼을 눌렀을 때 동작 정의
             // 예를 들어, 다이얼로그를 닫거나 삭제 작업을 수행할 수 있습니다.
             val deletefrienddialog = Dialog(context)
-            deletefrienddialog.setContentView(R.layout.activity_editstatus_popup)
-
+//            deletefrienddialog.setContentView(R.layout.activity_editstatus_popup)
+            deletefrienddialog.setContentView(R.layout.activity_groupin_friend_delete_popup)
             deletefrienddialog.setCanceledOnTouchOutside(true)
             deletefrienddialog.setCancelable(true)
             deletefrienddialog.window?.setGravity(Gravity.CENTER)
             deletefrienddialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             val title = deletefrienddialog.findViewById<TextView>(R.id.title)
-            title.text = "정말 친구를 삭제하시겠습니까?"
+            val title2 = deletefrienddialog.findViewById<TextView>(R.id.title2)
+            title.text = "'${itemName}'그룹에서"
+            title2.text = "${item.intra_name}님을 삭제하시겠습니까?"
             val cancel = deletefrienddialog.findViewById<Button>(R.id.cancel)
             val submit = deletefrienddialog.findViewById<Button>(R.id.submit)
 
             submit.setOnClickListener {
                 //여기가 친구 삭제하기 버튼 수락
                 val sharedViewModel = ViewModelProvider(context as MainPageActivity).get(
-                    SharedViewModel_GroupsMembersList::class.java
+                    SharedViewModelGroupsMembers::class.java
                 )
 
                 val members = mutableListOf<Int>()
                 members.add(item.intra_id)
-                sharedViewModel.deleteFriendGroup(item.included_group, members)
+                sharedViewModel.deleteFriendGroup(item.included_group, members, context)
 
                 deletefrienddialog.dismiss()
             }
