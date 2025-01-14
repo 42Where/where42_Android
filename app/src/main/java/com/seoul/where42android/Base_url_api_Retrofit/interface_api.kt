@@ -1,7 +1,5 @@
 package com.seoul.where42android.Base_url_api_Retrofit
 
-
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.Response
@@ -20,12 +18,6 @@ interface SearchApiService {
     ): Response<List<searchMemberResponse.searchMemberResponseItem>> // YourResponseModel에는 실제 응답 모델을 대입해야 합니다.
 }
 
-//interface SearchApiService {
-//    @GET("v3/search")
-//    fun searchMember(
-//        @Query("keyWord") keyWord: String
-//    ): Call<List<searchMemberResponse.searchMemberResponseItem>> // YourResponseModel에는 실제 응답 모델을 대입해야 합니다.
-//}
 //logout
 interface logoutAPI{
     @POST("v3/logout")
@@ -33,10 +25,12 @@ interface logoutAPI{
 }
 
 //reissue
-interface reissueAPI{
+interface ReissueAPI{
     // POST 요청을 위한 함수
     @POST("v3/jwt/reissue")
-    suspend fun reissueToken(): Response<ReissueResponse>
+    suspend fun reissueToken(
+        @Body intraIdRequest: intraIdRequest
+    ): Response<ReissueResponse>
 
 }
 
@@ -60,14 +54,14 @@ interface MemberAPI {
 //    fun getMembers(): Call<List<Member>>
 
     @POST("v3/member/comment")
-    fun updateMemberComment(
+    suspend fun updateMemberComment(
         @Body request: UpdateCommentRequest
-    ): Call<CommentChangeMember> // YourResponseModel은 서버 응답에 따라 실제 응답 모델로 변경되어야 합니다
+    ): Response<Member> // YourResponseModel은 서버 응답에 따라 실제 응답 모델로 변경되어야 합니다
 
     @PUT("v3/group/groupmember")
-    fun deleteFriendList(
+    suspend fun deleteFriendList(
         @Body request: deleteFriendListRequest
-    ): Call<List<deleteFriendListResponse.deleteFriendListResponseItem>>
+    ): Response<List<deleteFriendListResponse.deleteFriendListResponseItem>>
 
 }
 
@@ -88,7 +82,7 @@ interface GroupMemberListService {
 
     // Define endpoint and query parameter
     @GET("/v3/group")
-    fun getGroupMemberList(@Query("intraId") intraId: Int): Call<List<groups_memberlist.groups_memberlistItem>>
+    suspend fun getGroupMemberList(@Query("intraId") intraId: Int): Response<List<groups_memberlist.groups_memberlistItem>>
 }
 
 //----------------------------
@@ -96,42 +90,42 @@ interface GroupMemberListService {
 //1. group 이름 바꾸기
 interface GroupChangeName{
     @POST("v3/group/name")
-    fun groupChangeName(@Body groupData: GroupNameRequest):Call<GroupNameResponse>
+    suspend fun groupChangeName(@Body groupData: GroupNameRequest):Response<GroupNameResponse>
 }
 
 //2. Group 삭제
 interface GroupDelete {
     @DELETE("v3/group")
-    fun deleteGroup(@Query("groupId") groupId: Int): Call<GroupDeleteResponse>
+    suspend fun deleteGroup(@Query("groupId") groupId: Int): Response<GroupDeleteResponse>
 }
 //----------------------------
 
 //새로운 그룹 만들기
 interface NewGroup {
     @POST("v3/group")
-    fun newGroup(@Body request: NewGroupRequest
-    ): Call<NewGroupResponses> // YourResponseModel은 서버 응답에 따라 실제 응답 모델로 변경되어야 합니다
+    suspend fun newGroup(@Body request: NewGroupRequest
+    ): Response <NewGroupResponses> // YourResponseModel은 서버 응답에 따라 실제 응답 모델로 변경되어야 합니다
 
 }
 
 //새로운 그룹 만들고 나서 member추가하기
 interface GroupAddMemberlist {
     @POST("/v3/group/groupmember/members")
-    fun addMembersToGroup(@Body request: AddMembersRequest): Call<List<addMembersResponse.addMembersResponseItem>>
+    suspend fun addMembersToGroup(@Body request: AddMembersRequest): Response<List<addMembersResponse.addMembersResponseItem>>
 }
 
 
 //group memberlist 들고오기
 interface Deafult_friendGroup_memberlist {
     @GET("v3/group/groupmember")
-    fun getdefaultGroupList(@Query("groupId") groupId: Int): Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
+    suspend fun getdefaultGroupList(@Query("groupId") groupId: Int): Response<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
     @POST("/v3/group/groupmember/not-ingroup")
-    fun getGroupMembersNotInGroup(@Query("groupId") groupId: Int): Call<List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
+    suspend fun getGroupMembersNotInGroup(@Query("groupId") groupId: Int): Response <List<friendGroup_default_memberlist.friendGroup_default_memberlistItem>>
 
 }
 
 //location/custom
-interface member_custom_location {
+interface memberCustomLocation {
     @POST("v3/location/custom")
-    fun customLocationChange(@Body request: locationCustomMemberRequest) : Call <locationCustomMemberResponse>
+    suspend fun customLocationChange(@Body request: locationCustomMemberRequest) : Response<locationCustomMemberResponse>
 }

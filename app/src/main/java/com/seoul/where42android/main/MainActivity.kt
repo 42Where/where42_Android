@@ -1,6 +1,5 @@
 package com.seoul.where42android.main
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,16 +16,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import com.seoul.where42android.Base_url_api_Retrofit.reissueAPI
+import com.seoul.where42android.Base_url_api_Retrofit.ReissueAPI
+import com.seoul.where42android.Base_url_api_Retrofit.intraIdRequest
 import com.seoul.where42android.R
-import org.json.JSONObject
+import com.seoul.where42android.utils.TokenManager
+import kotlinx.coroutines.flow.MutableStateFlow
+
 
 class UserSettings private constructor() {
     var token: String = ""
     var intraId: Int = -1
     var agreement: Boolean = false
     var defaultGroup : Int = -1
-    var refreshToken : String = ""
     var inCluster : Boolean = false
 
     companion object {
@@ -40,291 +41,179 @@ class UserSettings private constructor() {
     }
 }
 
-class MainActivity : AppCompatActivity() {
+// DataStore 키 정의
 
+
+class MainActivity : AppCompatActivity() {
+    private val accessTokenFlow = MutableStateFlow("notoken")
     private lateinit var webView: WebView
 
-//    val intent = Intent(this, MainPageActivity::class.java)
-//    fun saveTokenToSharedPreferences(context: Context, token: String) {
-//        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-//        val editor = sharedPreferences.edit()
-////        editor.putString("AuthToken", token)
-//     editor.putString("AuthToken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k")
-//        editor.apply()
-//    }
-
-    fun getTokenFromSharedPreferences(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("AuthToken", null)
-    }
-
-    fun getIntraidFromSharedPreferences(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("intraId", null)
-    }
-
-    fun getAgreementFromSharedPreferences(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("agreement", null)
-    }
-
-    fun getRefreshTokenFromSharedPreferences(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("RefreshToken", null)
-    }
-
-    fun saveaccesTokenToSharedPreferences(context: Context, token: String) {
-        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString("AuthToken", token)
-    }
-
-//    fun clearSharedPreferences(context: Context) {
-//        val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-//        val editor = sharedPreferences.edit()
-//        editor.clear()
-//        editor.apply() // 또는 editor.commit()
-//    }
-
+    private var accesstoken: String? = null
+    private var intraId: Int? = null
+    private var agreement: Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //다크 모드 제한 코드
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
+        // TokenManager 초기화 (앱의 Application 클래스에서 호출되었을 가능성 있음)
+        TokenManager.initialize(applicationContext)
 
-//        //help Button
+        val loginButton = findViewById<ImageButton>(R.id.loginbutton)
+        //help Button
         val helpButton = findViewById<ImageButton>(R.id.help_button)
-
         helpButton.setOnClickListener{
             val intent = Intent(this@MainActivity, MainHelpPage::class.java)
             startActivity(intent)
         }
-
-
         //webView 초기화
         webView = findViewById(R.id.webView)
-        val loginButton = findViewById<ImageButton>(R.id.loginbutton)
         webView.settings.javaScriptEnabled = true // JavaScript 활성화 여부 설정
+        webView.settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW // HTTPS 트래픽 허용
 
-        // HTTPS 트래픽 허용
-        webView.settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        //쿠키값 지우기
+//         val cookieManager = CookieManager.getInstance()
+//         cookieManager.removeAllCookies(null)
 
+        // DataStore에서 데이터 읽기 예제
+        CoroutineScope(Dispatchers.IO).launch {
+//            TokenManager.setAccessToken(("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInR5cGUiOiJhY2Nlc3NUb2tlbiIsInJvbGUiOiJDYWRldCIsImlhdCI6MTczNTc5NTMxMSwiaXNzIjoid2hlcmU0MiIsImV4cCI6MTczNTc5ODkxMX0.cwycJ7xzQ7oDll6jxMCsWFbsqqXJKZQjsRo6D4q4WvE"))
+//            TokenManager.clearAllData()
+            TokenManager.printAllData()
 
-//        val cookieManager = CookieManager.getInstance()
-//        cookieManager.removeAllCookies(null)
+            accesstoken = TokenManager.getAccessToken()
+            intraId = TokenManager.getIntraId()
+            agreement = TokenManager.getAgreement() ?: false
+            Log.d("CustomWebView", "Token loaded: token=$accesstoken, intraId=$intraId, argreement = ${agreement}")
+            withContext(Dispatchers.Main) {
+                Log.d("MainActivity", "DataStore loaded: token=$accesstoken, intraId=$intraId, agreement=$agreement")
 
-//        token 값 일부러 바꾸기 -> 나중에 삭제해야됨
-//        saveTokenToSharedPreferences(this, "a")
-
-//        clearSharedPreferences(this@MainActivity)
-
-        val token = getTokenFromSharedPreferences(this@MainActivity) ?: "notoken"
-        val intraId = getIntraidFromSharedPreferences(this@MainActivity)?.toInt() ?: -1
-        val agreement = getAgreementFromSharedPreferences((this@MainActivity))
-        val refreshtoken = getRefreshTokenFromSharedPreferences(this@MainActivity) ?: "norefresh"
-
-        Log.e("refre", "memory token : ${token}")
-        Log.e("refre", "memory retoken : ${refreshtoken}")
-        Log.e("refre", "memory agreement : ${agreement}")
-        Log.e("refre", "memory intraId : ${intraId}")
-
-        //진짜 제일 처음 킬 때 memory, usersetting 전부 null임 -> 로그인 페이지
-        if (intraId == -1)
-        {
-
-        }
-        else {
-            val userSettings = UserSettings.getInstance()
-//            Log.e("refre", " token : ${userSettings.token}")
-
-            if (userSettings.token == "" || userSettings.intraId == -1) {
-                userSettings.token = token
-                userSettings.intraId = intraId
-                userSettings.agreement = agreement.toBoolean()
-                userSettings.refreshToken = refreshtoken
-
-                Log.e("refre", "memory token : ${token}")
-                Log.e("refre", "memory retoken : ${refreshtoken}")
-                Log.e("refre", "memory agreement : ${agreement}")
-                Log.e("refre", "memory intraId : ${intraId}")
-            }
-
-            //agreement 동의를 하였고, token intraId, accestoken이 있으면 MainPageAcitivty로 넘기기 -> 이 코드는 나중에
-
-//        saveTokenToSharedPreferences(this, "a")
-//        userSettings.token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInJvbGVzIjoiQ2FkZXQiLCJpYXQiOjE3MDUzOTE1MTUsImlzcyI6IndoZXJlNDIiLCJleHAiOjE3MDUzOTUxMTV9.J5akdcuH2X0l94cYbAX95petu9fYYK8HWXVWQ9T-O-k"
-//
-
-//            val intraid: Int = intraId
-            val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-//                    val response = memberAPI.getMember(intraid)
-                    val response = memberAPI.getMember()
-                    withContext(Dispatchers.IO) {
-                        when (response.code()) {
-                            200 -> {
-//                                Log.d("MainPageAcitivty_kt", "no login memberAPI SUC")
-                                val intent = Intent(this@MainActivity, MainPageActivity::class.java)
-                                intent.putExtra("TOKEN_KEY", token)
-                                intent.putExtra("INTRAID_KEY", intraId)
-                                intent.putExtra("AGREEMENT_KEY", agreement)
-                                startActivity(intent)
-                                finish()
-                            }
-
-                            else -> {
-//                                Log.d(
-//                                    "MainPageAcitivty_kt",
-//                                    "no login memberAPI response.code : ${response.code()}"
-//                                )
-                                //여기는 아무것도 없음. 밑 버튼이 보이게 해야됨
-                            }
-                        }
-                    }
-                } catch (e: IOException) {
-//                    Log.d("MainPageAcitivty_kt", "no login memberAPI Fail")
-                }
-            }
-        }
-
-        //버튼을 눌렀을 때
-        loginButton.setOnClickListener {
-            val userSettings = UserSettings.getInstance()
-//            val intraid : Int = intraId
-            val memberAPI = RetrofitConnection.getInstance(token).create(MemberAPI::class.java)
-            CoroutineScope(Dispatchers.IO).launch{
-                try {
-//                        val response = memberAPI.getMember(intraid)
-                    val response = memberAPI.getMember()
-                        withContext(Dispatchers.Main) {
-                            if (response.isSuccessful) {
-                                when (response.code())
-                                {
+                // 동의 및 세션 검증 후 MainPage로 이동
+                if (agreement == true && accesstoken != "notoken") {
+                    val memberAPI = RetrofitConnection.getInstance(accesstoken!!).create(MemberAPI::class.java)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            val response = memberAPI.getMember()
+                            withContext(Dispatchers.Main) {
+                                when (response.code()) {
                                     200 -> {
 
-                                        Log.d("token_check", "here1")
-//                                        Log.d("SUC", "SUC ${response.code()}")
+//                                        DataStoreManager.saveData(this@MainActivity, DataStoreKeys.ACCESS_TOKEN, accesstoken.toString())
+                                        Log.d("ReissueAPI", "New accessToken received: $accesstoken, member=${response.body()}")
+                                        // MainPage로 이동
                                         val intent = Intent(this@MainActivity, MainPageActivity::class.java)
-                                        intent.putExtra("TOKEN_KEY", token)
+                                        intent.putExtra("TOKEN_KEY", accesstoken)
                                         intent.putExtra("INTRAID_KEY", intraId)
                                         intent.putExtra("AGREEMENT_KEY", agreement)
                                         startActivity(intent)
                                         finish()
                                     }
-                                    201 -> {
-                                        //여기가 리다이렉트
-//                                        Log.d("token_check", "here2")
-                                        val headers = response.headers()
-                                        val originalString = headers["redirectUrl"]
-                                        val modifiedString =
-                                            originalString?.replace("{", "")?.replace("}", "")
-//                                        Log.d("SUC", "modifiedString : ${modifiedString}")
-                                        val customWebViewClient =
-                                            CustomWebViewClient(this@MainActivity, this@MainActivity)
-                                        runOnUiThread {
-                                            webView.visibility = VISIBLE
-                                            webView.webViewClient = customWebViewClient
-                                            if (modifiedString != null) {
-                                                Log.d("MainActivty", "third");
-                                                webView.loadUrl(modifiedString)
-                                            }
-                                        }
-                                    }
-                                    else ->
-                                    {
-//                                        Log.d("token_check", "here3")
-                                        //이 자리는 다시 로그인 해주세요를 띄워야함.
-                                    }
-                                }
-                            }
-                            else {
-                                when (response.code())
-                                {
                                     401 -> {
-                                        try {
-                                            Log.d("MainActivty", "third3");
-                                            val reissueapi = RetrofitConnection.getInstance(refreshtoken).create(reissueAPI::class.java)
-                                            val reissueResponse = reissueapi.reissueToken()
-                                            Log.d("MainActivty", "third4");
-                                            if (reissueResponse.isSuccessful)
-                                            {
-                                                when (reissueResponse.code())
-                                                {
-                                                    200 -> {
+                                        //1. accesstoken 만료 -> reissue를 통해서 다시 accesstoken 요청 -> 하고 다시 DataStoreManager update
+                                        //1.1accesstoken이 만료되어서 이제 다시 reissue를 요청했는데도 만료이면 그냥 로그인 버튼 누르게 해야됨.
+                                        val reissueAPI = RetrofitConnection.getNoAuthInstance().create(ReissueAPI::class.java)
 
-                                                        Log.d("MainActivty", "third4");
-//                                                        val reissue = reissueResponse.body()?.refreshToken
-                                                        val reissue_message = reissueResponse.message()
-                                                        val jsonObject = JSONObject(reissue_message)
-                                                        val reissueToken = jsonObject.optString("accessToken", "")
-                                                        if (reissueToken != "")
-                                                        {
-                                                            userSettings.token = reissueToken
-                                                            saveaccesTokenToSharedPreferences(this@MainActivity, reissueToken)
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            try {
+                                                val intraIdRequest = intraIdRequest(intraId ?: -1)
+                                                val response = reissueAPI.reissueToken(intraIdRequest)
+
+                                                withContext(Dispatchers.Main) {
+                                                    when (response.code())
+                                                    {
+                                                        200 -> { // refreshtoken이 아직 살아있음
+                                                            val newAccessToken = response.body()?.accessToken // `ReissueResponse`에서 필요한 데이터 가져오기
+                                                            Log.d("ReissueAPI", "New accessToken received: $newAccessToken")
+                                                            // DataStore에 새로운 accessToken 저장
+//                                                            DataStoreManager.saveData(this@MainActivity, DataStoreKeys.ACCESS_TOKEN, newAccessToken.toString())
+                                                            TokenManager.setAccessToken(newAccessToken.toString())
+                                                            // UserSettings 업데이트
+                                                            val userSettings = UserSettings.getInstance()
+                                                            userSettings.token = newAccessToken.toString()
+
+                                                            // MainPage로 이동
                                                             val intent = Intent(this@MainActivity, MainPageActivity::class.java)
-                                                            intent.putExtra("TOKEN_KEY", userSettings.token)
+                                                            intent.putExtra("TOKEN_KEY", newAccessToken.toString())
                                                             intent.putExtra("INTRAID_KEY", intraId)
                                                             intent.putExtra("AGREEMENT_KEY", agreement)
                                                             startActivity(intent)
                                                             finish()
                                                         }
-                                                        else
-                                                        {
-                                                            Log.d("MainActivty", "third5");
-                                                            userSettings.token = "notoken"
-                                                            saveaccesTokenToSharedPreferences(this@MainActivity, "notoken")
+                                                        401 -> { //refreshtoken이 만료됨 그래서 다시 로그인 but 하는 거는 없음 밑 로그인 버튼 눌러서 진행하게 해야됨
+
                                                         }
                                                     }
-                                                    201 -> {
-                                                        Log.d("MainActivty", "third12");
-                                                    }
-
-                                                    else ->
-                                                    {
-                                                        Log.d("MainActivty", "third6");
-                                                        // 기본적으로 어떻게 처리할지 작성
-                                                    }
                                                 }
-                                            } else {
-                                                Log.d("MainActivty", "third7");
-//                                                //401이며 Reissue API 호출 실패 시 처리 리다이렉트로 보내야함.
-                                                val headers = response.headers()
-                                                val originalString = headers["redirectUrl"]
-                                                val modifiedString =
-                                                    originalString?.replace("{", "")?.replace("}", "")
-                                                val customWebViewClient =
-                                                    CustomWebViewClient(this@MainActivity, this@MainActivity)
-                                                runOnUiThread {
-                                                    webView.visibility = VISIBLE
-                                                    webView.webViewClient = customWebViewClient
-                                                    if (modifiedString != null) {
-                                                        Log.d("MainActivty", "second");
-//                                                        webView.loadUrl("https://api.where42.kr/login/oauth2")
-//                                                        webView.loadUrl("https://api.where42.kr/oauth2/authorization/42seoul")
-                                                        webView.loadUrl("https://api.where42.kr/v3")
-//                                                        webView.loadUrl("https://test.where42.kr/v3")
-//                                                        webView.loadUrl("https://auth.42.fr/auth/realms/students-42/protocol/openid-connect/auth?client_id=intra&redirect_uri=https%3A%2F%2Fprofile.intra.42.fr%2Fusers%2Fauth%2Fkeycloak_student%2Fcallback&response_type=code&state=41a172bbce265c02e6c0f91cab615f90dae945f51b0308c5")
-//                                                        webView.loadUrl("http://test.where42.kr/oauth2/authorization/42seoul")
-                                                    }
+                                            } catch (e: IOException) {
+                                                Log.e("ReissueAPI", "Failed to call reissueAPI", e)
+                                                withContext(Dispatchers.Main) {
+                                                    // 네트워크 오류 또는 기타 예외 상황 처리 -> 다이얼로그 에러라고 띄워주면 될 듯 앱을 다시 시작하라고
                                                 }
                                             }
-                                        } catch (reissueException: Exception)
-                                        {
                                         }
                                     }
                                     else -> {
-                                        Log.d("MainActivty", "third8");
+                                        Log.d("MainActivity", "Unexpected response code: ${response.code()}")
                                     }
+                                }
+                            }
+                        } catch (e: IOException) {
+                            Log.e("MainActivity", "Failed to connect to MemberAPI", e)
+                        }
+                    }
+                }
+            }
+        }
+
+        // 로그인 버튼 클릭 시
+        //버튼을 눌렀을 때
+        loginButton.setOnClickListener {
+            handleLogin()
+        }
+    }
+
+    private fun handleLogin() {
+        val memberAPI = RetrofitConnection.getInstance(accesstoken ?: "notoken").create(MemberAPI::class.java)
+        CoroutineScope(Dispatchers.IO).launch{
+            try {
+                val response = memberAPI.getMember()
+                withContext(Dispatchers.Main) {
+                    when (response.code())
+                    {
+                        200 -> {
+//                                    DataStoreManager.saveData(this@MainActivity, DataStoreKeys.ACCESS_TOKEN, "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIiwiaW50cmFJZCI6MTQxNDQ3LCJpbnRyYU5hbWUiOiJqYWV5b2p1biIsInR5cGUiOiJhY2Nlc3NUb2tlbiIsInJvbGUiOiJDYWRldCIsImlhdCI6MTczNTc5NTMxMSwiaXNzIjoid2hlcmU0MiIsImV4cCI6MTczNTc5ODkxMX0.cwycJ7xzQ7oDll6jxMCsWFbsqqXJKZQjsRo6D4q4WvE")
+                            Log.d("token_check", "here1")
+                            val intent = Intent(this@MainActivity, MainPageActivity::class.java)
+                            intent.putExtra("TOKEN_KEY", accesstoken)
+                            intent.putExtra("INTRAID_KEY", intraId)
+                            intent.putExtra("AGREEMENT_KEY", agreement)
+                            startActivity(intent)
+                            finish()
+                        }
+                        401 -> {
+                            Log.d("MainActivty", "401로 옴")
+                            val headers = response.headers()
+                            val originalString = headers["redirectUrl"]
+                            val modifiedString =
+                                originalString?.replace("{", "")?.replace("}", "")
+//                                        Log.d("SUC", "modifiedString : ${modifiedString}")
+                            val customWebViewClient =
+                                CustomWebViewClient(this@MainActivity, this@MainActivity)
+                            runOnUiThread {
+                                webView.visibility = VISIBLE
+                                webView.webViewClient = customWebViewClient
+                                if (modifiedString != null) {
+                                    Log.d("MainActivty", "third");
+                                    webView.loadUrl(modifiedString)
                                 }
                             }
                         }
                     }
-                    catch (e:IOException){
-//                        Log.e("fail" , " fail")
-                    }
+                }
+            }
+            catch (e:IOException){
+                Log.e("MainActivity", "Failed to connect to MemberAPI", e)
             }
         }
-
     }
 }

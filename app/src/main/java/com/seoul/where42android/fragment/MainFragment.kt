@@ -1,6 +1,6 @@
 package com.seoul.where42android.fragment
 
-import SharedViewModel_GroupsMembersList
+import com.seoul.where42android.ViewModel.SharedViewModelGroupsMembers
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,14 +37,39 @@ object GroupsList {
 }
 
 
-class MainFragment(receivedToken : String, IntraId : Int, Context : Context) : Fragment() {
+class MainFragment() : Fragment() {
     private lateinit var binding: ActivityMainPageFragmentBinding
-    private val token = receivedToken
     private val emptyItemList = mutableListOf<RecyclerOutViewModel>()
-    private val intraid = IntraId
-    private val Context = Context
+    private var intraId: Int = -1
+    private var accesstoken : String = "notoken"
+    private lateinit var context: Context
 
-    private lateinit var sharedViewModel: SharedViewModel_GroupsMembersList
+    private lateinit var sharedViewModel: SharedViewModelGroupsMembers
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            accesstoken = it.getString("TOKEN").toString()
+            intraId = it.getInt("INTRA_ID")
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        this.context = context
+    }
+
+    companion object {
+        fun newInstance(receivedToken: String, intraId: Int): MainFragment {
+            val fragment = MainFragment()
+            val args = Bundle()
+            args.putString("TOKEN", receivedToken)
+            args.putInt("INTRA_ID", intraId)
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -72,7 +97,7 @@ class MainFragment(receivedToken : String, IntraId : Int, Context : Context) : F
 
         }
         // Create ViewModel instance
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel_GroupsMembersList::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModelGroupsMembers::class.java)
 //        viewModel = ViewModelProvider(this).get(GroupsMembersList::class.java)
 
         // Observe changes in LiveData
@@ -164,11 +189,11 @@ class MainFragment(receivedToken : String, IntraId : Int, Context : Context) : F
 
         // Call function to fetch data
 //        val intraId = 6 // Replace this with your memberId value
-        sharedViewModel.getGroupMemberList(intraid, token, Context)
+        sharedViewModel.getGroupMemberList(intraId, context)
     }
 
-    fun refreshData() {
-        // ViewModel을 사용하여 데이터를 다시 로드하는 로직
-        sharedViewModel.getGroupMemberList(intraid, token, Context)
-    }
+//    fun refreshData() {
+//        // ViewModel을 사용하여 데이터를 다시 로드하는 로직
+//        sharedViewModel.getGroupMemberList(intraId, accesstoken, context)
+//    }
 }

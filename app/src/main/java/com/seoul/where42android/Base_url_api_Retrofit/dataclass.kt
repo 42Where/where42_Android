@@ -2,6 +2,26 @@ package com.seoul.where42android.Base_url_api_Retrofit
 
 import java.util.Date
 
+// v3
+
+// ---                   reissue         ---
+data class intraIdRequest (
+    val intraId : Int
+)
+
+// 응답 데이터 클래스
+data class ReissueResponse(
+    val accessToken: String
+)
+
+
+
+
+
+
+
+
+// ------------------------------v2-----------------------------------------
 
 //search
 class searchMemberResponse : ArrayList<searchMemberResponse.searchMemberResponseItem>(){
@@ -24,11 +44,6 @@ data class logoutResponse(
 )
 
 
-// 응답 데이터 클래스
-data class ReissueResponse(
-    val refreshToken: String
-)
-
 data class JoinResponse(
     val message: String
 )
@@ -48,8 +63,7 @@ data class Member(
     val inCluster: Boolean,
     val agree: Boolean,
     val defaultGroupId: Int,
-    var location: String,
-    var responsecode : Int
+    var location: String
 )
 
 //@POST("v3/member/comment")
@@ -190,9 +204,8 @@ class friendGroup_default_memberlist : ArrayList<friendGroup_default_memberlist.
 
 //-------------------------------
 //Newgroup 추가
-data class  NewGroupRequest(
+data class NewGroupRequest(
     val groupName: String,
-    val intraId: Int
 )
 
 data class NewGroupResponses(

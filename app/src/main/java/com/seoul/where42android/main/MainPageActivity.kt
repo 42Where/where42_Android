@@ -1,6 +1,5 @@
 package com.seoul.where42android.main
 
-import SharedViewModel_Profile
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -23,7 +22,14 @@ import com.seoul.where42android.Base_url_api_Retrofit.Member
 import com.seoul.where42android.R
 import com.seoul.where42android.databinding.ActivityMainPageBinding
 import com.seoul.where42android.fragment.MainFragment
+import com.seoul.where42android.utils.TokenManager
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.launch
+import com.seoul.where42android.ViewModel.SharedViewModelProfile
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 
 object friendListObject {
     // HashMap 선언
@@ -91,286 +97,197 @@ object friendCheckedList {
 class MainPageActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainPageBinding
-    lateinit var profile : Member
-    private lateinit var sharedViewModel_profile: SharedViewModel_Profile
+    private lateinit var profile : Member
+    private lateinit var sharedViewModelProfile: SharedViewModelProfile
 
-
+    private var accesstoken: String = "notoken"
+    private var intraId: Int = -1
+    private var agreement: Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
         binding = ActivityMainPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //token 들고오기
-//        val intent = intent
-//        val receivedToken1 = intent.getStringExtra("TOKEN_KEY")?: "notoken"
-//        val receivedIntraId1 = intent.getStringExtra("INTRAID_KEY")?.toInt() ?: -1
-//        val receivedAgreement = intent.getStringExtra("AGREEMENT_KEY")
 
-
-
-        val userSettings = UserSettings.getInstance()
-        val receivedToken = userSettings.token
-        val receivedIntraId = userSettings.intraId
-        val receivedrefreshToken = userSettings.refreshToken
-        val receivedargreement = userSettings.agreement
-
-//        Log.e("checkcheck", "here receivedToken : receive token ${receivedToken}")
-//        Log.e("checkcheck", "here receivedrefreshToken : receive receivedrefreshToken ${receivedrefreshToken}")
-//        Log.e("checkcheck", "here intraId : intraId ${receivedIntraId}")
-//        Log.e("checkcheck", "here receivedargreement : intraId ${receivedargreement}")
-
-
-//        2. group list을 보여주기 위해 binding으로 MainFragment 설정
-        val mainFragment = MainFragment(receivedToken, receivedIntraId, this@MainPageActivity)
-        supportFragmentManager.beginTransaction().replace(binding.container.id, mainFragment).commit()
-//        supportFragmentManager.beginTransaction().replace(binding.container.id, MainFragment(receivedToken, receivedIntraId, this@MainPageActivity)).commit()
-
-//        2. 12_18 api를 통해 사용자 프로필 가져오기
-//        Log.d("PageCheck", "here")
-        sharedViewModel_profile = ViewModelProvider(this).get(SharedViewModel_Profile::class.java)
-
-        val intraId = receivedIntraId// Replace with the actual intraId
-//        Log.d("PageCheck", "intraId: ${intraId}")
-
-        val checkreissue = sharedViewModel_profile.getMemberData(this@MainPageActivity, intraId, receivedToken)
-//        Log.d("PageCheck", "intraId: getMemberData")
-//        Log.d("PageCheck", "checkreissue : ${checkreissue}")
-
-        // LiveData 객체 관찰
-        sharedViewModel_profile.profileLiveData.observe(this) { member ->
-            if (member != null) {
-//                Log.d("PageCheck", "member responsecode : ${member.responsecode} ")
-            }
-            member?.let {
-                profile = member
-
-                val mainImage = findViewById<CircleImageView>(R.id.profile_photo)
-                val imageUrl = member.image
-                Glide.with(this@MainPageActivity)
-                    .load(imageUrl)
-                    .apply(RequestOptions().circleCrop())
-                    .error(R.drawable.nointraimage)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL) // 디스크 캐시 사용
-                    .into(mainImage)
-                userSettings.defaultGroup = member.defaultGroupId
-                val intraIdTextView = binding.intraId
-                intraIdTextView.text = member.intraName
-                binding.Comment.text = member.comment
-                binding.locationInfo.text = member.location
-//                Log.d("checkIocation", "lo : ${binding.locationInfo.text}")
-                if (binding.locationInfo.text == "퇴근") {
-//                    Log.d("checkIocation", "lo2 : ${binding.locationInfo.text}")
-                    binding.locationInfo.setBackgroundResource(R.drawable.location_outcluster)
-                    val strokeColor = Color.parseColor("#132743")
-//                    binding.locationInfo.setPadding(20, 0, 20, 0)
-                    binding.locationInfo.setTextColor(strokeColor)
-
-                    mainImage.borderWidth  = 0
-
-                }
-                binding.locationInfo.setPadding(20, 0, 20, 0)
-            }
+        sharedViewModelProfile = ViewModelProvider(this).get(SharedViewModelProfile::class.java)
+        sharedViewModelProfile.fetchProfileData(this@MainPageActivity)
+        // Profile 데이터 관찰 및 UI 업데이트
+        sharedViewModelProfile.SharedProfileLiveData.observe(this) { member ->
+            Log.d("MainActivityMember", "Main ${member}")
+            member?.let { updateUI(it) }
         }
 
+        CoroutineScope(Dispatchers.IO).launch {
+            accesstoken = TokenManager.getAccessToken()
+            intraId = TokenManager.getIntraId() ?: -1
+            agreement = TokenManager.getAgreement() ?: false
 
-//        val refresh = binding.swipe
-//        val scrollView = binding.container
-//
-//        // 새로고침 이벤트 처리
-//        refresh.setOnRefreshListener {
-//            // 여기에 새로고침을 위한 작업을 수행하세요.
-//            val fragment = MainFragment(receivedToken, receivedIntraId, this@MainPageActivity) // 현재 프래그먼트를 다시 생성
-//            val transaction = supportFragmentManager.beginTransaction()
-//            transaction.replace(binding.container.id, fragment)
-//            transaction.addToBackStack(null)
-//            transaction.commit()
-//            // 작업이 완료되면 아래 코드를 호출하여 새로 고침을 종료합니다.
-//            refresh.isRefreshing = false
-//        }
-//
-//        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, _, _, _ ->
-//            refresh.isEnabled = (v.scrollY == 0)
-//        })
-
-//        // 새로고침 이벤트 처리
-//        val refresh = binding.swipe
-//        refresh.setOnRefreshListener {
-//            // 여기에 새로고침을 위한 작업을 수행하세요.
-////            val fragment = MainFragment(receivedToken, receivedIntraId, this@MainPageActivity) // 현재 프래그먼트를 다시 생성
-////            val transaction = supportFragmentManager.beginTransaction()
-////            transaction.replace(binding.container.id, fragment)
-////            transaction.addToBackStack(null)
-////            transaction.commit()
-//            // 작업이 완료되면 아래 코드를 호출하여 새로 고침을 종료합니다.
-//            refresh.isRefreshing = false
-//        }
+            withContext(Dispatchers.Main) {
+                val mainFragment = MainFragment.newInstance(accesstoken, intraId)
+                supportFragmentManager.beginTransaction()
+                    .replace(binding.container.id, mainFragment)
+                    .commit()
+            }
+        }
 
         //1. header의 환경 설정 버튼을 눌렀을 때 -> SettingPage.kt로 가게 하기
-        val headerBinding = binding.header // Change to your actual ID for the included header
+        val headerBinding = binding.header
         val settingButton: ImageButton = headerBinding.settingButton
-
         settingButton.setOnClickListener {
-            try {
-                val intent = Intent(this, MainSettingPage::class.java)
-                //값 넘겨주기
-                intent.putExtra("PROFILE_DATA", profile.intraId)
-                intent.putExtra("TOKEN", receivedToken)
-//                Log.e("MainSettingPage", "receivedIntraId : ${receivedIntraId}")
-                intent.putExtra("INTRA_ID", receivedIntraId)
-                startActivity(intent)
-//                finish()
-            } catch (e: Exception) {
-                e.printStackTrace()
-//                Toast.makeText(this, "환경 세팅 작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-            }
+            clickHeader()
         }
 
-
-        //3. footer의 홈버튼과 검색 버튼 기능 구현
+        //2. footer의 홈버튼과 검색 버튼 기능 구현
         val footerBinding = binding.footer
         val searchButton : ImageButton = footerBinding.searchButton
-
-        searchButton.setOnClickListener {
-            try {
-                //Toast.makeText(this, "버튼을 클릭했습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainSearchPage::class.java)
-                startActivity(intent)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-
         val homeButton : ImageButton = footerBinding.homeButton
-
+        searchButton.setOnClickListener {
+            clickSearch()
+        }
         homeButton.setOnClickListener {
-//
             try {
-                mainFragment.refreshData()
-
-//                // 프래그먼트를 다시 생성하여 화면 새로고침
-//                val fragment = MainFragment(receivedToken, receivedIntraId, this@MainPageActivity)
-//                val transaction = supportFragmentManager.beginTransaction()
-//                transaction.replace(binding.container.id, fragment)
-//                transaction.addToBackStack(null)
-//                transaction.commit()
+//                mainFragment.refreshData()
             } catch (e: Exception) {
                 Log.d("errorerror" , e.toString())
-//                e.printStackTrace()
-//                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
-
-//            try {
-//                if (this::class.java != MainPageActivity::class.java) {
-//                    val intent = Intent(this, MainPageActivity::class.java)
-//                    startActivity(intent)
-//                    finish()
-//                } else {
-////                    Toast.makeText(this, "이미 로그인 페이지에 있습니다!", Toast.LENGTH_SHORT).show()
-//                    val nochange = Dialog(this)
-//                    nochange.setContentView(R.layout.activity_prohibition_smalltext_popup)
-//                    nochange.setCanceledOnTouchOutside(true)
-//                    nochange.setCancelable(true)
-//                    nochange.window?.setGravity(Gravity.CENTER)
-//                    nochange.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//                    val submitButton = nochange.findViewById<Button>(R.id.submit)
-//                    // 확인 버튼 클릭 시 원하는 동작을 수행합니다.
-//                    submitButton.setOnClickListener {
-//                        nochange.dismiss()
-//                    }
-//                    nochange.show()
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//                Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-//            }
         }
 
-
-        //4. 새 그룹 기능 구현
+        //3. 새 그룹 기능 구현
         val newGroupButton: Button = binding.newGroupButton // 레이아웃 바인딩 객체에서 버튼 가져오기
-
         newGroupButton.setOnClickListener {
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.activity_edittext_popup)
+            clickNewGroup()
+        }
+    }
 
-            dialog.setCanceledOnTouchOutside(true)
-            dialog.setCancelable(true)
-            dialog.window?.setGravity(Gravity.CENTER)
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    private fun clickNewGroup() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.activity_edittext_popup)
 
-            val editText = dialog.findViewById<EditText>(R.id.input)
-            val typeface = ResourcesCompat.getFont(this, R.font.gmarketsans_bold)
-            editText.typeface = typeface
-            editText.hint = "그룹명을 지정해주세요."
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setCancelable(true)
+        dialog.window?.setGravity(Gravity.CENTER)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-            val btnCancel = dialog.findViewById<Button>(R.id.cancel)
-            val btnSubmit = dialog.findViewById<Button>(R.id.submit)
+        val editText = dialog.findViewById<EditText>(R.id.input)
+        val typeface = ResourcesCompat.getFont(this, R.font.gmarketsans_bold)
+        editText.typeface = typeface
+        editText.hint = "그룹명을 지정해주세요."
+
+        val btnCancel = dialog.findViewById<Button>(R.id.cancel)
+        val btnSubmit = dialog.findViewById<Button>(R.id.submit)
 
 
-            btnCancel.setOnClickListener {
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        btnSubmit.setOnClickListener {
+            //동일 이름 그룹 생성 막기
+            //새그룹 버튼 확인 누르면 api 요청
+            //groupname, intraid 필요
+            val groupname : String = editText.text.toString()
+            if (friendListObject.searchGroupName(groupname))
+            {
+//                    //동일 이름 있음.
+                val samegroup = Dialog(this)
+                samegroup.setContentView(R.layout.activtiy_prohibition_popup)
+
+                samegroup.setCanceledOnTouchOutside(true)
+                samegroup.setCancelable(true)
+                samegroup.window?.setGravity(Gravity.CENTER)
+                samegroup.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                val textname = samegroup.findViewById<TextView>(R.id.title)
+                textname.text = "동일 이름을 가진 그룹이 존재합니다."
+
+                val btnsubmit = samegroup.findViewById<Button>(R.id.submit)
+                btnsubmit.setOnClickListener {
+                    samegroup.dismiss()
+                }
+                samegroup.show()
+            }
+            else if (groupname.length > 20)
+            {
+                val longgroupname = Dialog(this)
+                longgroupname.setContentView(R.layout.activtiy_prohibition_popup)
+
+                longgroupname.setCanceledOnTouchOutside(true)
+                longgroupname.setCancelable(true)
+                longgroupname.window?.setGravity(Gravity.CENTER)
+                longgroupname.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                val textname = longgroupname.findViewById<TextView>(R.id.title)
+                textname.text = "그룹 이름은 20이하로 해주세요."
+
+                val btnsubmit = longgroupname.findViewById<Button>(R.id.submit)
+                btnsubmit.setOnClickListener {
+                    longgroupname.dismiss()
+                }
+                longgroupname.show()
+            }
+            else
+            {
+                //intraid 불러오자
+                //JSON 만들어주기
+                //NewGroup @POST("v3/group")
+                val intent = Intent(this@MainPageActivity, MainCreateGroupActivity::class.java)
+                Log.d("addGroup", "newgroupName = ${groupname}")
+                intent.putExtra("newgroupName", groupname)
+//                    intent.putExtra("profileintraIdKey", profile.intraId)
+                intent.putExtra("defaultgroupId", profile.defaultGroupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
+                startActivity(intent)
                 dialog.dismiss()
             }
-            btnSubmit.setOnClickListener {
-                //동일 이름 그룹 생성 막기
-                //새그룹 버튼 확인 누르면 api 요청
-                //groupname, intraid 필요
-                val groupname : String = editText.text.toString()
-                if (friendListObject.searchGroupName(groupname))
-                {
-//                    //동일 이름 있음.
-                    val samegroup = Dialog(this)
-                    samegroup.setContentView(R.layout.activtiy_prohibition_popup)
-
-                    samegroup.setCanceledOnTouchOutside(true)
-                    samegroup.setCancelable(true)
-                    samegroup.window?.setGravity(Gravity.CENTER)
-                    samegroup.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    val textname = samegroup.findViewById<TextView>(R.id.title)
-                    textname.text = "동일 이름을 가진 그룹이 존재합니다."
-
-                    val btnsubmit = samegroup.findViewById<Button>(R.id.submit)
-                    btnsubmit.setOnClickListener {
-                        samegroup.dismiss()
-                    }
-                    samegroup.show()
-                }
-                else if (groupname.length > 20)
-                {
-                    val longgroupname = Dialog(this)
-                    longgroupname.setContentView(R.layout.activtiy_prohibition_popup)
-
-                    longgroupname.setCanceledOnTouchOutside(true)
-                    longgroupname.setCancelable(true)
-                    longgroupname.window?.setGravity(Gravity.CENTER)
-                    longgroupname.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    val textname = longgroupname.findViewById<TextView>(R.id.title)
-                    textname.text = "그룹 이름은 20이하로 해주세요."
-
-                    val btnsubmit = longgroupname.findViewById<Button>(R.id.submit)
-                    btnsubmit.setOnClickListener {
-                        longgroupname.dismiss()
-                    }
-                    longgroupname.show()
-                }
-                else
-                {
-                    //intraid 불러오자
-                    //JSON 만들어주기
-                    //NewGroup @POST("v3/group")
-//                val newGroupRequest = NewGroupRequest(groupname, intra_id)
-//                sharedViewModel = ViewModelProvider(this).get(SharedViewModel_GroupsMembersList::class.java)
-                    val intent = Intent(this@MainPageActivity, MainCreateGroupActivity::class.java)
-                    intent.putExtra("newgroupNameKey", groupname)
-                    intent.putExtra("profileintraIdKey", profile.intraId)
-                    intent.putExtra("groupIdKey", profile.defaultGroupId) // groupIdKey는 key값, newGroupResponse.groupId는 전달할 값
-                    startActivity(intent)
-                    dialog.dismiss()
-                }
-            }
-            dialog.show()
         }
-
+        dialog.show()
     }
+
+    private fun clickSearch() {
+        try {
+            //Toast.makeText(this, "버튼을 클릭했습니다.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainSearchPage::class.java)
+            startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun clickHeader() {
+        try {
+            Log.d("MainPageActivtiy", "click")
+            val intent = Intent(this, MainSettingPage::class.java)
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "환경 세팅 작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * UI 업데이트
+     */
+    private fun updateUI(member: Member) {
+        profile = member
+        val mainImage = findViewById<CircleImageView>(R.id.profile_photo)
+        val imageUrl = member.image
+        Glide.with(this@MainPageActivity)
+            .load(imageUrl)
+            .apply(RequestOptions().circleCrop())
+            .error(R.drawable.nointraimage)
+            .diskCacheStrategy(DiskCacheStrategy.ALL) // 디스크 캐시 사용
+            .into(mainImage)
+
+        val userSettings = UserSettings.getInstance()
+        userSettings.defaultGroup = member.defaultGroupId
+
+        val intraIdTextView = binding.intraId
+        intraIdTextView.text = member.intraName
+        binding.Comment.text = member.comment
+        binding.locationInfo.text = member.location
+
+        if (binding.locationInfo.text == "퇴근") {
+            binding.locationInfo.setBackgroundResource(R.drawable.location_outcluster)
+            val strokeColor = Color.parseColor("#132743")
+            binding.locationInfo.setTextColor(strokeColor)
+            mainImage.borderWidth = 0
+        }
+        binding.locationInfo.setPadding(20, 0, 20, 0)
+}
 }

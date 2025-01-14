@@ -44,6 +44,7 @@
     <androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/newgroup_image"
         android:layout_height="0dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_constraintLeft_toLeftOf="parent"
