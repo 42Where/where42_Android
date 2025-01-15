@@ -9,6 +9,10 @@ import com.seoul.where42android.databinding.ActivityCreateAddFriendBinding
 import com.seoul.where42android.main.friendListObject
 import com.seoul.where42android.main.intraNameObject
 import com.seoul.where42android.model.SearchRecyclerInViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SearchRecyclerViewAdapter(private val context: Context,
     val itemList : MutableList<SearchRecyclerInViewModel>)
@@ -30,6 +34,7 @@ class SearchRecyclerViewAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: OutViewHolder, position: Int) {
         holder.bind(itemList[position])
+
     }
 
     // 체크박스 클릭 이벤트 리스너
@@ -44,8 +49,8 @@ class SearchRecyclerViewAdapter(private val context: Context,
         RecyclerView.ViewHolder(binding.root)
     {
         fun bind(item: SearchRecyclerInViewModel) {
-//            GlobalScope.launch(Dispatchers.IO) {
-//                withContext(Dispatchers.Main) {
+            GlobalScope.launch(Dispatchers.IO) {
+                withContext(Dispatchers.Main) {
                     Glide.with(binding.root.context)
                         .load(item.emoji)
                         .placeholder(R.drawable.placeholder)
@@ -57,8 +62,8 @@ class SearchRecyclerViewAdapter(private val context: Context,
                     binding.intraId.text = item.intra_name
 //                    binding.Comment.text = item.comment
 //                    binding.locationInfo.text = item.location
-//                }
-//            }
+                }
+            }
 
             if (friendListObject.searchItem(item.intra_id) != null)
             {

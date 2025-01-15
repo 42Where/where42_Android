@@ -18,17 +18,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.116" />
+        app:layout_constraintGuide_percent="0.08" />
 
     <TextView
         android:id="@+id/text_setting"
         android:layout_width="@dimen/setting_page_text_setting_width"
-        android:layout_height="@dimen/setting_page_text_setting_height"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline1"
         android:gravity="center"
-        android:textSize="@dimen/setting_page_text_size"
+        android:textSize="@dimen/setting_button_text"
         android:fontFamily="@font/gmarketsans_bold"
         android:text="환경설정"
         />
@@ -38,15 +38,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.303" />
+        app:layout_constraintGuide_percent="0.22" />
 
 
     <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/logout_button"
-            android:layout_width="@dimen/setting_width"
-            android:layout_height="@dimen/setting_height"
+            android:layout_width="@dimen/filter_available_w"
+            android:layout_height="@dimen/group_Button_height"
             style="@style/RoundedButton"
-            android:textSize="@dimen/setting_button_text"
+            android:textSize="@dimen/help_popup_font"
             app:layout_constraintTop_toBottomOf="@id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,14 +60,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.477" />
+        app:layout_constraintGuide_percent="0.36" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/comment_button"
-        android:layout_width="@dimen/setting_width"
-        android:layout_height="@dimen/setting_height"
+        android:layout_width="@dimen/filter_available_w"
+        android:layout_height="@dimen/group_Button_height"
+        android:textSize="@dimen/help_popup_font"
         style="@style/RoundedButton"
-        android:textSize="@dimen/setting_button_text"
         app:layout_constraintTop_toBottomOf="@id/guideline4"
         app:layout_constraintStart_toStartOf="@id/logout_button"
         android:text="코멘트 설정"
@@ -80,17 +80,57 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/place_setting_button"
-        android:layout_width="@dimen/setting_width"
-        android:layout_height="@dimen/setting_height"
+        android:layout_width="@dimen/filter_available_w"
+        android:layout_height="@dimen/group_Button_height"
+        android:textSize="@dimen/help_popup_font"
         style="@style/RoundedButton"
-        android:textSize="@dimen/setting_button_text"
         app:layout_constraintTop_toBottomOf="@id/guideline5"
         app:layout_constraintStart_toStartOf="@id/comment_button"
         android:text="자리 설정"
+        android:gravity="center"
+        android:fontFamily="@font/gmarketsans_light"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.64" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/guide"
+        android:layout_width="@dimen/filter_available_w"
+        android:layout_height="@dimen/group_Button_height"
+        android:textSize="@dimen/help_popup_font"
+        style="@style/RoundedButton"
+        app:layout_constraintTop_toBottomOf="@id/guideline6"
+        app:layout_constraintStart_toStartOf="@id/comment_button"
+        android:text="이용가이드"
+        android:gravity="center"
+        android:fontFamily="@font/gmarketsans_light"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.78" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/feedback"
+        android:layout_width="@dimen/filter_available_w"
+        android:layout_height="@dimen/group_Button_height"
+        android:textSize="@dimen/help_popup_font"
+        style="@style/RoundedButton"
+        app:layout_constraintTop_toBottomOf="@id/guideline7"
+        app:layout_constraintStart_toStartOf="@id/comment_button"
+        android:text="앱 피드백"
         android:gravity="center"
         android:fontFamily="@font/gmarketsans_light"
         />

@@ -27,7 +27,8 @@ class RetrofitConnection {
     companion object {
         // API 서버의 주소가 BASE_URL이 됩니다.
 //        private const val BASE_URL = "http://13.209.149.15:8080/" -- 난중 수정
-        private const val BASE_URL = "https://api-test.where42.kr/" // -- 난중 수정
+//        private const val BASE_URL = "https://api-test.where42.kr/" // -- 난중 수정
+        private const val BASE_URL = "https://api.where42.kr/" // -- 난중 수정
         private var INSTANCE: Retrofit? = null
 
         fun getInstance(token: String): Retrofit {
@@ -131,8 +132,9 @@ class RetrofitConnection {
                 val accessTokenPattern = "accessToken" // accessToken의 패턴에 따라 수정
 
 //                if (url.startsWith("http://13.209.149.15:8080") && response.code == 401) -- 난중 수정
+//                if (url.startsWith("https://api-test.where42.kr") && response.code == 401)
                 //이건 토큰 재발급
-                if (url.startsWith("https://api-test.where42.kr") && response.code == 401)
+                if (url.startsWith("https://api.where42.kr") && response.code == 401)
                 {
                     Log.d("MainActivty", "401 토큰 재발급");
 
