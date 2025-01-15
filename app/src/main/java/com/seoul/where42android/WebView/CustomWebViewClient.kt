@@ -106,10 +106,10 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         Log.e("onPageFinished", "firsturl : $url")
 
 
-//        if (url != null && (url.startsWith("https://where42.kr/"))) {           -- 난중 수정
-//            val cookies = CookieManager.getInstance().getCookie("https://where42.kr/") -- 난중 수정
-        if (url != null && (url.startsWith("https://dev.where42.kr/"))) {
-            val cookies = CookieManager.getInstance().getCookie("https://dev.where42.kr/")
+//        if (url != null && (url.startsWith("https://dev.where42.kr/"))) {
+//            val cookies = CookieManager.getInstance().getCookie("https://dev.where42.kr/")
+        if (url != null && (url.startsWith("https://where42.kr/"))) {
+            val cookies = CookieManager.getInstance().getCookie("https://where42.kr/")
             val cookiesMap = parseCookies(cookies)
 
             // 모든 쿠키 키-값 쌍 출력
@@ -286,8 +286,8 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
     ): Boolean {
         val url = request?.url?.toString()
         // 특정 URL로의 로딩을 막기 위한 조건을 설정합니다.
-//        if (url != null && url.startsWith("https://where42.kr/")) // -- 여기 수정
-        if (url != null && url.startsWith("https://dev.where42.kr/"))
+        if (url != null && url.startsWith("https://where42.kr/")) // -- 여기 수정
+//        if (url != null && url.startsWith("https://dev.where42.kr/"))
         {
 //            Log.d("WebView", "url : ${url}")
             // 해당 URL로의 로딩을 막습니다.

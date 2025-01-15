@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.session.MediaSession.Token
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -26,10 +27,11 @@ import com.seoul.where42android.utils.TokenManager
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.launch
 import com.seoul.where42android.ViewModel.SharedViewModelProfile
+import com.seoul.where42android.main.v3.MainAnnouncement
+import com.seoul.where42android.main.v3.MainCompass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
 
 object friendListObject {
     // HashMap 선언
@@ -106,6 +108,9 @@ class MainPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
+
+        TokenManager.initialize(this@MainPageActivity)
+
         binding = ActivityMainPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -157,6 +162,29 @@ class MainPageActivity : AppCompatActivity() {
         newGroupButton.setOnClickListener {
             clickNewGroup()
         }
+
+        //4. 나침반 버튼
+        val compassButton: ImageButton = headerBinding.compassButton
+        compassButton.setOnClickListener {
+            clickCompass()
+        }
+
+        //5. 공지사항 버튼
+        val annButton: ImageButton = headerBinding.annButton
+        annButton.setOnClickListener {
+            clickAnn()
+        }
+
+    }
+
+    private fun clickCompass() {
+        val intent = Intent(this@MainPageActivity, MainCompass::class.java)
+        startActivity(intent)
+    }
+
+    private fun clickAnn() {
+        val intent = Intent(this@MainPageActivity, MainAnnouncement::class.java)
+        startActivity(intent)
     }
 
     private fun clickNewGroup() {

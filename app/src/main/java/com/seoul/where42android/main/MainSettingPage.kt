@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -89,6 +90,32 @@ class MainSettingPage : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this, "작업을 수행하는 동안 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //이용가이드
+        val guideButton: Button = this.findViewById(R.id.guide)
+        guideButton.setOnClickListener {
+            guideButton.setOnClickListener {
+                val url = "https://holy-seatbelt-ff0.notion.site/where42-Android-d776288e21a0407dbbf1dc237063e306?pvs=4"
+                // 웹 페이지로 이동하는 Intent 생성
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(url)
+                // Intent 실행
+                startActivity(intent)
+            }
+        }
+
+        //앱 피드백
+        val feedbackButton: Button = this.findViewById(R.id.feedback)
+        feedbackButton.setOnClickListener {
+            feedbackButton.setOnClickListener {
+                val url = "https://forms.gle/bGNz5n7rdnG4DbZV6"
+                // 웹 페이지로 이동하는 Intent 생성
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(url)
+                // Intent 실행
+                startActivity(intent)
             }
         }
     }
