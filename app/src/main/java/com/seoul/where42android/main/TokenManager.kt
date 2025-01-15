@@ -1,6 +1,7 @@
 package com.seoul.where42android.utils
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
@@ -86,8 +87,15 @@ object TokenManager {
      * DataStore에서 IntraId 가져오기
      */
     suspend fun getIntraId(): Int? {
-        val preferences = appContext.dataStoreInstance.data.firstOrNull()
-        return preferences?.get(INTRA_ID)
+//        val preferences = appContext.dataStoreInstance.data.firstOrNull()
+//        return preferences?.get(INTRA_ID)
+        if (!::appContext.isInitialized) {
+            Log.e("TokenManager", "TokenManager is not initialized")
+            return null
+        }
+        return runBlocking {
+            appContext.dataStoreInstance.data.firstOrNull()?.get(INTRA_ID)
+        }
     }
 
     /**
