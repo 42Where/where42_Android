@@ -1,0 +1,90 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/activity_profile_popup_profile_height"
+    android:background="@drawable/bottom_popup_background"
+    android:paddingTop="@dimen/CircleImageView_border"
+    android:paddingLeft="@dimen/CircleImageView_border"
+    android:paddingRight="@dimen/CircleImageView_border"
+
+    >
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+
+        <!--        android:layout_marginLeft="12dp"-->
+        <!--        app:civ_border_width="2dp"-->
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/member_image"
+            android:layout_width="@dimen/newgroup_button_width"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/location_info"
+            android:src="@drawable/profile_photo_example"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:civ_border_color="#95FFB5B5"
+            app:civ_border_overlay="true"
+            app:civ_border_width="@dimen/activity_profile_popup_emoji_civ_border_width"
+            />
+
+        <TextView
+            android:id="@+id/member_name"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/intra_ID"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
+            android:text="jaeyojun"
+            android:textSize="@dimen/font_small"
+            android:gravity="bottom"
+            android:fontFamily="@font/gmarketsans_bold"
+            android:layout_marginBottom="@dimen/CircleImageView_border"
+            app:layout_constraintStart_toEndOf="@id/member_image"
+            app:layout_constraintBottom_toTopOf="@id/guideline" />
+
+        <!--        android:text="@{model.intra_id}"-->
+        <!--        android:text="코멘트코멘트코멘트"-->
+        <!--        android:text="@{model.comment}"-->
+
+
+        <!--        android:text="CX2R1S5"-->
+        <!--        android:text="@{model.location}"-->
+        <!--        android:layout_height="@dimen/location_h"-->
+        <TextView
+            android:id="@+id/member_cluster"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/comment"
+            android:layout_marginStart="@dimen/activity_profile_popup_textview_marginStart"
+            android:background="@drawable/location_shape"
+            android:gravity="center"
+            android:clipToOutline="true"
+            android:text="c1r8s4"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:textColor="#FCFDFF"
+            android:textSize="@dimen/font_small"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/member_image"
+            app:layout_constraintTop_toBottomOf="@id/guideline"
+            />
+
+        <ImageButton
+            android:id="@+id/add_friend"
+            android:layout_width="@dimen/where42_logo_height"
+            android:layout_height="@dimen/where42_logo_height"
+            android:src="@drawable/ic_action_fi_rr_user_add"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="@dimen/CircleImageView_border"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

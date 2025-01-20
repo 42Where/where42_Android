@@ -1,0 +1,1671 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- C2 -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.0909" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1818" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2727" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3636" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4545" />
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5454" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6363" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7272" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8181" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_horizontal1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9090" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.12" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.22" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.32"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.42" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.52" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.62" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.72" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.82" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.92" />
+
+    <TextView
+        android:id="@+id/r10"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttons_h"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:gravity="bottom"
+        android:text="r10"
+        android:textColor="#132743"
+        android:textSize="@dimen/font_medium_change"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal10"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical9"/>
+
+    <ImageView
+        android:id="@+id/seat_r10_8"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal10"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical8"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_8"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r10_8"
+        app:layout_constraintStart_toStartOf="@id/seat_r10_8"
+        app:layout_constraintEnd_toEndOf="@id/seat_r10_8"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r10_7"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal10"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical7"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_7"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r10_7"
+        app:layout_constraintStart_toStartOf="@id/seat_r10_7"
+        app:layout_constraintEnd_toEndOf="@id/seat_r10_7"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r10_6"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal10"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical6"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_6"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r10_6"
+        app:layout_constraintStart_toStartOf="@id/seat_r10_6"
+        app:layout_constraintEnd_toEndOf="@id/seat_r10_6"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r10_5"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal10"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical5"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_5"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r10_5"
+        app:layout_constraintStart_toStartOf="@id/seat_r10_5"
+        app:layout_constraintEnd_toEndOf="@id/seat_r10_5"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r10_4"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal10"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical4"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r10_4"
+        app:layout_constraintStart_toStartOf="@id/seat_r10_4"
+        app:layout_constraintEnd_toEndOf="@id/seat_r10_4"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r10_3"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal10"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical3"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r10_3"
+        app:layout_constraintStart_toStartOf="@id/seat_r10_3"
+        app:layout_constraintEnd_toEndOf="@id/seat_r10_3"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r10_2"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal10"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical2"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r10_2"
+        app:layout_constraintStart_toStartOf="@id/seat_r10_2"
+        app:layout_constraintEnd_toEndOf="@id/seat_r10_2"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r10_1"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal10"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical1"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r10_1"
+        app:layout_constraintStart_toStartOf="@id/seat_r10_1"
+        app:layout_constraintEnd_toEndOf="@id/seat_r10_1"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <TextView
+        android:id="@+id/r9"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttons_h"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:gravity="bottom"
+        android:text="r9"
+        android:textColor="#132743"
+        android:textSize="@dimen/font_medium_change"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal9"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical9"/>
+
+    <ImageView
+        android:id="@+id/seat_r9_8"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal9"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical8"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_8"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r9_8"
+        app:layout_constraintStart_toStartOf="@id/seat_r9_8"
+        app:layout_constraintEnd_toEndOf="@id/seat_r9_8"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r9_7"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal9"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical7"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_7"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r9_7"
+        app:layout_constraintStart_toStartOf="@id/seat_r9_7"
+        app:layout_constraintEnd_toEndOf="@id/seat_r9_7"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r9_6"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal9"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical6"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_6"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r9_6"
+        app:layout_constraintStart_toStartOf="@id/seat_r9_6"
+        app:layout_constraintEnd_toEndOf="@id/seat_r9_6"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r9_5"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal9"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical5"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_5"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r9_5"
+        app:layout_constraintStart_toStartOf="@id/seat_r9_5"
+        app:layout_constraintEnd_toEndOf="@id/seat_r9_5"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r9_4"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal9"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical4"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r9_4"
+        app:layout_constraintStart_toStartOf="@id/seat_r9_4"
+        app:layout_constraintEnd_toEndOf="@id/seat_r9_4"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r9_3"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal9"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical3"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r9_3"
+        app:layout_constraintStart_toStartOf="@id/seat_r9_3"
+        app:layout_constraintEnd_toEndOf="@id/seat_r9_3"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+
+    <ImageView
+        android:id="@+id/seat_r9_2"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal9"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r9_2"
+        app:layout_constraintStart_toStartOf="@id/seat_r9_2"
+        app:layout_constraintEnd_toEndOf="@id/seat_r9_2"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r9_1"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal9"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r9_1"
+        app:layout_constraintStart_toStartOf="@id/seat_r9_1"
+        app:layout_constraintEnd_toEndOf="@id/seat_r9_1"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <!--r8-->
+    <TextView
+        android:id="@+id/r8"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttons_h"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:gravity="bottom"
+        android:text="r8"
+        android:textColor="#132743"
+        android:textSize="@dimen/font_medium_change"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical9"/>
+
+    <ImageView
+        android:id="@+id/seat_r8_8"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical8"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_8"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r8_8"
+        app:layout_constraintStart_toStartOf="@id/seat_r8_8"
+        app:layout_constraintEnd_toEndOf="@id/seat_r8_8"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r8_7"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical7"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_7"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r8_7"
+        app:layout_constraintStart_toStartOf="@id/seat_r8_7"
+        app:layout_constraintEnd_toEndOf="@id/seat_r8_7"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r8_6"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical6"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_6"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r8_6"
+        app:layout_constraintStart_toStartOf="@id/seat_r8_6"
+        app:layout_constraintEnd_toEndOf="@id/seat_r8_6"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r8_5"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_5"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r8_5"
+        app:layout_constraintStart_toStartOf="@id/seat_r8_5"
+        app:layout_constraintEnd_toEndOf="@id/seat_r8_5"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r8_4"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical4"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r8_4"
+        app:layout_constraintStart_toStartOf="@id/seat_r8_4"
+        app:layout_constraintEnd_toEndOf="@id/seat_r8_4"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r8_3"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical3"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r8_3"
+        app:layout_constraintStart_toStartOf="@id/seat_r8_3"
+        app:layout_constraintEnd_toEndOf="@id/seat_r8_3"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r8_2"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r8_2"
+        app:layout_constraintStart_toStartOf="@id/seat_r8_2"
+        app:layout_constraintEnd_toEndOf="@id/seat_r8_2"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r8_1"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal8"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r8_1"
+        app:layout_constraintStart_toStartOf="@id/seat_r8_1"
+        app:layout_constraintEnd_toEndOf="@id/seat_r8_1"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+
+    <!--r8-->
+    <TextView
+        android:id="@+id/r7"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttons_h"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:gravity="bottom"
+        android:text="r7"
+        android:textColor="#132743"
+        android:textSize="@dimen/font_medium_change"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal7"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical9"/>
+
+    <ImageView
+        android:id="@+id/seat_r7_8"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal7"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical8"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_8"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r7_8"
+        app:layout_constraintStart_toStartOf="@id/seat_r7_8"
+        app:layout_constraintEnd_toEndOf="@id/seat_r7_8"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+
+    <ImageView
+        android:id="@+id/seat_r7_7"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal7"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical7"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_7"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r7_7"
+        app:layout_constraintStart_toStartOf="@id/seat_r7_7"
+        app:layout_constraintEnd_toEndOf="@id/seat_r7_7"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r7_6"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal7"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical6"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_6"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r7_6"
+        app:layout_constraintStart_toStartOf="@id/seat_r7_6"
+        app:layout_constraintEnd_toEndOf="@id/seat_r7_6"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r7_5"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal7"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r7_5"
+        app:layout_constraintStart_toStartOf="@id/seat_r7_5"
+        app:layout_constraintEnd_toEndOf="@id/seat_r7_5"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r7_4"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal7"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical4"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r7_4"
+        app:layout_constraintStart_toStartOf="@id/seat_r7_4"
+        app:layout_constraintEnd_toEndOf="@id/seat_r7_4"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+
+    <ImageView
+        android:id="@+id/seat_r7_3"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal7"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical3"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r7_3"
+        app:layout_constraintStart_toStartOf="@id/seat_r7_3"
+        app:layout_constraintEnd_toEndOf="@id/seat_r7_3"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r7_2"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal7"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r7_2"
+        app:layout_constraintStart_toStartOf="@id/seat_r7_2"
+        app:layout_constraintEnd_toEndOf="@id/seat_r7_2"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r7_1"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal7"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r7_1"
+        app:layout_constraintStart_toStartOf="@id/seat_r7_1"
+        app:layout_constraintEnd_toEndOf="@id/seat_r7_1"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+
+
+    <!--r6-->
+    <TextView
+        android:id="@+id/r6"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttons_h"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:gravity="bottom"
+        android:text="r6"
+        android:textColor="#132743"
+        android:textSize="@dimen/font_medium_change"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal6"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical9"/>
+
+    <ImageView
+        android:id="@+id/seat_r6_8"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal6"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical8"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_8"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r6_8"
+        app:layout_constraintStart_toStartOf="@id/seat_r6_8"
+        app:layout_constraintEnd_toEndOf="@id/seat_r6_8"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+
+    <ImageView
+        android:id="@+id/seat_r6_7"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal6"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical7"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_7"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r6_7"
+        app:layout_constraintStart_toStartOf="@id/seat_r6_7"
+        app:layout_constraintEnd_toEndOf="@id/seat_r6_7"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r6_6"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal6"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical6"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_6"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r6_6"
+        app:layout_constraintStart_toStartOf="@id/seat_r6_6"
+        app:layout_constraintEnd_toEndOf="@id/seat_r6_6"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r6_5"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal6"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_5"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r6_5"
+        app:layout_constraintStart_toStartOf="@id/seat_r6_5"
+        app:layout_constraintEnd_toEndOf="@id/seat_r6_5"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r6_4"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal6"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical4"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r6_4"
+        app:layout_constraintStart_toStartOf="@id/seat_r6_4"
+        app:layout_constraintEnd_toEndOf="@id/seat_r6_4"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r6_3"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal6"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical3"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r6_3"
+        app:layout_constraintStart_toStartOf="@id/seat_r6_3"
+        app:layout_constraintEnd_toEndOf="@id/seat_r6_3"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r6_2"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal6"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r6_2"
+        app:layout_constraintStart_toStartOf="@id/seat_r6_2"
+        app:layout_constraintEnd_toEndOf="@id/seat_r6_2"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r6_1"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal6"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r6_1"
+        app:layout_constraintStart_toStartOf="@id/seat_r6_1"
+        app:layout_constraintEnd_toEndOf="@id/seat_r6_1"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <!--r5-->
+    <TextView
+        android:id="@+id/r5"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttons_h"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:gravity="bottom"
+        android:text="r5"
+        android:textColor="#132743"
+        android:textSize="@dimen/font_medium_change"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal5"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical9"/>
+
+    <ImageView
+        android:id="@+id/seat_r5_8"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal5"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical8"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_8"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r5_8"
+        app:layout_constraintStart_toStartOf="@id/seat_r5_8"
+        app:layout_constraintEnd_toEndOf="@id/seat_r5_8"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r5_7"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal5"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical7"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_7"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r5_7"
+        app:layout_constraintStart_toStartOf="@id/seat_r5_7"
+        app:layout_constraintEnd_toEndOf="@id/seat_r5_7"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r5_6"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal5"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical6"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_6"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r5_6"
+        app:layout_constraintStart_toStartOf="@id/seat_r5_6"
+        app:layout_constraintEnd_toEndOf="@id/seat_r5_6"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r5_5"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal5"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_5"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r5_5"
+        app:layout_constraintStart_toStartOf="@id/seat_r5_5"
+        app:layout_constraintEnd_toEndOf="@id/seat_r5_5"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r5_4"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal5"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical4"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r5_4"
+        app:layout_constraintStart_toStartOf="@id/seat_r5_4"
+        app:layout_constraintEnd_toEndOf="@id/seat_r5_4"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r5_3"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal5"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical3"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r5_3"
+        app:layout_constraintStart_toStartOf="@id/seat_r5_3"
+        app:layout_constraintEnd_toEndOf="@id/seat_r5_3"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r5_2"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal5"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r5_2"
+        app:layout_constraintStart_toStartOf="@id/seat_r5_2"
+        app:layout_constraintEnd_toEndOf="@id/seat_r5_2"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r5_1"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal5"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r5_1"
+        app:layout_constraintStart_toStartOf="@id/seat_r5_1"
+        app:layout_constraintEnd_toEndOf="@id/seat_r5_1"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+
+    <!--r4-->
+    <TextView
+        android:id="@+id/r4"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttons_h"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:gravity="bottom"
+        android:text="r4"
+        android:textColor="#132743"
+        android:textSize="@dimen/font_medium_change"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal4"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical9"/>
+
+    <ImageView
+        android:id="@+id/seat_r4_8"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal4"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical8"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_8"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r4_8"
+        app:layout_constraintStart_toStartOf="@id/seat_r4_8"
+        app:layout_constraintEnd_toEndOf="@id/seat_r4_8"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r4_7"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal4"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical7"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_7"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r4_7"
+        app:layout_constraintStart_toStartOf="@id/seat_r4_7"
+        app:layout_constraintEnd_toEndOf="@id/seat_r4_7"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r4_6"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal4"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical6"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_6"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r4_6"
+        app:layout_constraintStart_toStartOf="@id/seat_r4_6"
+        app:layout_constraintEnd_toEndOf="@id/seat_r4_6"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r4_5"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal4"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_5"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r4_5"
+        app:layout_constraintStart_toStartOf="@id/seat_r4_5"
+        app:layout_constraintEnd_toEndOf="@id/seat_r4_5"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r4_4"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal4"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical4"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r4_4"
+        app:layout_constraintStart_toStartOf="@id/seat_r4_4"
+        app:layout_constraintEnd_toEndOf="@id/seat_r4_4"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r4_3"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal4"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical3"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r4_3"
+        app:layout_constraintStart_toStartOf="@id/seat_r4_3"
+        app:layout_constraintEnd_toEndOf="@id/seat_r4_3"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r4_2"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal4"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r4_2"
+        app:layout_constraintStart_toStartOf="@id/seat_r4_2"
+        app:layout_constraintEnd_toEndOf="@id/seat_r4_2"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r4_1"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal4"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r4_1"
+        app:layout_constraintStart_toStartOf="@id/seat_r4_1"
+        app:layout_constraintEnd_toEndOf="@id/seat_r4_1"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+
+    <!--r3-->
+    <TextView
+        android:id="@+id/r3"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttons_h"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:gravity="bottom"
+        android:text="r3"
+        android:textColor="#132743"
+        android:textSize="@dimen/font_medium_change"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal3"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical9"/>
+
+    <ImageView
+        android:id="@+id/seat_r3_8"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal3"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical8"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_8"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r3_8"
+        app:layout_constraintStart_toStartOf="@id/seat_r3_8"
+        app:layout_constraintEnd_toEndOf="@id/seat_r3_8"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r3_7"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal3"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical7"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_7"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r3_7"
+        app:layout_constraintStart_toStartOf="@id/seat_r3_7"
+        app:layout_constraintEnd_toEndOf="@id/seat_r3_7"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r3_6"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal3"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical6"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_6"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r3_6"
+        app:layout_constraintStart_toStartOf="@id/seat_r3_6"
+        app:layout_constraintEnd_toEndOf="@id/seat_r3_6"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r3_5"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal3"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_5"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r3_5"
+        app:layout_constraintStart_toStartOf="@id/seat_r3_5"
+        app:layout_constraintEnd_toEndOf="@id/seat_r3_5"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r3_4"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal3"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical4"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r3_4"
+        app:layout_constraintStart_toStartOf="@id/seat_r3_4"
+        app:layout_constraintEnd_toEndOf="@id/seat_r3_4"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r3_3"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal3"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical3"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r3_3"
+        app:layout_constraintStart_toStartOf="@id/seat_r3_3"
+        app:layout_constraintEnd_toEndOf="@id/seat_r3_3"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r3_2"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal3"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r3_2"
+        app:layout_constraintStart_toStartOf="@id/seat_r3_2"
+        app:layout_constraintEnd_toEndOf="@id/seat_r3_2"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r3_1"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal3"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r3_1"
+        app:layout_constraintStart_toStartOf="@id/seat_r3_1"
+        app:layout_constraintEnd_toEndOf="@id/seat_r3_1"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <!--r2-->
+    <TextView
+        android:id="@+id/r2"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttons_h"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:gravity="bottom"
+        android:text="r2"
+        android:textColor="#132743"
+        android:textSize="@dimen/font_medium_change"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal2"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical9"/>
+
+    <ImageView
+        android:id="@+id/seat_r2_8"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal2"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical8"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_8"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r2_8"
+        app:layout_constraintStart_toStartOf="@id/seat_r2_8"
+        app:layout_constraintEnd_toEndOf="@id/seat_r2_8"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r2_7"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal2"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical7"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_7"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r2_7"
+        app:layout_constraintStart_toStartOf="@id/seat_r2_7"
+        app:layout_constraintEnd_toEndOf="@id/seat_r2_7"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r2_6"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal2"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical6"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_6"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r2_6"
+        app:layout_constraintStart_toStartOf="@id/seat_r2_6"
+        app:layout_constraintEnd_toEndOf="@id/seat_r2_6"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r2_5"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal2"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_5"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r2_5"
+        app:layout_constraintStart_toStartOf="@id/seat_r2_5"
+        app:layout_constraintEnd_toEndOf="@id/seat_r2_5"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r2_4"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal2"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical4"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r2_4"
+        app:layout_constraintStart_toStartOf="@id/seat_r2_4"
+        app:layout_constraintEnd_toEndOf="@id/seat_r2_4"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r2_3"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal2"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical3"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r2_3"
+        app:layout_constraintStart_toStartOf="@id/seat_r2_3"
+        app:layout_constraintEnd_toEndOf="@id/seat_r2_3"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+
+    <ImageView
+        android:id="@+id/seat_r2_2"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal2"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r2_2"
+        app:layout_constraintStart_toStartOf="@id/seat_r2_2"
+        app:layout_constraintEnd_toEndOf="@id/seat_r2_2"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r2_1"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal2"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r2_1"
+        app:layout_constraintStart_toStartOf="@id/seat_r2_1"
+        app:layout_constraintEnd_toEndOf="@id/seat_r2_1"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <!--r1-->
+    <TextView
+        android:id="@+id/r1"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/buttons_h"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:gravity="bottom"
+        android:text="r1"
+        android:textColor="#132743"
+        android:textSize="@dimen/font_medium_change"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical9"/>
+
+    <ImageView
+        android:id="@+id/seat_r1_8"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical8"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_8"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r1_8"
+        app:layout_constraintStart_toStartOf="@id/seat_r1_8"
+        app:layout_constraintEnd_toEndOf="@id/seat_r1_8"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r1_7"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical7"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_7"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r1_7"
+        app:layout_constraintStart_toStartOf="@id/seat_r1_7"
+        app:layout_constraintEnd_toEndOf="@id/seat_r1_7"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r1_6"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical6"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_6"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r1_6"
+        app:layout_constraintStart_toStartOf="@id/seat_r1_6"
+        app:layout_constraintEnd_toEndOf="@id/seat_r1_6"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r1_5"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_5"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r1_5"
+        app:layout_constraintStart_toStartOf="@id/seat_r1_5"
+        app:layout_constraintEnd_toEndOf="@id/seat_r1_5"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r1_4"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical4"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_4"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r1_4"
+        app:layout_constraintStart_toStartOf="@id/seat_r1_4"
+        app:layout_constraintEnd_toEndOf="@id/seat_r1_4"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r1_3"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical3"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_3"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r1_3"
+        app:layout_constraintStart_toStartOf="@id/seat_r1_3"
+        app:layout_constraintEnd_toEndOf="@id/seat_r1_3"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r1_2"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical2"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_2"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r1_2"
+        app:layout_constraintStart_toStartOf="@id/seat_r1_2"
+        app:layout_constraintEnd_toEndOf="@id/seat_r1_2"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+    <ImageView
+        android:id="@+id/seat_r1_1"
+        android:layout_width="@dimen/edittext_layout_height"
+        android:layout_height="@dimen/edittext_layout_height"
+        android:src="@drawable/ic_action_computer"
+        app:layout_constraintTop_toTopOf="@id/guideline_horizontal1"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_1"
+        android:textSize="@dimen/help_popup_font_small"
+        app:layout_constraintTop_toBottomOf="@id/seat_r1_1"
+        app:layout_constraintStart_toStartOf="@id/seat_r1_1"
+        app:layout_constraintEnd_toEndOf="@id/seat_r1_1"
+        android:layout_marginTop="@dimen/CircleImageView_border" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
