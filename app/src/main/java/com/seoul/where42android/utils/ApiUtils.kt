@@ -60,32 +60,6 @@ object ApiUtils {
     }
 
 
-//    suspend fun <T> performApiRequest(
-//        apiCall: suspend (String) -> Response<T>
-//    ): Response<T>? {
-//        return try {
-//            val currentToken = TokenManager.getAccessToken()
-//            val response = apiCall(currentToken)
-//            if (response.isSuccessful) {
-//                response
-//            } else if (response.code() == 401) {
-//                // 토큰 갱신 처리
-//                val newToken = reissueAccessToken()
-//                if (newToken != null) {
-//                    TokenManager.setAccessToken(newToken)
-//                    apiCall(newToken) // 새 토큰으로 재시도
-//                } else {
-//                    null
-//                }
-//            } else {
-//                null
-//            }
-//        } catch (e: Exception) {
-//            Log.e("ApiUtils", "Error in API request", e)
-//            null
-//        }
-//    }
-
 
     /**
      * Reissue a new access token.

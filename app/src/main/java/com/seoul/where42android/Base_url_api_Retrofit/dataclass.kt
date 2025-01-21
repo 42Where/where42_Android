@@ -14,6 +14,23 @@ data class ReissueResponse(
     val accessToken: String
 )
 
+//---            Compass          ---
+
+// Member 데이터를 표현하는 데이터 클래스
+data class CompassMember(
+    val intraId: Int,
+    val intraName: String,
+    val image: String,
+    val cluster: String,
+    val row: Int,
+    val seat: Int,
+    var isFriend: Boolean
+)
+
+// 전체 API 응답 데이터를 표현하는 데이터 클래스
+data class CompassResponse(
+    val members: List<CompassMember>
+)
 
 
 

@@ -8,8 +8,22 @@ import retrofit2.http.POST
 
 import retrofit2.http.DELETE
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 
+//v3
+// --- compass ---
+interface CompassApi {
+    // GET 요청 정의
+    @GET("v3/location/active/{cluster}")
+    suspend fun getCompassMember(@Path("cluster") cluster: String): Response<CompassResponse>
+}
+
+
+
+
+
+// v2
 //search
 interface SearchApiService {
     @GET("v3/search")
