@@ -1,14 +1,12 @@
 package com.seoul.where42android.fragment
 
-import android.graphics.Matrix
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.seoul.where42android.R
 
-class C1Fragment : Fragment(R.layout.fragment_c1) {
+class C1C5Fragment : Fragment(R.layout.fragment_c1c5) {
 
     private lateinit var scaleGestureDetector: ScaleGestureDetector
     private var scaleFactor = 1.0f

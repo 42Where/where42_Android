@@ -4,4 +4,5 @@
     android:gravity="center_vertical"
     android:padding="@dimen/newgroup_textsize"
     android:textSize="@dimen/newgroup_textsize"
-    android:fontFamily="@font/gmarketsans_bold" />
+    android:fontFamily="@font/gmarketsans_bold"
+    android:background="@drawable/divider"/>

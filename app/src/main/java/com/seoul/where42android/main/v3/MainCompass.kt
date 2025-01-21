@@ -27,9 +27,10 @@ import com.seoul.where42android.Base_url_api_Retrofit.RetrofitConnection
 import com.seoul.where42android.R
 import com.seoul.where42android.adapter.adjustBackgroundSizeWithPadding
 import com.seoul.where42android.databinding.ActivityCompassBinding
-import com.seoul.where42android.fragment.C1Fragment
-import com.seoul.where42android.fragment.C2Fragment
+import com.seoul.where42android.fragment.C1C5Fragment
+import com.seoul.where42android.fragment.C2C6Fragment
 import com.seoul.where42android.fragment.CX1Fragment
+import com.seoul.where42android.fragment.CX2Fragment
 import com.seoul.where42android.main.MainPageActivity
 import com.seoul.where42android.utils.ApiUtils
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +51,7 @@ class MainCompass : AppCompatActivity() {
         defaultgroupId = intent.getStringExtra("DEFAULT_GROUP")?.toInt() ?: -1
         // 내 친구가 있는 지 보기 위해 api 호출
 
-        val rooms = listOf("C1", "C2", "CX1")
+        val rooms = listOf("C1", "C2", "C5", "C6", "CX1", "CX2")
         val adapter = ArrayAdapter(
             this,
             R.layout.custom_spinner_item, // 선택된 아이템의 레이아웃
@@ -72,15 +73,28 @@ class MainCompass : AppCompatActivity() {
 
                 when (selectedRoom) {
                     "C1" -> {
-                        loadFragment(C1Fragment())
+                        loadFragment(C1C5Fragment())
                         fetchClusterData("c1")
                     }
                     "C2" -> {
-                        loadFragment(C2Fragment())
+                        loadFragment(C2C6Fragment())
                         fetchClusterData("c2")
+                    }
+                    "C5" -> {
+                        loadFragment(C1C5Fragment())
+                        fetchClusterData("c5")
+                    }
+                    "C6" -> {
+                        loadFragment(C2C6Fragment())
+                        fetchClusterData("c6")
                     }
                     "CX1" -> {
                         loadFragment(CX1Fragment())
+                        fetchClusterData("cx1")
+                    }
+                    "CX2" -> {
+                        loadFragment(CX2Fragment())
+                        fetchClusterData("cx2")
                     }
                 }
             }
@@ -90,7 +104,7 @@ class MainCompass : AppCompatActivity() {
 
         // 기본 Fragment 설정
         if (savedInstanceState == null) {
-            loadFragment(C1Fragment()) // 기본값으로 C1Fragment를 로드
+            loadFragment(C1C5Fragment()) // 기본값으로 C1Fragment를 로드
             fetchClusterData("c1")
             previousCluster = "C1" // 초기 설정값 저장
         }

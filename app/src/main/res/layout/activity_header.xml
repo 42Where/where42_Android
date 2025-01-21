@@ -50,7 +50,7 @@
         android:layout_width="@dimen/header_setting_btn"
         android:layout_height="@dimen/header_setting_btn"
         android:src="@drawable/ic_action_megaphone"
-        android:visibility="visible"
+        android:visibility="gone"
         android:padding="0sp"
         android:backgroundTint="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
