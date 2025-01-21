@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.seoul.where42android.R
 
+//확대 축소 기능 추가 업데이트 필요
 class C1C5Fragment : Fragment(R.layout.fragment_c1c5) {
 
     private lateinit var scaleGestureDetector: ScaleGestureDetector
