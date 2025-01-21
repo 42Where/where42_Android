@@ -179,6 +179,7 @@ class MainPageActivity : AppCompatActivity() {
 
     private fun clickCompass() {
         val intent = Intent(this@MainPageActivity, MainCompass::class.java)
+        intent.putExtra("DEFAULT_GROUP", profile.defaultGroupId.toString())
         startActivity(intent)
     }
 
