@@ -155,6 +155,12 @@ class MainSearchPage : AppCompatActivity() {
         val settingbutton : ImageButton = headerBinding.settingButton
         settingbutton.visibility = View.GONE
 
+        val compassbutton : ImageButton = headerBinding.compassButton
+        compassbutton.visibility = View.GONE
+
+        val annbutton : ImageButton = headerBinding.annButton
+        annbutton.visibility = View.GONE
+
         //footer
         val footerBinding = binding.footer
         val searchButton : ImageButton = footerBinding.searchButton

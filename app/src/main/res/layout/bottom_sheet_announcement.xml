@@ -1,0 +1,110 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/main_logo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:adjustViewBounds="true"
+        android:src="@drawable/main_logo"
+        app:layout_constraintTop_toTopOf="@id/guideline3"
+        app:layout_constraintHeight_percent="0.15"
+         />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.01" />
+
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/main_logo"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintHeight_default="percent"-->
+<!--        app:layout_constraintHeight_percent="0.23"-->
+
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/guideline3"/>-->
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/main_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="기능 추가"
+        android:textSize="@dimen/setting_button_text"
+        android:textColor="@color/black"
+        android:fontFamily="@font/gmarketsans_bold"
+        android:layout_marginTop="@dimen/layout_height_padding"/>
+
+
+
+
+    <TextView
+        android:id="@+id/text_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="👀 클러스터 자리 시각화 기능이 추가되었습니다! 😄"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/gmarketsans_medium"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <TextView
+        android:id="@+id/text_createAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:text="작성일: 2025-01-07"
+        android:textSize="14sp"
+        android:textColor="@color/blue_add"
+        android:fontFamily="@font/gmarketsans_medium"/>
+    <TextView
+        android:id="@+id/text_updateAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_createAt"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="작성일: 2025-01-07"
+        android:textSize="14sp"
+        android:textColor="@color/blue_add"
+        android:fontFamily="@font/gmarketsans_medium"/>
+
+    <Button
+        android:id="@+id/button_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/gmarketsans_medium"
+        android:text="닫기"
+        android:backgroundTint="@color/blue_add"
+        android:textColor="@color/white" />
+</androidx.constraintlayout.widget.ConstraintLayout>
