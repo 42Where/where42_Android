@@ -19,7 +19,14 @@ interface CompassApi {
     suspend fun getCompassMember(@Path("cluster") cluster: String): Response<CompassResponse>
 }
 
-
+// --- Announcement ---
+interface AnnouncementApi {
+    @GET("v3/announcement")
+    suspend fun fetchAnnouncements(
+        @Query("page") page: Int,    // 페이지 번호
+        @Query("size") size: Int     // 한 페이지의 데이터 크기
+    ): Response<AnnouncementListResponse>
+}
 
 
 
