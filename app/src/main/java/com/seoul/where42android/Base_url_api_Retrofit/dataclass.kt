@@ -33,6 +33,23 @@ data class CompassResponse(
 )
 
 
+// 공지사항 Announcment
+data class AnnouncementListResponse(
+    val announcements: List<AnnouncementReponse>,
+    val totalPages: Int,
+    val totalElements: Int
+)
+
+data class AnnouncementReponse(
+    val announcementId: Int,
+    val title: String,
+    val content: String,
+    val authorName: String,
+    val createAt: String,
+    val updateAt: String
+)
+
+
 
 
 
