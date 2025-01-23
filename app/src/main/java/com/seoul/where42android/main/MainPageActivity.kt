@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import com.seoul.where42android.ViewModel.SharedViewModelProfile
 import com.seoul.where42android.main.v3.MainAnnouncement
 import com.seoul.where42android.main.v3.MainCompass
+import com.seoul.where42android.main.v3.MainVisualization
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -175,6 +176,16 @@ class MainPageActivity : AppCompatActivity() {
             clickAnn()
         }
 
+        //6. 시각화 버튼
+        val vaisualButton : ImageButton = footerBinding.visuallButton
+        vaisualButton.setOnClickListener{
+            clickVaisual()
+        }
+    }
+
+    private fun clickVaisual() {
+        val intent = Intent(this@MainPageActivity, MainVisualization::class.java)
+        startActivity(intent)
     }
 
     private fun clickCompass() {

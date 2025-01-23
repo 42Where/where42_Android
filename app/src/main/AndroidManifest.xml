@@ -40,6 +40,7 @@
         <activity android:name=".main.MainHelpPage" />
         <activity android:name=".main.v3.MainAnnouncement"/>
         <activity android:name=".main.v3.MainCompass" />
+        <activity android:name=".main.v3.MainVisualization" />
     </application>
 
 </manifest>
