@@ -37,7 +37,7 @@ class MainSearchFragment() : Fragment() {
     }
 
     companion object {
-        fun newInstance(intraName: String): MainSearchFragment {
+        fun newInstance(intraName: String, t1: Long = 0L): MainSearchFragment {
             val fragment = MainSearchFragment()
             val args = Bundle()
             args.putString("NAME", intraName)
@@ -63,11 +63,10 @@ class MainSearchFragment() : Fragment() {
             if (searchList != null) {
                 if (searchList.isNotEmpty()) {
                     val itemList = mutableListOf<SearchRecyclerInViewModel>()
-                    // searchList의 각 요소를 순회하면서 SearchRecyclerInViewModel로 변환하여 itemList에 추가합니다.
                     CoroutineScope(Dispatchers.IO).launch {
                         searchList.forEach { searchDetail ->
                             val searchItem = SearchRecyclerInViewModel(
-                                emoji = searchDetail.image, // 각각의 필드에 맞게 값 설정
+                                emoji = searchDetail.image ?: "",
                                 intra_name = searchDetail.intraName,
                                 intra_id = searchDetail.intraId
                             )
@@ -76,7 +75,6 @@ class MainSearchFragment() : Fragment() {
                         withContext(Dispatchers.Main)
                         {
                             binding.searchview.layoutManager = LinearLayoutManager(requireContext())
-                            // 어댑터 초기화 및 설정
                             adapter = SearchRecyclerViewAdapter(requireContext(), itemList)
                             binding.searchview.adapter = adapter
                             binding.progressBar.visibility = View.GONE
