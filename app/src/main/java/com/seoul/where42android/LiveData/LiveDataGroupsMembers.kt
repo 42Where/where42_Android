@@ -69,7 +69,11 @@ class LiveDataGroupsMembers() : ViewModel() {
                     retrofitAPI.getGroupMemberList(intraId)
                 }
 
-                if (response != null && response.isSuccessful) {
+                // 수정된 부분: 실패 조건을 먼저 명확하게 검사합니다.
+                if (response == null || !response.isSuccessful) {
+                    groupsMembersList.value = emptyList() // 실패 시 빈 리스트 설정
+                } else {
+                    // 성공했을 때의 로직을 else 블록 안으로 옮깁니다.
                     val groupList = response.body()?.toMutableList()
 
                     // default 그룹을 찾아서 이름 변경
@@ -104,8 +108,6 @@ class LiveDataGroupsMembers() : ViewModel() {
                     }
 
                     groupsMembersList.value = groupList.orEmpty()
-                } else {
-                    groupsMembersList.value = emptyList() // 실패 시 빈 리스트 설정
                 }
             } catch (e: Exception) {
                 groupsMembersList.value = emptyList() // 예외 발생 시 빈 리스트 설정
@@ -113,6 +115,59 @@ class LiveDataGroupsMembers() : ViewModel() {
             }
         }
     }
+
+//    fun getGroupMemberList(intraId: Int, context: Context) {
+//        viewModelScope.launch {
+//            try {
+//                val response = ApiUtils.performApiRequest(context) { accessToken ->
+//                    val retrofitAPI = RetrofitConnection.getInstance(accessToken).create(GroupMemberListService::class.java)
+//                    retrofitAPI.getGroupMemberList(intraId)
+//                }
+//
+//                if (response?.isSuccessful == true) {
+//                    val groupList = response.body()?.toMutableList()
+//
+//                    // default 그룹을 찾아서 이름 변경
+//                    val defaultGroupIndex = groupList?.indexOfFirst { it.groupName == "default" }
+//                    if (defaultGroupIndex != -1) {
+//                        val defaultGroup = defaultGroupIndex?.let { groupList?.get(it) }
+//                        defaultGroup?.groupName = "친구 목록"
+//                        if (defaultGroupIndex != null && defaultGroup != null) {
+//                            groupList?.set(defaultGroupIndex, defaultGroup)
+//                        }
+//                    }
+//
+//                    // 기존의 "친구 목록" 그룹이 있으면 삭제
+//                    val existingFriendListIndex = groupList?.indexOfFirst { it.groupName == "친구 목록" }
+//                    val defaultFriendList = groupList?.firstOrNull { it.groupName == "친구 목록" }
+//                    if (existingFriendListIndex != -1 && defaultFriendList != null) {
+//                        groupList.removeAt(existingFriendListIndex!!)
+//                        groupList.add(defaultFriendList)
+//                    }
+//
+//                    // 그룹 데이터 업데이트
+//                    groupList?.forEach { groupDetail ->
+//                        groupDetail.toggle = groupDetail.groupName == "친구 목록"
+//                        if (groupDetail.groupName == "친구 목록") {
+//                            groupDetail.members.forEach { defaultMember ->
+//                                friendListObject.addItem(defaultMember.intraId, defaultMember.intraName)
+//                            }
+//                        }
+//                        groupDetail.members.forEach { member ->
+//                            member.location = member.location ?: if (member.inCluster == true) "개포" else "퇴근"
+//                        }
+//                    }
+//
+//                    groupsMembersList.value = groupList.orEmpty()
+//                } else {
+//                    groupsMembersList.value = emptyList() // 실패 시 빈 리스트 설정
+//                }
+//            } catch (e: Exception) {
+//                groupsMembersList.value = emptyList() // 예외 발생 시 빈 리스트 설정
+//                e.printStackTrace()
+//            }
+//        }
+//    }
 
 
 //    fun getGroupMemberList(intraId: Int, token: String, context:Context) {

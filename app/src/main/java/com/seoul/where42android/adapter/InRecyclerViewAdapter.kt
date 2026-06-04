@@ -105,11 +105,10 @@ class InRecyclerViewAdapter(
 
         // 아이템의 값을 가져와서 TextView와 CircleImageView에 설정
         Glide.with(context)
-            .load(item.emoji) // item.emoji에는 이미지 URL이나 경로가 있어야 합니다.
-            .placeholder(R.drawable.placeholder) // 로딩 중에 표시할 이미지
-//            .error(R.drawable.placeholder) // 이미지 로드 실패 시 표시할 이미지
+            .load(item.emoji)
+            .placeholder(R.drawable.placeholder)
             .error(R.drawable.nointraimage)
-            .into(emojiImageView) // CircleImageView에 이미지를 설정합니다.
+            .into(emojiImageView)
 
         intraIdTextView.text = item.intra_name
         commentTextView.text = item.comment

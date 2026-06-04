@@ -105,15 +105,29 @@ class MainDeleteGroupDetailList : AppCompatActivity() {
                 val filteredList = ArrayList<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
 
                 // 검색어에 따라 데이터 필터링
+//                newText?.let { query ->
+//                    val searchText = query.toLowerCase().trim() // 입력된 검색어 소문자로 변환
+//                    for (member in friendProfileList) {
+//                        val memberName = member.intraName.toLowerCase()
+//                        if (memberName.contains(searchText)) {
+//                            filteredList.add(member)
+//                        }
+//                    }
+//                }
+
                 newText?.let { query ->
-                    val searchText = query.toLowerCase().trim() // 입력된 검색어 소문자로 변환
+                    // FIX: Replace toLowerCase() with lowercase()
+                    val searchText = query.lowercase().trim()
                     for (member in friendProfileList) {
-                        val memberName = member.intraName.toLowerCase()
+                        // FIX: Replace toLowerCase() with lowercase()
+                        val memberName = member.intraName.lowercase()
                         if (memberName.contains(searchText)) {
                             filteredList.add(member)
                         }
                     }
                 }
+
+
                 // 어댑터에 필터링된 데이터 업데이트
                 updateAdapterData(filteredList)
                 return true

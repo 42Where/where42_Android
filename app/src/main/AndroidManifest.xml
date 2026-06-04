@@ -25,6 +25,9 @@
             android:name=".main.MainCreateGroupActivity"
             android:exported="false" />
         <activity
+            android:name=".main.MainClusterStatActivity"
+            android:exported="false" />
+        <activity
             android:name=".main.MainActivity"
             android:exported="true">
             <intent-filter>

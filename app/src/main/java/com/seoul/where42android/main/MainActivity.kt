@@ -21,8 +21,6 @@ import com.seoul.where42android.Base_url_api_Retrofit.ReissueAPI
 import com.seoul.where42android.Base_url_api_Retrofit.intraIdRequest
 import com.seoul.where42android.R
 import com.seoul.where42android.utils.TokenManager
-import kotlinx.coroutines.flow.MutableStateFlow
-
 
 class UserSettings private constructor() {
     var token: String = ""
@@ -46,7 +44,6 @@ class UserSettings private constructor() {
 
 
 class MainActivity : AppCompatActivity() {
-    private val accessTokenFlow = MutableStateFlow("notoken")
     private lateinit var webView: WebView
 
     private var accesstoken: String? = null

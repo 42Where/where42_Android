@@ -67,15 +67,25 @@ class MainCreateGroupActivity : AppCompatActivity() {
 
                 // 검색어에 따라 데이터 필터링
                 newText?.let { query ->
-                    val searchText = query.toLowerCase().trim() // 입력된 검색어 소문자로 변환
+                    val searchText = query.lowercase().trim() // toLowerCase() -> lowercase()
                     for (member in friendProfileList) {
-                        val memberName = member.intraName.toLowerCase()
+                        val memberName = member.intraName.lowercase() // toLowerCase() -> lowercase()
                         if (memberName.contains(searchText))
                         {
                             filteredList.add(member)
                         }
                     }
                 }
+//                newText?.let { query ->
+//                    val searchText = query.toLowerCase().trim() // 입력된 검색어 소문자로 변환
+//                    for (member in friendProfileList) {
+//                        val memberName = member.intraName.toLowerCase()
+//                        if (memberName.contains(searchText))
+//                        {
+//                            filteredList.add(member)
+//                        }
+//                    }
+//                }
 
                 // 어댑터에 필터링된 데이터 업데이트
                 updateAdapterData(filteredList)
