@@ -146,8 +146,12 @@ class MainPageActivity : AppCompatActivity() {
         val footerBinding = binding.footer
         val searchButton : ImageButton = footerBinding.searchButton
         val homeButton : ImageButton = footerBinding.homeButton
+        val statButton : ImageButton = footerBinding.statButton
         searchButton.setOnClickListener {
             clickSearch()
+        }
+        statButton.setOnClickListener {
+            startActivity(Intent(this@MainPageActivity, MainClusterStatActivity::class.java))
         }
         homeButton.setOnClickListener {
             try {
@@ -300,7 +304,7 @@ class MainPageActivity : AppCompatActivity() {
             .load(imageUrl)
             .apply(RequestOptions().circleCrop())
             .error(R.drawable.nointraimage)
-            .diskCacheStrategy(DiskCacheStrategy.ALL) // 디스크 캐시 사용
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(mainImage)
 
         val userSettings = UserSettings.getInstance()

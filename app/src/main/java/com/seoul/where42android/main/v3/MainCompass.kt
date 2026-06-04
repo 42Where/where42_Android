@@ -126,20 +126,16 @@ class MainCompass : AppCompatActivity() {
             }
 
             response?.body()?.members?.forEach { member ->
-                // row와 seat 값을 기반으로 ImageView ID 생성
                 val imageViewId = resources.getIdentifier(
                     "seat_r${member.row}_${member.seat}",
                     "id",
                     packageName
                 )
-
-                // ImageView 가져오기
                 val imageView = findViewById<ImageView>(imageViewId)
                 imageView?.let {
-                    // Glide로 이미지를 항상 설정
-                    updateSeatImage(it, member) // 상태 업데이트
+                    updateSeatImage(it, member)
                     it.setOnClickListener {
-                        showMemberDetail(member, this@MainCompass) // 클릭 시 상세 프로필 다이얼로그 표시
+                        showMemberDetail(member, this@MainCompass)
                     }
                 }
             } ?: run {
@@ -151,8 +147,8 @@ class MainCompass : AppCompatActivity() {
     private fun updateSeatImage(imageView: ImageView, member: CompassMember) {
         // Glide로 이미지를 항상 설정
         Glide.with(this@MainCompass)
-            .load(member.image) // API에서 받은 이미지 URL
-            .error(R.drawable.nointraimage) // 오류 시 이미지
+            .load(member.image)
+            .error(R.drawable.nointraimage)
             .into(imageView)
 
         if (member.isFriend) {

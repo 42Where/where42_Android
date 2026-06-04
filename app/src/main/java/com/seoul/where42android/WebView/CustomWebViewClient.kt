@@ -50,6 +50,7 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
+        Log.d("onPageStarted", "URL: $url")
     }
 
     /**
@@ -103,7 +104,8 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        Log.e("onPageFinished", "firsturl : $url")
+        Log.e("onPageFinished", "━━━━━━━━━━━━━━━━━━━━━━━━")
+        Log.e("onPageFinished", "URL: $url")
 
 
 //        if (url != null && (url.startsWith("https://dev.where42.kr/"))) {
@@ -285,6 +287,7 @@ class CustomWebViewClient(private val context: Context, private val activity: Ac
         request: WebResourceRequest?
     ): Boolean {
         val url = request?.url?.toString()
+        Log.d("shouldOverrideUrl", "URL: $url")
         // 특정 URL로의 로딩을 막기 위한 조건을 설정합니다.
         if (url != null && url.startsWith("https://where42.kr/")) // -- 여기 수정
 //        if (url != null && url.startsWith("https://dev.where42.kr/"))
