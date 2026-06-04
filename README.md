@@ -14,7 +14,6 @@
   <img src="https://img.shields.io/badge/MVVM-Architecture-blue"/>
 </p>
 
----
 
 ## 소개
 
@@ -26,7 +25,6 @@ Where42는 42서울 클러스터 내 카뎃들의 실시간 위치를 확인하�
 - **스토어**: [Google Play Store 출시](https://play.google.com/store/apps/details?id=com.seoul.where42android)
 - **실사용자**: 최대 18명 설치 및 운영
 
----
 
 ## 주요 기능
 
@@ -37,8 +35,6 @@ Where42는 42서울 클러스터 내 카뎃들의 실시간 위치를 확인하�
 |:---------:|:-----------:|
 | <img src="docs/screenshots/app_startpage.png" width="220"/> | <img src="docs/screenshots/oauth_page.png" width="220"/> |
 
----
-
 ### 메인 페이지
 내 프로필(사진, intra 이름, 코멘트, 현재 위치)과 그룹별 친구들의 클러스터 입실 / 퇴근 상태를 한눈에 확인할 수 있습니다.
 
@@ -46,7 +42,6 @@ Where42는 42서울 클러스터 내 카뎃들의 실시간 위치를 확인하�
   <img src="docs/screenshots/main_page.png" width="220"/>
 </p>
 
----
 
 ### 그룹 관리
 새 그룹을 생성하고 친구를 그룹별로 관리할 수 있습니다. 그룹 이름 중복 체크, 20자 제한, 그룹 편집 및 삭제를 지원합니다.
@@ -59,7 +54,6 @@ Where42는 42서울 클러스터 내 카뎃들의 실시간 위치를 확인하�
 |:---------:|:--------------:|
 | <img src="docs/screenshots/group_edit_menu_friend_menu_delete1.png" width="220"/> | <img src="docs/screenshots/group_edit_menu_namechange.png" width="220"/> |
 
----
 
 ### 친구 검색 & 추가
 intra 이름으로 검색 후 체크박스로 복수 선택하여 일괄 친구 추가가 가능합니다.  
@@ -69,7 +63,6 @@ intra 이름으로 검색 후 체크박스로 복수 선택하여 일괄 친구 
 |:---------:|:---------:|:---------:|
 | <img src="docs/screenshots/search1.png" width="220"/> | <img src="docs/screenshots/search2.png" width="220"/> | <img src="docs/screenshots/search3.png" width="220"/> |
 
----
 
 ### 나침반 (클러스터 맵)
 > 💬 실사용자 피드백을 반영하여 개발된 기능
@@ -89,7 +82,6 @@ C1, C2, C5, C6, CX1, CX2 클러스터의 좌석 맵을 실시간으로 렌더링
 |:---------:|:--------------:|
 | <img src="docs/screenshots/compass_myfriend_page.png" width="220"/> | <img src="docs/screenshots/compass_nofriend_page.png" width="220"/> |
 
----
 
 ### 공지사항
 42서울 공식 공지를 목록으로 조회하고, 바텀시트로 상세 내용을 확인할 수 있습니다.
@@ -98,7 +90,6 @@ C1, C2, C5, C6, CX1, CX2 클러스터의 좌석 맵을 실시간으로 렌더링
 |:---------:|:---------:|
 | <img src="docs/screenshots/announcement1.png" width="220"/> | <img src="docs/screenshots/announcement2.png" width="220"/> |
 
----
 
 ### 설정
 한줄 코멘트 수정, 층별/구역별 수동 위치 설정(1~5층, 옥상, 지하), 로그아웃 기능을 제공합니다.
@@ -107,7 +98,6 @@ C1, C2, C5, C6, CX1, CX2 클러스터의 좌석 맵을 실시간으로 렌더링
 |:---------:|:------------------:|:---------:|
 | <img src="docs/screenshots/setting_main.png" width="220"/> | <img src="docs/screenshots/setting_changeseat_true1.png" width="220"/> | <img src="docs/screenshots/setting_changeseat_true2.png" width="220"/> |
 
----
 
 ### 클러스터 실시간 현황
 > 💬 실사용자 피드백을 반영하여 개발된 기능
@@ -118,7 +108,6 @@ C1, C2, C5, C6, CX1, CX2 클러스터의 좌석 맵을 실시간으로 렌더링
 |:-----------:|:---------:|
 | <img src="docs/screenshots/statistics1.png" width="220"/> | <img src="docs/screenshots/statistics2.png" width="220"/> |
 
----
 
 ## 기술 스택
 
@@ -132,7 +121,6 @@ C1, C2, C5, C6, CX1, CX2 클러스터의 좌석 맵을 실시간으로 렌더링
 | Storage | DataStore |
 | Auth | 42서울 OAuth (WebView) |
 
----
 
 ## 프로젝트 구조
 
@@ -147,8 +135,6 @@ app/src/main/java/com/seoul/where42android/
 ├── utils/              # TokenManager, ApiUtils
 └── WebView/            # CustomWebViewClient
 ```
-
----
 
 ## 커밋 메시지 가이드라인
 
