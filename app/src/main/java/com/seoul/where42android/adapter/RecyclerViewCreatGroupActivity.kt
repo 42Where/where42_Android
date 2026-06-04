@@ -52,14 +52,11 @@ class RecyclerViewCreatGroupActivity(
         fun bind(member: friendGroup_default_memberlist.friendGroup_default_memberlistItem)
         {
             Glide.with(context)
-                .load(member.image) // Assuming 'member.image' is the URL or path to the image
-                .placeholder(R.drawable.placeholder) // Placeholder image while loading
-//                .error(R.drawable.placeholder) // Error image if Glide fails to load
+                .load(member.image)
+                .placeholder(R.drawable.placeholder)
                 .error(R.drawable.nointraimage)
                 .into(textViewName)
 
-
-//            textViewGrade.text = member.memberIntraName
             textViewGrade.text = member.intraName
             textViewComment.text = member.comment
 

@@ -131,10 +131,8 @@ class RetrofitConnection {
 
                 val accessTokenPattern = "accessToken" // accessToken의 패턴에 따라 수정
 
-//                if (url.startsWith("http://13.209.149.15:8080") && response.code == 401) -- 난중 수정
-//                if (url.startsWith("https://api-test.where42.kr") && response.code == 401)
                 //이건 토큰 재발급
-                if (url.startsWith("https://api.where42.kr") && response.code == 401)
+                if (response.code == 401)
                 {
                     Log.d("MainActivty", "401 토큰 재발급");
 

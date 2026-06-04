@@ -127,11 +127,20 @@ class MainAddGroupDetailList : AppCompatActivity() {
                 val filteredList = ArrayList<friendGroup_default_memberlist.friendGroup_default_memberlistItem>()
 
                 // 검색어에 따라 데이터 필터링
-                newText?.let { query ->
+//                newText?.let { query ->
+////                    val searchText = query.toLowerCase().trim() // 입력된 검색어 소문자로 변환
 //                    val searchText = query.toLowerCase().trim() // 입력된 검색어 소문자로 변환
-                    val searchText = query.toLowerCase().trim() // 입력된 검색어 소문자로 변환
+//                    for (member in friendProfileList) {
+//                        val memberName = member.intraName.toLowerCase()
+//                        if (memberName.contains(searchText)) {
+//                            filteredList.add(member)
+//                        }
+//                    }
+//                }
+                newText?.let { query ->
+                    val searchText = query.lowercase().trim() // Use lowercase() instead of toLowerCase()
                     for (member in friendProfileList) {
-                        val memberName = member.intraName.toLowerCase()
+                        val memberName = member.intraName.lowercase() // Use lowercase() instead of toLowerCase()
                         if (memberName.contains(searchText)) {
                             filteredList.add(member)
                         }

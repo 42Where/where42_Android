@@ -86,8 +86,12 @@ class MainFragment() : Fragment() {
         val checkBox = activity?.findViewById<CheckBox>(R.id.checkBox)
 
         //출근한 친구만 보기 라는 버튼을 눌렀을 때 밑 checkBox가 체크로 변함
+//        availableButton?.setOnClickListener {
+//            checkBox?.isChecked = !checkBox?.isChecked!!
+//        }
         availableButton?.setOnClickListener {
-            checkBox?.isChecked = !checkBox?.isChecked!!
+            val cur = checkBox?.isChecked ?: false
+            checkBox?.isChecked = !cur
         }
 
         checkBox?.setOnCheckedChangeListener { _, isChecked ->
@@ -102,89 +106,151 @@ class MainFragment() : Fragment() {
 
         // Observe changes in LiveData
         sharedViewModel.groupsMembersListLiveData.observe(viewLifecycleOwner) { groupList ->
-//            Log.d("datachange", "datachange1")
-            if (checkBox?.isChecked == true)
-            {
-                checkBox?.isChecked = false
-            }
-            if (groupList.isNotEmpty()) {
-//                Log.d("checkfreind", "checkfriend")
-//                Log.d("boolean_check", " checkBox?.isChecked  : ${checkBox?.isChecked }")
-                val itemList = mutableListOf<RecyclerOutViewModel>()
-                groupList.forEach { groupDetail ->
-                    var count = 0
-                    val innerItemList = mutableListOf<RecyclerInViewModel>()
-                    groupDetail.members.forEach { intraId ->
-                        val recyclerInViewModel = RecyclerInViewModel(
-                            emoji = intraId.image ?: "",
-                            location = intraId.location ?: "",
-                            comment = intraId.comment ?: "",
-                            intra_name = intraId.intraName ?: "",
-                            included_group = groupDetail.groupId ?: -1,
-                            intra_id = intraId.intraId ?: -1,
-                        )
-                        if (recyclerInViewModel.location != "퇴근")
-                        {
-                            count++
-                        }
-//                        Log.d("groupId", "id : ${groupDetail.groupId} location :  ${intraId.location}")
-                        innerItemList.add(recyclerInViewModel)
-                    }
-                    val recyclerOutViewModel = RecyclerOutViewModel(
-                        title = groupDetail.groupName ?: "",
-                        innerItemList,
-                        groupId = groupDetail.groupId ?: 0,
-                        viewgroup = groupDetail.toggle,
-                        comeCluster = count
-                    )
-//                    Log.d("title_check", "title_check : ${recyclerOutViewModel.title}")
-                    if (!friendListObject.searchGroupName(recyclerOutViewModel.title))
-                    {
-                        friendListObject.groupAdd(recyclerOutViewModel.title)
-                    }
-                    itemList.add(recyclerOutViewModel)
-                }
+            // 체크박스 상태 초기화
+            if (checkBox?.isChecked == true) checkBox.isChecked = false
 
-                val lastIndex = itemList.lastIndex
-//                val lastItem = itemList[lastIndex]
-                val defaultGroupIndex = itemList?.indexOfFirst { it.title == "친구 목록"}
-                if (lastIndex == defaultGroupIndex) {
-//                    Log.d("LastItemCheck", "친구 목록이 마지막에 있습니다.")
-                } else {
-                    val defaultFriendListremove = itemList?.firstOrNull{it.title == "친구 목록"}
-                    if (defaultFriendListremove != null) {
-                        if (defaultGroupIndex != null) {
-                            itemList.removeAt(defaultGroupIndex)
-                            itemList.add(defaultFriendListremove)
-                        }
-
-                    }
-//                    Log.d("LastItemCheck", "친구 목록이 마지막에 없습니다.")
-                }
-
-
-
-//                Log.d("DiffUtil", "here1")
-                // Set up RecyclerView Adapter
-                val adapter = OutRecyclerViewAdapter(requireContext(), itemList, sharedViewModel)
-                binding.outRecyclerview.adapter = adapter
-                binding.outRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-                GroupsList.setToggleStat(itemList)
-                binding.progressBar.visibility = View.GONE
-            }
-            else {
-                // Handle empty or null data
+            if (groupList.isNullOrEmpty()) {
                 Toast.makeText(requireContext(), "No data available", Toast.LENGTH_SHORT).show()
                 val adapter = OutRecyclerViewAdapter(requireContext(), emptyItemList, sharedViewModel)
                 binding.outRecyclerview.adapter = adapter
                 binding.outRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+                return@observe
             }
+
+            // 1) itemList 구성: 람다 대신 for문으로 단순화
+            val itemList = mutableListOf<RecyclerOutViewModel>()
+            for (groupDetail in groupList) {
+                var comeCount = 0
+                val inner = mutableListOf<RecyclerInViewModel>()
+
+                for (m in groupDetail.members) {
+                    val vm = RecyclerInViewModel(
+                        emoji = m.image ?: "",
+                        location = m.location ?: "",
+                        comment = m.comment ?: "",
+                        intra_name = m.intraName ?: "",
+                        included_group = groupDetail.groupId ?: -1,
+                        intra_id = m.intraId ?: -1
+                    )
+                    if (vm.location != "퇴근") comeCount++
+                    inner.add(vm)
+                }
+
+                val out = RecyclerOutViewModel(
+                    title = groupDetail.groupName ?: "",
+                    innerList = inner,
+                    groupId = groupDetail.groupId ?: 0,
+                    viewgroup = groupDetail.toggle,
+                    comeCluster = comeCount
+                )
+
+                if (!friendListObject.searchGroupName(out.title)) {
+                    friendListObject.groupAdd(out.title)
+                }
+                itemList.add(out)
+            }
+
+            // 2) "친구 목록"을 마지막으로 이동 (인덱스 -1 명시 처리)
+            val lastIndex = itemList.lastIndex
+            val friendIdx = itemList.indexOfFirst { it.title == "친구 목록" } // Int (nullable 아님)
+            if (friendIdx >= 0 && friendIdx != lastIndex) {
+                val friend = itemList[friendIdx]
+                itemList.removeAt(friendIdx)
+                itemList.add(friend)
+            }
+
+            // 3) 어댑터 설정
+            val adapter = OutRecyclerViewAdapter(requireContext(), itemList, sharedViewModel)
+            binding.outRecyclerview.adapter = adapter
+            binding.outRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+            GroupsList.setToggleStat(itemList)
+            binding.progressBar.visibility = View.GONE
         }
 
-        sharedViewModel.groupsMembersListLiveData.observeForever { groupList ->
-//            Log.d("datachange", "datachange2")
-            // 데이터가 변경될 때 실행되는 코드
-        }
+//        sharedViewModel.groupsMembersListLiveData.observe(viewLifecycleOwner) { groupList ->
+////            Log.d("datachange", "datachange1")
+//            if (checkBox?.isChecked == true)
+//            {
+//                checkBox?.isChecked = false
+//            }
+//            if (groupList.isNotEmpty()) {
+////                Log.d("checkfreind", "checkfriend")
+////                Log.d("boolean_check", " checkBox?.isChecked  : ${checkBox?.isChecked }")
+//                val itemList = mutableListOf<RecyclerOutViewModel>()
+//                groupList.forEach { groupDetail ->
+//                    var count = 0
+//                    val innerItemList = mutableListOf<RecyclerInViewModel>()
+//                    groupDetail.members.forEach { intraId ->
+//                        val recyclerInViewModel = RecyclerInViewModel(
+//                            emoji = intraId.image ?: "",
+//                            location = intraId.location ?: "",
+//                            comment = intraId.comment ?: "",
+//                            intra_name = intraId.intraName ?: "",
+//                            included_group = groupDetail.groupId ?: -1,
+//                            intra_id = intraId.intraId ?: -1,
+//                        )
+//                        if (recyclerInViewModel.location != "퇴근")
+//                        {
+//                            count++
+//                        }
+////                        Log.d("groupId", "id : ${groupDetail.groupId} location :  ${intraId.location}")
+//                        innerItemList.add(recyclerInViewModel)
+//                    }
+//                    val recyclerOutViewModel = RecyclerOutViewModel(
+//                        title = groupDetail.groupName ?: "",
+//                        innerItemList,
+//                        groupId = groupDetail.groupId ?: 0,
+//                        viewgroup = groupDetail.toggle,
+//                        comeCluster = count
+//                    )
+////                    Log.d("title_check", "title_check : ${recyclerOutViewModel.title}")
+//                    if (!friendListObject.searchGroupName(recyclerOutViewModel.title))
+//                    {
+//                        friendListObject.groupAdd(recyclerOutViewModel.title)
+//                    }
+//                    itemList.add(recyclerOutViewModel)
+//                }
+//
+//                val lastIndex = itemList.lastIndex
+////                val lastItem = itemList[lastIndex]
+//                val defaultGroupIndex = itemList?.indexOfFirst { it.title == "친구 목록"}
+//                if (lastIndex == defaultGroupIndex) {
+////                    Log.d("LastItemCheck", "친구 목록이 마지막에 있습니다.")
+//                } else {
+//                    val defaultFriendListremove = itemList?.firstOrNull{it.title == "친구 목록"}
+//                    if (defaultFriendListremove != null) {
+//                        if (defaultGroupIndex != null) {
+//                            itemList.removeAt(defaultGroupIndex)
+//                            itemList.add(defaultFriendListremove)
+//                        }
+//
+//                    }
+////                    Log.d("LastItemCheck", "친구 목록이 마지막에 없습니다.")
+//                }
+//
+//
+//
+////                Log.d("DiffUtil", "here1")
+//                // Set up RecyclerView Adapter
+//                val adapter = OutRecyclerViewAdapter(requireContext(), itemList, sharedViewModel)
+//                binding.outRecyclerview.adapter = adapter
+//                binding.outRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+//                GroupsList.setToggleStat(itemList)
+//                binding.progressBar.visibility = View.GONE
+//            }
+//            else {
+//                // Handle empty or null data
+//                Toast.makeText(requireContext(), "No data available", Toast.LENGTH_SHORT).show()
+//                val adapter = OutRecyclerViewAdapter(requireContext(), emptyItemList, sharedViewModel)
+//                binding.outRecyclerview.adapter = adapter
+//                binding.outRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+//            }
+//        }
+
+//        sharedViewModel.groupsMembersListLiveData.observeForever { groupList ->
+////            Log.d("datachange", "datachange2")
+//            // 데이터가 변경될 때 실행되는 코드
+//        }
 
 
         // Call function to fetch data

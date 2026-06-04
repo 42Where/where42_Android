@@ -54,7 +54,6 @@ class SearchRecyclerViewAdapter(private val context: Context,
                     Glide.with(binding.root.context)
                         .load(item.emoji)
                         .placeholder(R.drawable.placeholder)
-//                        .error(R.drawable.placeholder)
                         .error(R.drawable.nointraimage)
                         .skipMemoryCache(true)
                         .into(binding.profilePhoto)
